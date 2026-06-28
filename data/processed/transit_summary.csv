@@ -1,0 +1,16 @@
+field,value,unit_or_note
+target,TIC 441420236,FITS OBJECT
+sector,1,TESS sector
+camera,,TESS camera
+ccd,,TESS CCD
+cadences_total,20076,rows in light-curve FITS table
+cadences_finite,18094,finite PDCSAP flux
+cadences_quality_0,18050,finite and quality == 0
+cadences_flagged_finite,44,finite and quality != 0
+median_pdcsap_flux,286670.359375,e-/s
+selected_transit_epoch,1330.402639737,TBJD
+dvt_period,19.830261564,days
+dvt_duration,2.513769,hours
+dvt_depth,3024.186,ppm
+estimated_local_depth,2778.582,"ppm, from local polynomial detrend"
+local_out_of_transit_scatter,588.832,ppm

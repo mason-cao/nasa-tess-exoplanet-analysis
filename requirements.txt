@@ -1,0 +1,4 @@
+numpy>=2.0
+matplotlib>=3.8
+jupyter>=1.0
+nbformat>=5.9
