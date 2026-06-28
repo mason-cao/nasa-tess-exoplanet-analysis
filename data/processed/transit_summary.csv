@@ -1,5 +1,6 @@
 field,value,unit_or_note
-target,TIC 441420236,FITS OBJECT
+target,AU Mic b,display name
+tic_id,TIC 441420236,FITS OBJECT
 sector,1,TESS sector
 camera,,TESS camera
 ccd,,TESS CCD

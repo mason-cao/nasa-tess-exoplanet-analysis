@@ -43,8 +43,10 @@ def main():
     # used in the lecture demo notebook, around TBJD 1330.4.
     dvt_hdus = list_hdus(DVT_FILE)
     tce5_header = dvt_hdus[5]["header"]
-    target = lc_header.get("OBJECT", "TIC 441420236").strip()
+    tic_id = lc_header.get("OBJECT", "TIC 441420236").strip()
+    target = "AU Mic b"
     sector = lc_header.get("SECTOR", 1)
+    light_curve_title = f"{target} Light Curve - Sector {sector}"
     camera = lc_header.get("CAMERA", "")
     ccd = lc_header.get("CCD", "")
     t0 = float(tce5_header["TEPOCH"])
@@ -87,7 +89,8 @@ def main():
         writer = csv.writer(f)
         writer.writerow(["field", "value", "unit_or_note"])
         writer.writerows([
-            ["target", target, "FITS OBJECT"],
+            ["target", target, "display name"],
+            ["tic_id", tic_id, "FITS OBJECT"],
             ["sector", sector, "TESS sector"],
             ["camera", camera, "TESS camera"],
             ["ccd", ccd, "TESS CCD"],
@@ -110,11 +113,10 @@ def main():
     ax.scatter(time[flagged_finite], normalized_flux[flagged_finite], s=12, alpha=0.85, label="finite but flagged")
     ax.axvspan(t0 - 0.25, t0 + 0.25, alpha=0.18, label="zoomed transit window")
     ax.axvline(t0, linestyle="--", linewidth=1.2, label=f"TCE epoch = {t0:.3f} TBJD")
-    ax.set_title(f"TESS Sector {sector} Light Curve for {target}")
-    ax.set_xlabel("Time (TBJD = BJD - 2457000)")
-    ax.set_ylabel("PDCSAP Flux / Median")
+    ax.set_title(light_curve_title)
+    ax.set_xlabel("Time (TBJD)")
+    ax.set_ylabel("median normalized PDCSAP Flux (e-/s)")
     ax.set_ylim(0.982, 1.055)
-    ax.legend(loc="upper right", frameon=True)
     fig.tight_layout()
     fig.savefig(PLOT_DIR / "01_full_light_curve_quality_and_transit_window.png", dpi=220)
     plt.close(fig)
@@ -128,30 +130,28 @@ def main():
     ax.axvspan(t0 - duration_days / 2, t0 + duration_days / 2, alpha=0.18, label=f"DVT duration ≈ {duration_hours:.2f} hr")
     ax.set_xlim(t0 - 0.25, t0 + 0.25)
     ax.set_ylim(0.989, 1.003)
-    ax.set_title(f"Required Transit Zoom: {target}, TESS Sector {sector}")
+    ax.set_title(light_curve_title)
     ax.set_xlabel("Time (TBJD)")
-    ax.set_ylabel("Median-normalized PDCSAP Flux")
+    ax.set_ylabel("median normalized PDCSAP Flux (e-/s)")
     ax.text(0.02, 0.04, f"Estimated local depth ≈ {estimated_depth_ppm:,.0f} ppm", transform=ax.transAxes, fontsize=10,
             bbox={"boxstyle": "round", "facecolor": "white", "alpha": 0.82, "edgecolor": "0.8"})
-    ax.legend(loc="lower left", frameon=True)
     fig.tight_layout()
     fig.savefig(PLOT_DIR / "02_required_transit_zoom.png", dpi=240)
     plt.close(fig)
 
     # 3. Detrended transit plot for a cleaner scientific view.
     fig, ax = plt.subplots(figsize=(9.5, 5.5))
-    ax.scatter((time[zoom] - t0) * 24, detrended[zoom], s=12, alpha=0.75, label="locally detrended flux")
+    ax.scatter(time[zoom], detrended[zoom], s=12, alpha=0.75, label="locally detrended flux")
     ax.axhline(1.0, linestyle="--", linewidth=1.0)
-    ax.axvline(0.0, linestyle="--", linewidth=1.0, label="mid-transit")
-    ax.axvspan(-duration_hours / 2, duration_hours / 2, alpha=0.18, label="DVT duration")
-    ax.set_xlim(-6, 6)
+    ax.axvline(t0, linestyle="--", linewidth=1.0, label="mid-transit")
+    ax.axvspan(t0 - duration_days / 2, t0 + duration_days / 2, alpha=0.18, label="DVT duration")
+    ax.set_xlim(t0 - 0.25, t0 + 0.25)
     ax.set_ylim(0.9955, 1.0025)
-    ax.set_title("Local Detrend of the Candidate Transit")
-    ax.set_xlabel("Hours from selected transit center")
-    ax.set_ylabel("Flux / Local Polynomial Baseline")
+    ax.set_title(light_curve_title)
+    ax.set_xlabel("Time (TBJD)")
+    ax.set_ylabel("median normalized PDCSAP Flux (e-/s)")
     ax.text(0.02, 0.05, f"Depth ≈ {estimated_depth_ppm:,.0f} ppm\nOOT scatter ≈ {local_scatter_ppm:,.0f} ppm", transform=ax.transAxes, fontsize=10,
             bbox={"boxstyle": "round", "facecolor": "white", "alpha": 0.82, "edgecolor": "0.8"})
-    ax.legend(loc="upper right", frameon=True)
     fig.tight_layout()
     fig.savefig(PLOT_DIR / "03_local_detrended_transit.png", dpi=240)
     plt.close(fig)
