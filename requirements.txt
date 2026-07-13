@@ -1,4 +1,9 @@
 numpy>=2.0
 matplotlib>=3.8
+astropy>=7.0
+photutils>=2.0
+scipy>=1.13
+pandas>=2.2
+scikit-image>=0.24
 jupyter>=1.0
 nbformat>=5.9

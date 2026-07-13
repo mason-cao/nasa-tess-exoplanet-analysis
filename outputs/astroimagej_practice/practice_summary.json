@@ -1,0 +1,36 @@
+{
+  "classification": "practice reduction; not TOI-6241.01",
+  "folder_date_local": "2023-10-12",
+  "observed_target_from_headers": "TOI 3718.01",
+  "science_frames": 270,
+  "dark_frames": 15,
+  "flat_frames": 8,
+  "filter": "R",
+  "exposure_seconds": 65.0,
+  "aperture_radius_pixels": 16.0,
+  "annulus_pixels": [
+    22.0,
+    32.0
+  ],
+  "seeing_fwhm_pixels_approx": 15.5,
+  "comparison_stars_selected": [
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11",
+    "C13",
+    "C15"
+  ],
+  "frames_used": 181,
+  "expected_depth_ppt": 3.77,
+  "expected_duration_hours": 4.263,
+  "preliminary_apparent_depth_ppt": 11.392532840584057,
+  "post_window_scatter_ppt": 2.6445996403001932,
+  "interpretation": "Preliminary practice result only; mentor review is required before scientific interpretation."
+}
