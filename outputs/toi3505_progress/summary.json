@@ -1,0 +1,17 @@
+{
+  "archive_count": 6,
+  "science_frames": 283,
+  "duplicate_science_files": 1,
+  "dark_50s": 10,
+  "dark_3_5s": 10,
+  "flat_3_5s_r": 10,
+  "focus_fits": 11,
+  "focus_png": 22,
+  "first_bjd_tdb": 2459782.598234811,
+  "last_bjd_tdb": 2459782.8386683143,
+  "span_hours": 5.770404081791639,
+  "period_days": 2.9151556,
+  "transit_epoch_bjd": 2459793.534385,
+  "previous_transit_bjd": 2459781.8737625997,
+  "next_transit_bjd": 2459784.7889181995
+}

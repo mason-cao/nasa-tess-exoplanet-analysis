@@ -3,12 +3,13 @@
 | Field | Value |
 |---|---|
 | Working project | Ground-based follow-up and dilution-aware multi-epoch vetting of TOI-3505.01 |
-| Working paper title | **Stress-Testing TOI-3505.01: A Dilution-Aware, Multi-Epoch Validation Using TESS, Gaia, and Public TFOP Constraints** (see the title-caution note in the title section — the final title must match the achieved result) |
+| Working paper title | **Stress-Testing TOI-3505.01: A Dilution-Aware, Multi-Epoch Analysis Using TESS, Gaia, and Public TFOP Constraints** (the final title must match the achieved result) |
 | Target | TOI-3505.01 / TIC 390988385 |
 | Document status | Living research design, not a statement that every analysis has already been completed |
-| Last updated | 2026-07-14 (complete pivot rewrite from TOI-6241.01; all catalog facts re-verified live on this date) |
+| Last updated | 2026-07-20 (personal-strategy, repository, and AERIS-methods audit integrated; external target facts remain on the dated 2026-07-14 snapshot unless noted) |
 | Program fit | GMU NASA Data Science & Astronomy Research Internship, Summer 2026 |
 | Hard deadlines | Symposium poster/talk: Aug 1, 2026 · Paper due: Aug 29, 2026 |
+| Strategic identity | Evidence engineering for noisy physical systems: domain-correct astronomy first, reproducible research software second |
 
 ## What the pivot re-research found
 
@@ -18,7 +19,7 @@ This document replaces the TOI-6241.01 blueprint after the project pivot to TOI-
 2. **A fourth TESS sector exists.** The pivot thesis names Sectors 14, 41, and 54. MAST/TESScut additionally lists **Sector 81** (2024, camera 2, CCD 3), and exo.MAST lists TCEs for `s0054`, `s0081`, and a **multi-sector run spanning s0014–s0086**. A "multi-epoch consistency" thesis that silently ignores the most recent epoch and the existing pipeline Data Validation products would be indefensible under review. The thesis below is extended to all four sectors (2019–2024), with S14/41/54 retained as the named core.
 3. **This is a genuinely crowded, genuinely blended target — the "dilution-aware" framing is not decoration, it is the whole problem.** The field sits at galactic latitude −3.46°. The TIC v8.2 contamination ratio is **0.547** (contaminating flux ≈ 55% of target flux in the TESS aperture model). Worse: SOAR speckle imaging (2021-10-01) shows a companion at **0.517″ with ΔI = 1.7 mag** (~21% of the target's flux) that has **no separate Gaia DR3 entry** — meaning it is absent from the TIC and therefore absent from *every* catalog-driven dilution correction QLP or SPOC applied. Shane/ShARCS AO (2021-07-19) catalogs 11 companions between 0.507″ and 8.355″. No seeing-limited photometry — TESS, GMU, or any public SG1 light curve — resolves the 0.52″ pair.
 4. **The star itself is not settled.** Gaia DR3 gives the target (source 1824561377891719424) **RUWE = 3.69**, far beyond the ~1.4 threshold where the single-star astrometric model has failed — unsurprising given the 0.52″ companion, but it poisons the parallax (DR3: 1.245 mas, naively ~800 pc) which conflicts with the TIC distance (373.5 pc, DR2-era). TRES reconnaissance spectroscopy on ExoFOP reports **Teff 6423 ± 63 K, log g 3.875 ± 0.109, v sin i 14.74 km/s** — a possibly evolved, fast-rotating F star — against TIC's 6220 K / 1.335 R☉ dwarf-ish solution. The candidate radius (7.46 R⊕ per the TOI table) is a hostage of these unresolved choices: defensible stellar-radius scenarios move it between roughly 7.5 and ~18 R⊕ (screening arithmetic in the stellar section). The candidate is either a rare hot-Neptune-desert object, an ordinary hot Jupiter, or an eclipsing binary — **and dilution plus stellar characterization decide which**. That is the paper.
-5. **The public TFOP record is rich — which kills "first follow-up" novelty and replaces it with something better.** ExoFOP lists **7 time-series observations** (KeplerCam ip full; ULMT rp full *with an NEB check*; MuSCAT2 g,r,i,z_s egress — four simultaneous colors; CMO g′ full; OAA Ic full; and a **prior GMU 0.8 m R-band night, 2021-06-28, tagged by the mentor**), 2 imaging campaigns (Shane AO J/Ks, SOAR speckle I), 3 TRES spectra, and **Keck/HIRES: "6 RVs between UT 2022-09-01 and 2022-09-12"**. ~147 files are downloadable with a free ExoFOP login. Nobody has published any of it: the NASA Archive disposition is still PC, `pscomppars` has no entry for this TIC, and exact-identifier searches return no dedicated paper (novelty ledger entries #1–4). The defensible contribution is therefore the *synthesis and stress-test*: an independent, dilution-aware, multi-epoch reanalysis that unifies four TESS sectors, the public SG1 archive, Gaia, and the imaging constraints — plus one GMU night (ours) that appears nowhere on ExoFOP.
+5. **The public TFOP record is rich — which kills "first follow-up" novelty and replaces it with something better.** ExoFOP lists **7 time-series observations** (KeplerCam ip full; ULMT rp full *with an NEB check*; MuSCAT2 g,r,i,z_s egress — four simultaneous colors; CMO g′ full; OAA Ic full; and a **prior GMU 0.8 m R-band night, 2021-06-28, tagged by the mentor**), 2 imaging campaigns (Shane AO J/Ks, SOAR speckle I), 3 TRES spectra, and **Keck/HIRES: "6 RVs between UT 2022-09-01 and 2022-09-12"**. ~147 files are downloadable with a free ExoFOP login. Nobody has published any of it: the NASA Archive disposition is still PC, `pscomppars` has no entry for this TIC, and exact-identifier searches return no dedicated paper (novelty ledger entries #1–4). The defensible contribution is therefore the *synthesis and stress-test*: a student-led, dilution-aware, multi-epoch reanalysis that unifies four TESS sectors, the public SG1 archive, Gaia, and the imaging constraints — plus one GMU night (ours) that appears nowhere on ExoFOP.
 6. **The GMU night is simultaneous with TESS Sector 54.** S54 ran ~2022-07-09 to 2022-08-05 (verify against the data-release notes); the GMU night of 2022-07-21/22 sits inside it. Same-night space photometry of the same star is a free, rare cross-check on the GMU night's photometric fidelity — and it converts an off-transit night into a calibrated precision benchmark.
 7. **Program-calendar integration is unchanged.** Same Summer 2026 program, same lecture rules, same deadlines (Discord light-curve gate → symposium Aug 1 → paper Aug 29). All compliance sections are carried forward intact and re-pointed at this target.
 
@@ -29,6 +30,46 @@ This document is the complete research blueprint for making the TOI-3505.01 proj
 The required paper remains a ground-based TESS Object of Interest follow-up study: determine what the GMU observation of TOI-3505.01 does and does not show at the predicted time, depth, and duration — which, for this night, includes determining *why the predicted transit was not in the observing window* and what the night constrains anyway. Every advanced component below strengthens that central result; none replaces it.
 
 The project can produce a defensible paper from exactly the situation we are in: a nondetection-by-geometry night, an ephemeris audit, and a multi-epoch space-based consistency analysis. The program explicitly expects imperfect nights: many are "plagued by clouds, data gaps" and end inconclusive, marginal, partial, or false-positive, and "only a few will result in clear, on target detections" — see [Lecture 8, result possibilities](../data_and_lectures/Lecture8_Schar2025_clean_redesign.pdf#page=14). What the program does not tolerate — and what this document is designed to prevent — is claims that outrun the evidence.
+
+## Student strategy and project identity — INTERNAL, not paper text
+
+The personal value of this project is not that exoplanets can be relabeled as environmental science. The authentic connection is methodological: both this study and Project AERIS ask how to make reliable claims from noisy, incomplete, differently sampled observations of a physical system. The astronomy must remain domain-native; the cross-project throughline is **evidence verification**, not "AI applied to two unrelated topics."
+
+A dated audit of the public AERIS repository on 2026-07-20 found a mature verification architecture: frozen evaluation sets linked to code and data hashes, measurement-process channel grouping, explicit non-independence caveats, leave-one-source/channel-out ablations, trigger-channel circularity tests, blinded expert-label packets, provenance gates, numeric claim checks, and a large automated test suite. This TOI project should transfer those research habits where they genuinely apply:
+
+- Freeze analysis decisions before seeing the answer.
+- Distinguish a new measurement from a new reduction of the same measurement.
+- Track the provenance and dependence of every evidence stream.
+- Preserve supporting, contradicting, silent, and unusable evidence rather than forcing a binary verdict.
+- Use ablations, negative controls, synthetic recovery, and human review to learn what actually carries a conclusion.
+- Set a claim ceiling and abstain when the available data cannot separate scenarios.
+
+The transfer stops there. AERIS is not evidence about TOI-3505.01, its terminology does not belong in the astronomy paper, and no LLM or multi-agent layer should be added to make the projects look connected. The strongest portfolio story is that the same student can learn the physics and measurement process of a new domain, then build trustworthy software around it.
+
+### Current public-evidence gap (2026-07-20)
+
+The NASA repository currently proves an AU Mic/TESS introductory analysis, a substantial TOI-3718 practice reduction, and a TOI-3505 archive/header/timing audit with progress figures. It does **not yet** prove a completed TOI-3505 differential light curve, four-sector reanalysis, Bayesian or hierarchical inference, journal manuscript, or automated test suite. The public description must stay at "analyzing" or "building" until those artifacts exist. Closing this evidence gap is more important than strengthening the wording.
+
+Conversely, AERIS already contains extensive evaluation and testing infrastructure but its public README still labels the formal freeze, expert labels, and final statistics as unfinished. Do not use this internship to imply that AERIS has a completed result it does not yet have, or use AERIS's code volume as evidence of TOI-3505 progress. Each project earns its own claims.
+
+### Two legitimate academic readings
+
+| Audience | What this project can honestly demonstrate | What not to claim |
+|---|---|---|
+| Earth systems / environmental engineering | Remote-sensing literacy; reconciliation of space- and ground-based measurements; calibration, spatial resolution, contamination, temporal sampling, uncertainty, and physical-model constraints | That exoplanet research is environmental research, or that astronomical dilution directly models atmospheric source attribution |
+| Computer science | Reproducible scientific pipelines; configuration-driven experiments; tests for time conversion and dilution algebra; provenance and data lineage; statistically valid evaluation; clear human-review gates | That software sophistication substitutes for an astronomical result, or that using more models makes the work more scientific |
+| Shared throughline | Reliable inference from heterogeneous measurements of real physical systems | A generic "AI + NASA + climate" brand |
+
+### Decision rule for maximizing the internship
+
+Add a task only if it does at least one of the following without endangering the paper deadline:
+
+1. changes or tightens the scientific claim ceiling;
+2. tests whether a result depends on a fragile analysis choice;
+3. creates a reusable, mentor-verifiable research artifact;
+4. teaches a domain method that can be explained without scripted language.
+
+If a task mainly makes the project sound more advanced, postpone it. Admissions-facing summaries, portfolio copy, and public case studies are downstream products created after the result is frozen; they never decide which analysis is run or which result is emphasized.
 
 ## Scope legend
 
@@ -44,7 +85,7 @@ Each proposed analysis is assigned one of five levels.
 
 ## One-sentence research strategy
 
-Determine whether the 2.9151556-day signal attributed to TOI-3505.01 can be independently localized to TIC 390988385 (or shown to belong to its unresolved 0.52″ companion or a neighbor), and whether its depth, duration, shape, and timing remain physically consistent across TESS Sectors 14, 41, 54, and 81 once dilution, aperture selection, stellar variability, and false-positive scenarios are explicitly modeled — using the GMU 2022-07-22 night as an identity-verified photometric benchmark and ephemeris-audit anchor, and the public TFOP archive (multi-band SG1 light curves, NEB checks, AO/speckle imaging, TRES spectroscopy) as quantitative constraints rather than as an appeal to authority.
+Determine whether our analysis can localize the 2.9151556-day signal attributed to TOI-3505.01 to the unresolved TIC 390988385 system (or show that it belongs to a resolvable neighbor), and whether its depth, duration, shape, and timing remain physically consistent across TESS Sectors 14, 41, 54, and 81 once dilution, aperture selection, stellar variability, and false-positive scenarios are explicitly modeled — using the GMU 2022-07-22 night as an identity-verified photometric benchmark and ephemeris-audit anchor, and the public TFOP archive (multi-band SG1 light curves, NEB checks, AO/speckle imaging, TRES spectroscopy) as quantitative constraints rather than as an appeal to authority.
 
 ## Strongest defensible novelty thesis
 
@@ -57,17 +98,17 @@ This is the right *kind* of thesis for this target — but as stated it has two 
 1. **It omits Sector 81 and the existing SPOC/TESS-SPOC Data Validation products.** Four sectors spanning 2019–2024 exist, along with TCEs (and therefore pipeline centroid/difference-image/odd-even diagnostics) for s0054, s0081, and a multi-sector s0014–s0086 run. "Independently localized" claims that ignore the pipeline's own localization tests are not independent — they are incomplete. The executed thesis covers all four sectors and treats DV reproduction as part of the localization evidence.
 2. **"Localized to the target star" may be unachievable as worded, and the plan must say so up front.** The 0.517″ ΔI = 1.7 companion is unresolved by TESS (21″ pixels), by GMU (~1–3″ seeing), and by every public SG1 light curve. Centroid and NEB analyses can localize the signal to *the unresolved pair*, not to the primary alone. Separating the pair requires chromatic-depth arguments (the public multi-band SG1 data make this genuinely testable), transit-derived stellar-density consistency, AO-resolved photometry, or RVs. The claim ladder below caps what each evidence layer can support.
 
-The executed thesis: **an independent, dilution-aware stress test of TOI-3505.01 across all four TESS epochs (2019–2024) and the public TFOP archive, quantifying (a) where the signal originates at each achievable angular scale, (b) whether one physically self-consistent transit solution survives contact with all the public evidence simultaneously, and (c) what the candidate is if it does not.**
+The executed thesis: **a student-led, dilution-aware stress test of TOI-3505.01 across all four TESS epochs (2019–2024) and the public TFOP archive, quantifying (a) where the signal originates at each achievable angular scale, (b) whether one physically self-consistent transit solution survives contact with all the public evidence simultaneously, and (c) what the candidate is if it does not.**
 
 The paper should aim to contribute five evidence layers:
 
 1. **Localization evidence:** per-sector difference images, centroid offsets, and aperture-dependence of depth, cross-checked against pipeline DV products and the public SG1 NEB checks, with explicit statements of the angular scales actually excluded — and the 0.52″ pair explicitly *not* excluded unless chromatic/density evidence earns it.
 2. **Dilution evidence:** a decomposed contamination budget (cataloged neighbors via TIC/TESS-cont, plus the uncataloged speckle companion), applied consistently to every depth from every instrument, with the candidate radius reported under each defensible stellar scenario rather than as one falsely precise number.
-3. **Multi-epoch consistency evidence:** a hierarchical Bayesian comparison of per-sector (and per-instrument) depths, durations, and shapes over 2019–2024, testing whether one physical transit model explains all epochs or whether the between-epoch scatter demands systematics, variability, or a false-positive explanation.
+3. **Multi-epoch consistency evidence:** a predeclared comparison of per-sector (and, where comparable, per-instrument) depths, durations, and shapes over 2019–2024, testing whether one physical transit model explains all epochs or whether the between-epoch scatter demands systematics, variability, or a false-positive explanation. A hierarchical Bayesian model is the preferred advanced implementation only after the simpler per-sector estimates, dependence map, and injection yardstick are valid.
 4. **Stellar and variability evidence:** rotation/pulsation characterization from the TESS time series (v sin i predicts P_rot/sin i ≲ 5 d — squarely measurable in 27-d sectors), spectroscopic-vs-transit-derived stellar density, and an honest treatment of the RUWE-poisoned distance.
 5. **Timing evidence:** a refined linear ephemeris across 2019–2024, an O−C diagram, the reconstruction of why the 2022 GMU night missed the transit, and concrete 2026 re-observation windows.
 
-No document or abstract should call the work "first," "novel," "confirmed," or "validated" until the corresponding checks in this blueprint are completed and the mentor approves the wording. The working title's word "Validation" is aspirational and conditional — see the title section.
+No document or abstract should call the work "first," "novel," "confirmed," or "validated" until the corresponding checks in this blueprint are completed and the mentor approves the wording. The working title therefore uses "Analysis," not "Validation"; see the result-dependent title section.
 
 ## Program-scope compliance and deliverables calendar
 
@@ -108,6 +149,8 @@ JWST work is a later opportunity requiring approval after the campus-telescope l
 
 Any code, equation, model, or wording used in the final project must be understood and defensible by the student: "Do not submit text, claims, or analysis you do not understand. Use AI cautiously and transparently." Preserve an analysis log and disclose assistance. See [Lecture 1, AI guidance](../data_and_lectures/Lecture1_intro.pdf#page=26). This applies with special force to the Bayesian machinery below: a hierarchical model you cannot explain at office hours is a liability, not a bonus.
 
+For every AI-assisted contribution retained in the project, the student must be able to explain the input data, algorithm, assumptions, failure modes, and at least one test that could falsify the output. Keep a compact assistance ledger (`date`, `tool`, `task`, `student verification`, `retained/changed/rejected`). Do not publish generated wording as a scientific claim until it has been checked against the claim–evidence ledger described below.
+
 ## Target fact sheet
 
 Values below were re-verified against the live NASA Exoplanet Archive TOI table, ExoFOP-TESS JSON, Gaia DR3 TAP, MAST/TESScut, and exo.MAST on **2026-07-14**. The TOI parameter set was last updated 2024-08-22 (source `qlp-s54-tois`); the TOI itself was created 2021-06-23 ("found in faint-star QLP search"). Re-snapshot immediately before the final paper.
@@ -143,7 +186,7 @@ Values below were re-verified against the live NASA Exoplanet Archive TOI table,
 | TIC contamination ratio | **0.547163** | ~55% of the target's flux worth of *cataloged* contaminating flux in the TESS aperture model — and the 0.52″ companion is NOT in this number (no Gaia/TIC entry). |
 | Speckle companion | **0.5171″, ΔI = 1.7 (SOAR HRCam, 2021-10-01)**; contrast Δ6.6 mag @ 1″ | Flux ratio ≈ 0.21. Unresolved by TESS, GMU, and all seeing-limited SG1 photometry. The central false-positive threat. |
 | AO companions | 11 sources, 0.507″–8.355″, Δ(J/Ks) 1.53–7.13 (Shane/ShARCS, 2021-07-19, PI Dressing) | Download the annotated PDFs and sensitivity curves; these feed TRICERATOPS directly. |
-| Gaia DR3 source | 1824561377891719424 | G = 11.476, BP−RP = 0.745, **RUWE = 3.694**, parallax 1.2448 mas, pmRA +4.72 / pmDec +2.95 mas/yr, `non_single_star = 0`, no variability flag. RUWE ≫ 1.4 is independent evidence of unresolved multiplicity; note `non_single_star = 0` merely means no NSS solution was fit, not that the star is single. ExoFOP's PM (2 ± 1.3, 1.7 ± 1.3) disagrees with DR3 — record both, trust neither blindly. |
+| Gaia DR3 source | 1824561377891719424 | G = 11.476, BP−RP = 0.745, **RUWE = 3.694**, parallax 1.2448 mas, pmRA +4.72 / pmDec +2.95 mas/yr, `non_single_star = 0`, no variability flag. RUWE ≫ 1.4 is astrometric evidence that the single-star solution is poor and is compatible with unresolved multiplicity; note `non_single_star = 0` merely means no NSS solution was fit, not that the star is single. ExoFOP's PM (2 ± 1.3, 1.7 ± 1.3) disagrees with DR3 — record both, trust neither blindly. |
 | Nearest Gaia neighbors | 5.70″ (G 20.05), 5.73″ (G 20.53), 6.33″ (G 19.21), 6.58″ (G 18.93), 6.88″ (G 18.21), 8.42″ (G 17.52) … | All bright-enough-to-matter screening arithmetic is in the blend section; inside 30″ only the G 17.52 star could formally mimic the diluted signal (requiring a ~76% eclipse). |
 | TESS coverage | **Sectors 14, 41, 54, 81** (TESScut: cam 1/1/2/2, CCD 3/3/4/3) | ExoFOP still lists "14,41,54" — S81 verified via TESScut on 2026-07-14. FFI cadences: 30 min (S14), 10 min (S41, S54), 200 s (S81). Whether 2-min target data exist in any sector must be verified on MAST (lightkurve search) — do not assume either way. |
 | TCEs (exo.MAST) | `s0014-s0086: TCE_1`, `s0054-s0054: TCE_1`, `s0081-s0081: TCE_1` | Pipeline Data Validation products exist — retrieve the DV reports/mini-reports/time series for all three and identify which pipeline (SPOC 2-min vs TESS-SPOC FFI) produced each. |
@@ -203,7 +246,7 @@ Do not let anyone — including yourself — describe this night as a failed obs
 | Science frames | 283 × 50.000 s, filter "Red" (R), numbered 0001–0283, no missing numbers |
 | Time span | 02:13:25 → 07:59:37 UT (start times); mid-exposure BJD_TDB 2459782.59823 → 2459782.83867 |
 | Airmass run | 1.32 → 1.066 (culmination between frames ~140–210) → 1.40 |
-| Calibration delivered | 10 × R flats (3.5 s, filenames tagged `-final` — determine what processing produced them before trusting), 10 × 50 s darks, 10 × 3.5 s darks (flat-matched), 13 focus FITS + focus PNGs. **No bias frames** — matched-exposure darks make bias separable only if the pipeline is documented; record the adopted calibration algebra explicitly. |
+| Calibration delivered | 10 × R flats (3.5 s, filenames tagged `-final` — determine what processing produced them before trusting), 10 × 50 s darks, 10 × 3.5 s darks (flat-matched), 11 unique focus FITS + 22 focus PNGs. **No bias frames** — matched-exposure darks make bias separable only if the pipeline is documented; record the adopted calibration algebra explicitly. |
 | Telescope | GMU 0.8 m (APTDIA 812.8 mm), f = 5769 mm |
 | Camera | SBIG STX-16803, 4096², 9 μm pixels, gain 1.31 e−/ADU, −20.4 °C setpoint (stable at −20.37 in headers) |
 | Plate scale / FOV | 0.322″/px, 22.0′ × 22.0′ |
@@ -245,7 +288,7 @@ Identity acceptance requires the available evidence to agree: observing log, obj
 Consequences for wording:
 
 - **Not safe:** "first ground-based follow-up" (seven public SG1 time series exist), "no prior analysis" (two NEB checks and pipeline DV reports exist), "validated" (nothing supports it yet).
-- **Safe now:** "TOI-3505.01 has remained a planet candidate since 2021 despite an extensive unpublished TFOP record; we present the first published synthesis of the public evidence, an independent dilution-aware multi-epoch analysis of all four TESS sectors, and a previously undocumented GMU observation."
+- **Safe now:** "TOI-3505.01 has remained a planet candidate since 2021 despite an extensive unpublished TFOP record; we present a dilution-aware synthesis of public evidence, a student-led multi-epoch analysis of all four TESS sectors, and a previously undocumented GMU observation." Recheck "previously undocumented" against program drives and public archives before submission.
 - **Potential after a clean re-audit and mentor approval:** sharper versions, if the audit holds.
 
 Before final drafting, repeat the audit:
@@ -270,7 +313,7 @@ What is the dilution-corrected transit depth in each sector and each public inst
 
 ### Multi-epoch consistency question — CORE / HIGH-VALUE BONUS
 
-Are depth, duration, shape, and timing mutually consistent across Sectors 14, 41, 54, and 81 (2019–2024) — evaluated with a hierarchical Bayesian model rather than by eyeballing error bars — after per-sector cadence, aperture, and dilution differences are modeled? Does the between-epoch variance posterior support one stable astrophysical signal?
+Are depth, duration, shape, and timing mutually consistent across Sectors 14, 41, 54, and 81 (2019–2024) after per-sector cadence, aperture, and dilution differences are modeled? The required answer uses predeclared per-sector estimates and an injection-derived scatter yardstick; if the method ladder promotes a hierarchical model, does its between-epoch variance posterior reach the same conclusion?
 
 ### GMU-night question — CORE (program requirement)
 
@@ -304,8 +347,8 @@ At P = 2.915 d, the candidate sits interior to the published Neptunian ridge (3.
 
 The hypotheses must be written before fitting the final models — in particular, before inspecting per-sector depth posteriors side by side and before unblinding the GMU window fit.
 
-- **H1:** Each TESS sector independently recovers a transit at the shared period with SNR sufficient for a per-sector depth fit.
-- **H2:** Per-sector dilution-corrected depths are consistent: the between-sector variance parameter in the hierarchical model is consistent with zero at the predeclared level.
+- **H1:** A separate fit to each TESS sector recovers a transit at the shared period with SNR sufficient for a per-sector depth estimate.
+- **H2:** Per-sector dilution-corrected depths are consistent within the predeclared injection-derived scatter. If a hierarchical model is promoted, its between-sector variance parameter should support the same verdict.
 - **H3:** Difference-image/centroid localization in each sector is consistent with the target pair's position, and no resolvable neighbor shows the signal in the SG1 NEB data or our reanalysis of it.
 - **H4:** The GMU night (phases 0.249–0.331) is flat: no eclipse-like event above the frozen detection threshold; the achieved precision makes that limit meaningful.
 - **H5:** The multi-band depth set is achromatic within uncertainties (planet-on-primary expectation), as opposed to the chromatic slope predicted under companion-hosted scenarios (compute the predicted slopes *before* measuring).
@@ -316,12 +359,12 @@ The hypotheses must be written before fitting the final models — in particular
 
 Two frozen primary endpoints, reflecting the two data domains:
 
-- **TESS endpoint:** the posterior on the between-sector depth variance (hierarchical model) plus the per-sector localization verdicts. "Consistent" requires both the variance posterior concentrated near zero *and* no sector's difference image excluding the target pair.
+- **TESS endpoint:** the predeclared per-sector depth-consistency statistic compared with the injection-derived null yardstick, plus the per-sector localization verdicts. If a hierarchical model is promoted, its between-sector variance posterior is an additional endpoint, not a replacement for the transparent comparison. "Consistent" requires agreement under the applicable depth test and no sector's difference image excluding the target pair.
 - **GMU endpoint:** the posterior upper limit (declared credibility level) on any eclipse depth within the observed window, from the frozen transit-plus-baseline model with duration fixed to the TESS-derived value, plus the achieved out-of-transit RMS benchmarked against simultaneous S54 photometry.
 
 The mentor should approve exact thresholds before unblinding. Strong default framework:
 
-- **Consistent multi-epoch signal:** all four sectors recover the signal; hierarchical variance consistent with zero; localization verdicts uniform; density consistent with ≥1 stellar scenario.
+- **Consistent multi-epoch signal:** all four usable sectors recover the signal; depth scatter is compatible with the injection yardstick (and hierarchical variance is compatible if that model is promoted); localization verdicts are uniform; density is consistent with ≥1 stellar scenario.
 - **Tentative consistency:** one sector weak or one diagnostic (localization, chromaticity, density) marginal.
 - **Physically inconsistent signal:** between-epoch variance excludes zero robustly, or localization/chromaticity/density excludes the clean interpretation — this is a *positive result* (false-positive evidence), not a failure.
 - **Inconclusive:** data quality prevents the tests from discriminating.
@@ -336,14 +379,14 @@ Every statement in the paper should stop at the highest rung supported by the co
 |---|---|---|
 | 0 | No interpretable constraint | Wrong target, insufficient baseline, severe systematics, or inadequate precision. |
 | 1 | A recurring dip exists in TESS data | Descriptive; already established by the TOI alert — reproducing it is not a contribution by itself. |
-| 2 | The signal is independently recovered per epoch | Own extraction and fits in each of the four sectors with defensible uncertainties. |
+| 2 | The signal is separately recovered per epoch | Own extraction and fits in each of the four sectors with defensible uncertainties. |
 | 3 | The signal is physically self-consistent across epochs | Hierarchical consistency posterior + duration/density coherence under a declared dilution model. |
 | 4 | The signal is localized to the unresolved TIC 390988385 pair | Difference images/centroids across sectors + NEB re-derivations exclude resolvable neighbors to stated limits. **This rung, not rung 5, is the realistic ceiling of seeing-limited photometry for this target.** |
 | 5 | The signal is attributed to the primary (or the companion) | Chromatic-depth analysis, density consistency, AO-resolved photometry, or RV/TFOP evidence actively discriminating between the pair members. |
 | 6 | Statistically validated planet | Full validated-planet criteria including the companion scenario quantitatively retired; vetted inputs; mentor approval; no contradictory evidence. Likely unreachable with current public data — say so rather than stretch. |
 | 7 | Dynamically confirmed planet | Mass or dynamical evidence meeting accepted standards; the unpublished HIRES RVs could do this, but they are not ours — outside this paper unless shared and permitted. |
 
-Rung 5 is already partially populated by the public imaging (companion census) and TRES (no obvious SB2 reported — verify from the actual spectra/plots, not the absence of a note). The paper's job is to *add* independent layers, not to re-derive existing ones and claim them.
+Rung 5 is already partially populated by the public imaging (companion census) and TRES (no obvious SB2 reported — verify from the actual spectra/plots, not the absence of a note). The paper's job is to add genuinely distinct measurement layers or useful implementation stress tests, while labeling which is which.
 
 ## Analysis governance and anti-bias plan
 
@@ -376,6 +419,59 @@ Exploratory findings may motivate future work but must not be presented as prepl
 ### Preserve all forks
 
 Do not keep only the aperture, comparison ensemble, dilution treatment, or stellar scenario that produces the most planet-like answer. Save the full analysis grid, including null and contradictory outcomes. For this target the temptation will be strongest in the dilution/stellar choices — which is precisely where the paper's credibility lives.
+
+### Claim–evidence ledger — signature research-engineering contribution
+
+Create one machine-readable row per atomic claim before drafting prose. The minimum schema is:
+
+| Field | Meaning |
+|---|---|
+| `claim_id` | Stable identifier used in text, figures, and review notes |
+| `claim_text` | One checkable statement, not a paragraph |
+| `status` | Proposed / supported / contradicted / silent / unusable / superseded |
+| `claim_rung` | Highest rung the claim would require |
+| `observation_id` | Raw observation or catalog snapshot that bears on it |
+| `measurement_channel` | GMU ground photometry, TESS photometry, high-resolution imaging, spectroscopy, catalog inference, or literature |
+| `implementation` | AIJ, custom Python, QLP, SPOC, custom FFI extraction, manual catalog query, etc. |
+| `dependence_notes` | Shared photons, shared catalog fields, inherited corrections, simultaneous observation, or other non-independence |
+| `config_and_commit` | Exact configuration plus code revision |
+| `quantitative_result` | Estimate, uncertainty/limit, units, and comparison rule |
+| `limitation` | What the evidence cannot establish |
+| `review` | Student verification date and mentor review status |
+
+The ledger prevents three common errors: turning multiple reductions of the same photons into multiple independent confirmations, silently inheriting a catalog value through several pipelines, and upgrading a qualitative consistency check into a validation claim. The scenario evidence matrix later in this plan should be generated from this ledger rather than maintained as a separate hand-written truth.
+
+### Measurement-dependence map
+
+Predeclare these relationships before combining evidence:
+
+- AIJ and custom Python reductions of the 2022 GMU frames are **independent implementations of one observation**, not two observations.
+- QLP, SPOC/TESS-SPOC, eleanor, TGLC, and custom apertures may provide useful pipeline-ablation evidence, but extractions of the same TESS pixels do not multiply the astrophysical evidence.
+- Sector 54 and the GMU night are distinct instruments and measurement processes observing simultaneously, but their astrophysical signals are correlated because they view the same star at the same time.
+- TIC values may inherit Gaia or other catalog inputs; quoting both is not automatically catalog-independent corroboration.
+- The public SG1 nights, high-resolution images, and spectra can be distinct observations, but reductions or summaries derived from one posted file must stay linked to that parent observation.
+- A pipeline's centroid, crowding correction, and transit depth can share upstream pixels and model assumptions. Report agreement as a cross-check, not as three independent votes.
+
+Use the word **independent** only for the dimension that is actually independent: observation, instrument, implementation, or analyst. If no data product is comparable to a claim, mark it silent or unusable; absence of a measurement is not contradiction.
+
+### Double-entry verification for load-bearing values
+
+Verify each load-bearing identifier, time, ephemeris value, frame count, dilution term, and reported depth by two paths—for example, header parsing plus manual FITS inspection, an archive API export plus the rendered target page, or a scripted calculation plus a hand-worked test case. Record and reconcile disagreements before modeling. This is intentionally limited to load-bearing values; duplicating every cosmetic metadata field would add work without adding reliability.
+
+### Ablation plan
+
+The robustness grid should answer which evidence stream or decision actually carries the conclusion:
+
+1. drop one comparison star at a time and then the full comparison-star subgroup;
+2. drop each discretionary quality cut;
+3. drop each detrending covariate;
+4. remove catalog contamination and unresolved-companion dilution separately;
+5. fit each sector alone, then leave one sector out of the combined result;
+6. compare official and custom apertures while labeling them as shared-data pipeline ablations;
+7. remove each public SG1 observation from the chromatic synthesis;
+8. repeat the classification using only genuinely distinct measurement channels.
+
+Report the direction and magnitude of the change, including null changes. Do not rerun only the ablations that make the preferred interpretation look stronger.
 
 ## Complete data inventory
 
@@ -460,7 +556,7 @@ Run the AstroImageJ NEB analysis exactly as TFOP SG1 does — light curves for e
 
 ### 6. Independent Python cross-check
 
-A separate, transparent Python extraction (astropy + photutils, already in `requirements.txt`) should reproduce the AIJ result without copying its outputs: FITS ingestion, source matching, aperture photometry with a declared background estimator, ensemble differential photometry, independent BJD_TDB, quality table, raw and detrended light curves, and the frozen window fit. Agreement strengthens confidence; disagreement is a result to diagnose, not to hide. As an optional third pipeline, EXOTIC is student-oriented and citable; a three-way AIJ/custom/EXOTIC comparison of the night's RMS is a cheap robustness figure.
+A separate, transparent Python extraction (astropy + photutils, already in `requirements.txt`) should reproduce the AIJ result without copying its outputs: FITS ingestion, source matching, aperture photometry with a declared background estimator, ensemble differential photometry, independent BJD_TDB, quality table, raw and detrended light curves, and the frozen window fit. Agreement strengthens confidence in the reduction but is not a second astrophysical observation; disagreement is a result to diagnose, not to hide. As an optional third implementation, EXOTIC is student-oriented and citable, but add it only if AIJ/custom disagreement remains unresolved—not to inflate a pipeline count.
 
 ## Differential-photometry design
 
@@ -528,9 +624,19 @@ Inflate parameter uncertainties when red noise is present. Do not quote a white-
 
 - Fit the eclipse model at many control times across the night; block-permute residuals; fit pseudo-targets at the same times; fit positive and negative boxes; run the full search on comparison stars to estimate false-alarm behavior.
 
-## Applied Bayesian and time-series analysis program — HIGH-VALUE BONUS (by design)
+## Statistical and time-series method ladder — CORE where simple, ADVANCED only when earned
 
-This project deliberately uses applied Bayesian inference and time-series analysis as its methodological spine. Every method below must satisfy the Lecture 1 understanding rule — if it cannot be explained at a whiteboard in office hours, it does not go in the paper. Statistics fundamentals and error propagation are covered in [Lecture 8](../data_and_lectures/Lecture8_Schar2025_clean_redesign.pdf); everything beyond it must be self-taught, documented, and validated on synthetic data first.
+The methodological spine is **verified inference**, not maximum model complexity. Use the least complex method that answers each scientific question, and promote a method only after its inputs and simpler benchmark are trustworthy. Every method below must satisfy the Lecture 1 understanding rule—if it cannot be explained at a whiteboard in office hours, it does not go in the paper. Statistics fundamentals and error propagation are covered in [Lecture 8](../data_and_lectures/Lecture8_Schar2025_clean_redesign.pdf); everything beyond it must be documented and validated on synthetic data first.
+
+### Method promotion ladder
+
+| Tier | Methods | Promotion rule |
+|---|---|---|
+| 1 — required | Descriptive QC, explicit uncertainty propagation, weighted least squares, robust scatter, phase folding, simple box/transit fits, bootstrap or permutation controls | Default paper methods; complete before advanced sampling |
+| 2 — high value | Per-sector physical transit fits, injection–recovery, linear ephemeris with covariance, Lomb–Scargle/ACF variability checks | Use when synthetic recovery and residual checks pass |
+| 3 — advanced | Hierarchical depth model, nested-sampling model comparison, GP/ARMA noise, scenario-level source posterior | Use only if it changes a named decision, survives prior/seed sensitivity, and can be explained and reproduced |
+
+If Tier 1 and Tier 3 disagree, the result is not automatically "more accurate" because Tier 3 is sophisticated. Diagnose the discrepancy and prefer the claim that survives both.
 
 ### Bayesian components
 
@@ -553,6 +659,8 @@ This project deliberately uses applied Bayesian inference and time-series analys
 - No stacking of black boxes: every sampler, kernel, and prior is declared and defensible.
 - No hierarchical model rescues bad photometry — the Bayesian layer sits *on top of* the frozen reduction, never in place of it.
 - Bayes factors are prior-sensitive; report sensitivity ranges or do not report Bayes factors.
+- A hierarchical model is not required for the paper to be strong. If four reliable per-sector depths are not available by the promotion deadline, use transparent per-sector estimates and an injection-calibrated consistency table.
+- Never list a method in the abstract, activity description, or portfolio until its code, diagnostic output, and interpretation exist in the repository.
 
 ## TESS reanalysis — CORE for the thesis
 
@@ -567,7 +675,7 @@ This project deliberately uses applied Bayesian inference and time-series analys
 
 (2-min/20-s target data: verify on MAST per sector; the s0054 and s0081 TCEs suggest SPOC processing but do not by themselves prove 2-min cadence. Record the answer with the search query.)
 
-For each sector, independently:
+For each sector, separately:
 
 1. Download all official light-curve products (QLP, TESS-SPOC, SPOC if present) and target pixel files/cutouts; record versions.
 2. Read the data-release notes; map scattered-light and momentum-dump windows onto the transit times.
@@ -577,7 +685,7 @@ For each sector, independently:
 6. Fit individual transits and the per-sector phase fold; feed the hierarchical model.
 7. Record missing/partial events and gaps.
 
-Then read the **three DV reports end to end** (s0014–s0086 multi-sector, s0054, s0081) and reproduce their headline diagnostics independently: odd/even, secondary search, centroid offset, difference image. Pipeline-vs-own agreement is publishable vetting evidence; disagreement is a finding.
+Then read the **three DV reports end to end** (s0014–s0086 multi-sector, s0054, s0081) and reproduce their headline diagnostics with a custom implementation: odd/even, secondary search, centroid offset, difference image. Pipeline-vs-own agreement is useful robustness evidence from shared observations; disagreement is a finding.
 
 NASA guides: [TESS data products](https://heasarc.gsfc.nasa.gov/docs/tess/data-products.html) and [Target Pixel File tutorial](https://heasarc.gsfc.nasa.gov/docs/tess/Target-Pixel-File-Tutorial.html).
 
@@ -586,11 +694,11 @@ NASA guides: [TESS data products](https://heasarc.gsfc.nasa.gov/docs/tess/data-p
 - Official apertures; smaller/larger custom masks; difference-image-informed masks; background alternatives.
 - Depth vs aperture size per sector (the blend-warning plot).
 - Dilution correction on/off/varied: propagate the contamination budget's uncertainty into the depth posterior instead of applying a point correction.
-- Independent FFI extractions (eleanor, TGLC, `unpopular`) as pipeline-dependence checks — cite versions.
+- Alternative FFI extractions (eleanor, TGLC, `unpopular`) as pipeline-dependence checks — cite versions.
 
 ### Standard transit-vetting diagnostics
 
-Odd/even depths and timings; secondary-eclipse search at phase 0.5 and elsewhere (a ΔI=1.7 companion EB scenario predicts potential secondaries — search hard); V-shape assessment (expected anyway at b ≈ 0.8 — do not over-read it, but do not ignore it); individual-event consistency; model-shift/uniqueness; in/out difference images; centroid motion; aperture-contamination assessment; alias checks; transit-correlated background/systematics search. Use the DV products and (optionally) DAVE-style diagnostics as independent evidence. A tool flag is not a classification.
+Odd/even depths and timings; secondary-eclipse search at phase 0.5 and elsewhere (a ΔI=1.7 companion EB scenario predicts potential secondaries — search hard); V-shape assessment (expected anyway at b ≈ 0.8 — do not over-read it, but do not ignore it); individual-event consistency; model-shift/uniqueness; in/out difference images; centroid motion; aperture-contamination assessment; alias checks; transit-correlated background/systematics search. Use the DV products and (optionally) DAVE-style diagnostics as pipeline cross-checks. When they reuse the same TESS observations, their agreement is implementation robustness rather than a new independent measurement. A tool flag is not a classification.
 
 ### Stellar variability and flares
 
@@ -664,7 +772,7 @@ Physically integrated transit model ([`batman`](https://arxiv.org/abs/1507.08285
 
 ### TESS-only fits
 
-- Per-sector independent fits (feeding the hierarchical model); shared-geometry joint fit as comparison; individual mid-times for timing; per-sector depths *before* any shared-depth enforcement, with pipeline dilution treatments reconciled explicitly.
+- Separate per-sector fits (feeding the hierarchical model if promoted); shared-geometry joint fit as comparison; individual mid-times for timing; per-sector depths *before* any shared-depth enforcement, with pipeline dilution treatments reconciled explicitly.
 
 ### Joint and cross-instrument fits
 
@@ -760,6 +868,7 @@ Use predicted mass/RV (43.4 M⊕ / 17.2 m/s under the Neptune scenario) only to 
 
 | Extension | Level | Scientific value | Dependency | Concrete output |
 |---|---|---|---|---|
+| Claim–evidence ledger + dependence map | CORE | Prevents correlated inputs and shared reductions from inflating the conclusion | Frozen questions and manifests | Machine-readable ledger, channel map, generated scenario table |
 | Sector 81 analysis + three-DV reproduction | CORE/BONUS | Newest epoch; pipeline vetting comparison | Public MAST products | Per-sector fits + DV-vs-own diagnostics table |
 | TESS-cont contamination decomposition (×4 sectors) | HIGH-VALUE BONUS | Converts 0.547 into a source-by-source budget | Public tool + Gaia | Contamination decomposition figure/table |
 | Companion-aware dilution model | CORE for thesis | The uncataloged 0.52″ star enters every depth | ShARCS/SOAR Δmags | Band-dependent dilution priors + corrected depths |
@@ -770,7 +879,7 @@ Use predicted mass/RV (43.4 M⊕ / 17.2 m/s under the Neptune scenario) only to 
 | Ephemeris archaeology (S14-only propagation) | HIGH-VALUE BONUS | Explains the missed transit; program-useful | S14 refit + spreadsheet row | Stale-vs-current prediction figure |
 | Hierarchical multi-epoch depth model | HIGH-VALUE BONUS / ADVANCED | The consistency thesis, done properly | Per-sector fits + injection yardstick | τ posterior + specification plot |
 | Rotation/pulsation characterization | HIGH-VALUE BONUS | Tests stellar scenarios; guards depth fits | TESS light curves | P_rot / pulsation report + R* sin i bound |
-| Blend-aware two-star SED fit | ADVANCED | Independent stellar scenario constraint | Public photometry + AO Δmags | SED posterior under two-star model |
+| Blend-aware two-star SED fit | ADVANCED | Additional stellar scenario constraint | Public photometry + AO Δmags | SED posterior under two-star model |
 | Transit-derived ρ* vs spectroscopic log g | HIGH-VALUE BONUS | Separates pair-member scenarios cheaply | Own fits + TRES values | Density-consistency figure |
 | RAVEN membership check | CONDITIONAL | Current-literature ML comparison if present | Zenodo tables | Ledger entry ± scenario-posterior comparison |
 | TRICERATOPS+ with real companion | ADVANCED | Quantitative scenario probabilities | Complete inputs | FPP/NFPP + stability audit |
@@ -778,7 +887,7 @@ Use predicted mass/RV (43.4 M⊕ / 17.2 m/s under the Neptune scenario) only to 
 | Gaia DR4 astrometry re-check | CONDITIONAL | RUWE 3.69 case may resolve | DR4 availability | Updated distance/multiplicity entry |
 | ASAS-SN/ZTF long-baseline variability | CONDITIONAL | Rotation/EB context | Saturation check | Periodogram + phase curve |
 | Archival image PM test | CONDITIONAL (weak here) | Background-star check | PM only ~3–5 mas/yr — low power | One appendix panel, honestly caveated |
-| Independent FFI extractions (eleanor/TGLC/unpopular) | HIGH-VALUE BONUS | Pipeline-dependence test | Same raw products | Cross-pipeline depth comparison |
+| Alternative FFI extractions (eleanor/TGLC/unpopular) | HIGH-VALUE BONUS | Pipeline-dependence test | Same raw products | Cross-pipeline depth comparison |
 | ExoFASTv2 / juliet cross-fit | HIGH-VALUE BONUS | Program-named modeling cross-check | Public tools | Parameter comparison table |
 | GP systematics alternative | ADVANCED | Correlated-noise robustness | Constrained kernel | GP-vs-parametric comparison |
 | BLS vs TLS + alias audit | HIGH-VALUE BONUS | Period integrity in a crowded aperture | TESS light curves | Recovery/alias plot |
@@ -787,7 +896,7 @@ Use predicted mass/RV (43.4 M⊕ / 17.2 m/s under the Neptune scenario) only to 
 | Secondary-eclipse/phase-curve limits | HIGH-VALUE BONUS (EB test) | Constrains companion-EB scenarios directly | TESS precision | Eclipse-depth limit at phase 0.5 |
 | Flare–transit interaction audit | CONDITIONAL | Prevents activity bias | Detectable flares | Flare mask + sensitivity result |
 | Desert/ridge population figure | CONDITIONAL | Context, scenario-dependent | Dated archive query | Period–radius figure with scenario-spanning error bar |
-| Reproducible data release | HIGH-VALUE BONUS | Auditable and reusable | Permissions/licenses | Code, manifests, configs, derived tables |
+| Reproducible research release | CORE for maximum value | Auditable and reusable; proves the methods actually exist | Permissions/licenses + tests | Code, manifests, configs, derived tables, tagged release |
 | Exoplanet Watch contribution | CONDITIONAL | Community reuse | Mentor + data-owner permission | AAVSO submission |
 | Educational methods appendix | HIGH-VALUE BONUS | Student-led reproducibility | Complete analysis log | Stepwise appendix |
 | 2026 transit re-observation from GMU | GATED / FUTURE | Replaces the missed transit; live windows exist (Jul 15 / Aug 6 / Aug 15 2026, screening) | Mentor/telescope approval + refined ephemeris | New on-transit R-band light curve |
@@ -795,7 +904,7 @@ Use predicted mass/RV (43.4 M⊕ / 17.2 m/s under the Neptune scenario) only to 
 | TFOP-note / HIRES-context integration | GATED | Potentially decisive (mass or FP verdict exists somewhere) | Mentor permission after Discord post | Restricted-constraint discussion, properly attributed |
 | Rossiter–McLaughlin / atmosphere / JWST | GATED / SEPARATE | Future-work framing only | Confirmation + approvals | Future-work paragraph |
 
-Machine learning has no load-bearing role in this project (the pivot away from the ML-pipeline thesis was correct — that framing belonged to the old target). Its only defensible near-term use is frame-quality triage with interpretable features and human review, plus the *critical* use of someone else's ML output (RAVEN) as a documented comparison point if membership is confirmed.
+Machine learning has no load-bearing role in this project (the pivot away from the ML-pipeline thesis was correct—that framing belonged to the old target). Project AERIS already demonstrates environmental ML/LLM evaluation; duplicating that surface form here would make both projects less distinctive. The transferable contribution is the verification architecture: provenance, frozen decisions, dependence-aware evidence, ablations, negative controls, and claim ceilings. The only defensible near-term ML use is optional frame-quality triage with interpretable features and human review, plus someone else's RAVEN output as a documented comparison point if membership is confirmed. Neither may determine the scientific classification on its own.
 
 ## Outcome decision tree
 
@@ -813,7 +922,7 @@ Machine learning has no load-bearing role in this project (the pivot away from t
 
 ## Result-dependent title options
 
-The working title — *Stress-Testing TOI-3505.01: A Dilution-Aware, Multi-Epoch Validation Using TESS, Gaia, and Public TFOP Constraints* — is retained as the project banner, **with one standing objection recorded: the word "Validation."** If the analysis ends (as is likely) below the validation rung, the final title must not contain it. The program's own guidance is to title simply and after the outcome ([Paperstructure, title guidance](../data_and_lectures/Paperstructure.pdf#page=5)). Outcome-matched variants:
+The working title — *Stress-Testing TOI-3505.01: A Dilution-Aware, Multi-Epoch Analysis Using TESS, Gaia, and Public TFOP Constraints* — is deliberately outcome-neutral. The final title still follows the achieved result, and the word "Validation" may appear only if the analysis reaches that rung with mentor approval. The program's guidance is to title simply and after the outcome ([Paperstructure, title guidance](../data_and_lectures/Paperstructure.pdf#page=5)). Outcome-matched variants:
 
 ### If multi-epoch consistency and pair-localization hold
 
@@ -837,50 +946,35 @@ The working title — *Stress-Testing TOI-3505.01: A Dilution-Aware, Multi-Epoch
 
 ## Figure plan
 
-### Main-text figures
+The previous 19-figure main-text list would maximize activity, not communication. The paper should have **six main figures, seven only if the stellar result is genuinely decisive**. Use multi-panel figures when the panels answer one question.
 
-1. Full TESS light curves, one panel per sector (14, 41, 54, 81), transit windows and quality gaps marked; GMU night marked inside S54.
-2. Per-sector and combined phase folds, cadence-distinguished.
-3. TESS pixel maps with apertures and Gaia overlays, ×4 sectors (`tpfplotter`-style), companion position indicated.
-4. Contamination decomposition (TESS-cont): who contributes what flux, per sector.
-5. GMU field image with target, comparisons, neighbors, apertures, N/E arrows.
-6. GMU observing diagnostics: sky, airmass, FWHM, centroid, comparison flux, meridian marker.
-7. GMU differential light curve, raw and detrended, with current-ephemeris phase annotations and the frozen upper-limit fit.
-8. Ephemeris archaeology: S14-propagated vs current prediction for 2022-07-22, with the observed window shaded.
-9. Simultaneous S54-vs-GMU photometry comparison.
-10. Depth vs aperture size (four sectors + GMU).
-11. Difference images and centroid offsets per sector (own + DV).
-12. Multi-band depth synthesis: depth vs wavelength across TESS + 6 SG1 datasets + GMU limit, with companion-blend prediction overlaid.
-13. Hierarchical consistency result: per-sector depth posteriors + τ posterior + injection yardstick.
-14. Transit-derived ρ* vs spectroscopic expectations per stellar scenario.
-15. ShARCS/SOAR contrast curves with the detected companion and exclusion regions.
-16. RMS vs bin size (GMU and TESS).
-17. Injection–recovery completeness (GMU window; per-sector depth bias).
-18. O−C diagram 2019–2024 with 2026 window forecast.
-19. Period–radius desert/ridge figure with the scenario-spanning radius extent.
+### Main-text figures, in narrative order
+
+1. **Observation geometry and timing:** full Sector 54 context, the GMU window, nearest current-ephemeris transits, and the scheduling-era/Sector-14 prediction if reconstructed.
+2. **GMU observation and reduction:** plate-solved finder image plus raw/detrended differential light curve and the few diagnostics needed to justify retained data.
+3. **Four-epoch TESS recovery:** per-sector phase folds with cadence and uncertainty made visible; no decorative combined fold that hides sector disagreement.
+4. **Dilution and aperture dependence:** TESS/Gaia field map, source-by-source contamination budget, and recovered depth versus aperture size.
+5. **Localization:** own difference-image/centroid results beside the relevant DV and re-derived NEB constraints, with the unresolved 0.52″ pair visibly marked as unresolved.
+6. **Claim-deciding synthesis:** per-sector depths and injection yardstick; add the multi-band SG1 comparison or scenario evidence matrix in the same figure according to which one actually changes the conclusion.
+7. **Optional stellar discriminator:** rotation/density/stellar-scenario result only if it separates plausible hosts or candidate radii.
 
 ### Appendix figures
 
-Master calibrations; plate-solution overlays (incl. meridian-bracketing frames); every pseudo-target curve; full model-selection grid; odd/even, secondary, model-shift diagnostics; per-sector individual transits; MCMC convergence/posteriors; prior sensitivity; posterior predictive checks; null-time event-search distribution; scenario probability breakdown.
+Full-sector light curves; master calibrations; plate-solution overlays (including meridian-bracketing frames); GMU sky/FWHM/centroid/airmass panels; S54-vs-GMU benchmark; every pseudo-target curve; RMS-vs-bin-size; full model-selection and ablation grids; odd/even, secondary, model-shift diagnostics; individual transits; injection–recovery completeness; O−C diagram; contrast curves; MCMC convergence/posteriors; prior sensitivity; posterior predictive checks; null-time event-search distribution; scenario probability breakdown; period–radius context.
 
 Every figure must state data source, time system, flux normalization, binning, excluded points, and raw-vs-detrended status. Export as PNG or vector formats, never JPEG (program rule).
 
 ## Table plan
 
-1. Target and host-star properties with provenance and snapshot date (including both distances, RUWE, and the TRES-vs-TIC tension — not a single-column fiction).
-2. Public follow-up assets and their key constraints (the 7 time series, imaging, spectroscopy, HIRES existence).
-3. GMU observing log and technical events (meridian passage, focus history).
-4. File manifest summary and calibration inventory.
-5. Photometry and detrending configuration (frozen).
-6. Gaia/TIC neighbor and contamination table with per-star mimicry arithmetic and NEB verdicts (ours + re-derived).
-7. Dilution budget per instrument/band, cataloged + companion.
-8. Per-sector and per-instrument transit-fit parameters alongside TOI values.
-9. Stellar scenario table with implied planet radii.
-10. Individual transit times and O−C.
-11. Robustness grid summary.
-12. Injection–recovery thresholds and completeness (both campaigns).
-13. Scenario evidence matrix: which observation constrains which false-positive scenario, and the surviving set.
-14. Software, versions, data releases, seeds, and query dates.
+Keep the main paper to five tables:
+
+1. Target/host properties and public follow-up assets, with provenance and snapshot date.
+2. GMU observing, calibration, timing, and frozen photometry configuration.
+3. Neighbor census and dilution budget, including the unresolved companion and per-star mimicry arithmetic.
+4. Per-sector/per-instrument results with uncertainties, data dependencies, and injection yardsticks.
+5. Claim–evidence/scenario matrix generated from the ledger, including surviving explanations and the final claim ceiling.
+
+Place the full file manifest, technical-event log, software versions, robustness grid, injection completeness, individual transit times, stellar scenarios, and sampler diagnostics in machine-readable supplements or appendices. A reader should be able to audit the result without forcing every audit record into the narrative.
 
 ## Paper structure aligned with the lectures
 
@@ -907,11 +1001,11 @@ Four parts (context, aims, methods, results), written last, including the off-tr
 
 ### Analysis (reproducible methods)
 
-Calibration and time verification; differential photometry; NEB methodology (ours + re-derivations); TESS extractions and dilution model; variability analysis; transit models and the hierarchical consistency model; robustness suite; injection–recovery; validation tools.
+Calibration and time verification; differential photometry; NEB methodology (ours + re-derivations); TESS extractions and dilution model; variability analysis; transit and consistency methods at the highest promoted tier; robustness suite; injection–recovery; validation tools if used.
 
 ### Results (facts only)
 
-Achieved precision (incl. S54 benchmark); the flat-window result and upper limit; ephemeris archaeology outcome; per-sector fits and τ posterior; localization results; chromatic synthesis; density comparison; timing.
+Achieved precision (including S54 benchmark); the flat-window result and upper limit; ephemeris archaeology outcome; per-sector fits and the promoted consistency statistic/model; localization results; chromatic synthesis; density comparison; timing.
 
 ### Discussion
 
@@ -930,9 +1024,40 @@ Succinct, dry, active voice, "we"; consistent tense; every acronym defined at fi
 
 Build the poster from the frozen Phase 0–2 results, not from whatever is newest on July 30. Follow the paper's section flow on the program template (40×30″). Reserve real estate for: the GMU light curve with the ephemeris-archaeology annotation (this is the poster's story — a missed transit *explained* beats a routine detection for memorability), one TESS phase-fold panel, the pixel/contamination figure, and the multi-band depth or scenario-matrix figure. If selected for a talk: 5 minutes, ≤1–2 slides per section, practiced; talk selection depends on analysis posted to Discord — post early and often.
 
+The spoken explanation should work at two depths: a 20-second answer ("the observation missed the transit, so I verified why and tested the candidate across four TESS epochs") and a technical answer that can defend timing, dilution, and evidence dependence. Do not mention applications, AERIS, or a personal brand on the scientific poster.
+
+## Application-facing artifact strategy — INTERNAL, downstream of the science
+
+The college value comes from a compact set of finished, verifiable artifacts—not from adding more analyses to an unfinished paper. Build these only from frozen results:
+
+1. **Journal-style paper and symposium poster/talk:** primary evidence of domain learning and scientific communication.
+2. **Public research repository:** a concise README, one-command or clearly staged reproduction path, tests, frozen configs, data lineage, and a tagged release. Do not publish restricted or observer-owned data without permission.
+3. **Short technical case study (600–900 words):** explain one hard decision—preferably why agreement among pipelines is not the same as independent evidence, or how dilution changed the claim ceiling. Include one result, one failed/negative test, and one limitation.
+4. **Two-minute walkthrough or three-slide explainer:** question → evidence architecture → bounded conclusion. Show the actual plots and repository, not an animated product demo.
+5. **Mentor-verifiable contribution log:** dates, specific analysis/code ownership, questions brought to office hours, feedback incorporated, final deliverables, and any coauthor contributions. This supports accurate recommendations and activity descriptions without asking a mentor to reconstruct the summer later.
+
+### Honest positioning rules
+
+- Use the official program name and institutional relationship. Do not shorten the role to "NASA researcher" or claim employment by NASA unless the program explicitly authorizes that wording.
+- Say "paper in preparation" only while a real manuscript exists; "submitted" only after submission; "published" only after public publication.
+- Claim Bayesian, hierarchical, time-series, or machine-learning methods only when the relevant code, outputs, diagnostics, and interpretation are complete.
+- Lead with the research question and contribution, not the prestige of the data source.
+- Quantify inputs and artifacts (283 frames, four TESS sectors, tested pipelines, reproducible release) rather than inventing impact metrics for a candidate classification.
+- Preserve the negative result. Discovering that the provided night did not cover the current transit is evidence of careful research, not something to hide.
+
+### Portfolio narrative after completion
+
+The strongest one-sentence bridge to the broader body of work is:
+
+> I build verification systems for noisy physical-world data: in AERIS I test environmental explanations against process-distinct measurements, and in this project I test an exoplanet candidate across ground, satellite, imaging, and catalog evidence while tracking which sources are genuinely distinct.
+
+Use this only as portfolio/application framing, not as paper language. The project should still stand on its own if AERIS is never mentioned.
+
 ## Proposed repository structure
 
 ```text
+README.md                            # question, current status, result, quickstart, limitations
+CITATION.cff                         # add for the tagged public release
 data/
   raw/
     gmu/toi3505/20220721/          # extracted from the six delivered zips; manifest + checksums
@@ -951,14 +1076,20 @@ data/
     gmu/toi3505/
     tess/toi3505/
   manifests/
+    input_files.csv                 # source, checksum, license/permission, retrieval date
+    catalog_snapshots/
+    measurement_dependence.yaml
 configs/
   toi3505_primary.yaml
   toi3505_robustness.yaml
   toi3505_dilution_budget.yaml
 docs/
   toi-3505-research-maximization-plan.md
-  analysis-ledger.md
+  claim-evidence-ledger.csv
+  decision-log.md
+  ai-assistance-ledger.md
   novelty-ledger.md
+  public-case-study.md              # written only after results freeze
 notebooks/
   01_data_identity.ipynb
   02_gmu_quality_control.ipynb
@@ -971,6 +1102,9 @@ notebooks/
   09_false_positive_validation.ipynb
 src/
   toi3505/
+tests/
+  unit/
+  integration/
 outputs/
   toi3505/
     figures/
@@ -979,84 +1113,115 @@ outputs/
     logs/
     paper/
     poster/
+    release/
 ```
 
 Raw data remain immutable. The six delivered zips (~6.3 GB) currently sit in `data_and_lectures/` with Git LFS tracking configured in this repo — **decide deliberately** whether 6 GB belongs in LFS (quota, clone cost) or outside the repo with manifests and retrieval instructions; do not let the default win by inertia. Do not silently overwrite downloaded files.
 
+The current repository has useful exploratory code and outputs but no top-level README, package structure, test suite, frozen configuration, or data-lineage manifest yet. Building that thin research-software layer is higher value than adding a fifth modeling framework. Keep notebooks for exploration; move claim-producing calculations and final figure generation into importable modules and scripts so they can be tested.
+
 ## Reproducibility standard
 
-- Pin the Python environment (`requirements.txt` exists; add the transit/sampling stack when adopted) and record the platform.
+- Replace broad minimum-version ranges with a generated lock or exact environment export for the release; keep a readable top-level dependency list and record Python, OS, AstroImageJ, and Java versions.
 - Record AstroImageJ version and every manual setting; archive the `.plotcfg` files posted to Discord.
 - Save archive query text, retrieval date, and raw returned tables (the TAP/ExoFOP/Gaia/TESScut/exo.MAST queries used for this document are recorded here and re-runnable verbatim).
 - Save random seeds and sampler settings; store machine-readable priors and configuration.
-- Checksums for raw inputs and important derived tables.
+- Hash raw inputs, frozen configs, code commit, and claim-producing derived tables. A result freeze is valid only when those four identities are linked in a manifest.
 - Paper figures generated from scripts, never hand-edited; plotting separate from numerics.
 - Units and time standards in column names.
 - Tests for: time conversion (header-BJD vs astropy-BJD), aperture flux on synthetic images, injection recovery, ephemeris cycle counting, and the dilution algebra (a sign error in a dilution correction is this project's most likely silent catastrophe — test it against hand-computed cases).
+- Add one end-to-end integration test on a small, publishable fixture—not the 6 GB archive—that recreates a key table/figure summary.
+- Run tests automatically on pushes if setup time permits; at minimum, record the exact test command and passing output at poster freeze and paper freeze.
 - Clean-environment reproduction before submission; preserve negative/failed runs in logs; cite software and data releases; obtain permission before publishing GMU or restricted follow-up data.
+- Tag the exact submitted state and create a release manifest. Archive only what licenses and program rules allow; a manifest plus retrieval instructions is preferable to republishing data without authority.
+
+### Minimum public-release acceptance test
+
+A new reader should be able to answer, from the repository alone: What was observed? Which files and catalog snapshots were used? Which decisions were frozen? Which outputs support the headline claim? Which evidence streams share upstream data? What failed or remained inconclusive? What command regenerates the main quantitative result? If any answer depends on private memory or a Discord thread, the release is not finished.
 
 ## Prioritized execution roadmap (calendar-mapped)
 
-Roughly 6.5 weeks remain between this revision (July 14) and the paper deadline (August 29), with the symposium on August 1. Phases 0–2 must effectively complete before the poster.
+As of **July 20**, 12 days remain to the August 1 symposium and 40 days to the August 29 paper deadline. The old roadmap attempted nearly every plausible extension before either deadline. This revision protects a complete core paper, one distinctive verification contribution, and a small number of result-dependent bonuses.
 
-### Phase 0 — Data acquisition and identity (target: week of July 14)
+### Phase 0 — Identity, provenance, and first public checkpoint (July 20–22)
 
-- [ ] Extract and manifest the six zips (checksums, header audit); plate solve early/middle/late + meridian-bracketing frames; confirm the TOI-3505 field against Gaia overlays.
-- [ ] Verify the calibration set; resolve the `-final` flats question.
-- [ ] Freeze a current target-property snapshot (Archive + ExoFOP + Gaia, query records) — done 2026-07-14 in this document; re-export into `manifests/`.
-- [ ] Download: all four sectors' light curves + TPFs/cutouts (recorded lightkurve searches; settle the 2-min question), the three DV reports, and the ~147 ExoFOP files (login required).
-- [ ] Audit the sign-up spreadsheet and 2021–2025 program drives: this night's scheduling row (ephemeris archaeology evidence), the 2021-06-28 GMU raw frames, any other TOI-3505 nights.
-- [ ] Check RAVEN Zenodo tables for TIC 390988385; set weekly ADS/arXiv alerts.
-- [ ] Write the frozen primary-analysis configuration (including the dilution budget structure) before fitting anything.
+- [x] Audit all six archives without silently treating duplicate filenames as new observations: 283 unique science frames, one duplicate science file, 10 × 50 s darks, 10 × 3.5 s darks, 10 flats, 11 unique focus FITS, and 22 focus PNGs.
+- [x] Export the 283-frame header table and simple timing/airmass figures; verify that the current-ephemeris transit falls outside the observed window.
+- [x] Prepare a plain-language Discord progress update and four simple images; **posting and mentor response remain pending**.
+- [ ] Hash the six immutable archives and create `input_files.csv`; do not extract 6 GB into a second uncontrolled copy merely to satisfy a checklist.
+- [ ] Plate solve early/middle/late and meridian-bracketing frames; confirm target identity against a Gaia/TIC overlay.
+- [ ] Verify the calibration set and resolve the `-final` flats provenance.
+- [ ] Create the frozen primary config, claim–evidence ledger, decision log, and measurement-dependence map.
+- [ ] Post the current timing question/progress update in the program's light-curve or data-reduction channel, then record the answer instead of relying on memory.
+- [ ] Export the 2026-07-14 Archive/ExoFOP/Gaia snapshot and queries into `manifests/`.
 
 **Stop rule:** no interpretation until identity passes.
 
-### Phase 1 — Internship core (target: July 18–25, use office hours)
+### Phase 1 — Internship light-curve core (July 21–25; use office hours)
 
 - [ ] Calibrate the night in AstroImageJ; select apertures/comparisons on field quality; saturation check.
 - [ ] Produce raw and detrended differential light curves; verify BJD_TDB independently.
-- [ ] Compute and plot the night's phase coverage under current and reconstructed ephemerides; bring the archaeology question to office hours (July 18).
+- [ ] Compute and plot the night's phase coverage under current and reconstructed ephemerides; bring the archaeology question to the next available office hours.
 - [ ] Run the NEB extraction on our night; download and re-derive the ULMT/KeplerCam NEB checks.
-- [ ] **Post the light curve + settings + `.plotcfg` to Discord** — unlocks TFOP context (including, plausibly, the HIRES story) and talk eligibility.
+- [ ] **Post the actual light curve + settings + `.plotcfg` to Discord**—this, not the header-only checkpoint, unlocks TFOP context and supports talk eligibility.
+- [ ] Reproduce the AIJ result in Python from the same frames; label this an implementation cross-check, not an independent observation.
+- [ ] Add unit tests for ephemeris cycle counting, BJD convention, and one hand-computed dilution case.
 - [ ] Draft outcome-neutral Observations and Analysis sections.
 
-### Phase 2 — Thesis core (target: July 21–31, parallel with Phase 1 wrap-up)
+**Promotion rule:** if the light curve is not trustworthy by July 25, stop expanding the model stack and finish the ground-based methods/results cleanly with mentor help.
 
-- [ ] Independent Python extraction of the GMU night; S54 simultaneity benchmark.
-- [ ] Per-sector TESS extraction, fits, and depth-vs-aperture plots; DV reproduction.
-- [ ] TESS-cont decomposition + companion-aware dilution budget (the `toi3505_dilution_budget.yaml` deliverable).
-- [ ] Variability/rotation analysis per sector.
+### Phase 2 — Poster-grade result (July 23–28)
+
+- [ ] Download and manifest TESS products for Sectors 14, 41, 54, and 81 plus the three DV reports; settle cadence/product availability.
+- [ ] Recover the signal separately in each usable sector with the simplest defensible fit; do not wait for a hierarchical model.
+- [ ] Build the companion-aware dilution budget and one depth-vs-aperture plot, starting with Sector 54.
+- [ ] Compare the GMU night with simultaneous Sector 54 photometry.
 - [ ] GMU-window upper-limit fit + injection–recovery (GMU campaign).
-- [ ] Novelty audit refresh; ledger entries.
+- [ ] Fill the claim–evidence ledger for every poster statement and run the first leave-one-decision-out ablations.
+- [ ] Choose the poster's claim ceiling from completed evidence; use "preliminary" where appropriate.
 
 ### Symposium checkpoint — poster/talk due August 1
 
-- [ ] Freeze poster-input results by ~July 28; build on the template; practice the 5-minute talk if selected.
+- [ ] Freeze poster-input code, config, data manifest, and results by July 28.
+- [ ] Build on the program template; practice the 20-second and 5-minute explanations.
+- [ ] Run the minimum public-release acceptance test on the poster's headline result.
 
-### Phase 3 — Consistency, timing, and stellar scenarios (early August)
+### Phase 3 — Paper core (August 2–12)
 
-- [ ] Hierarchical depth-consistency model + TESS injection yardstick.
-- [ ] Individual transit times ×4 sectors; linear ephemeris + O−C; archaeology figure finalized; 2026 windows.
-- [ ] Multi-band depth synthesis from the public SG1 files.
-- [ ] Stellar scenario table: density comparison, blend-aware SED (if time), rotation cross-check.
+- [ ] Complete per-sector extraction, aperture/dilution tests, standard vetting diagnostics, and the relevant DV reproductions.
+- [ ] Complete the GMU timing/precision result and ephemeris archaeology with its source provenance.
+- [ ] Build the source-by-source contamination table and explicit unresolved-companion scenario.
+- [ ] Run TESS injection tests sufficient to calibrate cross-sector depth comparisons.
+- [ ] Generate the six main figures and five main tables from scripts.
+- [ ] Draft Results as atomic statements linked to ledger rows.
 
-### Phase 4 — Advanced false-positive analysis (mid-August, only if Phases 1–3 are solid)
+### Phase 4 — One decisive bonus, not five (August 13–20)
 
-- [ ] TRICERATOPS(+) with contrast curves and the explicit companion; repeated seeds; `vespa` cross-check if time.
-- [ ] Scenario evidence matrix; claim-ceiling review with mentor **before Aug 25**.
+Choose the first feasible option that changes the claim ceiling, then stop:
 
-### Phase 5 — Potential new observations (only if a real limitation demands it)
+1. public SG1 multi-band depth/NEB synthesis;
+2. hierarchical depth consistency, if promoted by the method ladder;
+3. transit-density/rotation stellar discriminator;
+4. TRICERATOPS+ only with complete, validated companion inputs.
 
-- [ ] A 2026 on-transit GMU night (screening windows: ~Jul 15, Aug 6, Aug 15 UT) — request only with mentor approval and a refined ephemeris, and only if it resolves a named remaining scenario.
-- [ ] Treat multi-color, multi-site, RV, and atmosphere work as future work in the paper.
+Do not run `vespa`, a second sampler, a GP, and a two-star SED merely to lengthen a methods list. New observations remain gated future work unless the mentor identifies a specific feasible night that resolves the leading uncertainty.
 
-### Phase 6 — Paper and release (target: submit by August 29)
+### Phase 5 — Claim freeze, mentor audit, and submission (August 21–29)
 
-- [ ] Freeze primary analysis; generate all figures/tables from scripts.
+- [ ] Freeze primary analysis and run the full tests/reproduction path.
 - [ ] Result-matched title (drop "Validation" unless earned) and abstract; limitations and claim-ladder audit.
-- [ ] Re-run novelty and catalog checks; mentor review before Aug 25 if possible.
+- [ ] Re-run novelty/catalog checks and obtain mentor review of the claim ceiling, role wording, authorship, and data-release permissions before Aug 25 if possible.
 - [ ] Clean-environment reproduction.
 - [ ] Send PDF to execed@gmu.edu and nasa.schar.program@gmail.com by Aug 29.
+- [ ] Tag the submitted code state and preserve the exact submission PDF.
+
+### Phase 6 — Public/application translation (after the scientific freeze)
+
+- [ ] Write the short case study from the final ledger and one real methodological lesson.
+- [ ] Finish the public README and permitted release; add `CITATION.cff`.
+- [ ] Record the two-minute walkthrough or build the three-slide explainer.
+- [ ] Give the mentor a concise contribution log and retain the approved role/project wording.
+- [ ] Align the GitHub profile label with the actual project: astronomy / scientific computing / physical-data inference, not "geospatial."
 
 ## Value-versus-effort priority
 
@@ -1065,32 +1230,39 @@ Roughly 6.5 weeks remain between this revision (July 14) and the paper deadline 
 1. Correct data identity and calibration.
 2. Trustworthy differential photometry and independently verified BJD_TDB.
 3. The phase-coverage/ephemeris-archaeology result, stated plainly.
-4. NEB extraction (ours) + re-derived public NEB checks.
-5. Per-sector TESS recovery with reconciled dilution.
-6. Honest uncertainty and result-matched claims.
-7. Discord post early enough to unlock TFOP context and talk eligibility.
+4. Per-sector TESS recovery with one declared dilution treatment and dependence-aware interpretation.
+5. Claim–evidence ledger, frozen config, data manifest, and the three load-bearing unit tests.
+6. Honest uncertainty, negative controls, and result-matched claims.
+7. Discord posts early enough to obtain feedback and unlock program context.
+8. A finished poster/talk and paper.
 
 ### Best scientific return for added work
 
 1. Companion-aware dilution budget + TESS-cont decomposition.
-2. Hierarchical multi-epoch depth consistency with injection yardstick.
-3. Multi-band depth synthesis from public SG1 data.
-4. Transit-derived density vs stellar scenarios.
-5. Ephemeris refinement 2019–2024 + 2026 windows.
-6. S54-simultaneity benchmark; depth-vs-aperture plots.
-7. Rotation/variability characterization.
-8. DV-report reproduction ×3.
+2. NEB extraction (ours) + re-derived public NEB checks.
+3. S54-simultaneity benchmark and depth-vs-aperture plots.
+4. Multi-band depth synthesis from public SG1 data.
+5. Injection-calibrated multi-epoch consistency; hierarchical only if promoted.
+6. Ephemeris refinement 2019–2024 + 2026 windows.
+7. Transit-derived density or rotation as a stellar-scenario discriminator.
+8. Relevant DV diagnostic reproduction.
 
 ### Advanced only after the above is solid
 
-1. TRICERATOPS+ scenario probabilities (+ `vespa` cross-check).
-2. Bayesian source assignment.
+1. TRICERATOPS+ scenario probabilities with complete companion inputs.
+2. Hierarchical or Bayesian source assignment.
 3. Blend-aware two-star SED fit.
-4. GP alternatives; TTV search.
+4. GP alternatives, `vespa`, or TTV search.
+
+### High-value downstream artifacts
+
+1. Public reproducibility release and technical case study.
+2. Mentor-verifiable contribution log.
+3. Two-minute/three-slide explanation for a non-astronomy technical audience.
 
 ### Moonshots / separate projects
 
-1. 2026 on-transit GMU night (gated, but genuinely available this cycle).
+1. New on-transit GMU observation.
 2. New AO time-series or multi-color campaign.
 3. JWST track (separate paper, program-gated).
 
@@ -1111,7 +1283,12 @@ Roughly 6.5 weeks remain between this revision (July 14) and the paper deadline 
 | Alias/neighbor-EB period confusion | Wrong physical model | BLS/TLS alias audit | Explicit harmonic checks; neighbor curves |
 | Multiple testing across the robustness grid | Inflated significance | Analysis ledger | Frozen primary tests; null controls |
 | Advanced model instability | Misleading FPP/posteriors | Seed/prior sensitivity | Repeat, cross-tool, simplify, disclose |
+| Shared photons/catalog lineage counted as independent evidence | Confidence inflated without new information | Measurement-dependence map | Label observation vs implementation independence; channel-level ablation |
 | Scope overload before Aug 1 / Aug 29 | Poster or paper unfinished | Roadmap status vs calendar | Finish phases in order; poster freeze July 28 |
+| Application-driven scope creep | Scientific question gets replaced by a résumé narrative | Tasks added without changing a claim | Enforce the four-part task decision rule; translate only after freeze |
+| AERIS language or an LLM layer forced into astronomy | Project reads as branding rather than domain research | Methods cannot be justified astronomically | Transfer verification habits only; keep AERIS out of paper/poster |
+| Public claim outruns completed work or official affiliation | Credibility/ethics problem in applications | Activity wording names unrun methods or implies NASA employment | Evidence-backed wording audit with mentor; dated contribution log |
+| Repository remains an exploratory dump | Work is difficult to verify or reuse | No README, tests, configs, or release path | Build the thin research-software layer before extra frameworks |
 | 6 GB zips mishandled in git/LFS | Repo bloat or quota failure | LFS status check | Deliberate storage decision + manifests |
 | Restricted TFOP data used improperly | Publication/ethics problem | Provenance audit | Permission or omission |
 | TOI-3505/3506 conflation in program materials | Wrong-target contamination of searches | Double-check every identifier | TIC-first search discipline |
@@ -1124,8 +1301,11 @@ Before submission, the draft must survive these attacks, each of which is curren
 2. *"Your localization claim ignores a 21%-flux companion at 0.5″."* — Answer with the claim ladder capped at the pair, plus whatever chromatic/density evidence actually discriminates. Never claim more.
 3. *"Your depths are pipeline artifacts of inconsistent dilution corrections."* — Answer with the single declared budget applied uniformly, the depth-vs-aperture plots, and the injection yardstick.
 4. *"Your stellar parameters are internally contradictory."* — Answer with the scenario table and the density test; do not present one radius as truth.
-5. *"Your consistency claim is just wide error bars."* — Answer with the τ posterior against the injection-calibrated null yardstick, not with overlapping intervals.
+5. *"Your consistency claim is just wide error bars."* — Answer with the predeclared consistency statistic against the injection-calibrated null yardstick; include the τ posterior only if the hierarchical method was promoted.
 6. *"This is all already known to TFOP."* — Answer with the novelty ledger: nothing is published, our night is undocumented, and no public synthesis exists. And verify that stays true the week of submission.
+7. *"You counted three reductions of the same photons as three confirmations."* — Answer with the measurement-dependence map and channel-level ablations. If the prose still calls them independent measurements, the referee is right.
+8. *"This is a software portfolio wrapped around a weak astronomy result."* — Answer with a paper whose question, figures, and conclusion are entirely astronomical; keep the software architecture in methods/reproducibility and the personal throughline outside the paper.
+9. *"The public résumé says more than the repository proves."* — Answer with the tagged release, contribution log, and exact status language. Remove any method or outcome that cannot be opened and checked.
 
 ## Approval gates
 
@@ -1139,33 +1319,44 @@ Before submission, the draft must survive these attacks, each of which is curren
 | New telescope observations | Mentor/telescope approval | 2026 on-transit night |
 | JWST/atmosphere work | Lecture-defined approval after campus light curve | Separate project/paper |
 | Public release | Data-owner and license permission | Repository data/products release |
+| Public/activity wording | Completed artifact + mentor-verifiable role and status | Application, portfolio, and recommendation language |
 
 ## Definition of a successful project
 
 The project succeeds if it produces a reproducible and correctly bounded answer to the localization and consistency questions — including the honest accounting of the off-transit GMU night. Success does not require a transit in our data, a validated planet, or a resolved companion.
 
-A maximum-quality final result includes:
+A scientifically complete result includes:
 
 - Proven data identity and auditable calibration/timing.
 - The ephemeris-archaeology result, quantified.
 - A GMU photometric benchmark with an injection-calibrated upper limit, cross-checked against simultaneous TESS data.
-- Four independent sector analyses under one declared dilution model, with a hierarchical consistency verdict calibrated by injections.
+- Four separately executed sector analyses under one declared dilution model, with a consistency verdict calibrated by injections and a hierarchical result only if earned.
 - Localization verdicts with explicit angular scales, including what is *not* excluded.
-- A stellar scenario table replacing false precision, with the density test applied.
+- A stellar scenario table replacing false precision; apply the density test if the data support it.
 - A scenario evidence matrix stating what the candidate can and cannot be.
-- Reproducible code, figures, tables, and provenance; claims that stop at the supported rung; and a named, justified next observation.
+- Claims that stop at the supported rung and a named, justified next observation.
+
+A maximum-value research-engineering result additionally includes:
+
+- A frozen claim–evidence ledger and measurement-dependence map.
+- Unit tests for the load-bearing timing and dilution arithmetic plus one small end-to-end reproduction fixture.
+- Script-generated figures/tables, exact configs, input hashes, a tagged code state, and a clear public/private data boundary.
+- A README and permitted public release that a new reader can audit without private memory.
+
+The downstream application value is successful only if it can be expressed through completed artifacts and mentor-verifiable ownership. It should show one coherent strength—building trustworthy computational evidence for physical systems—while leaving the astronomy and environmental projects scientifically distinct.
 
 ## Immediate next actions
 
-1. Extract the zips; build the manifest; plate-solve; confirm identity.
-2. Download the four sectors' products, three DV reports, and the ExoFOP file set (create the free login).
-3. Audit the sign-up spreadsheet row and program drives (scheduling ephemeris; 2021 GMU raw frames).
-4. Re-verify sector date ranges and cadence products on MAST (recorded queries); retry WTV/tess-point for future coverage.
-5. Check RAVEN Zenodo tables for TIC 390988385; set ADS/arXiv alerts on the identifiers.
-6. Create the analysis and novelty ledgers; enter ledger items #1–5 from this document.
-7. Write the frozen primary-analysis configuration and dilution-budget structure before fitting anything.
-8. Book the ephemeris-archaeology and NEB questions for the July 18 office hours.
-9. Post the first light curve to Discord as early as Phase 1 allows — it is the gate on TFOP context.
+1. Hash and manifest the six existing zips; plate-solve representative frames and confirm identity.
+2. Post the prepared header/timing checkpoint, then record the mentor response.
+3. Resolve `-final` flat provenance and complete the first AstroImageJ reduction.
+4. Create `claim-evidence-ledger.csv`, `measurement_dependence.yaml`, the decision log, and the frozen config before choosing a preferred light curve.
+5. Reproduce BJD cycle counting and dilution arithmetic in tests.
+6. Post the actual AIJ light curve with settings, measurement table, and `.plotcfg`; this is the program gate.
+7. Reproduce that light curve in Python and diagnose any disagreement.
+8. Download/manifest the four TESS sectors and three DV reports; start with the Sector 54 simultaneity and aperture test.
+9. Audit the sign-up spreadsheet/program drives for the scheduling ephemeris and 2021 GMU night; request only the permissions/data actually needed.
+10. Freeze the poster claim and inputs on July 28; postpone non-decisive advanced models.
 
 ## Reference starting set
 

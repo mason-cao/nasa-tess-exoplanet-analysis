@@ -1,0 +1,1 @@
+i started checking the TOI-3505.01 data in AstroImageJ and found 283 50-second R-band images with the matching darks and flats. they cover BJD_TDB 2459782.598–2459782.839, but using P = 2.9151556 days and T0 = 2459793.534385 put the closest transit outside that range. did i calculate it wrong, or does this dataset not actually cover a transit?
