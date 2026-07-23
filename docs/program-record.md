@@ -89,7 +89,7 @@ The three videos mentioned in the July 17 announcement are not currently stored 
 
 ## Mason's Discord posting record
 
-Mason reports that only the following two progress posts have been sent.
+Mason reports that the following three posts have been sent.
 
 ### Post 1 - TOI-3505.01
 
@@ -101,13 +101,17 @@ Four AstroImageJ-related screenshots were attached. No mentor response had been 
 
 > i used the tess2018206045859-s0001-0000000441420236-0120-s_lc.fits dataset for AU Mic b, Sector 1. for the full light curve, i kept the whole time range and used ylim = 0.98–1.06; for the zoomed-in graph, i used t0 = 1330.402640 with xlim = t0 - 0.25 to t0 + 0.25 and ylim = 0.989–1.003.
 
-### Not sent
+### Post 3 - TOI-3505.01 follow-up
 
-The previously drafted follow-up questions were not posted. Do not count them as Discord activity.
+Posted in `light curve questions` on 2026-07-23:
+
+> Following up on my TOI-3505.01 homework post: I don't see a Transit Info PNG with the TOI-3505.01 files. Which predicted ingress/egress times, depth, duration, and timing uncertainty should I use for the July 21, 2022 light curve?
+
+The earlier alternative follow-up drafts were not posted.
 
 ## TOI-3505 evidence and current blocker
 
-The assigned data are split across six `TOI_3505.01-20260714T190730Z-1-00*.zip` archives. Inspection found science FITS files, darks, flats, focus FITS files, and focus images, but no `Transit Info` PNG, `.radec` file, or other target-specific timing document.
+The TOI-3505 files are split across six `TOI_3505.01-20260714T190730Z-1-00*.zip` archives. Inspection found science FITS files, darks, flats, focus FITS files, and focus images, but no `Transit Info` PNG, `.radec` file, or other target-specific timing document.
 
 The existing audit found:
 
@@ -120,15 +124,40 @@ The existing audit found:
 
 The Schar tutorial says predicted ingress/egress and period should come from the target's `Transit Info` PNG. The July 17 announcement also requires the predicted time, depth, duration, and timing uncertainty before fitting. Because that target-specific source is absent, the supplied Schar plot configuration's generic values must not be used as TOI-3505 values.
 
+## TOI-3505 data reduction completed - 2026-07-23
+
+The source-independent calibration stage is complete. `src/reduce_toi3505.py` implements the Schar AstroImageJ tutorial settings as a reproducible pipeline and writes AstroImageJ-compatible 32-bit FITS products. It performed:
+
+- a median combination of the 10 matching 3.5-second darks;
+- a median combination of the 10 matching 50-second darks;
+- subtraction of the 3.5-second master dark from each R flat;
+- fitted illumination-plane removal from each calibrated flat, followed by normalization and median combination;
+- science calibration using `(raw science - mdark_50.000s) / mflat_R`;
+- preservation of the original timing metadata, including `BJD_TDB`;
+- FITS provenance, `CHECKSUM`, and `DATASUM` cards for each output.
+
+No separate bias correction was applied because the exposure-matched dark contains the bias signal. No dark scaling, cosmic-ray filtering, plate solving, alignment, photometry, detrending, or transit model was applied. Those remain separate reviewable stages.
+
+Local products and evidence:
+
+- `data/ground/toi3505/calibration/`: two master darks, the R master flat, and a diagnostic flat-review mask;
+- `data/ground/toi3505/reduced/`: 283 calibrated science FITS files (about 18.99 GB);
+- `outputs/toi3505_reduction/frame_manifest.csv`: per-frame timing, header, and sampled quality statistics;
+- `outputs/toi3505_reduction/01_master_calibrations.png` through the seven `04_calibrated_contact_sheet_page_*.png` files: calibration diagnostics and a visual-review image for every frame;
+- `outputs/toi3505_reduction/05_astroimagej_frame_0001.png`, `06_astroimagej_frame_0282.png`, and `07_astroimagej_frame_0283.png`: direct AstroImageJ checks confirming the 4096 x 4096, 32-bit outputs open correctly and showing both end-frame quality failures;
+- `outputs/toi3505_reduction/verification.json`: independent integrity and formula verification.
+
+Verification passed for all 283 science products and all four calibration products. All FITS checksums and data sums are valid, all sampled science images are finite, all output images are 4096 x 4096 with `BITPIX=-32`, the BJD sequence is strictly increasing, and independent pixel checks on frames 0001, 0142, and 0283 exactly reproduce the calibration equation while preserving `BJD_TDB`.
+
+The automated review marked frames 0270, 0282, and 0283. Frame 0270 has an elevated background but its stellar field remains visible. Frames 0282-0283 occur after an approximately 41-minute gap, have a much brighter background, and direct AstroImageJ inspection confirms that neither contains a usable stellar field. Preserve them for traceability, but exclude them from the plate-solving and photometry working sequence. The master flat's low-response first detector row and one isolated low-response pixel are recorded in `master_flat_review_mask.fits`; they were not silently clipped or replaced.
+
 ## Next best course of action
 
-1. Reply in the existing TOI-3505 thread in `light curve questions` and ask for the missing assigned timing/model inputs. This is a direct homework-source question, not a new interpretation:
+1. Use frames 0001-0281 as the current working sequence and plate-solve or align them in AstroImageJ. Keep 0282-0283 in the archive but outside the working sequence. Save the plate-solved image and any target coordinate file used.
 
-   > Following up on my TOI-3505.01 homework post: I don't see a Transit Info PNG with the TOI-3505.01 files. Which predicted ingress/egress times, depth, duration, and timing uncertainty should I use for the July 21, 2022 light curve?
+2. Create and save the seeing profile, choose an initial aperture and sky annulus from it, perform multi-aperture photometry, and save the measurement table and aperture file. Do not permanently reject other variable-background frames until their seeing, source counts, and differential-photometry behavior have been checked.
 
-2. While waiting, continue the source-independent portion of the AIJ workflow: calibrate the science frames, plate-solve or align them, create and save the seeing profile, choose an initial aperture from that profile, perform multi-aperture photometry, and save the measurement table and aperture file.
-
-3. Load `SCHAR_Plot_config.plotcfg`, replace its template title/subtitle and target inputs in the working session, and first produce the required raw, unfitted, undetrended light curve plus the systematics panels. Do not fit a transit until the target-specific predicted inputs are confirmed.
+3. The request for the missing timing/model inputs is awaiting a response in the existing TOI-3505 thread in `light curve questions`. Load `SCHAR_Plot_config.plotcfg`, replace its template title/subtitle in the working session, and first produce the required raw, unfitted, undetrended light curve plus the systematics panels. Do not enter target markers or fit a transit until the target-specific predicted inputs are confirmed.
 
 4. Test aperture sizes and comparison-star selections, preserving each meaningful working result. Once a complete package exists, post the light curve, seeing profile, measurement table, target-specific `.plotcfg`, and screenshots of all relevant windows in `light curve questions`.
 

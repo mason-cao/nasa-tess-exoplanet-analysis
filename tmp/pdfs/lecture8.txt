@@ -1,0 +1,689 @@
+NASA Data Science &
+Astronomy Research
+Internship
+Summer 2026
+Exoplanet data analysis • NASA missions • Scientific writing
+
+
+
+
+Dr. Peter Plavchan
+George Mason University
+
+
+landolt.gmu.edu | @PlavchanPeter
+nasa.schar.program@gmail.com
+ Assignments to date
+
+     Older:
+     Telescope Observing
+     Review NASA mission study proposals, study reports, and mission proposals
+     Run the AU Mic jupyter notebook; Experiment with the code
+     Pick a TOI from the Exoplanet Archive
+     Retrieve a new TESS candidate light curve from MAST and generate a plot
+     Change time and flux ranges of the plot; Post plot to Discord Channel
+
+     Recent:
+     Download GMU telescope TOI follow-up data sets, analyze and produce light curves.
+     Post progress and challenges to discord
+     Research your TOI on the NASA Exoplanet Archive
+     Prepare presentation poster for symposium
+     Future:
+     Write your paper
+     Optional:
+     Pick a JWST transit observation (spreadsheet of options forthcoming)
+     Analyze following the Jupyter notebook tutorial
+     Write a separate paper on this observation (examples forthcoming)
+
+Schar School of Policy and Government                                                    2
+ Acccess to all data:
+
+     Go to spreadsheet shared with you via email and Discord. Please enter your name in Column N, first and last
+     initial. This is NOT first come, first serve, so don't rush. Multiple people can analyze the same data set,
+     together as a team of up to 3, or independently. Put a ";" (semi-colon) between names. If a group, indicate
+     this as well with some explanation.
+
+     To assist in picking a data set, look at it first. research the TOI on the NASA Exoplanet archive. google the
+     target. Ask AI. Pay particular attention to some of our team's old notes in column S.
+
+     2022 data: https://drive.google.com/drive/folders/148QIVQoSZVHBrvJmaSV5IGIpspOYdsGK?usp=sharing
+     2023 data: https://drive.google.com/drive/folders/1baHyEpGMZzcPr6OnAspDXhS9Ho_67IUq?usp=sharing
+     2024 data: https://drive.google.com/drive/folders/1HZyoRaUZarzPpO8kOLwQkd90M7mpeHRU?usp=sharing
+     2025 data: https://drive.google.com/drive/folders/1uI4uYjjzxeS5g7ewToQfrW48p_34Z3HA?usp=sharing
+
+     Use the date from the above spreadsheet, and go into that folder. You should find a subfolder with the same
+     name as the TOI number. Download that folder and its data. Extract the multiple 2GB zip files, and merge the
+     file contents.
+
+Schar School of Policy and Government                                                                                2
+ What about JWST data
+
+     • Use the MAST archive to retrieve
+     • Attempt only after receiving approval for your light curve
+       analysis via Discord for the campus telescope TESS follow-
+       up data.
+     • Why? JWST data is another level deeper in complexity.
+     • What the video sent previously for how to access the data,
+       how to access code to process and analye JWST data, … or
+       … write your own! It is better to be a tool creator than solely a
+       tool user.
+     • Use the python jupyter notebook tutorials available on the
+       STScI github account.
+Schar School of Policy and Government                                      2
+ Schedule
+
+
+     June 13, 20, 27, July 11– live lectures
+     June 25, July 1, July 4 , 15– asynchronous
+     lectures
+     July 11, 18, 25 – live office hours
+     July 31st – Symposium tours
+     August 1st – Symposium day
+
+Schar School of Policy and Government             2
+Topics for Our Program
+
+    Introductions                                   Working with data, part 2: AstroImageJ
+
+    Logistics                                       Making a Measurement: Science Methods
+                                                    and Inference
+    How a NASA Mission Happens                      Science Writing
+
+    Working with data, part 1: Jupyter notebooks    Space Revolution and Space Policy
+    and FITS files
+    Telescopes on the Ground and in Space           Working with data, part 3: JWST
+    (part 2)
+    The NASA TESS mission and Transiting            Bonus? Mission Engineering
+    Exoplanets
+
+
+
+
+NASA Data Science & Astronomy Research Internship
+ Draft Symposium Schedule
+
+
+          • 9-9:30: Checkin, set up posters (digital
+            and print)
+          • 9:30-11:30: Talks
+          • 11:30-1:00: Poster viewing & lunch
+          • 1:00-3:00 – Research Lab Tours
+
+
+Schar School of Policy and Government                  3
+ Final homework Assignments: the poster
+
+          • Poster – 48x36” max – 40x30” template:
+            https://www.dropbox.com/scl/fi/awofmzrkfdj083r16oq0w/ScharScholars_N
+            AME_PosterTemplate.pptx?rlkey=ljfyftt7r15vm206hewolegoq&st=y2uxh07s
+            &dl=1 (password: Schar2026!)
+          • We will send out a survey to learn your preference for a poster or a talk; and
+            talk selection depends on analysis posted to discord.
+          • How to make a prize winning poster:
+            https://sites.psu.edu/astrowright/2013/09/17/make-award-winning-
+            posters/
+
+
+
+
+Schar School of Policy and Government                                                        3
+ Final homework Assignments: the talk
+
+          • PPT or Google Slides (keynote ok, but not preferred)
+          • 1 minute per slide, at most 2 slides per minute
+          • Practice your talks in advance à helps with flow, comfort level and timing (5
+            minutes max)
+          • Try to avoid large blocks of text. à put this in notes or a script
+          • Focus figures (including images and screen grabs), tables or bulleted lists
+          • Slides should follow the sections of the paper, with at most 2-3 slides per
+            section, ideally 1-2.
+                     • Intro, Observations, Data Reduction, Aperture Photometry, Light Curve Detrending,
+                       Result, Discussion, Conclusions and Future work, Acknowledgments
+
+
+
+
+Schar School of Policy and Government                                                                      3
+ Final homework Assignments: the paper
+
+          • Due August 29th
+          • Discord will remain open for Q&A, check-ins, assistance, technical support; I
+            will not be responsive to email. I will not have time to review writing in
+            general.
+          • Lean into each other on Discord:
+                     • Swap drafts!
+                     • Compare data reduction approaches;
+                     • Use the chat and audio channels on Discord
+                     • Get a study group together! Self-organize by high school or geographic region. You can
+                       achieve more together than working in isolation.
+                     • Post light curves to discord, and light curve settings, post xls target light curve files, and
+                       .plotcfg files to reproduce a plot.
+                     • My team will assist you as much as we can through when our semester starts (August
+                       25th)
+
+
+Schar School of Policy and Government                                                                                   3
+ Final homework Assignments: the paper
+
+          Please send as a PDF to execed@gmu.edu and nasa.schar.program@gmail.com
+          Use Google Docs, Word, or Overleaf if you go the latex route; you can send
+          these as well.
+          Your papers may be lightly edited and will be posted as a student journal from
+          George Mason University. We will provide this link to you in the fall to use in
+          your resumes and college applications.
+
+
+
+
+Schar School of Policy and Government                                                       3
+Final homework Assignments: the paper
+
+         Example papers from last year: https://science.gmu.edu/academics/departments-units/physics-and-astronomy-
+         department/observatory/schar-astro-scholars
+         Here are some professional examples on the validation of a transiting exoplanet with ground-based follow-up:
+                       This is a good example from a high school student:
+                                 https://emerginginvestigators.org/articles/ground-based-follow-up-observations-of-tess-exoplanet-
+                                 candidates/pdf
+                       https://arxiv.org/abs/2110.14344
+                       https://academic.oup.com/mnras/article/516/3/4432/6692879
+                       https://arxiv.org/abs/2210.08179
+                       https://arxiv.org/abs/2205.05709
+                       https://arxiv.org/abs/2212.08242
+                       https://arxiv.org/abs/2208.07328
+                       This links to even more TESS follow-up papers I have been on:
+                       https://ui.adsabs.harvard.edu/search/q=%20author%3A%22Plavchan%22%20title%3A%22TOI%22&sort=date%2
+                       0desc%2C%20bibcode%20desc&p_=0
+                       Note: DO NOT pay for any paper access. If you want access to a particular paper, often George Mason has
+                       institutional access. Send me a link and I can see if I can provide you a free copy. When looking for papers via
+                       NASA ADS, look for the free “arXiv” preprint link.
+         Example websites and papers for reference:
+                       https://tess.mit.edu/followup/
+                       https://arxiv.org/abs/2103.12538
+                       https://asd.gsfc.nasa.gov/archive/tess/ground_based_followup.html
+Schar School of Policy and Government                                                                                                     3
+ Final homework Assignments: the paper
+
+Science goals of paper:
+       Verify that the transit occurs on the TESS object of interest (you need a finder chart to know which is
+       your target - https://astro.swarthmore.edu/transits/finding_charts.cgi , at the time predicted, with the
+       depth (brightness change) expected, and with the duration expected.
+       If not, it could be poor timing knowledge (the timing uncertainty matters), or a false-positive for a variety of
+       reasons.
+       We provided the expected start and stop times of transit for you, but once you have light curves for us to
+       look at, post them to discord.
+       We can look up more details about the transit, such as the timing uncertainty, and notes from the TESS
+       team on what other observations have revealed. Only I and Kevin have access to this TESS team
+       information to share. Only when you have a light curve can we move on to interpretation and provide you
+       this information.
+       If there is no detectable transit, it could be that the signal was too small given the noise in our lightcurve to
+       discern it.
+       It could also be that there is a nearby star that is an eclipsing binary, and AstroImageJ has a tool called the
+       nearby eclipsing binary (NEB) check that we can help you run and learn to interpret.
+Schar School of Policy and Government                                                                                3
+ Final homework Assignments: the paper
+
+          • Most importantly, try your best. Get as far as you can in the process, and write up what you are
+            able to complete. If you fall short of our goals, conclude with a future work section outlining the
+            remaining work to be completed in the future (by you or someone else)
+          • This is a very challenging assignment, one that usually not all college undergraduate students can
+            complete successfully as part of a course.
+          • You will struggle – you’ve never done this before.
+          • You have very little help, mentorship and guidance. There is no known “right answer” unlike in a
+            math class. We don’t know what the outcome will be.
+          • Each night’s data outcome can be very different!
+                     •      Many may be plagued by clouds, data gaps, and result in an inconclusive outcome.
+                     •      Many may result in marginal or noisy detections
+                     •      Some transits may be incomplete (partial)
+                     •      Some will be false positives.
+                     •      Only a few will result in clear, on target detections
+                     •      Be careful with the language you use in your papers – try to be precise
+          • The outcome may be more work that will have to be deferred to the future.
+          • You may answer one question but leave or create several more unanswered.
+          • This… is research.
+Schar School of Policy and Government                                                                             3
+Topics for Our Program
+
+    Introductions                                   Working with data, part 2: AstroImageJ
+
+    Logistics                                       Making a Measurement: Science Methods
+                                                    and Inference
+    How a NASA Mission Happens                      Science Writing
+
+    Working with data, part 1: Jupyter notebooks    Space Revolution and Space Policy
+    and FITS files
+    Telescopes on the Ground and in Space           Working with data, part 3: JWST
+    (part 2)
+    The NASA TESS mission and Transiting            Bonus? Mission Engineering
+    Exoplanets
+
+
+
+
+NASA Data Science & Astronomy Research Internship
+ Basic Statistics
+
+                                        Mean:
+                                             “Average value” = 1.63
+
+
+
+
+                                        Median: The individual value
+                                        from the collection such that 1/2
+                                                                                                        Mean
+                                                                                           Median
+                                        the observations are less and
+                                        1/2 are greater = 1.5
+                                                                            Mode
+                                        Median is often useful because
+                                        it is less affected by a single
+                                        outlier than the mean
+
+                                         Mode:The most frequently
+                                        occurring value in the              16 Values: 1.3, 1.3, 1.3, 1.3, 1.35, 1.35, 1.4,
+                                        collection = 1.3                    1.5, 1.5, 1.55, 1.55, 1.55, 1.6, 1.65, 1.65, 4.2
+
+
+
+
+Schar School of Policy and Government                                                                                          3
+ How measurements are distributed
+
+     Most of what we know is derived by making measurements
+
+     A priori, when we make a set of measurements, we may know and expect what
+     type of distribution of values of the measurements that we will get (more on this
+     later).
+
+     However, we may not know the distributions “central value” (for example,
+     mean), nor it’s size or scale.
+
+     Quantifying this distribution of measurements is known as quantifying
+     uncertainty or “errors”.
+
+
+Schar School of Policy and Government                                                    4
+ The idea of error
+
+     It is never possible to measure anything exactly (eventually Heisenberg's uncertainty principle
+     would bite you!).
+
+     So when you measure something, you have to say how precisely you have measured it -> This is
+     the scale of the distribution of measurements.
+
+     Example:
+     Planck’s constant h is known to approximately 1.5 parts in 10^8, or 6.626070040(81)×10−34 J-s,
+     e.g. 6.626070040 +/- 0.000000081 ×10−34 J-s
+
+     Suppose you derive an experiment to measure Planck’s constant. You can’t just take their value
+     and error and use as their own. The above is the work of other scientists’ experiments. Your
+     experiment will have it’s own value and associated error.
+
+
+Schar School of Policy and Government                                                                  5
+ The idea of error
+
+     Errors are also not 'blunders' or experimental mishaps which
+     can be fixed.
+
+     If a telescope is bumped during an exposure resulting in two
+     sets of stars, the image is simply deleted and redone. If it's not
+     caught at the time, then this datum is discarded.
+
+     Errors occur for all measurements. It is impossible to know
+     exactly how far off a measurement is. Otherwise, the
+     measurements would just be 'adjusted' (fudge-factor) to the
+     proper value. But this is not possible nor good science.
+Schar School of Policy and Government                                     6
+ The classification of error
+
+
+     Errors occur in two types: systematic and random.
+
+     Systematic errors are errors which shift all
+     measurements in the same way. Things like
+     improper equipment calibration, thicker atmosphere
+     than anticipated, etc.
+
+     An example is a ruler with the wrong length.
+Schar School of Policy and Government                     7
+ The classification of error
+
+     Random errors displace measurements in an arbitrary
+     direction (they scatter measurements about a value). They
+     cannot be eliminated, but usually can be reduced (by
+     making multiple measurements).
+
+     For example, each measurement of a star includes random
+     fluctuations caused by seeing, detector noise, random sky
+     noise, etc.
+
+     OK, so how do we quantify errors?
+Schar School of Policy and Government                            8
+ How sets of events or measurements are distributed
+
+   Often with data we have a large number of
+   “events”. For most experiments, the
+   outcome is a continuous distribution of
+   possible values. In this case, the distribution
+   of results approaches a smooth curve as the
+   number of measurements approaches
+   infinity.
+
+   y = a e^[ -(x-x0)2 / (2 σ2)]
+
+   Other continuous examples: uniform
+   random distribution; lognormal distribution,
+   student t-distribution, etc…                 Gaussian Distribution: x0 = mean, 𝜎 = standard deviation
+
+
+Schar School of Policy and Government                                                               9
+ Gaussian Distribution - FWHM
+
+
+   y = a e^[ -(x-x0)2 / (2 σ2)]
+
+                                        a
+   Full width at half maximum:
+
+
+
+
+                                        x0
+
+
+
+
+Schar School of Policy and Government        10
+ Binomial Distribution
+
+            • Where there are exactly 2 mutually exclusive outcomes
+              – success or failure.
+            • The probability of observing m successes in n
+              observations
+                                                                          For a particular n
+
+
+
+
+            • p is probability of success
+            in a single observation
+                                                         p
+            Approaches Gaussian for
+            large n and m, but <0 excluded
+
+
+                                                                      m successes
+Schar School of Policy and Government                                                          11
+   Poisson Distribution – when the outcome is a discrete integer and positive definite
+
+
+
+The limit of the binomial distribution
+for rare events and a large number of
+trials.
+The “counting rate” distribution. The
+value can never be less than zero. For
+example the number of photons that
+arrive in a time interval can be 0, 1, 2,
+… but can never be less than 0                                     p
+  Pr(k events given lambda) =
+
+
+
+                                          Similar to Gaussian for large
+                                          lambda, but still excludes k<0   k
+  Schar School of Policy and Government   and only integer measurements                  12
+ Estimating How Good the Data Are
+
+
+                                        (Simple) deviation: (Note that   is how we
+                                          represent the mean)
+
+
+                                        Mean deviation: The N-1 represents the loss
+                                         of one degree of freedom - with only 1 data
+                                         point the mean deviation is meaningless
+
+
+Schar School of Policy and Government                                                  13
+ Estimating How Good the Data Are
+
+   Variance: (true*) Standard deviation, root mean square
+   deviation (rms or sigma) which is the better estimator for
+   random errors than the mean deviation
+
+
+
+
+   * This is called the “true” because we are using the values
+   to determine the mean. Thus, we lose one “degree of
+   freedom” when we calculate the mean from the data and
+   hence the N-1. If the mean is known a priori, then N-1 -> N
+
+Schar School of Policy and Government                            14
+ Estimating how Good your Data Are Cont.
+
+You can use the equation of the normal distribution to
+determine the fraction of data points within 1s, 2 s, 3
+s, etc.
+
+         •68% of points are within 1s
+         •95% of points are within 2s
+         •99.7% of points are within 3s (3/1000 are not)
+         •99.994% … 4 s
+
+         Works well if your distribution is Gaussian, fails
+         horribly if it is not.
+
+         These are sometimes called “confidence intervals”.
+         E.g., with 95% confidence we can say the mean lies
+         within 2-sigma of this value. But all distributions
+         and not just Gaussians have confidence intervals.
+
+Schar School of Policy and Government                          15
+ Estimating how Good your Data Are Cont.
+
+You can use the equation of the normal distribution to
+determine the fraction of data points within 1s, 2 s, 3
+s, etc.
+
+         •68% of points are within 1s
+         •95% of points are within 2s
+         •99.7% of points are within 3s (3/1000 are not)
+         •99.994% … 4 s
+
+         Works well if your distribution is Gaussian, fails
+         horribly if it is not.
+
+         Example: when the ”highly improbable” events are
+         more probable than you estimated (stock market
+         crash). Sometimes called the “long tail”. Student
+         t-distribution does a better job of capturing outliers
+         than a Gaussian.
+Schar School of Policy and Government                             16
+ Estimating how Good your Data Are Cont.
+
+
+   There are many
+   different ways to
+   summarize and
+   visualize your
+   measurements:
+
+
+
+
+Schar School of Policy and Government      17
+ Error Propagation
+
+                                    • Let’s say you’ve measured multiple quantities and
+                                      now you want to combine them in some
+                                      mathematical formula.
+
+                                    • For example, I’ve measured the time of one
+                                      transit of an exoplanet to be t1+/- s1 and I’ve
+                                      measured the next transit to occur at t2 +/- s2.
+
+                                    • What can I say the period of the orbiting
+                                      exoplanet to be?
+
+Schar School of Policy and Government                                                     18
+ Error Propagation
+
+                                    • Let’s say you’ve measured multiple quantities and
+                                      now you want to combine them in some
+                                      mathematical formula.
+
+                                    • For example, I’ve measured the time of one
+                                      transit of an exoplanet to be t1+/- s1 and I’ve
+                                      measured the next transit to occur at t2 +/- s2.
+
+                                    • P = t2 – t1. But what about sP?
+
+
+Schar School of Policy and Government                                                     18
+ Error Propagation
+
+
+                                    As another example. What if I’ve measured Planck’s constant
+                                    to be:
+
+                                    6.626070040 +/- 0.000000081 ×10−34 J-s
+
+                                    And the frequency of a photon to be 10.000+/-0.001 GHz
+
+                                    What is the energy of the photon (E=hf)?
+                                    What about the value for sE?
+
+
+Schar School of Policy and Government                                                             20
+ Error Propagation – start with a simple linear function
+
+
+
+
+                                        f=P
+                                        x1 = t2
+                                        a1 =1
+                                        x2 =t1
+                                        a2 = -1
+
+
+        Given individual uncertainties on measurements xi, which we
+        denote σi, what is the total uncertainty on f?
+
+Schar School of Policy and Government                                 21
+ Error Propagation:
+
+     In reality, even for a simple linear function, errors can be correlated between variables:
+
+
+
+
+Schar School of Policy and Government                                                             22
+ Error Propagation:
+
+     In reality, even for a simple linear function, errors can be correlated between variables:
+                                                              Correlated Uncertainties
+                                                              (Can be systematic or random)
+
+
+
+
+Schar School of Policy and Government                                                             22
+ Error Propagation:
+
+     In reality, even for a simple linear function, errors can be correlated between variables:
+
+
+
+
+                                            0
+                                        0
+
+
+
+
+Schar School of Policy and Government                                                             22
+ Error Propagation:
+
+
+
+
+Schar School of Policy and Government   22
+ Error Propagation:
+
+
+
+
+       Key result: increase number of measurements
+       and decrease uncertainty from random errors by sqrt(n):
+
+       For an average, ai = 1/n and thus: σf = σ/sqrt(n)
+Schar School of Policy and Government                            22
+ Full Error Propagation Formula for Non-Linear Functions – linearize them as an approximation!
+
+
+
+
+Schar School of Policy and Government                                                            23
+ Propagation of Errors
+
+     In these equations a and b are constants, u and v are variables
+
+
+
+
+Schar School of Policy and Government                                  24
+ Propagation of Errors
+
+     In these equations a and b are constants, u and v are variables
+
+
+
+
+Schar School of Policy and Government                                  24
+ What does this mean?
+
+     The area of a rectangle is given by:
+     A = LW
+     You have the following measurements:
+     L=22.1±0.1cm W=7.3 ±0.2cm
+     What is the uncertainty in A?
+
+
+
+
+Schar School of Policy and Government       26
+ Signal-to-Noise Ratio
+
+     Now that we understand errors/uncertainties, we can discuss a measure of the significance of
+     an observational result.
+     Signal is the number of “detections.” For our purposes, at least to begin, signal will generally be
+     the number of photons detected from our source.
+     Noise in this first case is “everything else” including photons from the “sky,” signal from the
+     electronics, and random fluctuations due to photon detection being a poisson process.
+     In the simple case where there is no electronic or sky noise:
+
+
+
+
+Schar School of Policy and Government                                                                      27
+ Signal-to-Noise Cont.
+
+
+                                        Signal        Noise    S/N
+                                        10            3.16     3.16
+                                        100 (102)     10.00    10.00
+                                        1000 (103)    31.62    31.62
+                                        10000 (104)   100.00   100.00
+                                        100000 (105) 316.23    316.23
+
+
+
+     Note: if signal increases linearly with time observing time must be increased by
+     a factor of 100 for S/N to increase by a factor of 10. This is what we mean when
+     we say ”The SNR goes as the square root of the integration time.”
+Schar School of Policy and Government                                                   28
+

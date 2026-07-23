@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "verified_utc": "2026-07-23T05:56:15Z",
+  "pipeline_version": "1.1.0",
+  "science_files_expected": 283,
+  "science_files_found": 283,
+  "science_checksums_valid": 283,
+  "calibration_checksums_valid": 4,
+  "sampled_science_files_all_finite": 283,
+  "partial_files_found": [],
+  "bjd_tdb_start": 2459782.598234811,
+  "bjd_tdb_end": 2459782.8386683143,
+  "bjd_tdb_strictly_increasing": true,
+  "formula_spot_checks": [
+    {
+      "sequence": 1,
+      "sampled_pixels": 256,
+      "maximum_absolute_difference_adu": 0.0,
+      "bjd_tdb_absolute_difference_days": 0.0
+    },
+    {
+      "sequence": 142,
+      "sampled_pixels": 256,
+      "maximum_absolute_difference_adu": 0.0,
+      "bjd_tdb_absolute_difference_days": 0.0
+    },
+    {
+      "sequence": 283,
+      "sampled_pixels": 256,
+      "maximum_absolute_difference_adu": 0.0,
+      "bjd_tdb_absolute_difference_days": 0.0
+    }
+  ],
+  "errors": [],
+  "elapsed_seconds": 33.05563366699971
+}

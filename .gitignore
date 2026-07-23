@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+
+# Personal notes and planning files stay on this computer.
+/docs/
+
+# Reproducible TOI-3505 calibration products are too large for normal Git.
+# Keep the generated README and compact QA artifacts, but not the FITS images.
+data/ground/toi3505/calibration/*.fits
+data/ground/toi3505/reduced/*.fits
+data/ground/toi3505/**/*.partial

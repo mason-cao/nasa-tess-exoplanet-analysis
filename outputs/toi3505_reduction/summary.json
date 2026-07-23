@@ -1,0 +1,84 @@
+{
+  "pipeline_version": "1.1.0",
+  "created_utc": "2026-07-23T05:51:36Z",
+  "calibration_formula": "(raw science - median 50 s dark) / median normalized R flat",
+  "bias_subtracted": false,
+  "dark_exposure_scaled": false,
+  "flat_gradient_removed": true,
+  "cosmic_ray_filter_applied": false,
+  "output_bitpix": -32,
+  "inventory": {
+    "archive_count": 6,
+    "archives": [
+      "TOI_3505.01-20260714T190730Z-1-001.zip",
+      "TOI_3505.01-20260714T190730Z-1-002.zip",
+      "TOI_3505.01-20260714T190730Z-1-003.zip",
+      "TOI_3505.01-20260714T190730Z-1-004.zip",
+      "TOI_3505.01-20260714T190730Z-1-005.zip",
+      "TOI_3505.01-20260714T190730Z-1-006.zip"
+    ],
+    "science_frames": 283,
+    "science_sequence_start": 1,
+    "science_sequence_end": 283,
+    "dark_50s": 10,
+    "dark_3_5s": 10,
+    "flat_3_5s_r": 10,
+    "duplicate_science_members": [
+      {
+        "sequence": 34,
+        "selected": "TOI_3505.01/TOI_3505.01_50.000s_R-0034.fits",
+        "ignored": [
+          "TOI_3505.01/TOI_3505.01_50.000s_R-0034(1).fits"
+        ],
+        "crc": 2123369012,
+        "file_size": 33560640
+      }
+    ]
+  },
+  "reduced_science_frames": 283,
+  "qa_flagged_frames": 3,
+  "qa_flagged_sequences": [
+    270,
+    282,
+    283
+  ],
+  "frames_with_wcs": 0,
+  "contact_sheet_frames": 283,
+  "contact_sheet_pages": 7,
+  "bjd_tdb_start": 2459782.598234811,
+  "bjd_tdb_end": 2459782.8386683143,
+  "master_dark_3_5_stats": {
+    "mean": 1027.363489151001,
+    "median": 1027.0,
+    "mad": 6.6716999999999995,
+    "p01": 1014.0,
+    "p99": 1048.5,
+    "min": 1000.5,
+    "max": 2377.5,
+    "finite_fraction": 1.0
+  },
+  "master_dark_50_stats": {
+    "mean": 1029.9509582519531,
+    "median": 1029.0,
+    "mad": 5.9304,
+    "p01": 1017.0,
+    "p99": 1051.5,
+    "min": 1006.0,
+    "max": 13151.0,
+    "finite_fraction": 1.0
+  },
+  "master_flat_stats": {
+    "mean": 0.9986570399911159,
+    "median": 0.9974262416362762,
+    "mad": 0.0375430013358593,
+    "p01": 0.9067870652675628,
+    "p99": 1.0640322303771972,
+    "min": 0.06795767694711685,
+    "max": 1.1024991273880005,
+    "finite_fraction": 1.0
+  },
+  "master_flat_review_pixels": 4097,
+  "master_flat_review_fraction": 0.0002442002296447754,
+  "reduced_directory_size_bytes": 18993692160,
+  "elapsed_seconds": 67.14239891699981
+}
