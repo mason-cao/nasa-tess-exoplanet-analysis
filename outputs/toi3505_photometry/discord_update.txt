@@ -1,5 +1,0 @@
-I finished multi-aperture photometry for TOI-3505.01 on the 281 usable aligned R-band images. I used a 35-pixel source aperture and compared 70-100 and 70-139 pixel sky rings with background-star removal on. The 70-139 ring was slightly better in this check (0.325% robust scatter versus 0.330%), so I kept it for now.
-
-I also checked each comparison star. Using all ten gave 0.325% robust scatter. My working set is C2, C3, C5, C6, C7, C10, C11, which gave 0.300%; I set the other stars aside for review. The stated ephemeris puts the closest transit midpoint before these images, so I am treating this as a photometry-quality check rather than a transit detection.
-
-I saved the working AstroImageJ table, aperture file, and plot configuration with detrending and the transit fit turned off. Does the 70-139 sky ring and this comparison-star set look reasonable? Also, should I treat this sequence as a reduction-quality exercise, or is there another TOI-3505 sequence that contains the predicted transit? I can attach the light curve, seeing profile, measurement table, aperture screenshot, and observing-condition plots.

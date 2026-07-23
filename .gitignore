@@ -7,6 +7,11 @@ tmp/pdfs/*.png
 # Personal notes and planning files stay on this computer.
 /docs/
 
+# Keep Discord posts, drafts, and announcements out of the repository.
+/docs/discord-messages.md
+/outputs/**/discord_post.txt
+/outputs/**/discord_update.txt
+
 # Reproducible TOI-3505 calibration products are too large for normal Git.
 # Keep the generated README and compact QA artifacts, but not the FITS images.
 data/ground/toi3505/calibration/*.fits

@@ -326,10 +326,6 @@ seeing and comparison-star trends across the full set of usable images.
 """
     (output_dir / "README.md").write_text(notes, encoding="utf-8")
 
-    discord = f"""I plate-solved the first reduced TOI-3505.01 image at {pixel_scale:.3f} arcsec/pixel. The target position from the plate solution and the center measured by AstroImageJ are only {position_difference:.2f} pixel apart. The Seeing Profile gave a FWHM of {fwhm:.2f} pixels and starting radii of {source_radius:.0f}, {background_inner:.0f}, and {background_outer:.0f} pixels. A nearby star is {nearby_star_distance:.1f} pixels away, so it falls inside the outer background ring. I am going to compare that with a {background_inner:.0f}-{clean_background_outer:.0f} pixel background area while I check the seeing and comparison-star trends across all 281 usable images.
-"""
-    (output_dir / "discord_update.txt").write_text(discord, encoding="utf-8")
-
 
 def main() -> None:
     args = parse_args()

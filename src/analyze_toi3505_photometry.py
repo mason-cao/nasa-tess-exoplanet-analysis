@@ -641,24 +641,6 @@ predicted transit model only after that timing question is resolved.
 """
     (output_dir / "README.md").write_text(text, encoding="utf-8")
 
-
-def write_discord_update(
-    output_dir: Path,
-    *,
-    narrow_scatter: float,
-    wide_scatter: float,
-    working_stars: list[str],
-    working_scatter: float,
-    all_scatter: float,
-) -> None:
-    text = f"""I finished multi-aperture photometry for TOI-3505.01 on the 281 usable aligned R-band images. I used a 35-pixel source aperture and compared 70-100 and 70-139 pixel sky rings with background-star removal on. The 70-139 ring was slightly better in this check ({wide_scatter:.3f}% robust scatter versus {narrow_scatter:.3f}%), so I kept it for now.
-
-I also checked each comparison star. Using all ten gave {all_scatter:.3f}% robust scatter. My working set is {', '.join(working_stars)}, which gave {working_scatter:.3f}%; I set the other stars aside for review. The stated ephemeris puts the closest transit midpoint before these images, so I am treating this as a photometry-quality check rather than a transit detection.
-
-I saved the working AstroImageJ table, aperture file, and plot configuration with detrending and the transit fit turned off. Does the 70-139 sky ring and this comparison-star set look reasonable? Also, should I treat this sequence as a reduction-quality exercise, or is there another TOI-3505 sequence that contains the predicted transit? I can attach the light curve, seeing profile, measurement table, aperture screenshot, and observing-condition plots."""
-    (output_dir / "discord_update.txt").write_text(text + "\n", encoding="utf-8")
-
-
 def main() -> None:
     args = parse_args()
     narrow_path = args.narrow_table.resolve()
@@ -818,14 +800,6 @@ def main() -> None:
         end_bjd=end_bjd,
         closest_midpoint=midpoint,
         review_count=int(flags.sum()),
-    )
-    write_discord_update(
-        output_dir,
-        narrow_scatter=narrow_scatter,
-        wide_scatter=wide_scatter,
-        working_stars=working_stars,
-        working_scatter=working_scatter,
-        all_scatter=all_scatter,
     )
     print(json.dumps(summary, indent=2))
 
