@@ -9,4 +9,5 @@ __pycache__/
 data/ground/toi3505/calibration/*.fits
 data/ground/toi3505/reduced/*.fits
 data/ground/toi3505/aligned/*.fits
+data/ground/toi3505/plate_solved/*.fits
 data/ground/toi3505/**/*.partial

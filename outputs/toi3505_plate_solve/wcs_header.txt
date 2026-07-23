@@ -1,0 +1,111 @@
+SIMPLE  =                    T / Standard FITS file                             
+BITPIX  =                    8 / ASCII or bytes array                           
+NAXIS   =                    0 / Minimal header                                 
+EXTEND  =                    T / There may be FITS ext                          
+WCSAXES =                    2 / no comment                                     
+CTYPE1  = 'RA---TAN-SIP' / TAN (gnomic) projection + SIP distortions            
+CTYPE2  = 'DEC--TAN-SIP' / TAN (gnomic) projection + SIP distortions            
+EQUINOX =               2000.0 / Equatorial coordinates definition (yr)         
+LONPOLE =                180.0 / no comment                                     
+LATPOLE =                  0.0 / no comment                                     
+CRVAL1  =        297.080937129 / RA  of reference point                         
+CRVAL2  =        18.5863597645 / DEC of reference point                         
+CRPIX1  =        1485.25152505 / X reference pixel                              
+CRPIX2  =        2858.06495437 / Y reference pixel                              
+CUNIT1  = 'deg     ' / X pixel scale units                                      
+CUNIT2  = 'deg     ' / Y pixel scale units                                      
+CD1_1   =   -0.000100592100943 / Transformation matrix                          
+CD1_2   =   -1.11552035049E-06 / no comment                                     
+CD2_1   =    1.14150205365E-06 / no comment                                     
+CD2_2   =   -0.000100575042801 / no comment                                     
+IMAGEW  =                 4096 / Image width,  in pixels.                       
+IMAGEH  =                 4096 / Image height, in pixels.                       
+A_ORDER =                    2 / Polynomial order, axis 1                       
+A_0_0   =                    0 / no comment                                     
+A_0_1   =                    0 / no comment                                     
+A_0_2   =   -1.42297262175E-07 / no comment                                     
+A_1_0   =                    0 / no comment                                     
+A_1_1   =    8.06329045363E-08 / no comment                                     
+A_2_0   =   -2.55790424637E-07 / no comment                                     
+B_ORDER =                    2 / Polynomial order, axis 2                       
+B_0_0   =                    0 / no comment                                     
+B_0_1   =                    0 / no comment                                     
+B_0_2   =     2.3632821324E-08 / no comment                                     
+B_1_0   =                    0 / no comment                                     
+B_1_1   =   -6.91124785804E-08 / no comment                                     
+B_2_0   =    6.04097426465E-08 / no comment                                     
+AP_ORDER=                    2 / Inv polynomial order, axis 1                   
+AP_0_0  =   -0.000339375017364 / no comment                                     
+AP_0_1  =   -2.10001250774E-08 / no comment                                     
+AP_0_2  =    1.42398332027E-07 / no comment                                     
+AP_1_0  =    2.43548977645E-07 / no comment                                     
+AP_1_1  =   -8.08918009012E-08 / no comment                                     
+AP_2_0  =    2.56088278971E-07 / no comment                                     
+BP_ORDER=                    2 / Inv polynomial order, axis 2                   
+BP_0_0  =    0.000111328182124 / no comment                                     
+BP_0_1  =    2.39931849277E-08 / no comment                                     
+BP_0_2  =   -2.36750296751E-08 / no comment                                     
+BP_1_0  =   -5.22886074306E-08 / no comment                                     
+BP_1_1  =    6.91968149774E-08 / no comment                                     
+BP_2_0  =   -6.04974073615E-08 / no comment                                     
+HISTORY Created by the Astrometry.net suite.                                    
+HISTORY For more details, see http://astrometry.net.                            
+HISTORY Git URL https://github.com/dstndstn/astrometry.net                      
+HISTORY Git revision 0.97-19-g6c3a49f6                                          
+HISTORY Git date Thu_Jul_3_16:22:59_2025_+0000                                  
+HISTORY This is a WCS header was created by Astrometry.net.                     
+DATE    = '2026-07-23T07:03:44' / Date this file was created.                   
+COMMENT -- onefield solver parameters: --                                       
+COMMENT Index(0): /data/INDEXES/index-4100/index-4107.fits                      
+COMMENT Index(1): /data/INDEXES/index-4100/index-4108.fits                      
+COMMENT Index(2): /data/INDEXES/index-5200-HEAVY/index-5200-12.fits             
+COMMENT Index(3): /data/INDEXES/index-5200-HEAVY/index-5201-12.fits             
+COMMENT Index(4): /data/INDEXES/index-5200-HEAVY/index-5202-12.fits             
+COMMENT Index(5): /data/INDEXES/index-5200-HEAVY/index-5203-12.fits             
+COMMENT Index(6): /data/INDEXES/index-5200-HEAVY/index-5204-12.fits             
+COMMENT Index(7): /data/INDEXES/index-5200-HEAVY/index-5205-12.fits             
+COMMENT Index(8): /data/INDEXES/index-5200-HEAVY/index-5206-12.fits             
+COMMENT Field name: job.axy                                                     
+COMMENT Field scale lower: 0.3 arcsec/pixel                                     
+COMMENT Field scale upper: 0.4 arcsec/pixel                                     
+COMMENT X col name: X                                                           
+COMMENT Y col name: Y                                                           
+COMMENT Start obj: 0                                                            
+COMMENT End obj: 0                                                              
+COMMENT Solved_in: (null)                                                       
+COMMENT Solved_out: (null)                                                      
+COMMENT Parity: 2                                                               
+COMMENT Codetol: 0.01                                                           
+COMMENT Verify pixels: 1 pix                                                    
+COMMENT Maxquads: 0                                                             
+COMMENT Maxmatches: 0                                                           
+COMMENT Cpu limit: 600.000000 s                                                 
+COMMENT Time limit: 0 s                                                         
+COMMENT Total time limit: 0 s                                                   
+COMMENT Total CPU limit: 0.000000 s                                             
+COMMENT Tweak: yes                                                              
+COMMENT Tweak AB order: 2                                                       
+COMMENT Tweak ABP order: 2                                                      
+COMMENT --                                                                      
+COMMENT -- properties of the matching quad: --                                  
+COMMENT index id: 5203                                                          
+COMMENT index healpix: 12                                                       
+COMMENT index hpnside: 2                                                        
+COMMENT log odds: 734.237                                                       
+COMMENT odds: inf                                                               
+COMMENT quadno: 1283543                                                         
+COMMENT stars: 13392,13575,13550,13553                                          
+COMMENT field: 8,3,1,10                                                         
+COMMENT code error: 0.00139214                                                  
+COMMENT nmatch: 102                                                             
+COMMENT nconflict: 0                                                            
+COMMENT nfield: 114                                                             
+COMMENT nindex: 197                                                             
+COMMENT scale: 0.362124 arcsec/pix                                              
+COMMENT parity: 1                                                               
+COMMENT quads tried: 329                                                        
+COMMENT quads matched: 26                                                       
+COMMENT quads verified: 0                                                       
+COMMENT objs tried: 11                                                          
+COMMENT cpu time: 0.002371                                                      
+COMMENT --                                                                      

@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "plate_solve_version": "1.0.0",
+  "created_utc": "2026-07-23T07:22:25Z",
+  "input_file": "TOI_3505.01_50.000s_R-0001_out.fits",
+  "output_file": "TOI_3505.01_50.000s_R-0001_wcs.fits",
+  "submission_id": "15667980",
+  "sources_submitted": 114,
+  "full_image_uploaded": false,
+  "image_width_pixels": 4096,
+  "image_height_pixels": 4096,
+  "pixel_scale_arcsec": 0.3621236516728507,
+  "search_scale_arcsec_per_pixel": [
+    0.3,
+    0.4
+  ],
+  "search_radius_degrees": 0.3333333333333333,
+  "target_ra_degrees": 297.0434583333333,
+  "target_dec_degrees": 18.69891388888889,
+  "plate_solution_target_x_pixel_zero_based": 1849.7166405494077,
+  "plate_solution_target_y_pixel_zero_based": 1741.9397785374738,
+  "plate_solution_target_x_pixel_fits": 1850.7166405494077,
+  "plate_solution_target_y_pixel_fits": 1742.9397785374738,
+  "target_x_pixel_zero_based": 1849.4309855601423,
+  "target_y_pixel_zero_based": 1742.3076791940853,
+  "target_x_pixel_fits": 1850.4309855601423,
+  "target_y_pixel_fits": 1743.3076791940853,
+  "wcs_to_star_distance_pixels": 0.46577855900347853,
+  "target_width_pixels": 9.75781868274771,
+  "api_key_stored": false,
+  "elapsed_seconds": 0.5735012500008452
+}

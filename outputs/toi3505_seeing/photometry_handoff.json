@@ -1,0 +1,9 @@
+{
+  "status": "ready",
+  "target_reference_star": 13,
+  "comparison_stars": 10,
+  "minimum_brightness_ratio": 0.7019029852773672,
+  "maximum_brightness_ratio": 1.2766872936783973,
+  "maximum_width_difference_pixels": 0.188579027740305,
+  "minimum_edge_distance_pixels": 504.62362984260415
+}
