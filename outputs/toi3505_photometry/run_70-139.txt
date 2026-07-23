@@ -1,0 +1,4 @@
+Images: 281
+Virtual stack: yes
+Source radius: 35 pixels
+Sky ring: 70-139 pixels

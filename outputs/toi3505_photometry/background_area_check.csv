@@ -1,0 +1,3 @@
+sky_ring,target_robust_scatter_percent,target_clipped_standard_deviation_percent,target_full_standard_deviation_percent,median_sky_counts_per_pixel
+70-100 pixels,0.32962330811517726,0.38625349937881087,0.5480868119234001,466.715889390912
+70-139 pixels,0.3251888154885688,0.3775702565203308,0.5143757152237447,465.98927120343706

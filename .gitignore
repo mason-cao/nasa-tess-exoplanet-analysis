@@ -1,6 +1,9 @@
 __pycache__/
 *.py[cod]
 
+# Rendered lecture pages are temporary review files.
+tmp/pdfs/*.png
+
 # Personal notes and planning files stay on this computer.
 /docs/
 

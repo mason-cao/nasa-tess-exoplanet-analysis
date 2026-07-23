@@ -1,0 +1,96 @@
+{
+  "status": "pass",
+  "images_measured": 281,
+  "saturated_measurements": 0,
+  "source_radius_pixels": 35,
+  "chosen_sky_ring": "70-139 pixels",
+  "background_area_check": [
+    {
+      "sky_ring": "70-100 pixels",
+      "target_robust_scatter_percent": 0.32962330811517726,
+      "target_clipped_standard_deviation_percent": 0.38625349937881087,
+      "target_full_standard_deviation_percent": 0.5480868119234001,
+      "median_sky_counts_per_pixel": 466.715889390912
+    },
+    {
+      "sky_ring": "70-139 pixels",
+      "target_robust_scatter_percent": 0.3251888154885688,
+      "target_clipped_standard_deviation_percent": 0.3775702565203308,
+      "target_full_standard_deviation_percent": 0.5143757152237447,
+      "median_sky_counts_per_pixel": 465.98927120343706
+    }
+  ],
+  "working_comparison_stars": [
+    "C2",
+    "C3",
+    "C5",
+    "C6",
+    "C7",
+    "C10",
+    "C11"
+  ],
+  "comparison_stars_set_aside": [
+    "C4",
+    "C8",
+    "C9"
+  ],
+  "selection_steps": [
+    {
+      "stars_before": 10,
+      "removed": "C8",
+      "scatter_before_percent": 0.3251888154885688,
+      "scatter_after_percent": 0.3123792596594112,
+      "relative_improvement_percent": 3.9391132840507854
+    },
+    {
+      "stars_before": 9,
+      "removed": "C4",
+      "scatter_before_percent": 0.3123792596594112,
+      "scatter_after_percent": 0.3066803400031354,
+      "relative_improvement_percent": 1.82435916599885
+    },
+    {
+      "stars_before": 8,
+      "removed": "C9",
+      "scatter_before_percent": 0.3066803400031354,
+      "scatter_after_percent": 0.29955873643197173,
+      "relative_improvement_percent": 2.3221584960714634
+    }
+  ],
+  "target_robust_scatter_all_comparisons_percent": 0.3251888154885688,
+  "target_robust_scatter_working_set_percent": 0.29955873643197173,
+  "native_working_table_validation": {
+    "present": true,
+    "file": "TOI_3505.01_2022-07-22_R_working_measurements.xls",
+    "rows": 281,
+    "maximum_normalized_curve_difference": 1.1102230246251565e-15,
+    "maximum_comparison_count_difference": 1.862645149230957e-09
+  },
+  "review_points": 25,
+  "observation": {
+    "start_bjd_tdb": 2459782.598234811,
+    "end_bjd_tdb": 2459782.8094587056,
+    "duration_hours": 5.069373473525047,
+    "airmass_min": 1.0650149585083697,
+    "airmass_max": 1.3202923982859234,
+    "median_fwhm_pixels": 12.849719667980082,
+    "median_width_pixels": 21.16573343009517
+  },
+  "closest_predicted_transit_midpoint": {
+    "epoch_number": -4,
+    "midpoint_bjd_tdb": 2459781.8737625997,
+    "inside_observation": false,
+    "hours_from_observation_start": -17.387333068996668,
+    "hours_from_observation_end": -22.456706542521715
+  },
+  "working_light_curve_condition_correlations": {
+    "airmass": -0.21133356827093458,
+    "sky_counts_per_pixel": -0.23429090971607566,
+    "star_width_pixels": -0.02816465618377127,
+    "target_x_fits": -0.08242468121851675,
+    "target_y_fits": -0.02145338873242771,
+    "comparison_counts": 0.2478702146000916
+  },
+  "detrending_applied": false,
+  "transit_model_applied": false
+}

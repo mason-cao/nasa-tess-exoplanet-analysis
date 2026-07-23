@@ -1,0 +1,17 @@
+#AstroImageJ Saved Apertures
+#Thu Jul 23 05:10:16 EDT 2026
+.aperture.nameoverlay=true
+.aperture.radius=35.0
+.aperture.rback1=70.0
+.aperture.rback2=139.0
+.aperture.removebackstars=true
+.aperture.reposition=true
+.aperture.showremovedpixels=false
+.aperture.skyoverlay=false
+.aperture.valueoverlay=true
+.multiaperture.absmagapertures=99.999,99.999,99.999,99.999,99.999,99.999,99.999,99.999,99.999,99.999,99.999
+.multiaperture.isrefstar=false,true,true,false,true,true,true,false,false,true,true
+.multiaperture.previous=true
+.multiaperture.usevarsizeap=false
+.multiaperture.xapertures=1847.1644,2716.9744,1695.7684,655.11255,3129.0042,2075.9421,3328.786,632.5264,2000.8611,2298.6807,2511.8457
+.multiaperture.yapertures=2352.5164,928.6411,3525.642,789.06104,2252.9324,842.06683,3589.975,1725.1836,1315.148,3042.8757,2130.6267
