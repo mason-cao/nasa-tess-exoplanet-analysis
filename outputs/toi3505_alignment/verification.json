@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "verified_utc": "2026-07-23T06:42:43Z",
+  "alignment_version": "1.0.0",
+  "aligned_images_expected": 281,
+  "aligned_images_found": 281,
+  "valid_fits_checksums": 281,
+  "exact_whole_pixel_checks": 281,
+  "observation_times_preserved": 281,
+  "observation_times_in_order": true,
+  "x_shift_range_pixels": [
+    -30,
+    297
+  ],
+  "y_shift_range_pixels": [
+    -345,
+    40
+  ],
+  "unfinished_files": [],
+  "errors": [],
+  "elapsed_seconds": 35.85098379199917
+}

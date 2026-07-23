@@ -576,7 +576,8 @@ def reduce_science_frames(
     spotcheck_thumbnails: dict[int, tuple[np.ndarray, np.ndarray]] = {}
     review_thumbnails: dict[int, np.ndarray] = {}
 
-    if overwrite and jsonl_path.exists():
+    # This file records one row per frame for the current run.
+    if jsonl_path.exists():
         jsonl_path.unlink()
 
     for index, ref in enumerate(refs):
@@ -757,39 +758,39 @@ def plot_master_calibrations(
 ) -> None:
     figure, axes = plt.subplots(2, 2, figsize=(12, 10))
     products = [
-        (master_dark_3_5[::8, ::8], "Median master dark - 3.5 s", "ADU"),
-        (master_dark_50[::8, ::8], "Median master dark - 50 s", "ADU"),
-        (master_flat[::8, ::8], "Gradient-corrected median master flat - R", "Relative response"),
+        (master_dark_3_5[::8, ::8], "3.5-second master dark", "Brightness (ADU)"),
+        (master_dark_50[::8, ::8], "50-second master dark", "Brightness (ADU)"),
+        (master_flat[::8, ::8], "R-band master flat", "Relative sensitivity"),
     ]
     for axis, (image, title, label) in zip(axes.flat[:3], products):
         finite = image[np.isfinite(image)]
         low, high = np.percentile(finite, [0.5, 99.5])
         rendered = axis.imshow(image, origin="lower", cmap="gray", vmin=low, vmax=high)
         axis.set_title(title)
-        axis.set_xlabel("Binned CCD x")
-        axis.set_ylabel("Binned CCD y")
+        axis.set_xlabel("Camera x position")
+        axis.set_ylabel("Camera y position")
         figure.colorbar(rendered, ax=axis, fraction=0.046, pad=0.04, label=label)
 
     profile_axis = axes[1, 1]
     profile_axis.plot(
         np.nanmedian(master_flat, axis=0),
-        label="column median",
+        label="Across each column",
         linewidth=1.1,
     )
     profile_axis.plot(
         np.nanmedian(master_flat, axis=1),
-        label="row median",
+        label="Across each row",
         linewidth=1.1,
     )
     profile_axis.axhline(1.0, color="0.3", linestyle=":")
     profile_axis.set(
-        title="Master-flat spatial profiles",
-        xlabel="Pixel index",
-        ylabel="Relative response",
+        title="Master flat across the camera",
+        xlabel="Pixel position",
+        ylabel="Relative sensitivity",
     )
     profile_axis.legend()
     profile_axis.grid(alpha=0.2)
-    figure.suptitle("TOI-3505.01 calibration products", fontsize=16)
+    figure.suptitle("TOI-3505.01 darks and flat", fontsize=16)
     figure.tight_layout()
     figure.savefig(output, dpi=180)
     plt.close(figure)
@@ -804,14 +805,14 @@ def plot_raw_calibrated_comparison(
     for row_index, sequence in enumerate(sequences):
         raw, calibrated = thumbnails[sequence]
         for column, (image, label) in enumerate(
-            ((raw, "raw"), (calibrated, "dark-subtracted / flat-divided"))
+            ((raw, "Before calibration"), (calibrated, "After calibration"))
         ):
             axis = axes[row_index, column]
             axis.imshow(image, origin="lower", cmap="gray", norm=display_normalization(image))
             axis.set_title(f"Frame {sequence:04d} - {label}")
-            axis.set_xlabel("Binned CCD x")
-            axis.set_ylabel("Binned CCD y")
-    figure.suptitle("TOI-3505.01 reduction spot checks", fontsize=16)
+            axis.set_xlabel("Camera x position")
+            axis.set_ylabel("Camera y position")
+    figure.suptitle("TOI-3505.01 before and after calibration", fontsize=16)
     figure.tight_layout()
     figure.savefig(output, dpi=180)
     plt.close(figure)
@@ -848,7 +849,7 @@ def plot_contact_sheets(
                 norm=display_normalization(image),
             )
             record = table_by_sequence.loc[sequence]
-            flag = " | QA" if bool(record["qa_flag"]) else ""
+            flag = " | check" if bool(record["qa_flag"]) else ""
             axis.set_title(
                 f"{sequence:04d} | BJD-2459782 {record['bjd_tdb'] - 2459782:.4f}{flag}",
                 fontsize=7.5,
@@ -859,7 +860,7 @@ def plot_contact_sheets(
         for axis in axes_array[len(page_sequences) :]:
             axis.axis("off")
         figure.suptitle(
-            "TOI-3505.01 calibrated sequence visual review "
+            "Calibrated TOI-3505.01 images "
             f"({page_index + 1}/{page_count}; frames {page_sequences[0]:04d}-"
             f"{page_sequences[-1]:04d})",
             fontsize=15,
@@ -876,8 +877,8 @@ def plot_reduction_timeseries(table: pd.DataFrame, output: Path) -> None:
     x = table["bjd_tdb"] - 2459782.0
     figure, axes = plt.subplots(4, 1, figsize=(12, 10), sharex=True)
     metrics = [
-        ("calibrated_median", "Sampled image median (ADU)"),
-        ("calibrated_mad", "Sampled image robust scatter (ADU)"),
+        ("calibrated_median", "Background level (ADU)"),
+        ("calibrated_mad", "Image noise (ADU)"),
         ("airmass", "Airmass"),
         ("ccd_temp_c", "CCD temperature (C)"),
     ]
@@ -890,14 +891,14 @@ def plot_reduction_timeseries(table: pd.DataFrame, output: Path) -> None:
             table.loc[~good, column],
             color="#c43d3d",
             s=20,
-            label="automatic review candidate",
+            label="Check this frame",
         )
         axis.set_ylabel(label)
         axis.grid(alpha=0.2)
     if table["qa_flag"].any():
         axes[0].legend(loc="best")
-    axes[-1].set_xlabel("BJD_TDB - 2459782")
-    figure.suptitle("TOI-3505.01 calibration quality timeline", fontsize=16)
+    axes[-1].set_xlabel("Time (BJD TDB - 2459782)")
+    figure.suptitle("TOI-3505.01 image checks through the night", fontsize=16)
     figure.tight_layout()
     figure.savefig(output, dpi=180)
     plt.close(figure)
@@ -911,7 +912,7 @@ def write_readme(
 ) -> None:
     content = f"""# TOI-3505.01 calibrated image set
 
-Generated by `src/reduce_toi3505.py` (version {PIPELINE_VERSION}).
+Made with `src/reduce_toi3505.py` (version {PIPELINE_VERSION}).
 
 ## Calibration equation
 
@@ -937,17 +938,18 @@ Generated by `src/reduce_toi3505.py` (version {PIPELINE_VERSION}).
 - `{display_path(diagnostics_dir / '04_calibrated_contact_sheet_page_*.png')}` (every reduced frame)
 - `{display_path(diagnostics_dir / '05_astroimagej_frame_0001.png')}`, `{display_path(diagnostics_dir / '06_astroimagej_frame_0282.png')}`, and `{display_path(diagnostics_dir / '07_astroimagej_frame_0283.png')}` (AstroImageJ compatibility/end-frame checks)
 - `{display_path(diagnostics_dir / 'verification.json')}` (independent checksum, timing, and formula validation)
+- `outputs/toi3505_alignment/` (movement plot, alignment check, shift table, and file checks)
 
 ## Status
 
 - Reduced frames: {summary['reduced_science_frames']}
-- Automatically flagged for visual review: {summary['qa_flagged_frames']}
+- Frames marked for a closer look: {summary['qa_flagged_frames']}
 - Frames with WCS headers before plate solving: {summary['frames_with_wcs']}
 - Calibrated frames represented in visual-review sheets: {summary['contact_sheet_frames']}
 
-Automatic flags are review candidates, not rejected frames. Inspect the sequence in AstroImageJ before deciding whether to exclude any image. The next stage is plate solving or alignment, followed by seeing-profile measurement and multi-aperture photometry.
+The marked frames are not automatically rejected. Frames 0001-0281 were aligned separately with whole-pixel shifts. Frames 0282-0283 were kept in the archive but left out of the working sequence because their star field is not usable. The next step is to locate the target, save its Seeing Profile, and use those radii for multi-aperture photometry.
 
-## Reproduce
+## Run it again
 
 From the repository root:
 

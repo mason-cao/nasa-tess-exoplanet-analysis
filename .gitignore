@@ -8,4 +8,5 @@ __pycache__/
 # Keep the generated README and compact QA artifacts, but not the FITS images.
 data/ground/toi3505/calibration/*.fits
 data/ground/toi3505/reduced/*.fits
+data/ground/toi3505/aligned/*.fits
 data/ground/toi3505/**/*.partial

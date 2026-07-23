@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "alignment_version": "1.0.0",
+  "created_utc": "2026-07-23T06:42:01Z",
+  "reference_frame": "TOI_3505.01_50.000s_R-0001_out.fits",
+  "first_sequence": 1,
+  "last_sequence": 281,
+  "aligned_frames": 281,
+  "excluded_sequences": [
+    282,
+    283
+  ],
+  "reference_stars": 25,
+  "minimum_stars_used": 20,
+  "median_stars_used": 25.0,
+  "whole_pixel_shifts": true,
+  "interpolation_applied": false,
+  "median_position_rms_pixels": 0.5264237689584341,
+  "maximum_position_rms_pixels": 0.81897352259436,
+  "x_shift_range_pixels": [
+    -30,
+    297
+  ],
+  "y_shift_range_pixels": [
+    -345,
+    40
+  ],
+  "bjd_tdb_start": 2459782.598234811,
+  "bjd_tdb_end": 2459782.8094587056,
+  "aligned_images_written": true,
+  "elapsed_seconds": 58.77150287499899
+}

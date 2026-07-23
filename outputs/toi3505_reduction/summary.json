@@ -1,6 +1,6 @@
 {
   "pipeline_version": "1.1.0",
-  "created_utc": "2026-07-23T05:51:36Z",
+  "created_utc": "2026-07-23T06:44:08Z",
   "calibration_formula": "(raw science - median 50 s dark) / median normalized R flat",
   "bias_subtracted": false,
   "dark_exposure_scaled": false,
@@ -80,5 +80,5 @@
   "master_flat_review_pixels": 4097,
   "master_flat_review_fraction": 0.0002442002296447754,
   "reduced_directory_size_bytes": 18993692160,
-  "elapsed_seconds": 67.14239891699981
+  "elapsed_seconds": 68.43905408299906
 }

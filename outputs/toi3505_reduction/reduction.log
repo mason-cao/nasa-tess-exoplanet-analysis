@@ -64,3 +64,69 @@
 2026-07-23 01:51:24,393 | INFO | Reduced 280/283 science frames (latest TOI_3505.01_50.000s_R-0280.fits, 0.15 s)
 2026-07-23 01:51:24,863 | INFO | Reduced 283/283 science frames (latest TOI_3505.01_50.000s_R-0283.fits, 0.16 s)
 2026-07-23 01:51:36,844 | INFO | Reduction complete: {"bias_subtracted": false, "bjd_tdb_end": 2459782.8386683143, "bjd_tdb_start": 2459782.598234811, "calibration_formula": "(raw science - median 50 s dark) / median normalized R flat", "contact_sheet_frames": 283, "contact_sheet_pages": 7, "cosmic_ray_filter_applied": false, "created_utc": "2026-07-23T05:51:36Z", "dark_exposure_scaled": false, "elapsed_seconds": 67.14239891699981, "flat_gradient_removed": true, "frames_with_wcs": 0, "inventory": {"archive_count": 6, "archives": ["TOI_3505.01-20260714T190730Z-1-001.zip", "TOI_3505.01-20260714T190730Z-1-002.zip", "TOI_3505.01-20260714T190730Z-1-003.zip", "TOI_3505.01-20260714T190730Z-1-004.zip", "TOI_3505.01-20260714T190730Z-1-005.zip", "TOI_3505.01-20260714T190730Z-1-006.zip"], "dark_3_5s": 10, "dark_50s": 10, "duplicate_science_members": [{"crc": 2123369012, "file_size": 33560640, "ignored": ["TOI_3505.01/TOI_3505.01_50.000s_R-0034(1).fits"], "selected": "TOI_3505.01/TOI_3505.01_50.000s_R-0034.fits", "sequence": 34}], "flat_3_5s_r": 10, "science_frames": 283, "science_sequence_end": 283, "science_sequence_start": 1}, "master_dark_3_5_stats": {"finite_fraction": 1.0, "mad": 6.6716999999999995, "max": 2377.5, "mean": 1027.363489151001, "median": 1027.0, "min": 1000.5, "p01": 1014.0, "p99": 1048.5}, "master_dark_50_stats": {"finite_fraction": 1.0, "mad": 5.9304, "max": 13151.0, "mean": 1029.9509582519531, "median": 1029.0, "min": 1006.0, "p01": 1017.0, "p99": 1051.5}, "master_flat_review_fraction": 0.0002442002296447754, "master_flat_review_pixels": 4097, "master_flat_stats": {"finite_fraction": 1.0, "mad": 0.0375430013358593, "max": 1.1024991273880005, "mean": 0.9986570399911159, "median": 0.9974262416362762, "min": 0.06795767694711685, "p01": 0.9067870652675628, "p99": 1.0640322303771972}, "output_bitpix": -32, "pipeline_version": "1.1.0", "qa_flagged_frames": 3, "qa_flagged_sequences": [270, 282, 283], "reduced_directory_size_bytes": 18993692160, "reduced_science_frames": 283}
+2026-07-23 02:42:59,798 | INFO | Inventory validated: {"archive_count": 6, "archives": ["TOI_3505.01-20260714T190730Z-1-001.zip", "TOI_3505.01-20260714T190730Z-1-002.zip", "TOI_3505.01-20260714T190730Z-1-003.zip", "TOI_3505.01-20260714T190730Z-1-004.zip", "TOI_3505.01-20260714T190730Z-1-005.zip", "TOI_3505.01-20260714T190730Z-1-006.zip"], "dark_3_5s": 10, "dark_50s": 10, "duplicate_science_members": [{"crc": 2123369012, "file_size": 33560640, "ignored": ["TOI_3505.01/TOI_3505.01_50.000s_R-0034(1).fits"], "selected": "TOI_3505.01/TOI_3505.01_50.000s_R-0034.fits", "sequence": 34}], "flat_3_5s_r": 10, "science_frames": 283, "science_sequence_end": 283, "science_sequence_start": 1}
+2026-07-23 02:42:59,799 | INFO | Building 3.5 s median master dark
+2026-07-23 02:42:59,906 | INFO | Loaded dark 1/10: Dark_3.500s-0001.fits
+2026-07-23 02:43:00,010 | INFO | Loaded dark 2/10: Dark_3.500s-0002.fits
+2026-07-23 02:43:00,101 | INFO | Loaded dark 3/10: Dark_3.500s-0003.fits
+2026-07-23 02:43:00,194 | INFO | Loaded dark 4/10: Dark_3.500s-0004.fits
+2026-07-23 02:43:00,288 | INFO | Loaded dark 5/10: Dark_3.500s-0005.fits
+2026-07-23 02:43:00,384 | INFO | Loaded dark 6/10: Dark_3.500s-0006.fits
+2026-07-23 02:43:00,480 | INFO | Loaded dark 7/10: Dark_3.500s-0007.fits
+2026-07-23 02:43:00,571 | INFO | Loaded dark 8/10: Dark_3.500s-0008.fits
+2026-07-23 02:43:00,664 | INFO | Loaded dark 9/10: Dark_3.500s-0009.fits
+2026-07-23 02:43:00,753 | INFO | Loaded dark 10/10: Dark_3.500s-0010.fits
+2026-07-23 02:43:03,372 | INFO | Building 50 s median master dark
+2026-07-23 02:43:03,466 | INFO | Loaded dark 1/10: Dark_50.000s-0001.fits
+2026-07-23 02:43:03,557 | INFO | Loaded dark 2/10: Dark_50.000s-0002.fits
+2026-07-23 02:43:03,647 | INFO | Loaded dark 3/10: Dark_50.000s-0003.fits
+2026-07-23 02:43:03,736 | INFO | Loaded dark 4/10: Dark_50.000s-0004.fits
+2026-07-23 02:43:03,824 | INFO | Loaded dark 5/10: Dark_50.000s-0005.fits
+2026-07-23 02:43:03,912 | INFO | Loaded dark 6/10: Dark_50.000s-0006.fits
+2026-07-23 02:43:04,001 | INFO | Loaded dark 7/10: Dark_50.000s-0007.fits
+2026-07-23 02:43:04,090 | INFO | Loaded dark 8/10: Dark_50.000s-0008.fits
+2026-07-23 02:43:04,180 | INFO | Loaded dark 9/10: Dark_50.000s-0009.fits
+2026-07-23 02:43:04,274 | INFO | Loaded dark 10/10: Dark_50.000s-0010.fits
+2026-07-23 02:43:06,657 | INFO | Building dark-corrected median R master flat
+2026-07-23 02:43:06,891 | INFO | Calibrated flat 1/10: Flat_3.500s_R-0001-final.fits
+2026-07-23 02:43:07,109 | INFO | Calibrated flat 2/10: Flat_3.500s_R-0002-final.fits
+2026-07-23 02:43:07,328 | INFO | Calibrated flat 3/10: Flat_3.500s_R-0003-final.fits
+2026-07-23 02:43:07,548 | INFO | Calibrated flat 4/10: Flat_3.500s_R-0004-final.fits
+2026-07-23 02:43:07,762 | INFO | Calibrated flat 5/10: Flat_3.500s_R-0005-final.fits
+2026-07-23 02:43:07,975 | INFO | Calibrated flat 6/10: Flat_3.500s_R-0006-final.fits
+2026-07-23 02:43:08,191 | INFO | Calibrated flat 7/10: Flat_3.500s_R-0007-final.fits
+2026-07-23 02:43:08,399 | INFO | Calibrated flat 8/10: Flat_3.500s_R-0008-final.fits
+2026-07-23 02:43:08,619 | INFO | Calibrated flat 9/10: Flat_3.500s_R-0009-final.fits
+2026-07-23 02:43:08,833 | INFO | Calibrated flat 10/10: Flat_3.500s_R-0010-final.fits
+2026-07-23 02:43:11,514 | INFO | Reducing 283 science frames
+2026-07-23 02:43:11,793 | INFO | Reduced 1/283 science frames (latest TOI_3505.01_50.000s_R-0001.fits, 0.28 s)
+2026-07-23 02:43:13,122 | INFO | Reduced 10/283 science frames (latest TOI_3505.01_50.000s_R-0010.fits, 0.14 s)
+2026-07-23 02:43:14,777 | INFO | Reduced 20/283 science frames (latest TOI_3505.01_50.000s_R-0020.fits, 0.14 s)
+2026-07-23 02:43:16,416 | INFO | Reduced 30/283 science frames (latest TOI_3505.01_50.000s_R-0030.fits, 0.28 s)
+2026-07-23 02:43:17,952 | INFO | Reduced 40/283 science frames (latest TOI_3505.01_50.000s_R-0040.fits, 0.14 s)
+2026-07-23 02:43:19,556 | INFO | Reduced 50/283 science frames (latest TOI_3505.01_50.000s_R-0050.fits, 0.15 s)
+2026-07-23 02:43:21,035 | INFO | Reduced 60/283 science frames (latest TOI_3505.01_50.000s_R-0060.fits, 0.22 s)
+2026-07-23 02:43:22,403 | INFO | Reduced 70/283 science frames (latest TOI_3505.01_50.000s_R-0070.fits, 0.13 s)
+2026-07-23 02:43:23,894 | INFO | Reduced 80/283 science frames (latest TOI_3505.01_50.000s_R-0080.fits, 0.15 s)
+2026-07-23 02:43:25,508 | INFO | Reduced 90/283 science frames (latest TOI_3505.01_50.000s_R-0090.fits, 0.23 s)
+2026-07-23 02:43:27,044 | INFO | Reduced 100/283 science frames (latest TOI_3505.01_50.000s_R-0100.fits, 0.16 s)
+2026-07-23 02:43:28,651 | INFO | Reduced 110/283 science frames (latest TOI_3505.01_50.000s_R-0110.fits, 0.14 s)
+2026-07-23 02:43:30,276 | INFO | Reduced 120/283 science frames (latest TOI_3505.01_50.000s_R-0120.fits, 0.13 s)
+2026-07-23 02:43:31,663 | INFO | Reduced 130/283 science frames (latest TOI_3505.01_50.000s_R-0130.fits, 0.13 s)
+2026-07-23 02:43:33,062 | INFO | Reduced 140/283 science frames (latest TOI_3505.01_50.000s_R-0140.fits, 0.14 s)
+2026-07-23 02:43:34,788 | INFO | Reduced 150/283 science frames (latest TOI_3505.01_50.000s_R-0150.fits, 0.13 s)
+2026-07-23 02:43:36,268 | INFO | Reduced 160/283 science frames (latest TOI_3505.01_50.000s_R-0160.fits, 0.14 s)
+2026-07-23 02:43:37,833 | INFO | Reduced 170/283 science frames (latest TOI_3505.01_50.000s_R-0170.fits, 0.14 s)
+2026-07-23 02:43:39,457 | INFO | Reduced 180/283 science frames (latest TOI_3505.01_50.000s_R-0180.fits, 0.14 s)
+2026-07-23 02:43:40,971 | INFO | Reduced 190/283 science frames (latest TOI_3505.01_50.000s_R-0190.fits, 0.13 s)
+2026-07-23 02:43:42,470 | INFO | Reduced 200/283 science frames (latest TOI_3505.01_50.000s_R-0200.fits, 0.13 s)
+2026-07-23 02:43:43,925 | INFO | Reduced 210/283 science frames (latest TOI_3505.01_50.000s_R-0210.fits, 0.13 s)
+2026-07-23 02:43:45,344 | INFO | Reduced 220/283 science frames (latest TOI_3505.01_50.000s_R-0220.fits, 0.18 s)
+2026-07-23 02:43:46,926 | INFO | Reduced 230/283 science frames (latest TOI_3505.01_50.000s_R-0230.fits, 0.14 s)
+2026-07-23 02:43:48,668 | INFO | Reduced 240/283 science frames (latest TOI_3505.01_50.000s_R-0240.fits, 0.20 s)
+2026-07-23 02:43:50,735 | INFO | Reduced 250/283 science frames (latest TOI_3505.01_50.000s_R-0250.fits, 0.18 s)
+2026-07-23 02:43:52,386 | INFO | Reduced 260/283 science frames (latest TOI_3505.01_50.000s_R-0260.fits, 0.17 s)
+2026-07-23 02:43:54,326 | INFO | Reduced 270/283 science frames (latest TOI_3505.01_50.000s_R-0270.fits, 0.29 s)
+2026-07-23 02:43:55,613 | INFO | Reduced 280/283 science frames (latest TOI_3505.01_50.000s_R-0280.fits, 0.13 s)
+2026-07-23 02:43:56,122 | INFO | Reduced 283/283 science frames (latest TOI_3505.01_50.000s_R-0283.fits, 0.23 s)
+2026-07-23 02:44:08,233 | INFO | Reduction complete: {"bias_subtracted": false, "bjd_tdb_end": 2459782.8386683143, "bjd_tdb_start": 2459782.598234811, "calibration_formula": "(raw science - median 50 s dark) / median normalized R flat", "contact_sheet_frames": 283, "contact_sheet_pages": 7, "cosmic_ray_filter_applied": false, "created_utc": "2026-07-23T06:44:08Z", "dark_exposure_scaled": false, "elapsed_seconds": 68.43905408299906, "flat_gradient_removed": true, "frames_with_wcs": 0, "inventory": {"archive_count": 6, "archives": ["TOI_3505.01-20260714T190730Z-1-001.zip", "TOI_3505.01-20260714T190730Z-1-002.zip", "TOI_3505.01-20260714T190730Z-1-003.zip", "TOI_3505.01-20260714T190730Z-1-004.zip", "TOI_3505.01-20260714T190730Z-1-005.zip", "TOI_3505.01-20260714T190730Z-1-006.zip"], "dark_3_5s": 10, "dark_50s": 10, "duplicate_science_members": [{"crc": 2123369012, "file_size": 33560640, "ignored": ["TOI_3505.01/TOI_3505.01_50.000s_R-0034(1).fits"], "selected": "TOI_3505.01/TOI_3505.01_50.000s_R-0034.fits", "sequence": 34}], "flat_3_5s_r": 10, "science_frames": 283, "science_sequence_end": 283, "science_sequence_start": 1}, "master_dark_3_5_stats": {"finite_fraction": 1.0, "mad": 6.6716999999999995, "max": 2377.5, "mean": 1027.363489151001, "median": 1027.0, "min": 1000.5, "p01": 1014.0, "p99": 1048.5}, "master_dark_50_stats": {"finite_fraction": 1.0, "mad": 5.9304, "max": 13151.0, "mean": 1029.9509582519531, "median": 1029.0, "min": 1006.0, "p01": 1017.0, "p99": 1051.5}, "master_flat_review_fraction": 0.0002442002296447754, "master_flat_review_pixels": 4097, "master_flat_stats": {"finite_fraction": 1.0, "mad": 0.0375430013358593, "max": 1.1024991273880005, "mean": 0.9986570399911159, "median": 0.9974262416362762, "min": 0.06795767694711685, "p01": 0.9067870652675628, "p99": 1.0640322303771972}, "output_bitpix": -32, "pipeline_version": "1.1.0", "qa_flagged_frames": 3, "qa_flagged_sequences": [270, 282, 283], "reduced_directory_size_bytes": 18993692160, "reduced_science_frames": 283}
