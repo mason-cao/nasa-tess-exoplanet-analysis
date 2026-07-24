@@ -1,0 +1,4 @@
+ensemble,description,all_frame_robust_scatter_ppt,primary_robust_scatter_ppt,primary_standard_deviation_ppt,adopted_for_final_light_curve,selection_note
+flux_sum_ensemble,target divided by the sum of all ten comparison-star counts,2.6894334161,2.4970201305,3.8944798095,True,The adopted all-ten flux sum remains fixed; this table is a robustness comparison.
+equal_star_ensemble,target divided by the mean of ten individually normalized stars,2.6553085875,2.3365164254,3.8664810024,False,The adopted all-ten flux sum remains fixed; this table is a robustness comparison.
+inverse_error_ensemble,target divided by an exposure-by-exposure inverse-error weighted mean,2.7649028498,2.4767878540,3.9427700451,False,The adopted all-ten flux sum remains fixed; this table is a robustness comparison.

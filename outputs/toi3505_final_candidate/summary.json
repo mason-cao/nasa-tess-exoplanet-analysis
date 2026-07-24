@@ -1,0 +1,234 @@
+{
+  "status": "ready_for_mentor_review",
+  "scientific_interpretation": "historically scheduled transit window with no fixed-window dimming; off transit under the current catalog ephemeris",
+  "images_measured": 281,
+  "measurements_archived": 281,
+  "measurements_used_in_primary_curve": 263,
+  "measurements_excluded_from_primary_curve": 18,
+  "review_points": 23,
+  "review_points_retained_in_primary_curve": 5,
+  "condition_model_fit_points": 263,
+  "source_radius_pixels": 25.0,
+  "sky_annulus_pixels": [
+    70,
+    139
+  ],
+  "primary_comparison_stars": [
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11"
+  ],
+  "all_frame_raw_robust_scatter_ppt": 2.6894334161111844,
+  "previous_35px_all_frame_raw_robust_scatter_ppt": 3.251888154885688,
+  "aperture_all_frame_robust_scatter_improvement_percent": 17.29625103893757,
+  "all_frame_raw_clipped_standard_deviation_ppt": 3.6852156818403192,
+  "primary_raw_robust_scatter_ppt": 2.4968989195518168,
+  "primary_raw_clipped_standard_deviation_ppt": 3.2722742501565554,
+  "previous_working_ensemble_primary_robust_scatter_ppt": 2.751702178142674,
+  "promoted_condition_model": "none",
+  "detrending_applied_to_adopted_curve": false,
+  "adopted_primary_robust_scatter_ppt": 2.4968989195518168,
+  "promoted_model_cv_robust_improvement_percent": 0.0,
+  "best_non_null_cv_model": "x",
+  "best_non_null_cv_robust_improvement_percent": -0.38371789333693945,
+  "fitted_model": {
+    "features": [],
+    "standardization_center": [],
+    "standardization_scale": [],
+    "coefficients": [
+      1.00004854461157
+    ]
+  },
+  "observation": {
+    "start_bjd_tdb": 2459782.598234811,
+    "end_bjd_tdb": 2459782.8094587056,
+    "duration_hours": 5.069373473525047
+  },
+  "closest_predicted_transit_midpoint": {
+    "epoch_number": -4,
+    "midpoint_bjd_tdb": 2459781.8737625997,
+    "inside_observation": false,
+    "hours_from_observation_start": -17.387333068996668,
+    "hours_from_observation_end": -22.456706542521715
+  },
+  "historical_schedule": {
+    "source_record": "data/program_records/toi3505/observing_schedule_2022-07-21.json",
+    "source_description": "TOI-3505.01 row copied by Mason from the internship observing-schedule spreadsheet and pasted into the project conversation",
+    "original_workbook_or_url_archived": false,
+    "source_limits": [
+      "The pasted row does not state a time zone.",
+      "The workbook name, URL, revision history, formulas, and cell formatting were not supplied.",
+      "The row gives ingress, egress, and period but no epoch, timing uncertainty, depth, or source for those predictions.",
+      "Finder Chart is display text; its underlying link target was not present in the pasted data."
+    ],
+    "row": {
+      "NoD": "2022-07-21",
+      "NoW": "Thursday",
+      "Target": "TOI 3505.01",
+      "Vmag": "11.24",
+      "Ingress": "0:15",
+      "Egress": "1:54",
+      "Start": "21:10",
+      "End": "4:55",
+      "Filter": "R",
+      "Exp": "50s",
+      "Priority": "3",
+      "Dis": "VPC-+",
+      "TOC": "",
+      "Student Sign Up": "Mason Cao",
+      "Observer 1": "Kevin",
+      "Observer 2": "Schar Students",
+      "Observer 3": "",
+      "Observer 4": "",
+      "Notes": "bad RA jumps at the beginning of the night",
+      "RA": "19:48:10",
+      "Dec": "#N/A",
+      "Orbital Period": "2.9151488",
+      "Apertures File": "",
+      "Finder Chart": "Finder Chart"
+    },
+    "working_interpretation": {
+      "timezone": "America/New_York",
+      "timezone_abbreviation": "EDT",
+      "utc_offset_hours": -4.0,
+      "source_timezone_explicit": false,
+      "times": {
+        "planned_start": {
+          "source_clock": "21:10",
+          "clock_datetime": "2022-07-21T21:10:00-04:00",
+          "utc_datetime": "2022-07-22T01:10:00+00:00",
+          "bjd_tdb": 2459782.5539275403
+        },
+        "ingress": {
+          "source_clock": "0:15",
+          "clock_datetime": "2022-07-22T00:15:00-04:00",
+          "utc_datetime": "2022-07-22T04:15:00+00:00",
+          "bjd_tdb": 2459782.682400599
+        },
+        "egress": {
+          "source_clock": "1:54",
+          "clock_datetime": "2022-07-22T01:54:00-04:00",
+          "utc_datetime": "2022-07-22T05:54:00+00:00",
+          "bjd_tdb": 2459782.7511509927
+        },
+        "planned_end": {
+          "source_clock": "4:55",
+          "clock_datetime": "2022-07-22T04:55:00-04:00",
+          "utc_datetime": "2022-07-22T08:55:00+00:00",
+          "bjd_tdb": 2459782.8768460616
+        }
+      },
+      "event_duration_hours": 1.6500094458460808,
+      "event_midpoint_bjd_tdb": 2459782.716775796
+    },
+    "utc_alternative": {
+      "timezone": "UTC",
+      "timezone_abbreviation": "UTC",
+      "utc_offset_hours": 0.0,
+      "source_timezone_explicit": false,
+      "times": {
+        "planned_start": {
+          "source_clock": "21:10",
+          "clock_datetime": "2022-07-21T21:10:00+00:00",
+          "utc_datetime": "2022-07-21T21:10:00+00:00",
+          "bjd_tdb": 2459782.3872596794
+        },
+        "ingress": {
+          "source_clock": "0:15",
+          "clock_datetime": "2022-07-22T00:15:00+00:00",
+          "utc_datetime": "2022-07-22T00:15:00+00:00",
+          "bjd_tdb": 2459782.5157328276
+        },
+        "egress": {
+          "source_clock": "1:54",
+          "clock_datetime": "2022-07-22T01:54:00+00:00",
+          "utc_datetime": "2022-07-22T01:54:00+00:00",
+          "bjd_tdb": 2459782.584483305
+        },
+        "planned_end": {
+          "source_clock": "4:55",
+          "clock_datetime": "2022-07-22T04:55:00+00:00",
+          "utc_datetime": "2022-07-22T04:55:00+00:00",
+          "bjd_tdb": 2459782.7101785406
+        }
+      },
+      "event_duration_hours": 1.650011457502842,
+      "event_midpoint_bjd_tdb": 2459782.5501080663
+    },
+    "timezone_plausibility": {
+      "preferred_interpretation": "America/New_York",
+      "working_interpretation_altitudes": {
+        "planned_start": {
+          "utc_datetime": "2022-07-22T01:10:00+00:00",
+          "sun_altitude_degrees": -7.5791099008577,
+          "target_altitude_degrees": 36.856382920919366
+        },
+        "planned_end": {
+          "utc_datetime": "2022-07-22T08:55:00+00:00",
+          "sun_altitude_degrees": -11.782388131916019,
+          "target_altitude_degrees": 35.37014324057427
+        }
+      },
+      "utc_alternative_altitudes": {
+        "planned_start": {
+          "utc_datetime": "2022-07-21T21:10:00+00:00",
+          "sun_altitude_degrees": 36.77966581496045,
+          "target_altitude_degrees": -7.985687640450835
+        },
+        "planned_end": {
+          "utc_datetime": "2022-07-22T04:55:00+00:00",
+          "sun_altitude_degrees": -30.698655605131034,
+          "target_altitude_degrees": 69.91097415557927
+        }
+      },
+      "working_start_is_observable": true,
+      "working_end_is_observable": true,
+      "utc_start_is_observable": false,
+      "assessment": "America/New_York is strongly favored: on this date it is EDT (UTC-4), its planned start and end occur with the Sun below the horizon and the target above 20 degrees, and its planned range brackets the images. Treating the clocks as UTC starts in daylight with the target below the horizon."
+    },
+    "working_interpretation_reason": "America/New_York civil time is used because the planned 21:10-04:55 range brackets the actual GMU sequence and has physically plausible Sun and target altitudes under that interpretation. On this date America/New_York is EDT (UTC-4). The source row itself does not state a time zone.",
+    "historical_ephemeris_complete": false,
+    "observation_comparison": {
+      "observation_start_bjd_tdb": 2459782.598234811,
+      "observation_end_bjd_tdb": 2459782.8094587056,
+      "working_planned_range_brackets_observation": true,
+      "working_event_fully_covered": true,
+      "utc_event_fully_covered": false
+    },
+    "fixed_window_check": {
+      "model": "straight baseline plus exposure-integrated fixed box",
+      "observed_depth_ppt": -0.6583833665306802,
+      "observed_depth_error_ppt": 0.39478212142599517,
+      "observed_depth_snr": -1.667713229141505,
+      "transit_like_dimming_above_3_sigma": false,
+      "points": 263,
+      "in_window_points": 90,
+      "outside_window_points": 173,
+      "median_inside": 1.0000645091856781,
+      "median_outside": 0.9998234892990056,
+      "residual_robust_scatter_ppt": 2.5401394189118545,
+      "reduced_chi_square": 2.9888860214352277,
+      "comparison_injection_depth_ppt": 2.91,
+      "injected_total_depth_ppt": 2.251577276407514,
+      "injected_increment_recovered_ppt": 2.909960642938194,
+      "injected_total_depth_snr": 5.7068111616105455,
+      "interpretation": "No transit-like dimming is measured in the exact historical window. This is conditional on the documented Eastern-time interpretation and is not a physical transit fit."
+    }
+  },
+  "transit_model_applied": false,
+  "visual_quality_exclusions": {
+    "253": "field-wide vertical PSF trail confirmed in target and comparison stars"
+  },
+  "remaining_finalization_gates": [
+    "observatory clock-sync provenance",
+    "original scheduling workbook or Transit Info file, time zone, epoch, and timing uncertainty",
+    "mentor timing and 25-pixel photometry review"
+  ]
+}

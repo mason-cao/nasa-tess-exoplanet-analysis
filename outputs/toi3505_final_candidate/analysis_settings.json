@@ -1,0 +1,27 @@
+{
+  "input_measurements": "TOI_3505.01_2022-07-22_R_measurements_25px_70-139_AIJ.tbl",
+  "source_aperture_pixels": 25.0,
+  "sky_annulus_pixels": [
+    70,
+    139
+  ],
+  "comparison_stars": [
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11"
+  ],
+  "frames_measured": 281,
+  "frames_used_in_plot": 263,
+  "detrending": "none",
+  "transit_fit": "none",
+  "historical_schedule_window_displayed": true,
+  "historical_schedule_timezone_assumption": "America/New_York",
+  "display_bin_minutes": 10.0
+}

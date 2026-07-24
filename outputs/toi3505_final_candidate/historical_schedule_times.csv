@@ -1,0 +1,9 @@
+interpretation,timezone,event,source_clock,clock_datetime,utc_datetime,bjd_tdb
+working_interpretation,America/New_York,planned_start,21:10,2022-07-21T21:10:00-04:00,2022-07-22T01:10:00+00:00,2459782.5539275403
+working_interpretation,America/New_York,ingress,0:15,2022-07-22T00:15:00-04:00,2022-07-22T04:15:00+00:00,2459782.6824005991
+working_interpretation,America/New_York,egress,1:54,2022-07-22T01:54:00-04:00,2022-07-22T05:54:00+00:00,2459782.7511509927
+working_interpretation,America/New_York,planned_end,4:55,2022-07-22T04:55:00-04:00,2022-07-22T08:55:00+00:00,2459782.8768460616
+utc_alternative,UTC,planned_start,21:10,2022-07-21T21:10:00+00:00,2022-07-21T21:10:00+00:00,2459782.3872596794
+utc_alternative,UTC,ingress,0:15,2022-07-22T00:15:00+00:00,2022-07-22T00:15:00+00:00,2459782.5157328276
+utc_alternative,UTC,egress,1:54,2022-07-22T01:54:00+00:00,2022-07-22T01:54:00+00:00,2459782.5844833050
+utc_alternative,UTC,planned_end,4:55,2022-07-22T04:55:00+00:00,2022-07-22T04:55:00+00:00,2459782.7101785406

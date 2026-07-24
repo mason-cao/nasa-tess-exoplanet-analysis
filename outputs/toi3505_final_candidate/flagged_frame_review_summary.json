@@ -1,0 +1,13 @@
+{
+  "review_frames": 23,
+  "used_in_primary_curve": 5,
+  "excluded_from_primary_curve": 18,
+  "classification_counts": {
+    "field-wide transparency loss, consistent with cloud": 13,
+    "differential-flux excursion within the late-night trend": 5,
+    "broad PSF / poor-seeing excursion": 2,
+    "elongated PSF / tracking or seeing excursion": 2,
+    "field-wide vertical PSF trail confirmed across all eleven stars": 1
+  },
+  "decision": "All reviewed frames remain in the saved table. Eighteen frames with image problems are excluded from the plotted light curve; five brightness changes without a separate image problem remain in it."
+}

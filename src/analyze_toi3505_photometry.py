@@ -92,6 +92,7 @@ def load_table(
     path: Path,
     expected_outer_radius: int,
     *,
+    expected_source_radius: float = 35.0,
     require_all_comparisons: bool = True,
 ) -> pd.DataFrame:
     table = pd.read_csv(path, sep="\t")
@@ -131,8 +132,10 @@ def load_table(
         raise RuntimeError(f"{path.name} contains {len(table)} rows instead of 281")
     if not np.array_equal(table["slice"].to_numpy(), np.arange(1, 282)):
         raise RuntimeError(f"{path.name} does not contain slices 1 through 281 in order")
-    if not np.allclose(table["Source_Radius"], 35.0):
-        raise RuntimeError(f"{path.name} does not use a 35-pixel source radius")
+    if not np.allclose(table["Source_Radius"], expected_source_radius):
+        raise RuntimeError(
+            f"{path.name} does not use a {expected_source_radius:g}-pixel source radius"
+        )
     if not np.allclose(table["Sky_Rad(min)"], 70.0):
         raise RuntimeError(f"{path.name} does not use a 70-pixel inner sky radius")
     if not np.allclose(table["Sky_Rad(max)"], expected_outer_radius):

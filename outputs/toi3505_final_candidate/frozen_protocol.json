@@ -1,0 +1,87 @@
+{
+  "status": "frozen_for_final_candidate_generation",
+  "input_table": "TOI_3505.01_2022-07-22_R_measurements_25px_70-139_AIJ.tbl",
+  "source_radius_pixels": 25.0,
+  "sky_annulus_pixels": [
+    70,
+    139
+  ],
+  "primary_comparison_stars": [
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11"
+  ],
+  "comparison_selection_uses_target_scatter": false,
+  "measurements_archived": 281,
+  "measurements_used_in_primary_curve": 263,
+  "point_exclusion_policy": "exclude from the primary curve only for predeclared condition failures or a cross-star image artifact; target brightness alone never excludes a point",
+  "visual_quality_exclusions": {
+    "253": "field-wide vertical PSF trail confirmed in target and comparison stars"
+  },
+  "condition_fit_policy": "the primary quality mask is also the condition-model fit mask",
+  "candidate_models": {
+    "none": [],
+    "airmass": [
+      "airmass"
+    ],
+    "sky": [
+      "sky"
+    ],
+    "width": [
+      "width"
+    ],
+    "x": [
+      "x"
+    ],
+    "y": [
+      "y"
+    ],
+    "comparison_counts": [
+      "comparison_counts"
+    ],
+    "centroid_xy": [
+      "x",
+      "y"
+    ],
+    "airmass_sky": [
+      "airmass",
+      "sky"
+    ],
+    "airmass_meridian": [
+      "airmass",
+      "meridian_side"
+    ],
+    "conditions": [
+      "airmass",
+      "sky",
+      "width",
+      "x",
+      "y",
+      "comparison_counts",
+      "meridian_side"
+    ]
+  },
+  "blocked_cross_validation_blocks": 8,
+  "promotion_rules": {
+    "minimum_robust_scatter_improvement_fraction": 0.05,
+    "maximum_rmse_ratio": 1.01,
+    "minimum_fraction_of_blocks_better": 0.6,
+    "parsimony_near_best_fraction": 0.01
+  },
+  "display_bin_minutes": 10.0,
+  "transit_model_allowed": false,
+  "reason_no_transit_model": "the historical schedule and current ephemeris disagree, and the fixed historical window contains no significant transit-like dimming",
+  "historical_schedule": {
+    "source_record": "data/program_records/toi3505/observing_schedule_2022-07-21.json",
+    "working_timezone": "America/New_York",
+    "source_timezone_explicit": false,
+    "fixed_window_only": true
+  }
+}

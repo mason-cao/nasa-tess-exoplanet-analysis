@@ -1,0 +1,12 @@
+Correction,Terms,Scatter_ppt,RMS_ppt,Improvement_percent,Time_sections_better,Time_sections,Passed
+none,intercept,2.5150563288,4.0043722196,0.0000000000,0,8,False
+airmass,airmass,2.6657484084,4.4245465573,-5.9915985929,4,8,False
+sky,sky,2.8895980437,4.3809678775,-14.8919811664,5,8,False
+width,width,2.6512786329,4.1598185758,-5.4162724897,1,8,False
+x,x,2.5247070500,4.0000863071,-0.3837178933,3,8,False
+y,y,2.6461706069,3.9819160564,-5.2131746121,3,8,False
+comparison_counts,comparison_counts,2.7588548910,3.9027275576,-9.6935626997,4,8,False
+centroid_xy,x+y,2.6523117330,3.9626353271,-5.4573491102,1,8,False
+airmass_sky,airmass+sky,2.9586560018,4.3163395300,-17.6377629364,2,8,False
+airmass_meridian,airmass+meridian_side,2.9878257197,4.5027328175,-18.7975666966,3,8,False
+conditions,airmass+sky+width+x+y+comparison_counts+meridian_side,3.0205797653,3.7194712832,-20.0998852663,3,8,False

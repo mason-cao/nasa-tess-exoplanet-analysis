@@ -1,0 +1,112 @@
+{
+  "status": "review_required",
+  "implementation": "Photutils 3 sigma-clipped median-annulus extraction",
+  "images_measured": 281,
+  "source_radii_pixels": [
+    20.0,
+    25.0,
+    30.0,
+    35.0,
+    40.0,
+    45.0,
+    50.0
+  ],
+  "sky_annulus_pixels": [
+    70.0,
+    139.0
+  ],
+  "primary_radius_pixels": 35.0,
+  "primary_radius_passes_frozen_precision_plateaus": false,
+  "primary_radius_tolerance_fraction": 0.1,
+  "astroimagej_photutils_35px_curve_correlation": 0.990349840256969,
+  "astroimagej_photutils_35px_robust_curve_difference_ppt": 0.5402643312913075,
+  "photutils_to_astroimagej_target_count_ratio": {
+    "median": 0.9981414671814327,
+    "robust_scatter": 0.0005584372157603934
+  },
+  "timing": {
+    "bjd_tdb_recalculation_pass": true,
+    "maximum_absolute_recalculation_error_seconds": 0.00020116567611694336,
+    "maximum_absolute_dateobs_midpoint_offset_seconds": 2.041912078857422,
+    "clock_sync_provenance_confirmed": false
+  },
+  "metrics": [
+    {
+      "source_radius_pixels": 20.0,
+      "target_robust_scatter_ppt": 2.6720735470214034,
+      "target_clipped_standard_deviation_ppt": 3.929387326173709,
+      "target_full_standard_deviation_ppt": 4.6827767736529635,
+      "median_pseudo_target_scatter_ppt": 5.04173048359958,
+      "correlation_with_astroimagej_35px": 0.8655567074015778,
+      "robust_difference_from_astroimagej_35px_ppt": 1.8902769263324497,
+      "passes_target_10_percent_plateau": true,
+      "passes_pseudo_target_10_percent_plateau": true
+    },
+    {
+      "source_radius_pixels": 25.0,
+      "target_robust_scatter_ppt": 2.5869902684374795,
+      "target_clipped_standard_deviation_ppt": 3.6487117891083867,
+      "target_full_standard_deviation_ppt": 4.782822214099599,
+      "median_pseudo_target_scatter_ppt": 4.83257591259917,
+      "correlation_with_astroimagej_35px": 0.9217823334350573,
+      "robust_difference_from_astroimagej_35px_ppt": 1.2875742487900426,
+      "passes_target_10_percent_plateau": true,
+      "passes_pseudo_target_10_percent_plateau": true
+    },
+    {
+      "source_radius_pixels": 30.0,
+      "target_robust_scatter_ppt": 2.9857698473896646,
+      "target_clipped_standard_deviation_ppt": 3.7380847137035813,
+      "target_full_standard_deviation_ppt": 4.546816826336922,
+      "median_pseudo_target_scatter_ppt": 4.858311497412962,
+      "correlation_with_astroimagej_35px": 0.9629901592658203,
+      "robust_difference_from_astroimagej_35px_ppt": 1.0367473805554324,
+      "passes_target_10_percent_plateau": false,
+      "passes_pseudo_target_10_percent_plateau": true
+    },
+    {
+      "source_radius_pixels": 35.0,
+      "target_robust_scatter_ppt": 3.2634607648678635,
+      "target_clipped_standard_deviation_ppt": 3.954842309328038,
+      "target_full_standard_deviation_ppt": 5.000577194432799,
+      "median_pseudo_target_scatter_ppt": 4.869109862383097,
+      "correlation_with_astroimagej_35px": 0.990349840256969,
+      "robust_difference_from_astroimagej_35px_ppt": 0.5402643312913075,
+      "passes_target_10_percent_plateau": false,
+      "passes_pseudo_target_10_percent_plateau": true
+    },
+    {
+      "source_radius_pixels": 40.0,
+      "target_robust_scatter_ppt": 3.4630997614489227,
+      "target_clipped_standard_deviation_ppt": 4.030560037742185,
+      "target_full_standard_deviation_ppt": 5.580901279052326,
+      "median_pseudo_target_scatter_ppt": 5.03351398710023,
+      "correlation_with_astroimagej_35px": 0.9404988126815276,
+      "robust_difference_from_astroimagej_35px_ppt": 1.1633140615987743,
+      "passes_target_10_percent_plateau": false,
+      "passes_pseudo_target_10_percent_plateau": true
+    },
+    {
+      "source_radius_pixels": 45.0,
+      "target_robust_scatter_ppt": 3.7247307799486555,
+      "target_clipped_standard_deviation_ppt": 4.448012583549404,
+      "target_full_standard_deviation_ppt": 5.534354582264928,
+      "median_pseudo_target_scatter_ppt": 5.108326619961155,
+      "correlation_with_astroimagej_35px": 0.8966002248925099,
+      "robust_difference_from_astroimagej_35px_ppt": 1.7072205779015488,
+      "passes_target_10_percent_plateau": false,
+      "passes_pseudo_target_10_percent_plateau": true
+    },
+    {
+      "source_radius_pixels": 50.0,
+      "target_robust_scatter_ppt": 4.111190793795921,
+      "target_clipped_standard_deviation_ppt": 4.873231442091572,
+      "target_full_standard_deviation_ppt": 5.916080848658016,
+      "median_pseudo_target_scatter_ppt": 5.629957801054546,
+      "correlation_with_astroimagej_35px": 0.8590026241496455,
+      "robust_difference_from_astroimagej_35px_ppt": 2.2067472232495526,
+      "passes_target_10_percent_plateau": false,
+      "passes_pseudo_target_10_percent_plateau": false
+    }
+  ]
+}
