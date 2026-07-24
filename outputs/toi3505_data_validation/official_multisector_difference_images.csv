@@ -1,0 +1,3 @@
+report_scope,sector,difference_image_transits,difference_image_quality,cadences_in_transit,cadences_out_of_transit,dvr_xml_file
+s0014-s0086,54,8,0.9283383,74,273,data/tess/toi3505/data_validation_multi_sector/tess2019199201929-s0014-s0086-0000000390988385-00971_dvr.xml
+s0014-s0086,81,6,0.9699345,55,205,data/tess/toi3505/data_validation_multi_sector/tess2019199201929-s0014-s0086-0000000390988385-00971_dvr.xml

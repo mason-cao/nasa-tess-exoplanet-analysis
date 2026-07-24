@@ -1,0 +1,111 @@
+{
+  "target": "TOI-3505.01",
+  "sectors": [
+    14,
+    41,
+    54,
+    81
+  ],
+  "cutout_size_pixels": [
+    15,
+    15
+  ],
+  "aperture_radii_pixels": [
+    1.5,
+    2.0,
+    2.5,
+    3.0,
+    3.5,
+    4.0
+  ],
+  "reference_radius_pixels": 3.0,
+  "difference_image_random_seed": 3505,
+  "localization": [
+    {
+      "sector": 14,
+      "events": 6,
+      "cycles": "-380;-379;-376;-375;-374;-372",
+      "target_x": 7.707758916163257,
+      "target_y": 7.702440053093277,
+      "difference_centroid_x": 7.888447679996304,
+      "difference_centroid_y": 7.8329962790342265,
+      "centroid_offset_pixels": 0.22292006977268516,
+      "centroid_offset_arcsec": 4.527046461683103,
+      "bootstrap_68pct_centroid_error_arcsec": 3.04205484606246,
+      "pixel_scale_arcsec": 20.307935782988935,
+      "difference_aperture_depth_ppt": 1.4309606793061949,
+      "difference_aperture_depth_error_ppt": 0.6133635234906603,
+      "consistent_with_target_within_one_pixel": true,
+      "angular_limit": "TESS cannot separate the 0.517-arcsec companion from the target"
+    },
+    {
+      "sector": 41,
+      "events": 9,
+      "cycles": "-128;-127;-126;-125;-124;-123;-122;-121;-120",
+      "target_x": 7.549649490659785,
+      "target_y": 7.987323601083556,
+      "difference_centroid_x": 7.67115197467383,
+      "difference_centroid_y": 8.038949861862696,
+      "centroid_offset_pixels": 0.13201562189233068,
+      "centroid_offset_arcsec": 2.6318826232737154,
+      "bootstrap_68pct_centroid_error_arcsec": 2.1401312704042477,
+      "pixel_scale_arcsec": 19.936145325439036,
+      "difference_aperture_depth_ppt": 1.321650801577178,
+      "difference_aperture_depth_error_ppt": 0.2606200575578214,
+      "consistent_with_target_within_one_pixel": true,
+      "angular_limit": "TESS cannot separate the 0.517-arcsec companion from the target"
+    },
+    {
+      "sector": 54,
+      "events": 7,
+      "cycles": "-8;-7;-6;-4;-3;-2;0",
+      "target_x": 7.959723454952886,
+      "target_y": 7.953629031144924,
+      "difference_centroid_x": 8.001747877683474,
+      "difference_centroid_y": 8.017792242251721,
+      "centroid_offset_pixels": 0.07670051998112212,
+      "centroid_offset_arcsec": 1.6137515955915898,
+      "bootstrap_68pct_centroid_error_arcsec": 3.649425314108049,
+      "pixel_scale_arcsec": 21.039643485973414,
+      "difference_aperture_depth_ppt": 1.6856991310537741,
+      "difference_aperture_depth_error_ppt": 0.22742058844842838,
+      "consistent_with_target_within_one_pixel": true,
+      "angular_limit": "TESS cannot separate the 0.517-arcsec companion from the target"
+    },
+    {
+      "sector": 81,
+      "events": 7,
+      "cycles": "245;246;247;250;251;252;253",
+      "target_x": 7.967717431337251,
+      "target_y": 7.901752467611052,
+      "difference_centroid_x": 7.854417397392018,
+      "difference_centroid_y": 8.11621191875119,
+      "centroid_offset_pixels": 0.24254845675724332,
+      "centroid_offset_arcsec": 5.101267132449909,
+      "bootstrap_68pct_centroid_error_arcsec": 3.873735081825526,
+      "pixel_scale_arcsec": 21.03195048383901,
+      "difference_aperture_depth_ppt": 1.7476632855753067,
+      "difference_aperture_depth_error_ppt": 0.16964331545475966,
+      "consistent_with_target_within_one_pixel": true,
+      "angular_limit": "TESS cannot separate the 0.517-arcsec companion from the target"
+    }
+  ],
+  "dilution_screen": {
+    "target_tmag": 10.9372,
+    "tic_catalog_contamination_ratio": 0.5471626,
+    "unresolved_companion": {
+      "separation_arcsec": 0.517,
+      "delta_i_mag": 1.7,
+      "flux_ratio_using_delta_i_as_tess_band_proxy": 0.20892961308540392,
+      "warning": "Delta I is only a screening proxy for the TESS-band flux ratio."
+    },
+    "screening_sum_contaminating_flux_over_target_flux": 0.756092213085404,
+    "screening_target_fraction_of_total_flux": 0.5694461785939068,
+    "if_2p91_ppt_is_an_uncorrected_observed_depth": {
+      "target_host_depth_ppt": 5.110228340078525,
+      "target_host_radius_ratio": 0.07148586112007412,
+      "companion_eclipse_fraction_including_screening_contamination": 0.024459090622015477
+    },
+    "do_not_adopt_as_final_correction": "QLP dilution treatment and band-dependent companion flux must be resolved first; this is scenario arithmetic."
+  }
+}

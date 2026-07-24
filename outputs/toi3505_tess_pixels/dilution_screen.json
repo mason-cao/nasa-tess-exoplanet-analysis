@@ -1,0 +1,18 @@
+{
+  "target_tmag": 10.9372,
+  "tic_catalog_contamination_ratio": 0.5471626,
+  "unresolved_companion": {
+    "separation_arcsec": 0.517,
+    "delta_i_mag": 1.7,
+    "flux_ratio_using_delta_i_as_tess_band_proxy": 0.20892961308540392,
+    "warning": "Delta I is only a screening proxy for the TESS-band flux ratio."
+  },
+  "screening_sum_contaminating_flux_over_target_flux": 0.756092213085404,
+  "screening_target_fraction_of_total_flux": 0.5694461785939068,
+  "if_2p91_ppt_is_an_uncorrected_observed_depth": {
+    "target_host_depth_ppt": 5.110228340078525,
+    "target_host_radius_ratio": 0.07148586112007412,
+    "companion_eclipse_fraction_including_screening_contamination": 0.024459090622015477
+  },
+  "do_not_adopt_as_final_correction": "QLP dilution treatment and band-dependent companion flux must be resolved first; this is scenario arithmetic."
+}
