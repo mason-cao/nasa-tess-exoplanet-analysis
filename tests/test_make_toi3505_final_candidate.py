@@ -12,14 +12,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from make_toi3505_final_candidate import (
-    aij_review_columns,
     apply_condition_model,
     bin_light_curve,
     blocked_model_review,
     fit_robust_linear,
-    page_relative_series,
     select_promoted_model,
-    write_aij_review_table,
 )
 
 
@@ -91,39 +88,6 @@ class FinalCandidateTests(unittest.TestCase):
 
         self.assertEqual(int(binned["points"].sum()), len(hours))
         self.assertEqual(len(binned), 2)
-
-    def test_page_relative_scaling_is_display_only_and_invertible(self) -> None:
-        values = np.linspace(10.0, 20.0, 101)
-
-        normal = page_relative_series(values)
-        inverted = page_relative_series(values, invert=True)
-
-        self.assertTrue(np.all(np.diff(normal) >= 0.0))
-        self.assertTrue(np.all(np.diff(inverted) <= 0.0))
-        np.testing.assert_allclose(normal + inverted, 2.0 * 0.946)
-
-    def test_aij_review_table_keeps_required_values_and_all_rows(self) -> None:
-        columns = aij_review_columns()
-        table = pd.DataFrame(
-            {
-                column: (
-                    ["frame-1.fits", "frame-2.fits"]
-                    if column == "Label"
-                    else [float(index), float(index) + 0.5]
-                )
-                for index, column in enumerate(columns)
-            }
-        )
-        destination = ROOT / "tests" / "_temporary_aij_review.tbl"
-        try:
-            write_aij_review_table(table, destination)
-            reopened = pd.read_csv(destination, sep="\t")
-        finally:
-            destination.unlink(missing_ok=True)
-
-        self.assertEqual(list(reopened.columns), columns)
-        self.assertEqual(len(reopened), len(table))
-        pd.testing.assert_frame_equal(reopened, table)
 
 
 if __name__ == "__main__":

@@ -786,8 +786,9 @@ def plot_nearby_screen(
     image_path: Path,
     wcs_image: Path,
     candidates: pd.DataFrame,
+    measurements: pd.DataFrame,
 ) -> None:
-    """Show the target and nearby catalog candidates in the observed field."""
+    """Show candidate locations and the conditional schedule-window screen."""
     with fits.open(image_path, memmap=True) as hdul:
         image = np.asarray(hdul[0].data, dtype=float)
     wcs = WCS(fits.getheader(wcs_image))
@@ -801,9 +802,9 @@ def plot_nearby_screen(
     crop = image[y_min:y_max, x_min:x_max]
     low, high = np.nanpercentile(crop, [20, 99.7])
 
-    figure, axis = plt.subplots(figsize=(6.2, 6.0))
-    axis.imshow(crop, origin="lower", cmap="gray", vmin=low, vmax=high)
-    axis.scatter(
+    figure, axes = plt.subplots(1, 2, figsize=(12.0, 5.7))
+    axes[0].imshow(crop, origin="lower", cmap="gray", vmin=low, vmax=high)
+    axes[0].scatter(
         candidates["x_zero_indexed"] - x_min,
         candidates["y_zero_indexed"] - y_min,
         facecolors="none",
@@ -812,7 +813,7 @@ def plot_nearby_screen(
         linewidths=0.9,
         label="Catalog candidates",
     )
-    axis.scatter(
+    axes[0].scatter(
         target_x - x_min,
         target_y - y_min,
         marker="+",
@@ -821,11 +822,40 @@ def plot_nearby_screen(
         color="#2d6f9e",
         label="TOI-3505.01",
     )
-    axis.set_xlabel("Image column (pixels)")
-    axis.set_ylabel("Image row (pixels)")
-    axis.set_title("Stars Near TOI-3505.01")
-    axis.legend(fontsize=8.5)
-    figure.tight_layout()
+    axes[0].set_xlabel("Image column (pixels)")
+    axes[0].set_ylabel("Image row (pixels)")
+    axes[0].set_title("Sources within 60 arcseconds")
+    axes[0].legend(fontsize=8.5)
+
+    cleared = measurements["transit_relevant_clearance"].astype(bool)
+    axes[1].scatter(
+        100.0 * measurements.loc[~cleared, "eclipse_fraction_needed_simple"],
+        measurements.loc[~cleared, "night_robust_scatter_ppt"],
+        s=34,
+        alpha=0.75,
+        color="#a45c4a",
+        label="Not cleared",
+    )
+    axes[1].scatter(
+        100.0 * measurements.loc[cleared, "eclipse_fraction_needed_simple"],
+        measurements.loc[cleared, "night_robust_scatter_ppt"],
+        s=34,
+        alpha=0.75,
+        color="#35745c",
+        label="Cleared by this screen",
+    )
+    axes[1].set_xscale("log")
+    axes[1].set_yscale("log")
+    axes[1].set_xlabel("Eclipse needed to mimic 2.91 ppt (%)")
+    axes[1].set_ylabel("Nightly robust scatter (ppt)")
+    axes[1].set_title("Fixed schedule-window source screen")
+    axes[1].legend(fontsize=8.5)
+    axes[1].grid(alpha=0.16, which="both")
+    figure.suptitle(
+        "Nearby-star screen for the 2022 schedule window (EDT assumed)",
+        fontsize=15,
+    )
+    figure.tight_layout(rect=(0, 0, 1, 0.94))
     figure.savefig(output_dir / "02_nearby_star_screen.png", dpi=230)
     plt.close(figure)
 
@@ -1084,6 +1114,7 @@ def main() -> None:
             first_image,
             args.wcs_image.resolve(),
             candidates,
+            nearby_measurements,
         )
     write_readme(
         output_dir,

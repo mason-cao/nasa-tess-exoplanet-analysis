@@ -1,14 +1,11 @@
 __pycache__/
 *.py[cod]
-.pytest_cache/
-.venv/
-.DS_Store
-tmp/
 
 # Rendered lecture pages are temporary review files.
 tmp/pdfs/*.png
 
-# The Discord posting log contains local communication notes.
+# Personal notes, planning, Discord records, and assistance records stay local.
+/docs/
 /docs/discord-messages.md
 /outputs/**/discord_post.txt
 /outputs/**/discord_update.txt

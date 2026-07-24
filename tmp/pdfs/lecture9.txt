@@ -1,0 +1,1548 @@
+NASA Data Science &
+Astronomy Research
+Internship
+Summer 2026
+Exoplanet data analysis • NASA missions • Scientific writing
+
+
+
+
+Dr. Peter Plavchan
+George Mason University
+
+
+landolt.gmu.edu | @PlavchanPeter
+nasa.schar.program@gmail.com
+Topics for Our Program
+
+    Introductions                                   Working with data, part 2: AstroImageJ
+
+    Logistics                                       Making a Measurement: Science Methods
+                                                    and Inference
+    How a NASA Mission Happens                      Science Writing
+
+    Working with data, part 1: Jupyter notebooks    Space Revolution and Space Policy
+    and FITS files
+    Telescopes on the Ground and in Space           Working with data, part 3: JWST
+    (part 2)
+    The NASA TESS mission and Transiting            Bonus? Mission Engineering
+    Exoplanets
+
+
+
+
+NASA Data Science & Astronomy Research Internship
+ Basic Statistics
+
+                                        Mean:
+                                             “Average value” = 1.63
+
+
+
+
+                                        Median: The individual value
+                                        from the collection such that 1/2
+                                                                                                        Mean
+                                                                                           Median
+                                        the observations are less and
+                                        1/2 are greater = 1.5
+                                                                            Mode
+                                        Median is often useful because
+                                        it is less affected by a single
+                                        outlier than the mean
+
+                                         Mode:The most frequently
+                                        occurring value in the              16 Values: 1.3, 1.3, 1.3, 1.3, 1.35, 1.35, 1.4,
+                                        collection = 1.3                    1.5, 1.5, 1.55, 1.55, 1.55, 1.6, 1.65, 1.65, 4.2
+
+
+
+
+Schar School of Policy and Government                                                                                          3
+ How measurements are distributed
+
+     Most of what we know is derived by making measurements
+
+     A priori, when we make a set of measurements, we may know and expect what
+     type of distribution of values of the measurements that we will get (more on this
+     later).
+
+     However, we may not know the distributions “central value” (for example,
+     mean), nor it’s size or scale.
+
+     Quantifying this distribution of measurements is known as quantifying
+     uncertainty or “errors”.
+
+
+Schar School of Policy and Government                                                    4
+ The idea of error
+
+     It is never possible to measure anything exactly (eventually Heisenberg's uncertainty principle
+     would bite you!).
+
+     So when you measure something, you have to say how precisely you have measured it -> This is
+     the scale of the distribution of measurements.
+
+     Example:
+     Planck’s constant h is known to approximately 1.5 parts in 10^8, or 6.626070040(81)×10−34 J-s,
+     e.g. 6.626070040 +/- 0.000000081 ×10−34 J-s
+
+     Suppose you derive an experiment to measure Planck’s constant. You can’t just take their value
+     and error and use as their own. The above is the work of other scientists’ experiments. Your
+     experiment will have it’s own value and associated error.
+
+
+Schar School of Policy and Government                                                                  5
+ The idea of error
+
+     Errors are also not 'blunders' or experimental mishaps which
+     can be fixed.
+
+     If a telescope is bumped during an exposure resulting in two
+     sets of stars, the image is simply deleted and redone. If it's not
+     caught at the time, then this datum is discarded.
+
+     Errors occur for all measurements. It is impossible to know
+     exactly how far off a measurement is. Otherwise, the
+     measurements would just be 'adjusted' (fudge-factor) to the
+     proper value. But this is not possible nor good science.
+Schar School of Policy and Government                                     6
+ The classification of error
+
+
+     Errors occur in two types: systematic and random.
+
+     Systematic errors are errors which shift all
+     measurements in the same way. Things like
+     improper equipment calibration, thicker atmosphere
+     than anticipated, etc.
+
+     An example is a ruler with the wrong length.
+Schar School of Policy and Government                     7
+ The classification of error
+
+     Random errors displace measurements in an arbitrary
+     direction (they scatter measurements about a value). They
+     cannot be eliminated, but usually can be reduced (by
+     making multiple measurements).
+
+     For example, each measurement of a star includes random
+     fluctuations caused by seeing, detector noise, random sky
+     noise, etc.
+
+     OK, so how do we quantify errors?
+Schar School of Policy and Government                            8
+ How sets of events or measurements are distributed
+
+   Often with data we have a large number of
+   “events”. For most experiments, the
+   outcome is a continuous distribution of
+   possible values. In this case, the distribution
+   of results approaches a smooth curve as the
+   number of measurements approaches
+   infinity.
+
+   y = a e^[ -(x-x0)2 / (2 σ2)]
+
+   Other continuous examples: uniform
+   random distribution; lognormal distribution,
+   student t-distribution, etc…                 Gaussian Distribution: x0 = mean, 𝜎 = standard deviation
+
+
+Schar School of Policy and Government                                                               9
+ Gaussian Distribution - FWHM
+
+
+   y = a e^[ -(x-x0)2 / (2 σ2)]
+
+                                        a
+   Full width at half maximum:
+
+
+
+
+                                        x0
+
+
+
+
+Schar School of Policy and Government        10
+ Binomial Distribution
+
+            • Where there are exactly 2 mutually exclusive outcomes
+              – success or failure.
+            • The probability of observing m successes in n
+              observations
+                                                                          For a particular n
+
+
+
+
+            • p is probability of success
+            in a single observation
+                                                         p
+            Approaches Gaussian for
+            large n and m, but <0 excluded
+
+
+                                                                      m successes
+Schar School of Policy and Government                                                          11
+   Poisson Distribution – when the outcome is a discrete integer and positive definite
+
+
+
+The limit of the binomial distribution
+for rare events and a large number of
+trials.
+The “counting rate” distribution. The
+value can never be less than zero. For
+example the number of photons that
+arrive in a time interval can be 0, 1, 2,
+… but can never be less than 0                                     p
+  Pr(k events given lambda) =
+
+
+
+                                          Similar to Gaussian for large
+                                          lambda, but still excludes k<0   k
+  Schar School of Policy and Government   and only integer measurements                  12
+ Estimating How Good the Data Are
+
+
+                                        (Simple) deviation: (Note that   is how we
+                                          represent the mean)
+
+
+                                        Mean deviation: The N-1 represents the loss
+                                         of one degree of freedom - with only 1 data
+                                         point the mean deviation is meaningless
+
+
+Schar School of Policy and Government                                                  13
+ Estimating How Good the Data Are
+
+   Variance: (true*) Standard deviation, root mean square
+   deviation (rms or sigma) which is the better estimator for
+   random errors than the mean deviation
+
+
+
+
+   * This is called the “true” because we are using the values
+   to determine the mean. Thus, we lose one “degree of
+   freedom” when we calculate the mean from the data and
+   hence the N-1. If the mean is known a priori, then N-1 -> N
+
+Schar School of Policy and Government                            14
+ Estimating how Good your Data Are Cont.
+
+You can use the equation of the normal distribution to
+determine the fraction of data points within 1s, 2 s, 3
+s, etc.
+
+         •68% of points are within 1s
+         •95% of points are within 2s
+         •99.7% of points are within 3s (3/1000 are not)
+         •99.994% … 4 s
+
+         Works well if your distribution is Gaussian, fails
+         horribly if it is not.
+
+         These are sometimes called “confidence intervals”.
+         E.g., with 95% confidence we can say the mean lies
+         within 2-sigma of this value. But all distributions
+         and not just Gaussians have confidence intervals.
+
+Schar School of Policy and Government                          15
+ Estimating how Good your Data Are Cont.
+
+You can use the equation of the normal distribution to
+determine the fraction of data points within 1s, 2 s, 3
+s, etc.
+
+         •68% of points are within 1s
+         •95% of points are within 2s
+         •99.7% of points are within 3s (3/1000 are not)
+         •99.994% … 4 s
+
+         Works well if your distribution is Gaussian, fails
+         horribly if it is not.
+
+         Example: when the ”highly improbable” events are
+         more probable than you estimated (stock market
+         crash). Sometimes called the “long tail”. Student
+         t-distribution does a better job of capturing outliers
+         than a Gaussian.
+Schar School of Policy and Government                             16
+ Estimating how Good your Data Are Cont.
+
+
+   There are many
+   different ways to
+   summarize and
+   visualize your
+   measurements:
+
+
+
+
+Schar School of Policy and Government      17
+ Error Propagation
+
+                                    • Let’s say you’ve measured multiple quantities and
+                                      now you want to combine them in some
+                                      mathematical formula.
+
+                                    • For example, I’ve measured the time of one
+                                      transit of an exoplanet to be t1+/- s1 and I’ve
+                                      measured the next transit to occur at t2 +/- s2.
+
+                                    • What can I say the period of the orbiting
+                                      exoplanet to be?
+
+Schar School of Policy and Government                                                     18
+ Error Propagation
+
+                                    • Let’s say you’ve measured multiple quantities and
+                                      now you want to combine them in some
+                                      mathematical formula.
+
+                                    • For example, I’ve measured the time of one
+                                      transit of an exoplanet to be t1+/- s1 and I’ve
+                                      measured the next transit to occur at t2 +/- s2.
+
+                                    • P = t2 – t1. But what about sP?
+
+
+Schar School of Policy and Government                                                     18
+ Error Propagation
+
+
+                                    As another example. What if I’ve measured Planck’s constant
+                                    to be:
+
+                                    6.626070040 +/- 0.000000081 ×10−34 J-s
+
+                                    And the frequency of a photon to be 10.000+/-0.001 GHz
+
+                                    What is the energy of the photon (E=hf)?
+                                    What about the value for sE?
+
+
+Schar School of Policy and Government                                                             20
+ Error Propagation – start with a simple linear function
+
+
+
+
+                                        f=P
+                                        x1 = t2
+                                        a1 =1
+                                        x2 =t1
+                                        a2 = -1
+
+
+        Given individual uncertainties on measurements xi, which we
+        denote σi, what is the total uncertainty on f?
+
+Schar School of Policy and Government                                 21
+ Error Propagation:
+
+     In reality, even for a simple linear function, errors can be correlated between variables:
+
+
+
+
+Schar School of Policy and Government                                                             22
+ Error Propagation:
+
+     In reality, even for a simple linear function, errors can be correlated between variables:
+                                                              Correlated Uncertainties
+                                                              (Can be systematic or random)
+
+
+
+
+Schar School of Policy and Government                                                             22
+ Error Propagation:
+
+     In reality, even for a simple linear function, errors can be correlated between variables:
+
+
+
+
+                                            0
+                                        0
+
+
+
+
+Schar School of Policy and Government                                                             22
+ Error Propagation:
+
+
+
+
+Schar School of Policy and Government   22
+ Error Propagation:
+
+
+                                        σP2 = (1)2 σ12+ (-1)2 σ22
+                                        σP2 = σ12+ σ22
+                                        σP = (σ12+ σ22)1/2
+
+
+
+       Key result: increase number of measurements
+       and decrease uncertainty from random errors by sqrt(n):
+
+       For an average: f = 1/N Σ xi à ai = 1/N, σi = σ à and thus:
+       σf = √N * 1/N * σ = σ/√N
+Schar School of Policy and Government                                22
+ Full Error Propagation Formula for Non-Linear Functions – linearize them as an approximation!
+
+
+
+
+Schar School of Policy and Government                                                            23
+ Propagation of Errors
+
+     In these equations a and b are constants, u and v are variables
+
+
+
+
+Schar School of Policy and Government                                  24
+ Propagation of Errors
+
+     In these equations a and b are constants, u and v are variables
+
+
+
+
+Schar School of Policy and Government                                  24
+ What does this mean?
+
+     The area of a rectangle is given by:
+     A = LW
+     You have the following measurements:
+     L=22.1±0.1cm W=7.3 ±0.2cm
+     What is the uncertainty in A?
+
+
+
+
+Schar School of Policy and Government       26
+ Signal-to-Noise Ratio
+
+     Now that we understand errors/uncertainties, we can discuss a measure of the significance of
+     an observational result.
+     Signal is the number of “detections.” For our purposes, at least to begin, signal will generally be
+     the number of photons detected from our source.
+     Noise in this first case is “everything else” including photons from the “sky,” signal from the
+     electronics, and random fluctuations due to photon detection being a poisson process.
+     In the simple case where there is no electronic or sky noise:
+
+
+
+
+Schar School of Policy and Government                                                                      27
+ Signal-to-Noise Cont.
+
+
+                                        Signal        Noise    S/N
+                                        10            3.16     3.16
+                                        100 (102)     10.00    10.00
+                                        1000 (103)    31.62    31.62
+                                        10000 (104)   100.00   100.00
+                                        100000 (105) 316.23    316.23
+
+
+
+     Note: if signal increases linearly with time observing time must be increased by
+     a factor of 100 for S/N to increase by a factor of 10. This is what we mean when
+     we say ”The SNR goes as the square root of the integration time.”
+Schar School of Policy and Government                                                   28
+ Fitting a model to data
+
+
+     Beyond determining the mean and
+     standard deviation of a set of
+     measurements, you can explore how the
+     measurement of a quantity depends on
+     some parameter
+
+
+Schar School of Policy and Government        29
+ Least squares minimization (includes linear regression)
+
+
+
+
+                                        Data   model
+
+                                  When y is the smallest, then
+                                  the line best represents the
+                                  data.
+
+                                  You may have used this in a
+                                  spreadsheet with the
+                                  command slope or linest.
+Schar School of Policy and Government                            30
+ Least squares minimization (includes linear regression)
+
+                                        A method of determining the characteristic y as a function of x
+                                        Equation of a line:
+                                              y(x) = a + bx
+
+
+
+                                        The method determines the most probable
+                                        values of a and b for a series of x and y
+                                        values
+                                        For simplicity, we assume all of the
+                                        uncertainty is in the variable y and that the
+                                        uncertainty in all of the y values is the same
+
+
+
+
+Schar School of Policy and Government                                                                     30
+ Least squares minimization (includes linear regression)
+                                    Taylor describes how the best fit values for A and B are determined.
+                                    We will skip to the answer for our purposes here:
+
+
+
+
+                                        The errors in the coefficients are given by:
+
+
+
+
+                                    Note that a similar process can be done to find the best fit to an
+                                    arbitrary function. This is the process we can “minimizing c2”
+
+Schar School of Policy and Government                                                                      30
+ How linear is our data?
+
+                                        We use the coefficient of linear correlation to describe how
+                                        linear the data are:
+
+
+
+
+Schar School of Policy and Government                                                                  30
+ Goodness of fit – going beyond the line to more complex models
+
+
+   aka, how well does my model describe the data?
+
+
+
+
+Schar School of Policy and Government                             31
+ 𝝼 is the number of degrees of freedom – typically number of data points minus number of model parameters
+
+
+
+   Goodness of fit
+   aka, how well does my model describe the data?
+
+
+
+
+                                                                           𝝼 is the number of degrees of
+                                                                           freedom – typically number
+                                                                           of data points minus number
+                                                                           of model parameters
+
+
+
+                                                                     Pearson
+
+
+Schar School of Policy and Government                                                                       32
+  More complex model fitting approaches
+
+For analytic equations that are differentiable, there are numerical minimizers:
+https://en.wikipedia.org/wiki/Numerical_methods_for_ordinary_differential_equations
+
+e.g.:
+
+Newton’s method: https://en.wikipedia.org/wiki/Newton%27s_method
+Euler’s method
+
+For numerical models with a few model parameters, one can use a “brute force” “grid search” approach, where
+every model parameter is tried over a large set of values to find the model that fits the data the best (lowest rms
+of data-model).
+
+However, brute force approaches fail horribly for higher number of model parameters (dimensionality of model
+space).
+
+ Schar School of Policy and Government                                                                        32
+ More complex model fitting approaches
+
+
+           • Enter the Nelder-Mead simplex algorithm: One method many numerical ones to
+             efficiently survey high dimensional model parameter (Hilbert-like) spaces to find best fits:
+             https://en.wikipedia.org/wiki/Nelder%E2%80%93Mead_method
+
+
+
+
+Schar School of Policy and Government                                                                       32
+ More complex model fitting approaches
+
+
+Nelder-Mead is already out of fashion (but still one of my faves). The minimizer of the decade is the gradient descent
+algorithm. It is what permeates ALL of machine learning for neural network node weight back-propagation solutions.
+
+Gradient Descent Algorithm iteratively calculates the next point using gradient at the current position, scales it (by a
+learning rate) and subtracts obtained value from the current position (makes a step). It subtracts the value because we
+want to minimise the function (to maximise it would be adding).
+
+
+
+
+Schar School of Policy and Government                                                                                    32
+• https://towardsdatascience.co
+  m/gradient-descent-algorithm-
+  a-deep-dive-cf04e8115f21
+• https://en.wikipedia.org/wiki/
+  Gradient_descent
+ What if I have two or more models? Which is better, even if identical χ2 values
+
+
+
+
+Schar School of Policy and Government                                              33
+ What if I have two or more models? Which is better? Or similarly, what if my assumption (like a Gaussian distribution) is
+ wrong? How would I be able to tell?
+
+
+
+
+                                        Cliffhanger…. To be continued.
+
+Schar School of Policy and Government                                                                                        34
+ CCDs
+
+
+
+
+Schar School of Policy and Government   35
+ What is a CCD detector?
+
+     CCD = Charge-Coupled Device
+
+     This is basically the equivalent of a digital camera that we put on the back of our telescope.
+
+
+     CCDs are the detection device generally used in optical and infrared astronomy, converting (coupling) photons into electrons
+     (charges)
+
+     History
+     Invented by Boyle and Smith at Bell Labs in 1969. They were intended as memory storage devices before their image detection
+     capabilities were found.
+
+     First astronomical use:
+     1976 61" at Mt. Lemmon in AZ.
+     1977 200" at Mt. Palomar in CA.
+
+
+
+
+Schar School of Policy and Government                                                                                               36
+ Military – Astronomy Connections
+
+     CCDs à spy satellites no longer needed to drop film canisters all over the planet
+
+     https://www.vice.com/en/article/jpzpkg/the-first-spy-satellites-had-to-drop-gigantic-buckets-of-film-back-to-earth
+
+
+     Hubble Space Telescope à KH-11 spy satellite program à 2 spares donated to NASA in 2012 by NRO à 1 used as Roman
+     Space Telescope
+     https://en.wikipedia.org/wiki/KH-11_KENNEN
+
+
+     JWST spy satellite heritage à likely, but classified (my guess is instrumentation is different)
+
+     Nice article summarizing:
+     https://www.grid.news/story/science/2022/07/13/why-nasas-james-webb-telescope-and-its-galactic-discoveries-may-owe-
+     something-to-spy-satellites/
+
+
+
+
+Schar School of Policy and Government                                                                                      37
+ An aside
+
+     Ever wondered about Roswell à watch this physics lecture:
+
+     https://www.youtube.com/watch?v=k4ygiQHSNDc
+
+     Incredibly clever use of sound wave transmission physics in the pre-spy satellite era, and well, pre-
+     satellite era in general
+
+
+
+
+Schar School of Policy and Government                                                                        38
+ What is a CCD Detector?
+                                                          Image area
+                                                                          Metal,ceramic or plastic package
+    It has pixels in a grid, square or rectangular in
+    a single, large-scale integrated circuit, just like                                                         Connection pins
+    a computer chip. The front side consists of a
+                                                                                                                  Gold bond wires
+    large number of regularly arranged gates and
+    channels layered onto a substrate of silicon.                                                                Bond pads
+
+
+
+    We want to count the number of photons that
+    fall in each pixel to get a measurement of the
+                                                                                                              Silicon chip
+    brightness of objects in the sky
+
+    Photons get absorbed and free electrons that
+    we count
+
+    The image of the sky is recorded as a pattern
+    of electric charge “counts”.                                                                             On-chip amplifier
+
+
+
+                                                                       Serial register
+
+
+
+
+Schar School of Policy and Government                                                                                               39
+ CCDs
+
+   Rows are parallel to the output register, which is a special
+   high-capacity row.
+
+
+
+
+Schar School of Policy and Government                             40
+ A single pixel: side view
+
+   MOS gate (a miniature capacitor).
+
+
+
+
+Schar School of Policy and Government   41
+ Storing electrons
+
+     A photon is absorbed by the valence band of a silicon semiconductor moving the electron to the conduction band by the
+     photoelectric effect
+
+
+     Photons with wavelengths longer than ~1.2 μm don’t have enough energy to push the electron beyond the band gap
+
+
+     Impurities in the silicon make the “holes” migrate away from the positive gate when biased with a positive voltage
+
+     The full well capacity is the max. number of electrons that can be stored before electrons and holes recombine
+
+
+                                                                                       pho
+                                                                                        to n                      to n
+                                                                                                                 pho
+
+                                                            Conduction Band
+
+
+
+
+                                        Increasing energy
+                                                                              1.26eV
+
+
+                                                            Valence Band
+
+
+
+                                                                                               Hole   Electron
+
+
+
+Schar School of Policy and Government                                                                                        42
+ Single pixel – top down view
+
+
+
+         Every third electrode is
+         connected together making a
+         pixel. Wires running down the
+         edge of the chip make the
+         connection. Channel stops keep
+         charge from moving between
+         columns.
+
+
+
+
+Schar School of Policy and Government     43
+ Readout in time
+
+   Charge is transferred from the column adjacent
+   to the serial register. Then the serial register
+   "shifts" the charge through the "output node",
+   where the charge in each pixel is detected as a
+   voltage and converted into a digital number in
+   Analog-to-Digital Units or "ADUs". The voltages
+   are very low and must be amplified by an on-
+   chip amplifier. The A to D converter is usually in
+   an external electronics unit, as well as another
+   voltage amplifier.
+
+   If one pixel is read at a frequency of 1 MHz, and
+   there are 16 megapixels, it takes 16 seconds to
+   read out the whole array.
+
+
+Schar School of Policy and Government                   44
+ Analogy – the bucket brigade
+
+
+
+
+Schar School of Policy and Government   45
+ CCD advantages: Quantum Efficiency (QE)
+
+
+                  QE = the fraction or percentage of incident photons that are converted into
+                  a measurable output.
+
+                                        Device    Typical QE (%)
+
+                                        Eye       1
+                                        Film      1
+                                        TV        15
+                                        PM Tube   15
+                                        CCD       70
+
+                  Spectral Sensitivity = the QE vs. wavelength
+
+
+
+
+Schar School of Policy and Government                                                           46
+ CCD advantages: Linearity
+
+   The output response of a CCD varies in direct proportion to
+   the intensity of incoming photons. The response is
+   extremely linear over most of the output range.
+
+
+
+
+Schar School of Policy and Government                            47
+ CCDs – Put it all together
+
+     What information do you get when you take a CCD image?
+
+     (The CCD is placed at the focal plane of the telescope)
+
+
+
+
+Schar School of Policy and Government                          48
+ A CCD image of stars.
+
+
+
+                                        Stars
+
+                                        Sky
+
+                                        Flat field
+
+                                        Dark Current
+
+                                        Bias level
+
+
+Schar School of Policy and Government                  49
+ The image obtained from the CCD is like several layers of information:
+
+     1. The base is the noise you get when you run electricity through an amplifier. This is called the bias level.
+     You get this regardless of how long the exposure time is. Even an image of 0 length has this component.
+
+     2. The 'hum' of the electronics. This is called dark current. This accumulates with time. It is a constant rate
+     (counts/second) but the longer you expose, the more you get. To account for this, we take images without
+     opening the shutter.
+
+
+
+
+Schar School of Policy and Government                                                                                  50
+ The CCD is like several layers of information:
+
+     3) Pixel-to-pixel sensitivity variations. Some CCD pixels will accumulate counts (light) easier than others.
+     This could be caused by a property of the pixel or because there is a speck of dust covering it. To correct
+     this, we take 'flat' images, which are pictures of nothing (a blank screen that is not specular like a mirror).
+
+
+
+
+Schar School of Policy and Government                                                                                  51
+ The CCD is like several layers of information:
+
+     4) Sky: Whenever you take an image, there is always stray light that makes its way into your image. Just like
+     starlight, it contributes to your signal. However, unlike starlight, it should be evenly spread across your
+     image. Therefore, if we examine pixels that do not have objects (stars, galaxies), we can determine how
+     much stray light is in our image.
+
+
+
+
+Schar School of Policy and Government                                                                                52
+ Brief aside – difference between CMOS and CCDs
+
+     CMOS sensors are like the parallel version of CCDs.
+
+     Each pixel is addressable and can be read out in parallel with its
+     own amplifier built in.
+
+     Rather than the “bucket brigade” of CCDs, all the buckets are
+     counted simultaneously.
+
+      Thus it can support much faster readout times.
+
+
+     It used to be that CMOS sensors were inferior and noisier than
+     CCDs. That is no longer the case.
+
+
+     Otherwise they are very similar, and you’re more likely to find
+     CMOS sensors today than 20 years ago in digital cameras.
+
+Schar School of Policy and Government                                     52
+ Image Processing Basics
+
+
+
+
+Schar School of Policy and Government   53
+ Images to collect for scientific observations
+
+     Option 1: (preferred)
+     10 science images with exposure time ts, for each filter
+     10 flatfield images with exposure time tf (tf <> ts), for each filter
+     10 dark images with exposure time td = ts
+     10 dark images with exposure td = tf, for each filter if flatfield
+     exposure times for each filter are different
+     Preferred both because the detector noise is often not simple linear
+     scaling, and because it makes the reduction process easier/faster
+
+
+
+Schar School of Policy and Government                                        54
+ Put it all together… with option 1 in words
+
+     1) Median combine 10 darks, flats and (optionally) science images
+            - Purpose: cosmic ray rejection and reducing noise by factor of ~3
+     2) Dark subtracted flatfield = median-combined flatfield – median combined dark with same exposure time as flat
+            - Purpose: remove the electronic detector signal to isolate the electrons generated by photons
+     3) Reduced/normalized flatfield = dark subtracted flatfield / median value of illuminated portion of dark subtracted
+     flatfield
+            - Purpose: turn the flatfield image into a pixel correction image of what fraction (percentage) of light is reported by
+     each pixel. Typical pixel value will now be close to 1. This ”normalization” gets rid of the variation in counts for flatfields
+     (e.g. if I collected two sets of flats with 10,000 counts and 20,000 counts, both will now have values ~1)
+
+     4) Dark subtracted science image = median-combined science image – median combined dark with same exposure as
+     science image.
+          - Purpose: remove the electronic detector signal to isolate the electrons generated by photons from the
+     sky/targets
+
+     5) Reduced science image = dark subtracted science image / reduced flatfield
+          - Purpose: remove the variation in individualize pixels so that pixels that behave differently report the same
+     number of counts for the same number of photons (now not an integer anymore)
+
+     6) Repeat #3-5 for each filter science observations are collected in.
+
+Schar School of Policy and Government                                                                                                  55
+ In math (full option 1 equation)
+
+     Reduced science image = {raw science image –dark image} /
+     {reduced flat image/median(reduced flat image)}
+
+     Using the dark images with ts=td
+
+     Where:
+     Reduced flat image = {raw flat image –dark image}
+
+     Using the dark images with tf=td
+
+
+
+
+Schar School of Policy and Government                            56
+ What about option 2?
+
+     Option 2: (not preferred)
+     1.   10 science images with exposure time ts, for each filter
+     2.   10 flatfield images with exposure time tf (tf <> ts), for each filter
+     3.   10 bias images with exposure time tb = 0, the minimum exposure time
+     4.   10 dark images with exposure td>0
+
+
+
+
+Schar School of Policy and Government                                             56
+ Option 2 in words:
+
+     1.          Median combine 10 biases, darks, flats and (optionally) science images
+                Purpose: cosmic ray rejection and reducing noise by factor of ~3
+     2.          Bias subtracted dark image = median-combined dark image – median combined bias image
+                Purpose: remove the instantaneous detector signal from the detector response to isolate the detector signal (dark current) that builds linearly with
+                time.
+     3.          Flat-scaled dark image = median combined bias image + tf/td * bias subtracted dark image
+                Purpose: generate an estimated image of the detector signal present in the flat images
+     4.          Science-scaled dark image = median combined bias image + ts/td * bias subtracted dark image
+                Purpose: generate an estimated image of the detector signal present in the science images
+     5.          Dark subtracted flatfield = median-combined flatfield – median combined dark with same simulated exposure time as flat from
+                 step 3
+                Purpose: remove the electronic detector signal to isolate the electrons generated by photons
+     6.          Reduced/normalized flatfield = dark subtracted flatfield / median value of illuminated portion of dark subtracted flatfield
+                Purpose: turn the flatfield image into a pixel correction image of what fraction (percentage) of light is reported by each pixel. Typical pixel value
+                will now be close to 1. This ”normalization” gets rid of the variation in counts for flatfields (e.g. if I collected two sets of flats with 10,000 counts
+                and 20,000 counts, both will now have values ~1)
+     7.          Dark subtracted science image = median-combined science image – median combined dark with same simulated exposure as
+                 science image from step 4.
+                Purpose: remove the electronic detector signal to isolate the electrons generated by photons from the sky/targets
+     8.          Reduced science image = dark subtracted science image / reduced & normalized flatfield
+                Purpose: remove the variation in individual pixels so that pixels that behave differently report the same number of counts for the same number of
+                photons (now not an integer anymore)
+     9.          Repeat #3-8 for each filter.
+
+Schar School of Policy and Government                                                                                                                                       56
+ Option 2 in math:
+
+     Reduced science image = {raw science image – [bias image + ts/td*(dark image-bias image)]} /
+     {reduced flat image/median(reduced flat image)}
+     Where:
+     Reduced flat image = [raw flat image – (bias image + tf/td*(dark image-bias image ))]
+
+     When two sets of dark images are available such that ts=td for one set of darks, and tf=td for the other, the above equation
+     reduces to option 1.
+
+
+
+
+Schar School of Policy and Government                                                                                               56
+ The full CCD SNR equation:
+
+
+
+
+ Note: Estimate of the 1σ error introduced within the A/D converter: it depends on the actual internal electrical workings of a
+ given A/D converter; its value is approximately of 0.289 in the example above, and is generally small enough to ignore.
+ Note: Does not capture all of the noise sources in a detector – for example, fringing, bad pixels, cosmic rays, etc.
+Schar School of Policy and Government                                                                                             56
+ Aperture Photometry
+
+
+
+
+Schar School of Policy and Government   57
+ How do we measure the brightness of things in an image?
+
+
+   First let’s start with the simpler case of an unresolved “point
+   source” (like a star)
+
+
+
+
+Schar School of Policy and Government                                58
+ How do we measure the brightness of things in an image?
+
+
+   Lets zoom in on one of these stars and adjust how it is
+   displayed to show more detail of the point spread function:
+
+
+
+
+Schar School of Policy and Government                            58
+ How do we measure the brightness of things in an image?
+
+
+   In the infinite SNR approximation, if we were to plot this
+   image in 3D of one of the stars, it might look something like
+   this:
+
+
+
+
+Schar School of Policy and Government                              58
+ How do we measure the brightness of things in an image?
+
+
+   But real images of stars are noisy, so they will look more
+   something like this:
+
+
+
+
+Schar School of Policy and Government                           58
+ How do we measure the brightness of things in an image?
+
+
+   But real images of stars are noisy, so they will look more
+   something like this:
+
+
+                     From this, how do we figure out how bright this star is?
+
+
+
+
+Schar School of Policy and Government                                           58
+ Measuring Stellar Brightness
+
+     - You draw a circle around the star, called an aperture, and add up the counts inside of it. The signal
+       outside the circle will be missed.
+     - How big do you make the circle? Well, that depends on a number of factors, the most important being
+       signal to noise ratio.
+     - If you just look at the brightness of the star in a given aperture you will also be including the background
+       and its associated noise.
+     - Make it too big, and you have too much background noise
+     - Make it too small, and you have left out too much signal.
+
+
+
+
+Schar School of Policy and Government                                                                                 59
+ Measuring Stellar Brightness
+
+     - An offset annulus is then used to subtract the background
+     - Best if the background determination is local because the background can vary across an image
+     - Use the median of pixels in the annulus to remove bad pixels and cosmic rays
+
+     - There are alternatives, including point spread function modeling, which until recently with Bayesian
+       analysis did not work as well as aperture photometry.
+     - Another alternative involves combinations of individual pixel time-series, which can be used to
+       disentangle instrumental and astrophysical effects. This is particularly important for the NASA TESS
+       mission data, and Kepler data as well.
+
+
+
+
+Schar School of Policy and Government                                                                         59
+ Differential Photometry
+
+     The Easiest Magnitudes to Measure (the hard one is absolute)
+
+     - Once you have measured brightness you need to have something with which to compare it.
+
+     - Multiple sources in the same field can be compared directly without measuring the calibrated brightness
+
+
+     - Varying sources can be tracked without measuring the calibrated brightness as long as there is a non-
+     varying source in the same field
+
+     - Differential photometry avoids the need to calibrate your data with respect to some outside magnitude
+     standard
+
+
+
+
+Schar School of Policy and Government                                                                            60
+ Differential photometry
+
+
+
+
+Schar School of Policy and Government   61
+ Differential photometry
+
+
+
+
+Schar School of Policy and Government   62
+ Differential photometry
+
+
+
+
+Schar School of Policy and Government   63
+ The magnitude system
+
+    Thanks to Hipparchus assigning brightnesses of stars from 1 to 6 with 1 the brightest and 6 the faintest he could
+    discern, two millenia ago, and thanks to the fact that our eyes see brightness logarithmically, today astronomers
+    use the magnitude system:
+
+    Apparent Magnitude = -2.5 * log ( apparent flux or apparent brightness)
+    Absolute Magnitude = -2.5 * log ( absolute flux or absolute brightness)
+    Instrumental magnitude = -2.5 * log ( counts from the sensor)
+
+    Counts = 10 ^ ((-instrumental magnitude)/(2.5))
+
+    A star of magnitude 1 is approximately 100 times brighter than a star of magnitude 6.
+    A change in magnitude 1 corresponds to a brightness change of ~2.5.
+
+
+
+
+Schar School of Policy and Government                                                                                   63
+ Differential photometry
+
+
+
+
+                                                                  Minst(standard) = measure
+
+                                        Minst(target) = measure
+
+
+
+
+Schar School of Policy and Government                                                         63
+ Differential photometry
+
+
+
+
+                                                                  Minst(standard) = measure
+
+                                        Minst(target) = measure   Mtrue(standard)=known
+
+
+
+                                             Mtrue(target)=?
+
+
+
+
+Schar School of Policy and Government                                                         63
+ Differential photometry
+
+
+
+
+                                                                             Minst(standard) = measure
+
+                                                   Minst(target) = measure   Mtrue(standard)=known
+
+
+
+                                                        Mtrue(target)=?
+
+
+                                        Mtrue(target)-Mtrue(standard) = Minst(target) - Minst(standard)
+
+Schar School of Policy and Government                                                                     63
+ Differential photometry
+
+
+
+             True brightness of target / known brightness of standard
+             =
+             Counts of target / counts from standard
+
+
+
+
+Schar School of Policy and Government                                   63
+ Differential photometry
+
+
+
+
+                                                                             Minst(standard) = measure
+
+                                                   Minst(target) = measure   Mtrue(standard)=known
+
+
+
+                                                        Mtrue(target)=?
+
+                                        Mtrue(target)= Minst(target)
+                                                       +1/N x ΣiN (Mtrue(standardi)- Minst(standardi) )
+Schar School of Policy and Government                                                                     63
+Differential photometry
+
+
+
+   Then you repeat this for every image to build up a relative
+   light curve.
+
+   We didn’t event talk about non-point source extended
+   objects like galaxies. In that case, we can’t do aperture
+   photometry, but we can talk about ”surface brightness”
+   or brightness per unit area on the sky (aka per pixel)
+
+
+                                                                 63
+ Back to the Cliffhanger
+
+
+
+
+Schar School of Policy and Government   63
+ What if I have two or more models? Which is better? Or similarly, what if my assumption (like a Gaussian distribution) is
+ wrong? How would I be able to tell?
+
+
+
+
+Schar School of Policy and Government                                                                                        34
+ Sir Thomas Bayes entered the chat.
+
+
+
+
+Schar School of Policy and Government   34
+ The statistics revolution in astronomy that started with the NASA Kepler mission
+
+                                                                     The NASA Exoplanet Archive had to make a decision
+                                                                     in 2010. The confirmed planets table still exists to
+                                                                     this day.
+
+                                                                     At that time, a “confirmed” planet usually meant
+                                                                     that it had a mass measured with radial velocities.
+                                                                     Today, there’s not really a good definition.
+
+                                                                     But many Kepler candidates were too faint and
+                                                                     lightweight for radial velocity confirmation.
+
+                                                                     However, astronomers were statistically ”validating”
+                                                                     exoplanets by the hundreds, using new techniques
+                                                                     pioneered by Sir Thomas Bayes.
+
+                                                                     The archive decided, under pressure from NASA, to
+                                                                     include statistically validated planets in the
+                                                                     confirmed planets table. It’s really the “confirmed
+                                                                     and validated” table, and remains so today.
+
+                                                                     To this day, the field lacks clear definitions of
+                                                                     statistically validated (generally >99%, but what
+                                                                     tests are done?), and confirmed (my favorite:
+                                                                     detected with two independent techniques)
+
+Schar School of Policy and Government                                                                                      34
+ Bayes Theorem
+
+
+
+           Likelihood principle: All of the information in a sample is contained in
+           the likelihood function, a density of probability distribution function.
+
+           The data are modeled by a likelihood function
+
+           Not all statistical paradigms agree with this principle.
+
+
+
+
+Schar School of Policy and Government                                                 34
+ Bayes Rule
+
+
+           Let A and B be two events in the sample space, then:
+
+           P(A | B) = P(AB)/P(B) = P(B|A)P(A)/P(B)
+
+           Note: P(B | A) = P(AB)/P(A) à P(AB) = P(B | A)P(A)
+
+           It is really just about conditional probabilities
+
+
+
+
+Schar School of Policy and Government                             34
+ Applying Bayes Rule to models and data:
+
+
+
+
+Schar School of Policy and Government      34
+ Another way of writing it:
+
+
+
+
+      The prior distribution allows you to “easily” incorporate your beliefs (assumptions)
+      about the parameter(s) of interest.
+
+      Posterior is a distribution on the parameter space given the observed data
+
+
+Schar School of Policy and Government                                                        34
+ A “simple” example:
+
+
+
+
+Schar School of Policy and Government   34
+ A “simple” example:
+
+
+
+
+Schar School of Policy and Government   34
+ The Bayesian framework
+
+
+
+     Classical or “frequentist” methods for inference consider θ (the model parameters)
+     to be fixed and unknown.
+     à Performance of methods evaluated by repeated sampling
+     à Consider all possible data sets
+
+     Bayesian methods consider θ to be random
+     à Only considered observed data set as fixed, and prior information (assumptions)
+
+
+
+
+Schar School of Policy and Government                                                     34
+ A “simple” example:
+
+
+
+
+Schar School of Policy and Government   34
+ Examples of Prior functions and their conjugates
+ (inverses of a sort) that are used for the likelihood function
+
+
+
+
+Schar School of Policy and Government                             34
+ Uniform Prior
+
+
+
+
+Schar School of Policy and Government   34
+  Ok, this is the math, now how do we use it – enter the Markov Chain Monte Carlo algorithm, or MCMC
+
+
+
+
+                                 And thus we compute “relative posteriors” to compare models quantitatively given a data set
+Schar School of Policy and Government                                                                                          34
+  What is the product of MCMC?
+
+
+
+
+Schar School of Policy and Government   34
+  What is the product of MCMC?
+
+
+
+
+Schar School of Policy and Government   34
+Schar School of Policy and Government   34
+  MCMC is an iterative algorithm that evaluates a model given a data set in the model parameter space
+
+
+
+
+Schar School of Policy and Government                                                                   34
+  MCMC is an iterative algorithm that evaluates a model given a data set in the model parameter space
+
+
+
+
+                                                                  We then do many of
+                                                                  these, and call each
+                                                                  one a “chain”. The
+                                                                  chains help evaluate
+                                                                  convergence. Similar to
+                                                                  gradient descent in a
+                                                                  sense of parallelism.
+
+
+Schar School of Policy and Government                                                                   34
+  A practical real-world example
+
+
+
+
+        • https://twiecki.io/blog/2015/11/10/mcmc-sampling/
+
+
+
+
+Schar School of Policy and Government                         34
+  How do you know when an MCMC finishes?
+
+
+
+
+        Previously, the Gelman-Rubin statistic was useful to evaluate
+        the convergence of “chains”, but it relief on the assumption
+        (ironic!) that chains were independent, and since the chains
+        we initially “mixed”, this wasn’t strictly true.
+        More recently (circa 2020), a new statistic called the
+        autocorrelation timescale has taken precedence for evaluating
+        convergence of MCMC chains:
+        https://emcee.readthedocs.io/en/stable/tutorials/autocorr/
+
+Schar School of Policy and Government                                   34
+  Each chain in an MCMC looks a little like an amoeba simplex algorithm.
+
+
+
+
+        MCMC explores the (data-model)2 residuals multi-dimensional “surface” (where the dimensions are
+        the model parameters).
+        Amoeba finds the minimum residuals in that ”valley” of that surface.
+        Which is better? Both are computationally intensive, MCMCs even more so than amoeba simplex
+        algorithms.
+        Amoeba and solvers are in general better for fitting – finding the best fit set of model parameters.
+        MCMC is better for understanding the model parameter posterior probability distributions – aka,
+        given the data and our model, what is our knowledge of the value and uncertainty distribution for
+        each of the model parameters (e.g. what is the shape and size of the rms surface around the
+        minimum).
+        https://iopscience.iop.org/article/10.3847/1538-4365/aab76e/pdf
+        https://iopscience.iop.org/article/10.3847/1538-4365/aab76e/meta
+
+
+Schar School of Policy and Government                                                                          34
+Schar School of Policy and Government   34
+N measurements in transit of fi +/- σi
+àN measurements with σ.
+Average flux in transit = fit a transit
+model in AIJ with a non-fixed depth
+Depth = ΔF +/- σ/sqrt(N)
+uncertainty on depth measured ~
+σ/sqrt(N)
+
+SNR = ? = ΔF* sqrt(N)/σ
+MCMC - ExoFast does.
+
+https://exoplanetarchive.ipac.caltech.e
+du/cgi-bin/ExoFAST/nph-exofast
+
+https://github.com/jdeast/EXOFASTv2/
+
+Python tools: MCMCs
+Pytransit
+batman
+  The rabbit hole
+
+
+
+
+        Statistical tools will eventually be
+        as numerous as the stars in the
+        sky J
+
+
+
+
+Schar School of Policy and Government          34
+

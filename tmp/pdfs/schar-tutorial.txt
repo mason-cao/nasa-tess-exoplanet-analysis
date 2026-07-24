@@ -1,0 +1,698 @@
+        iAstroImageJ (AIJ) Tutorial for Transiting
+          Exoplanet Data-Reduction & Analysis
+Peter Plavchan, William Matzko, Bahaa Hamze, Justin Wittrock, Michael
+                  Bowen, Owen Alfaro, Kevin Collins
+Contents
+    1.​ Introduction
+    2.​ Installing, Updating, & Preparing AIJ
+    3.​ AIJ Data-Reduction & Plate-Solving
+    4.​ Alnitak Data-Reduction & Plate-Solving
+    5.​ AIJ Light Curve Extraction
+    6.​ Interpreting Light Curves
+    7.​ Preparing Files for ExoFOP–TESS or ExoFOP–K2
+    8.​ Additional In-depth PDF Resources for AIJ
+
+
+1.​ Introduction
+AstroImageJ, or AIJ, is an ImageJ software that is customized for astrophysical purposes, mainly data
+reducing and analyzing images taken through optical telescopes. The main website for AIJ can be found
+at www.astro.louisville.edu/software/astroimagej/. This tutorial is intended to be a summarized version
+and geared toward data-reducing and analyzing transiting exoplanet data; more in-depth sources are
+listed near the end of this tutorial.
+
+
+2.​ Installing, Updating, & Preparing AIJ
+  2.1.​ Installing AIJ
+A list of installation packages can be found in
+www.astro.louisville.edu/software/astroimagej/installation_packages/. Note that Java is required to run
+AIJ; if one does not already have Java installed it will get installed concurrently when you install AIJ. To
+install AIJ, follow the directions below based on your computer’s operating system:
+
+    1)​ For Windows users:
+        a)​ Download the package via​
+            http://www.astro.louisville.edu/software/astroimagej/installation_packages/AstroImageJ_v5
+            .3.3.00-windows-x86_64Bit.exe
+        b)​ Extract the downloaded zip file and place the extracted folder in a directory that is
+            convenient for you.​
+            ​
+    2)​ For Mac users:
+        a)​ Download the package via ​
+            http://www.astro.louisville.edu/software/astroimagej/installation_packages/AstroImageJ_v5
+            .3.3.00-mac-arm_64Bit.dmg​
+            ​
+            And follow the instructions here​
+            www.astro.louisville.edu/software/astroimagej/installation_packages/AstroImageJ_installati
+            on_mac.html.
+        b)​ Follow the prompted steps on installing the package.
+        c)​ You may get a half-empty icon bar. To fix this, go to “Plugins” -> “Macros” -> “Install” (or
+            press “command” + “shift” + “m”), navigate to the “AstroImageJ/Macros” folder, and run
+            “StartupMacros.txt”. Additional tweaks are required to allow the macros to actually run.
+            OSX 10.12 and 10.13 security “enhancements” are isolating scripts that should work
+            together.
+
+A more in-depth guide on AIJ installation can be found in Section 2 of “AIJ User Guide” pdf.​
+
+  2.2.​ Updating AIJ
+The next step is to update your AIJ package.
+
+    1)​ To run AstroImageJ, go to “AstroImageJ” folder and double-click on “AstroImageJ” icon. A small
+        toolbar should pop up:
+
+
+
+
+    2)​ Go to “Help” -> “Update AstroImageJ…”. “AstroImageJ Updater” window will then open.
+
+    3)​ Click on the down arrow next to the displayed version number, scroll up, select “daily build”, and
+        click “OK”. Your AIJ will be restarted and should then be updated to the latest beta version.
+
+  2.3​ Preparing AIJ
+Since many sets of images you will be data-reducing and analyzing will have very large number of bytes
+(often in gigabytes), you may need to adjust the memory allocation setting in AIJ.
+
+    1)​ On your AIJ toolbar, go to “Edit” -> “Options” -> “Memory & Threads…”. A window should
+        appear:
+    2)​ The maximum memory will depend on the byte size of your RAM. As an example, for those with
+        8.00 GB RAM, change the “Maximum memory:” entry to roughly 6400 MB and click “OK”. If you
+        enter too high of a maximum memory, your computer will experience memory thrashing which
+        will considerably slow down your computer processes and may cause it to crash.
+
+    3)​ Close down and reopen AIJ for that change to take effect.
+
+    4)​ Go back to the memory setting and check if the new “Maximum memory:” entry is saved. If it
+        was not, you probably entered too high of a value. Try making smaller changes, restart AIJ, then
+        check again. You can repeat this step until you are satisfied with the max memory setting.
+
+  2.4​ Priming AIJ for Plate-Solving
+Plate-solving an image is defined as assigning each object in an image with RA and DEC coordinates. This
+is useful in that a set of plate-solved images do not need to be aligned before doing light curve analysis;
+this will greatly cut down the number of new files being created, which would save us more memory
+space in the long run. Another advantage is that if one wishes to align a stack of images, one can
+automatically start the alignment process without having to manually select the targets in each image.
+There are two options for doing plate-solving in AIJ, depending on your computer’s operating system:
+
+    1)​ For Windows users:
+        a)​ Plate-solving can be done using a local version of Astrometry.net, which can considerably
+            speed up the plate-solving process.
+        b)​ Visit adgsoftware.com/ansvr/ to install an ansvr plugin.
+        c)​ Follow the installation directions #1 through #14 on that webpage.
+        d)​ Note that this plugin appears to be only available for Windows.
+
+    2)​ For Mac users:
+        a)​ Plate-solving can be done using the online version of Astrometry.net.
+        b)​ Register online at nova.astrometry.net/signin/?next=/api_help to obtain an Astrometry.net
+            key. There is no fee for registration.
+        c)​ Go to “My Profile” and look for “my API key”. You will need this key to initiate the
+            plate-solving process on AIJ; entering the key will only need to be done once unless you
+            reset the AIJ settings.
+Section 7.4 of “Transit Light Curve Tutorial” pdf provides further discussions on preparing and using AIJ
+to plate-solve images.
+
+
+3.​ AIJ Data-Reduction
+A data-reduction is a process in which images are being rid of spurious and/or artificial counts caused by
+various external sources. There are four different types of images that are taken while observing a target
+of interest: bias, dark, flat, and science. In our case, only the darks and flats are needed to “clean” up
+the sciences before we can do any sort of analysis.​
+
+  3.1​ Bias
+A bias is an image that is taken with a shutter closed and at an exposure time of nearly 0 s. This image
+captures systematic noises from the electronics within the camera. Normally, you would take at least 10
+biases, median combine them into a master bias, and then subtract it from the raw sciences. However,
+doing so will add noise to the sciences. Fortunately, the bias subtraction does not need to be done since
+the darks already include the bias within them. Thus, the biases are not needed at all.​
+
+  3.2​ Dark
+A dark is an image that is taken with a shutter closed and at an exposure time that is much longer than
+that of a bias. It contains noises generated through thermal processes. There are two sets of darks you
+should take: flat darks and science darks. Flat darks are darks with the same exposure time as the flats;
+these would be median combined into a master flat dark, which will then be subtracted from the raw
+flats. Science darks are darks with the same exposure time as the sciences; again, these would be
+median combined into a master science dark, which will then be subtracted from the raw sciences. You
+should take at least 10 darks for each set, so your overall total would be at least 20 darks. The darks are
+not dependent on the color filters used for the sciences.​
+
+  3.3​ Flat
+A flat is an image that is taken with a shutter opened and at an exposure time such that it has enough
+counts (roughly 20,000) in each pixel. The flat is used to remove artificial distortions on the raw sciences
+caused by imperfect or defective pixels. A general rule-of-thumb is to take at least 10 flats, dark subtract
+each flat, median combine the flats into a master flat, and then flat divide the sciences by the master
+flat. The color filter for the flats should be the same one that is being used for the sciences.​
+
+  3.4​ Science
+A science is an image of a target you wish to analyze. Each set of sciences vary in number of images and
+exposure times. There are two types of sciences: A raw science is an unprocessed image while a reduced
+science is an image that has been data-reduced.​
+
+  3.5​ Preparing Files for Data-Reduction
+1)​ During a given night, the observing volunteers would use the GMU Observatory telescope to
+    take a set of images and save them into a directory folder labeled with the date of the
+    observation. You would often be given a link to that folder.
+    a)​ Download the images that are inside this folder (this process can take several minutes to
+        even hours depending on the number of images taken).
+    b)​ You must separate those images into the following groups (if it has not already done so): flat
+        darks, science darks, flats, and sciences. The folder’s label for each group should contain the
+        type of image, exposure time, and the filter used. As an example: “Dark_8s”, “Dark_15s”,
+        “Flat_8s_V”, and “Science_15s_V”.
+
+2)​ Next, you must visually inspect each of your sciences for issues such as streaking, targets outside
+    the field-of-view, or considerable shifting or jolting of the target between each frame (often due
+    to the telescope periodically auto-correcting its position).
+    a)​ Go to AIJ toolbar, click on “File” -> “Import” -> “Image Sequence…”, then select the first
+        science image file of a set that you wish to data-reduce; “Sequence Options” window will
+        appear:
+
+
+
+
+    b)​ Make sure the number of images is the same number of sciences that are part of a set and
+        that “Use virtual stack” is checked. After clicking “OK”, a stack of sciences will open up as
+        seen on the next page.
+    c)​ Near the top, just below the menu, are the sequence number out of the total number of
+        stacked sciences and its corresponding file name (enclosed in a yellow box). Just below the
+        image field is a horizontal scroll bar (enclosed in a red box) that allows you to page through
+        each science; use that (or hit the right arrow button on your keyboard) to examine each
+        science.
+     d)​ If you come across any bad images, create a new folder in the same directory with the dark,
+         flat, and science folders, move those defective sciences into that folder, and create a text file
+         within that folder with a list of science files you moved and the reason for the removal.
+     e)​ Once your set of sciences have been checked, you can then close the stacked images
+         window and proceed to data-reduction.
+
+3.6​ Doing Data-Reduction
+ 1)​ To use AIJ to data-reduce your images, click on “DP” button (enclosed in a yellow box) on AIJ
+     toolbar.
+Two windows will materialize: “DP Coordinate Converter” and “CCD Data Processor”.
+2)​ Go to “DP Coordinate Converter” window.
+    a)​ Under the “Observatory ID”, make sure “George Mason Univ. Obs., GMU, VA” is selected; the
+        “Time Zone” and “Geographic Location of Observatory” will be automatically filled. This
+        only need to be done once, but if you reset the AIJ settings, you may have to repeat this
+        step.
+    b)​ You can enter the target’s name or ID into “SIMBAD Object ID (or SS Object)” to see if it does
+        have info on that target. If it does, it will automatically enter the coordinates under
+        “Standard Coordinates”. If it doesn’t, you will have to manually enter the target’s RA and
+        Dec into “J2000 Equatorial” boxes; make sure you hit “enter” each time you fill in the box so
+        that all other coordinate boxes are automatically updated.
+    c)​ The “Target Proper Motion (mas/yr)” will often not be filled in. The target’s proper motions
+        can be looked up in SIMBAD (simbad.u-strasbg.fr/simbad/), ExoFOP databases
+        (exofop.ipac.caltech.edu), or NASA Exoplanet Archive (exoplanetarchive.ipac.caltech.edu)
+        and typed into the boxes; again, hit “enter” each time you fill in the box.
+    d)​ Under “Dynamical Time”, make sure “Auto” box is checked, then click “Update”. A window
+        will open; click “OK” on that window. This step will update the leap seconds of your images’
+        timestamp in BJD (Barycentric Julian Date).
+
+3)​ Go to your “CCD Data Processor” window.
+    a)​ Note that “Bias Subtraction”, “Dark Subtraction”, and “Flat Division” have 4 boxes. The
+        longer box on top specifies the location of your raw files. The longer box on the bottom
+        specifies the output location of your reduced images. The shorter box on top allows you to
+        enter a filename pattern, and the one on the bottom lets you specify the output master file
+        name. You can hover your mouse above a box to see details about that input field.
+b)​ The “Total” column on the far right will tell you how many files has been found; make sure it
+    has found all of your appropriate files after you’ve filled in the boxes – no more, no less!
+c)​ The first thing you should do is to dark subtract the flats and create a master flat.
+    i)​ In “Science Image Processing”, uncheck the box next to “Enable” under “Filename
+          Pattern Matching”.
+    ii)​ In “Bias Subtraction”, uncheck “Build” and “Enable” (we don’t usually take biases).
+    iii)​ In “Dark Subtraction”, check “Build” and “Enable” and select “med”. Click on the input
+          row’s second blue folder icon; find and select one of the flat darks. (IMPORTANT! You
+          likely have two sets of darks – one has the same exposure time as your flats while the
+          other has the same exposure time as your sciences. When you make your master flat
+          and master dark here, you need to make sure that you are using your set of darks that
+          has the same exposure time as your flats.) The directory address box and the filename
+          box will be automatically filled in. Copy the directory entry and paste it into the output
+          row’s directory box directly below it. In the output row’s filename box, type in
+          “mdark_#s.fits” (replace # with the exposure time of those darks). This will create a
+          master dark file with that name.
+    iv)​ In “Flat Division”, check “Build” and “Remove Gradient”, uncheck “Enable”, and select
+          “med”. Repeat step iii) for the boxes, except to type “mflat.fits” into the output’s
+          filename box.
+    v)​ Click on “START” button at the bottom. A log should come up that shows AIJ computing
+          stuff. Let it run; it will say “Finished” when everything is completed.
+d)​ The next thing is to data reduce the sciences.
+    i)​ In “Science Image Processing”, check “Enable” under “Filename Pattern Matching”. Click
+          on the second blue folder icon to find the sciences you want to data reduce; select one
+          of those files, and the boxes should be automatically filled in.
+    ii)​ In “Dark Subtraction”, repeat step c iii) except to select one of the science darks. Make
+          sure you change the exposure time number in the output filename box and to update
+          the output directory box.
+    iii)​ In “Flat Division”, uncheck “Build” and check “Enable”.
+    iv)​ In “FITS Header Updates”, check “General” and “Plate Solve”. Make sure “Coordinate
+          Converter manual entry” is selected for both “Target Coordinate Source” and
+          “Observatory Location Source”.
+    v)​ In “Save Calibrated Images”, check “Enable” and select “32” bits. The “Sub-dir:” box is to
+          name a subdirectory folder that will be created to store the reduced sciences; the
+          default name is “pipelineout”. The “Suffix:” box is to add a suffix to the reduced
+          sciences’ filename to distinguish them from the raw science files; the default suffix is
+          “_out”.
+
+    vi)​ Go back to “FITS Header Updates”. Click on the plate solve icon            . “DP
+         Astrometry Settings” window will appear:
+vii)​ For Windows users, leave “User Key:” box blank and check “Use Custom Server:”. The
+      box next to that should be automatically filled in like the one above.
+viii)​For Mac users, enter your API key into “User Key:” box and uncheck “Use Custom
+      Server:”. This will only need to be done once, but you may need to repeat this step if
+      you reset the AIJ settings.
+ix)​ Have all other boxes be exactly those shown in the snapshot above. Also, make sure the
+      entries for “Radius (pixels)”, “Filter Radius (pixels)”, “Plate Scale (arcsec/pix)”, “Tolerance
+      (arcsec/pix)”, “Radius (arcmin)”, and “SIP Order” are the same. Also, the “Center RA”
+      and “Center Dec” boxes should already have entries; those were updated via “DP
+      Coordinate Converter” window. Click “SAVE AND EXIT”.
+
+x)​ In “FITS Header Updates”, click on the icon              . “General FITS Header Settings”
+      window will emerge. Find the “BJD (TDB) mid-Obs Keyword:” box. The default entry is
+      “BJD_UTC”; change that entry to “BJD_TDB”, then close out that window. This only need
+      to be done once, but this may need to be repeated if you reset the AIJ settings.
+xi)​ Click “START” and let it run until the log says “Finished”. Your reduced and plate-solved
+      sciences should now have been created in the new subdirectory “pipelineout”.
+xii)​ You can choose not to plate-solve the sciences if you want to speed up the
+      data-reduction process. Simply uncheck “Plate Solve” in the “CCD Data Processor”
+      window before running the data-reduction.
+    4.​ Alnitak Data Reduction & Plate-Solving
+5.​ AIJ Light Curve Extraction
+  5.1​ Aligning Images
+If you did not plate-solve the sciences, you will need to align them before doing light curve extraction.
+
+    1)​ Import a virtual stack of data-reduced sciences. See Section 3.5.2a and b in case if you have
+        forgotten on how to do that.
+
+    2)​ Page through the stack and note whether or not there are large “jumps” (i.e., is the star in one
+        place in one image, and then in the next it’s in a very different, far away place?). This will be
+        important in a moment.
+
+    3)​ In the stack window (not AIJ toolbar), go to “Process” -> “Align stack using WCS or apertures…”
+        A window will come up that looks like this:
+
+
+
+
+        a)​ Make sure you select all the slices in your stack. Set “Radius of object aperture” to about the
+            size of your target star. You can just add 10 (as in the above image) to get the other aperture
+            sizes. There is a rigorous way to choose apertures; see Section 4.2.3 if you wish to employ
+            that method.
+    b)​ Have all checked boxes be like those in the screenshot above. Note: “Use previous n
+        apertures” will just use the same aperture size, location, and number you used last time, so
+        keep it unchecked for this purpose.
+
+    c)​ If you noticed significant jumps in your stack, check “Use single step mode”.
+
+    d)​ Click OK.
+
+4)​ Now, you can place your apertures. The first one you place will always indicate your target star
+    (marked as T1 in green). The others are reference stars (marked as C# in red). For alignment of
+    images, you only need 3 or more reference stars. Things should look something along the lines
+    of this:
+5)​ Once you have all your reference stars selected, you can right click on the image or hit “enter”.
+    a)​ If you did not enable “single step mode”, life is good and it will align all the images for you.
+    b)​ If you had to enable “single step mode”, you will have to click on your target star for each
+        science you have. This is arguably the worst part, but at least you don’t have to click your
+        reference stars over again!
+        c)​ Aligned images, now denoted with a filename suffix “_aligned”, should be placed in a
+            newly-created folder called “Aligned”, which should be located in the same folder your
+            processed images are in.
+
+
+  5.2​ Generating a Measurement Table for Light Curve
+We can now generate a light curve using our plate-solved or aligned data.
+
+    1)​ Please review Section A (pages 3 and 4) of TFOP SG1 Guideline pdf for file naming conventions
+        before proceeding to light curve extraction. From this point on, you will be saving files that are
+        needed as part of submitting the report online.
+
+    2)​ Import a virtual stack of data-reduced and plate-solved (or aligned) sciences. See Section 3.5.2a
+        and b in case if you have forgotten on how to do that.
+
+    3)​ We need to figure out the aperture size so that we can do the aperture photometry properly.
+
+        a)​ On AIJ toolbar, click on “Aperture Photometry Tool” button (enclosed in a yellow box).
+
+
+
+
+        b)​ Use the provided finder chart to find your target on the first science image. Once you have
+            found your target, click on it. “Measurement” window may pop up; close it. There should
+            be one or three red circles enclosing the target now.
+
+        c)​ On AIJ toolbar, go to “Plugins” -> “Astronomy” -> “Seeing Profile”. “Seeing Profile” window
+            will materialize.
+
+            i)​ The source’s radius will be your aperture size, and the background’s inner and outer radii
+                will be your annulus sizes.
+
+            ii)​ Save the seeing profile plot by clicking on “Save…” button near the bottom left corner.
+                 Once you have saved the file, close that window.
+d)​ On AIJ toolbar, double-click on “Aperture Photometry Tool” to open “Aperture Photometry
+    Settings” window.
+
+   i)​ Enter the aperture and annuli radius values you obtained from the seeing profile plot.
+
+   ii)​ All other entries and boxes should be exactly like those in the screenshot. You may need
+        to enter “1.414214” into “CCD readout noise” entry box and “0.012283” into “CCD dark
+        current per sec” entry box; those are based on the specifications of our camera’s CCD
+        and should only need to be entered once unless you reset the AIJ settings.
+       iii)​ After you are done with the settings, click “OK”.
+
+       iv)​ Step 3d can be skipped if “CCD readout noise” and “CCD dark current per sec” entries
+            are already updated. The aperture and annuli radius values can instead be entered via
+            Multi-Aperture Photometry (see step 4).
+
+
+
+
+   e)​ On AIJ toolbar, click on the “Clear Overlay” button (enclosed in a yellow box). This will
+       remove the red circles on the image.
+
+
+
+
+4)​ Now, we should be ready to do multi-aperture photometry.
+
+   a)​ We need to temporarily place a 2.5’ circle around the target. In the image stack window,
+       right-click on the target. The following window will emerge:
+i)​ In “Custom Text:” entry, type in “Radius = 2.5’”.
+
+ii)​ Check “Show Circle” and uncheck all other boxes.
+
+iii)​ In “Search Radius:”, type in “150.000”
+
+iv)​ In “Circle Radius:”, type in “416.667”. This is based on the specifications of our CCD.
+
+v)​ Click “OK”. An orange circle will appear in your image:
+b)​ If you have a Gaia stars .radec file that was generated for that particular date in which this
+    target’s data were collected, you can drag that file over the image and drop it. You should
+    then see something like this:
+c)​ In the image stack window, there is an icon with two red circles with a blue dot in the middle
+    of each circle (enclosed in a yellow box). If you hover over it, it will say “perform
+    multi-aperture photometry”. Click it to bring up “Multi-Aperture Measurements” window:
+i)​ If you skipped step 3d, enter the radii for aperture and annuli using the values from the
+      seeing profile plot.
+ii)​ If your set of images are plate-solved, check “Use RA/Dec to locate aperture positions”
+      and uncheck “Halt processing on WCS or centroid error”.
+iii)​ If your set of images are not plate-solved, uncheck “Use RA/Dec to locate aperture
+      positions” and check “Halt processing on WCS or centroid error”.
+iv)​ Have all other boxes be kept as seen in the screenshot above.
+v)​ Click “Place Apertures” at the bottom of the window.
+      d)​ You will first select your target star, followed by your reference stars. Unlike with alignment,
+          you need as many good quality reference stars as you can get. Try to get around 10 or so.
+          Good reference stars are of the same size and brightness of your target star. If you can’t get
+          many good matches, that’s OK. Just take what you can get. However, you may want to avoid
+          choosing reference stars near the edges as they may have drifted out of sight in later images.
+          Note: If you did step b, the target stars may already have been selected; you may only need
+          to select reference stars around them. As an example, your resulting selections may look like
+          this:
+
+
+
+
+      e)​ Once your apertures are placed, you may want to save the selections as a backup. Go to
+          “File” -> “Save apertures...”; an aperture file will be created. That way, this can cut down
+          your effort and time if you need to redo the multi-aperture photometry.
+
+      f)​ Once you are done with the above steps, right click or hit “enter”. The “Measurements”
+          window will pop up. It will remain blank until the process is completed; let AIJ finish
+          processing before you play around with anything.
+
+      g)​ Once the process is completed and the “Measurements” window is now populated with
+          data, go to that window and click on “File” -> “Save As…”. You now have a measurement
+          table that you will need to create a light curve plot.
+
+
+
+6.​ Analyzing & Interpreting Light Curves
+In this section, you will be analyzing and then interpreting the light curve.
+
+    1)​ If you don’t have the measurement table up right now, click on the measurement table button
+        (enclosed in a yellow box) on AIJ toolbar, then find the “..._measurements.xls” file that you saved
+        in the previous steps. This will open up the “Measurements” window.
+
+
+
+
+    2)​ To do the light curve analysis, click on the multiplot button (enclosed in a yellow box) on AIJ
+        toolbar. Multiple windows will then materialize.
+
+
+
+
+    3)​ The first thing you should do is to upload the default template.
+
+        a)​ If you don’t have “Template.plotcfg”, download it via www.astrodennis.com/Template.zip,
+            unzip the file, and place it in a convenient directory.
+
+        b)​ Go to “Multi-plot Main” window. Click on “File” -> “Open plot configuration from file…”.
+            Find and select “Template.plotcfg”. This will revert all plotting windows to proper settings so
+            that your analysis will be in compliance with the TESS/K2 reporting guidelines. You should
+            do this every time you start a new light curve analysis.
+
+    4)​ In “Multi-plot Main” window, do the following steps:
+
+        a)​ Set the “Default X-data” to “BJD_TDB”.
+
+        b)​ In “V. Marker 1” and “V. Marker 2” boxes, enter the predicted ingress and egress times. You
+            can get these values by consulting the target’s “Transit Info” png file and looking up the
+            “BJDTDB” column. Only take the decimal portion of the time values; the start and end times
+            should be in 0.### format (number of decimal places may vary from target to target). If, for
+            example, the start time was “8191.630” and the end time was “8191.744”, the entries
+            should be “0.630” and “0.744”. If the end time was “8192.744” (effectively the next
+            BJD_TDB day), then the entry should be “1.744”.
+
+        c)​ In the “Title” section, enter the target’s name and the UT date of observation.
+
+        d)​ In the “Subtitle section, replace “Observer Name” with “GMU” and enter the filter used and
+            the length of exposure time.
+    e)​ In the “X-Axis Scaling” section, select “Auto X-range” so that your data will become visible in
+        the plot window.
+
+    f)​ In the “Fit and Normalize Region Selection” section, click on “Copy” icon. This will copy the
+        entries from “V. Marker 1” and “V. Marker 2”. You will come back to this section for
+        adjustments later on.
+
+    g)​ If your plot (in a different window) is too big that part of it is being obscured, go to the “Plot
+        Size” section and reduce the “Height” and/or “Width” values until you can see the entirety
+        of the plot window.
+
+5)​ Go to “Data Set 2 Fit Settings” window and do the following steps:
+
+    a)​ In “Orbital Parameters”, enter the target’s period. The value can be obtained via the target’s
+        “Transit Info” png file.
+
+    b)​ In “Host Star Parameters”, enter the stellar radius of the target’s host star. The value can be
+        obtained from ExoFOP databases (exofop.ipac.caltech.edu) or NASA Exoplanet Archive
+        (exoplanetarchive.ipac.caltech.edu). The rest of the parameters will be automatically
+        updated.
+
+    c)​ In “Transit Parameters”, you will need the “Linear LD u1” and “Quad LD u2” values.
+
+        i)​ Visit astroutils.astronomy.ohio-state.edu/exofast/limbdark.shtml, choose the filter band
+            that was used for your target, and enter the host star’s effective temperature,
+            metallicity, and surface gravity parameters. Those values can be found in ExoFOP
+            databases (exofop.ipac.caltech.edu) or NASA Exoplanet Archive
+            (exoplanetarchive.ipac.caltech.edu).
+
+        ii)​ If the metallicity is not provided, you can enter “0” to treat it as having metallicity like
+             our Sun.
+
+        iii)​ If either effective temperature or surface gravity parameter is not provided, have u1 and
+              u2 be set to 0.3, unlock u1, and lock u2.
+
+    d)​ In “Detrend Parameters”, have all parameters be unchecked. We don’t want to apply any
+        detrending yet at this point.
+
+    e)​ In “Plot Settings”, check “Show Residuals” and “Show Error”. The residuals and their error
+        bars will appear on the plot.
+
+6)​ Go to “Multi-plot Y-data” window and do the following steps:
+
+    a)​ Review the label of each column. You can use the scroll bars at the bottom and at the right
+        to move around.
+
+    b)​ Make sure the “Plot” boxes are checked for the following “Y-data”:
+
+        i)​ Sky/Pixel_T1
+
+        ii)​ Width_T1
+        iii)​ AIRMASS
+
+        iv)​ tot_C_cnts
+
+        v)​ X(FITS)_T1
+
+        vi)​ Y(FITS)_T1
+
+    c)​ Page 8 of “TFOP SG1 Guidelines” pdf lists the recommended scale, shift, and color of those
+        parameters listed in the previous step; have these settings of each parameter be exactly
+        those listed and make sure each parameter’s “Page Rel” box is checked.
+
+    d)​ We now need to review each reference star’s flux.
+
+        i)​ Find “rel_flux_T2” or “rel_flux_C2”; it is usually in row 3. Check “Plot” and then examine
+            this star’s flux on the plot.
+
+        ii)​ If the flux shows large variation or scattering, make a note of that star (on a sheet of
+             paper or on the computer’s notepad); you will be removing that star from the list.
+
+        iii)​ Repeat steps i and ii for all other reference stars. You can change the “Y-data” entry to
+              review each star instead of going down the rows.
+
+        iv)​ After reviewing each star’s flux, you can uncheck the “Plot” box.
+
+7)​ Go to “Multi-plot Reference Star Settings” window and do the following steps:
+
+    a)​ Uncheck all reference stars that you listed as bad from the previous step.
+
+    b)​ Note: “T” means the star is not being used as a reference star while “C” means the star is
+        being used as a reference star.
+
+    c)​ Click on “Save Apertures” button to save the current aperture selections. If you had
+        previously created an aperture file while doing multi-aperture photometry, you can
+        overwrite that file.
+
+    d)​ Click on “Save Table” button to rewrite the measurement table file with the current aperture
+        configurations. That way next time when you reload the measurement table and plot for
+        later review, the aperture configurations will be exactly as you left it.
+
+8)​ If you have already uploaded the .radec file prior to running the multi-aperture photometry,
+    we’ll need to check the neighboring stars to see if they’re cleared or not.
+
+    a)​ Go back to “Multi-plot Main”. Go to “File” -> “Create NEB search reports and plots…” The
+        “TFOP SG1 NEB Analysis Macro” window will appear:
+b)​ Have “Option 1”, “Option 2”, “Option 3”, and “Select here if you would like the plots only to
+    be saved in a subfolder” be checked.
+
+c)​ If your images are plate-solved, check “Use plate-solved image to get pixel scale…”
+
+d)​ If your images are not plate-solved, enter “0.36” into the box below instead.
+
+e)​ The predicted ingress and egress times and predicted depth can be obtained from the
+    target’s “Transit Info” png file; enter those values into the boxes.
+
+f)​ Click “OK” at the bottom. You will be prompted to select the measurement table file (and a
+    plate-solved image, if you checked the box in step c). The “...dmagRMS-plot.png”,
+    “...NEB-table.txt”, and a folder with multiple plots will then be generated.
+    g)​ Examine the dmagRMS-plot for any outliers. If there are outliers, go to “Multi-plot
+        Reference Star Settings” and uncheck those outliers (if they’re not already unchecked).
+
+    h)​ In “Multi-plot Reference Star Settings” window, click on “Save Table” and “Save Apertures”
+        to resave the table and aperture files.
+
+9)​ Examine the plot. If you see the T1’s transit, check the alignment of the predicted ingress and
+    egress lines. If they’re not aligned, go to “Multi-plot Main” window and to “Fit and Normalize
+    Region Selection” section; adjust “Left” and “Right” values until the grey lines match up with the
+    ingress and egress on the plot.
+
+10)​Go to “Data Set 2 Fit Settings” window, check a detrend parameter “Use” box, then examine the
+    plot. Do this for each detrend parameter one at a time.
+
+11)​At this point, interpreting the data is an open-ended question. Experiment with the detrending
+    parameters and plot settings (“Multi-plot Main” and “Multi-plot Y-data”) until you believe you
+    have a satisfactory result. Your resulting plot may look somewhere along the line like this:
+12)​The analysis steps may vary depending on what objectives the team is requesting (verifying the
+    target’s transit, checking the field for NEBs, etc). See “TFOP SG1 Guidelines” pdf for additional
+    details.
+7.​ Preparing Files for ExoFOP–TESS or ExoFOP–K2
+Once your analysis is complete, you will need to prepare several files and write a brief summary about
+your results. Pages 3 and 4 of “TFOP SG1 Guidelines” pdf lists the required files for submission and their
+naming convention. Also consult that pdf file for additional details as the report preparations may vary
+depending on the objectives.
+
+    1)​ Create a new subdirectory folder that will contain your submission report files. Make sure to
+        move and/or save all submission report files into that folder.
+
+    2)​ You should already have a seeing profile file saved (see Section 4.2.3).
+
+    3)​ You should already have a measurement table file saved with the latest aperture configurations.
+        If you have not done so yet, go to “Multi-plot Reference Star Settings” window and click on “Save
+        Table” button.
+
+    4)​ Save your current plot configurations by going to “Multi-plot Main” window and clicking on
+        “File” -> “Save plot configuration…”; this will generate a .plotcfg file.
+
+    5)​ Go to the window containing the plot and click on “Save…” button at the bottom; this will save
+        your plot as a light curve png file.
+
+    6)​ You should already have an aperture file saved with the latest aperture configurations. If you
+        have not done so yet, go to “Multi-plot Reference Star Settings” window and click on “Save
+        Apertures” button.
+
+    7)​ Copy your first plate-solved image fit file, paste it into your submission report folder, and rename
+        that file according to TFOP SG1’s naming convention.
+
+    8)​ If your plate-solved image is not up yet, double-click on that fit file to open it. Go to “Multi-plot
+        Reference Star Settings” and click on “Show Apertures” button. This will display the aperture
+        selections on your image. Check then uncheck “T1” to make the colors stand out more. Then,
+        go to your image window and click on “File” -> “Save image display as PNG...” You now have a
+        png file of the field image with apertures.
+
+    9)​ You should already have a Dmag vs RMS plot png file and a NEB table txt file (see Section 5.8).
+
+    10)​Go to “Data Set 2 Fit Settings” window and click on “File” -> “Save image of fit panel as PNG file”.
+        This file is not required for the report, but it will be useful when doing a final review of the
+        results with Dr. Plavchan.
+
+    11)​Type up a brief statement discussing the radius of the photometry aperture in arcseconds, the
+        timing of the transit, transit depths in percentage, etc. See Section D of “TFOP SG1 Guidelines”
+        pdf for further details on that.
+
+    12)​Do a final review of your results and all aforementioned files above with Dr. Plavchan.
+
+    13)​If your results are satisfactory, you will need to upload some of the files into the ExoFOP
+        (exofop.ipac.caltech.edu/).
+       a)​ If your target’s name is “EPIC...”, it is generally a K2 target and you will need to upload to
+           ExoFOP-K2.
+
+       b)​ If your target has a TOI ID, it is a TESS target and you will need to upload to ExoFOP-TESS.
+
+       c)​ Some targets are both a K2 and a TESS target. Visit both ExoFOP pages to double-check if
+           they already have a page on a particular target you analyzed and if the target has a TOI ID.
+
+       d)​ Upload the following files to the ExoFOP:
+
+           i)​ Field image with aperture selections (set it as “Finding_Chart”)
+
+           ii)​ Plate-solved image (set it as “Image”)
+
+           iii)​ Seeing profile
+
+           iv)​ Measurement table
+
+           v)​ Plot configuration file
+
+           vi)​ Light curve plot
+
+           vii)​ Aperture file
+
+           viii)​Dmag plot
+
+           ix)​ Set files iii through viii as “Photometry”.
+
+       e)​ Copy your typed report and paste it into an email, then attach the following files to that
+           email:
+
+           i)​ Seeing profile
+
+           ii)​ Plot configuration file
+
+           iii)​ Light curve plot
+
+           iv)​ Aperture file
+
+           v)​ Field image with aperture selections
+
+           vi)​ Dmag plot
+
+       f)​ Make sure the email’s header has the target’s name, UT date of observation, the name of
+           the observatory, and the filter used. Send the email.
+
+   14)​This concludes the preparation and submission of your reports!
+
+
+
+           8. Additional In-depth PDF Resources for AIJ
+AIJ User Guide: www.astro.louisville.edu/software/astroimagej/guide/AstroImageJ_User_Guide.pdf
+
+Transit Light Curve Tutorial: www.astrodennis.com/Guide.pdf
+AIJ Cookbook: www.astrodennis.com/AIJCookbook.pdf
+
+TFOP SG1 Guidelines: www.astrodennis.com/TFOP_SG1_Guidelines_Latest.pdf
+
+NEB Table Instructions: www.astrodennis.com/NEB_Table_Instructions.pdf
+

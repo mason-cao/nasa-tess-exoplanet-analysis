@@ -47,11 +47,6 @@ separate image problem and remain in the light curve.
 
 The scatter of the plotted measurements is 2.497 ppt.
 The 10-minute bins are included only to make the overall shape easier to see.
-The posting figure also includes the program-requested width, sky, inverted
-airmass, comparison-count, X-position, and Y-position diagnostics. They are
-robustly scaled and shifted into a shared lower display band, like
-AstroImageJ's Page Rel option; those display transforms never enter the flux
-calculation or fixed-window result.
 
 ## Detrending
 
@@ -59,11 +54,12 @@ No correction was applied. Checks against airmass, sky level, star width, image 
 
 ## Files to attach to the Discord post
 
-The current three-image package is collected in `../toi3505_discord_post/`:
+The four files are collected in `../toi3505_post/`:
 
-- `01_TOI_3505.01_final_light_curve.png`
-- `02_TOI_3505.01_data_set_fit_settings.png`
-- `03_TOI_3505.01_NEB_screen.png`
+- `TOI_3505.01_2022-07-22_R_light_curve.png`
+- `TOI_3505.01_2022-07-22_R_measurements.xls`
+- `TOI_3505.01_2022-07-22_R_light_curve.plotcfg`
+- `TOI_3505.01_2022-07-22_R_seeing_profile.png`
 
 ## Supporting files
 
@@ -73,8 +69,6 @@ The current three-image package is collected in `../toi3505_discord_post/`:
 - `detrending_checks.csv`: results of the trend checks.
 - `frame_review.csv` and the two review figures: image-by-image notes.
 - `analysis_settings.json`: settings used to make the light curve.
-- `TOI_3505.01_2022-07-22_R_AIJ_review.tbl`: compact, row-preserving AIJ
-  table used to reopen MultiPlot 6.0.7 for the fit-settings screenshot.
 - `historical_schedule_check.json` and `historical_schedule_times.csv`: the
   preserved schedule interpretation and fixed-window result.
 - `summary.json`: short numerical summary.

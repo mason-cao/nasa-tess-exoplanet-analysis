@@ -433,12 +433,8 @@ def write_target_plot_config(
     *,
     observation_start_bjd: float,
     observation_end_bjd: float,
-    orbital_period_days: float,
-    transit_center_bjd: float,
-    catalog_depth_ppt: float,
-    target_teff_k: float,
 ) -> None:
-    """Write a target-specific AstroImageJ config with honest fit settings."""
+    """Write a target-specific AstroImageJ config with schedule V.Markers."""
     working = schedule["working_interpretation"]
     assert isinstance(working, dict)
     times = working["times"]
@@ -448,7 +444,7 @@ def write_target_plot_config(
     integer_offset = math.floor(observation_start_bjd)
     values = {
         ".plot.title": "TOI-3505.01, UT 2022-07-22",
-        ".plot.subtitle": "GMU 0.8 m (R filter, 50 s exp, fap 25-70-139)",
+        ".plot.subtitle": "GMU 0.8 m (R filter, 50 s exposures)",
         ".plot.xlabel": "BJD_TDB",
         ".plot.showVMarker1": "true",
         ".plot.showVMarker2": "true",
@@ -463,22 +459,6 @@ def write_target_plot_config(
         ".plot.egressTime": f"{egress - integer_offset:.9f}",
         ".plot.xMin": f"{observation_start_bjd:.9f}",
         ".plot.xMax": f"{observation_end_bjd:.9f}",
-        # Keep both rel_flux_T1 data-set entries internally consistent. Data set
-        # 0 is the visible raw series; data set 1 is the disabled fit-settings
-        # entry used for review and the Discord settings screenshot.
-        ".plot.orbitalPeriod0": f"{orbital_period_days:.7f}",
-        ".plot.teff0": f"{target_teff_k:.1f}",
-        # AIJ stores this field as transit depth = (Rp/R*)^2, not Rp/R*.
-        ".plot.priorCenter[0][1]": f"{catalog_depth_ppt / 1000.0:.9f}",
-        ".plot.priorCenter[0][3]": f"{transit_center_bjd:.9f}",
-        ".plot.useTransitFit0": "false",
-        ".plot.detrendFit0": "false",
-        ".plot.orbitalPeriod1": f"{orbital_period_days:.7f}",
-        ".plot.teff1": f"{target_teff_k:.1f}",
-        ".plot.priorCenter[1][1]": f"{catalog_depth_ppt / 1000.0:.9f}",
-        ".plot.priorCenter[1][3]": f"{transit_center_bjd:.9f}",
-        ".plot.useTransitFit1": "false",
-        ".plot.detrendFit1": "false",
     }
     text = source.read_bytes().decode("ascii")
     for key, value in values.items():
