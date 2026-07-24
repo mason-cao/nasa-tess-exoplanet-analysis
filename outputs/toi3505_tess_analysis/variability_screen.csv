@@ -1,0 +1,5 @@
+sector,strongest_residual_period_days,lomb_scargle_power,formal_false_alarm_probability,points,interpretation
+14,4.5804807386902775,0.10615901019026316,1.4655807455691732e-11,611,variability screen only; QLP/systematics processing can alter long periods
+41,4.467382667656576,0.05243742501539381,1.574477293945229e-33,3227,variability screen only; QLP/systematics processing can alter long periods
+54,6.718352420883512,0.1352971961437862,2.859195223629332e-74,2490,variability screen only; QLP/systematics processing can alter long periods
+81,5.014394668407058,0.032887696328168695,5.170973263440967e-57,8502,variability screen only; QLP/systematics processing can alter long periods

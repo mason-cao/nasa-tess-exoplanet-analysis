@@ -1,0 +1,10 @@
+{
+  "ground_start_bjd_tdb": 2459782.598234811,
+  "ground_end_bjd_tdb": 2459782.8094587056,
+  "quality_zero_tess_points_during_ground_window": 0,
+  "nearest_quality_zero_tess_before_bjd_tdb": 2459782.299633718,
+  "hours_from_last_tess_point_to_ground_start": 7.1664262264966965,
+  "nearest_quality_zero_tess_after_bjd_tdb": 2459783.646866456,
+  "hours_from_ground_end_to_next_tess_point": 20.097786013036966,
+  "conclusion": "No direct GMU/TESS flux comparison is possible because the GMU sequence is inside the Sector 54 data gap."
+}

@@ -1,0 +1,5 @@
+product_kind,sequence_number,mission,author,exptime,target_name,productFilename,dataURI,size,t_min,t_max,obsid,distance
+TESScut,14,TESS Sector 14,TESScut,1425.599392,TIC 390988385,TESScut,,,58682.85808757,,,0.0
+TESScut,41,TESS Sector 41,TESScut,475.199767,TIC 390988385,TESScut,,,59419.48970344907,,,0.0
+TESScut,54,TESS Sector 54,TESScut,475.199781,TIC 390988385,TESScut,,,59769.39945616898,,,0.0
+TESScut,81,TESS Sector 81,TESScut,158.399927,TIC 390988385,TESScut,,,60506.0507468287,,,0.0

@@ -1,0 +1,42 @@
+{
+  "target": "TOI-3505.01",
+  "tic_id": 390988385,
+  "sectors": [
+    14,
+    41,
+    54,
+    81
+  ],
+  "primary_light_curve_pipeline": "QLP",
+  "cross_check_pipelines": [
+    "SPOC",
+    "TESS-SPOC"
+  ],
+  "official_spoc_report_sets": [
+    "Sector 54",
+    "Sector 81",
+    "combined Sectors 54 and 81 from the s0014-s0086 search"
+  ],
+  "pixel_cutout_size": [
+    15,
+    15
+  ],
+  "retrieved_utc": "2026-07-24T04:26:33.904526+00:00",
+  "mast_query": "TIC 390988385; mission=TESS; sectors=[14, 41, 54, 81]",
+  "downloaded_file_count": 36,
+  "downloaded_bytes": 313558730,
+  "software": {
+    "python": "3.13.5",
+    "operating_system": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "lightkurve": "2.6.0",
+    "astropy": "8.0.1",
+    "script": "download_toi3505_tess.py"
+  },
+  "notes": [
+    "QLP is the uniform four-sector light-curve set.",
+    "SPOC and TESS-SPOC are checks of the same TESS observations, not independent observations.",
+    "TESScut files support a common custom-aperture check in all four sectors.",
+    "Official SPOC Data Validation products exist for Sectors 54 and 81; Sectors 14 and 41 have no SPOC target observation in this search.",
+    "DR122's s0014-s0086 label is the pipeline search range; only Sectors 54 and 81 contributed for this target, at 10-minute cadence."
+  ]
+}
