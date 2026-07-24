@@ -57,7 +57,7 @@ from toi3505_schedule import (
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "toi3505_final_candidate"
-DEFAULT_POST_DIR = ROOT / "outputs" / "toi3505_post"
+DEFAULT_DISCORD_POST_DIR = ROOT / "outputs" / "toi3505_discord_post"
 DEFAULT_FINAL_TABLE = (
     ROOT
     / "outputs"
@@ -72,6 +72,8 @@ MAXIMUM_RMSE_RATIO = 1.01
 MINIMUM_BETTER_BLOCK_FRACTION = 0.60
 NEAR_BEST_SCORE_FRACTION = 0.01
 BIN_MINUTES = 10.0
+CATALOG_DEPTH_PPT = 2.910
+TARGET_TEFF_K = 6220.0  # TIC v8 value in data/catalogs/toi3505.
 VISUAL_QUALITY_EXCLUSIONS = {
     253: "field-wide vertical PSF trail confirmed in target and comparison stars",
 }
@@ -430,6 +432,55 @@ def bin_light_curve(
     return pd.DataFrame(rows)
 
 
+def aij_review_columns() -> list[str]:
+    """Return the lossless subset needed by MultiPlot and the NEB macro.
+
+    AstroImageJ 6.0.7 cannot reliably reopen this project's 255-column
+    measurement table.  The review table keeps every row and every value used
+    by the requested fit-settings and nearby-eclipsing-binary diagnostics, but
+    omits unrelated aperture-statistics columns.  It is a view of the original
+    measurements, not a new photometric reduction.
+    """
+    columns = [
+        "Label",
+        "slice",
+        "Saturated",
+        "J.D.-2400000",
+        "JD_UTC",
+        "BJD_TDB",
+        "AIRMASS",
+        "Source_Radius",
+        "Sky/Pixel_T1",
+        "Width_T1",
+        "tot_C_cnts",
+    ]
+    for star in ("T1", *COMPARISON_STARS):
+        columns.extend(
+            [
+                f"X(FITS)_{star}",
+                f"Y(FITS)_{star}",
+                f"Source-Sky_{star}",
+                f"rel_flux_{star}",
+                f"rel_flux_err_{star}",
+            ]
+        )
+    return columns
+
+
+def write_aij_review_table(table: pd.DataFrame, output_path: Path) -> None:
+    """Write a compact tab-delimited AIJ table without changing its rows."""
+    columns = aij_review_columns()
+    missing = [column for column in columns if column not in table.columns]
+    if missing:
+        raise ValueError(f"AIJ review table is missing columns: {missing}")
+    table.loc[:, columns].to_csv(
+        output_path,
+        sep="\t",
+        index=False,
+        lineterminator="\n",
+    )
+
+
 def comparison_ensemble_review(table: pd.DataFrame) -> pd.DataFrame:
     """Review comparison stars independently of the target light curve."""
     rows: list[dict[str, float | str | bool]] = []
@@ -464,6 +515,46 @@ def comparison_ensemble_review(table: pd.DataFrame) -> pd.DataFrame:
     return review
 
 
+def _save_figure_variants(fig: plt.Figure, output_path: Path) -> None:
+    """Save the requested raster figure and a matching vector copy."""
+    fig.savefig(output_path, dpi=220, facecolor="white")
+    if output_path.suffix.lower() == ".png":
+        svg_path = output_path.with_suffix(".svg")
+        fig.savefig(svg_path, facecolor="white")
+        svg_text = svg_path.read_text(encoding="utf-8")
+        svg_path.write_text(
+            "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
+            encoding="utf-8",
+        )
+
+
+def page_relative_series(
+    values: np.ndarray | pd.Series,
+    *,
+    center: float = 0.946,
+    span: float = 0.022,
+    invert: bool = False,
+) -> np.ndarray:
+    """Scale one diagnostic into a shared display band without changing time.
+
+    AstroImageJ's recommended final-light-curve layout uses ``Page Rel`` for
+    observing-condition diagnostics.  This helper reproduces that display-only
+    behavior with robust percentiles.  It is never used in the photometry,
+    detrending review, fixed-window measurement, or exported flux table.
+    """
+    array = np.asarray(values, dtype=float)
+    finite = array[np.isfinite(array)]
+    if finite.size == 0:
+        return np.full_like(array, np.nan)
+    lower, median, upper = np.nanpercentile(finite, [2.0, 50.0, 98.0])
+    width = float(upper - lower)
+    if not np.isfinite(width) or width <= 0.0:
+        return np.full_like(array, center)
+    scaled = np.clip((array - median) / width, -0.65, 0.65)
+    direction = -1.0 if invert else 1.0
+    return center + direction * span * scaled
+
+
 def plot_final_candidate(
     output_path: Path,
     *,
@@ -471,118 +562,188 @@ def plot_final_candidate(
     adopted_curve: np.ndarray,
     primary_use: np.ndarray,
     binned: pd.DataFrame,
-    midpoint: dict[str, float | bool],
+    diagnostics: dict[str, np.ndarray],
     schedule: dict[str, object],
     source_radius: float,
 ) -> None:
+    """Make the mentor-review light curve in the program's diagnostic style.
+
+    The student example saved with the project is an AstroImageJ fit plot: it
+    contains a detrended target curve, a transit model, and residuals.  Those
+    layers are intentionally absent here because this sequence has no
+    supported transit fit and no detrending model passed the frozen tests.  We
+    do include the six observing-condition traces requested by the TFOP/Schar
+    guidance, scaled and shifted only for display below the unmodified target
+    flux.
+    """
     bjd_zero = 2459782.0
-    x_values = bjd_tdb - bjd_zero
-    binned_x = bjd_tdb[0] + binned["hours"].to_numpy(dtype=float) / 24.0 - bjd_zero
+    x_values = np.asarray(bjd_tdb, dtype=float) - bjd_zero
+    binned_x = (
+        float(bjd_tdb[0])
+        + binned["hours"].to_numpy(dtype=float) / 24.0
+        - bjd_zero
+    )
+    primary_use = np.asarray(primary_use, dtype=bool)
     excluded = ~primary_use
     working = schedule["working_interpretation"]
-    assert isinstance(working, dict)
+    fixed_window = schedule["fixed_window_check"]
+    assert isinstance(working, dict) and isinstance(fixed_window, dict)
     schedule_times = working["times"]
     assert isinstance(schedule_times, dict)
-    fixed_window = schedule["fixed_window_check"]
-    assert isinstance(fixed_window, dict)
     ingress_x = float(schedule_times["ingress"]["bjd_tdb"]) - bjd_zero
     egress_x = float(schedule_times["egress"]["bjd_tdb"]) - bjd_zero
 
-    fig, axis = plt.subplots(figsize=(10.5, 6.6))
-    axis.axvspan(
+    fig, axis = plt.subplots(figsize=(9.2, 8.2))
+    axis.axvspan(ingress_x, egress_x, color="#d9534f", alpha=0.045, zorder=0)
+    axis.axvline(
         ingress_x,
-        egress_x,
-        color="#d7a84a",
-        alpha=0.18,
-        label="Scheduled window (EDT)",
+        color="#d43f3a",
+        linestyle="--",
+        linewidth=0.9,
+        zorder=1,
     )
-    axis.axvline(ingress_x, color="#a87019", linestyle="--", linewidth=1.0)
-    axis.axvline(egress_x, color="#a87019", linestyle="--", linewidth=1.0)
+    axis.axvline(
+        egress_x,
+        color="#d43f3a",
+        linestyle="--",
+        linewidth=0.9,
+        zorder=1,
+    )
+
+    primary_scatter_ppt = 1000.0 * robust_scatter(adopted_curve[primary_use])
     axis.plot(
         x_values[primary_use],
         adopted_curve[primary_use],
         ".",
-        color="#225f91",
-        markersize=5.0,
-        label="Individual exposures",
+        color="#0645f5",
+        markersize=3.5,
+        label=(
+            "rel_flux_T1 (normalized, undetrended) "
+            f"(RMS={primary_scatter_ppt:.2f} ppt; bin=1)"
+        ),
+        zorder=4,
     )
     axis.plot(
         x_values[excluded],
         adopted_curve[excluded],
         "x",
-        color="#9a9a9a",
-        markersize=5.0,
-        markeredgewidth=1.0,
-        label="Excluded frames",
+        color="#8f8f8f",
+        markersize=4.5,
+        markeredgewidth=0.9,
+        label=f"excluded image-quality frames ({int(excluded.sum())})",
+        zorder=3,
     )
     axis.errorbar(
         binned_x,
         binned["relative_brightness"],
         yerr=binned["uncertainty"],
         fmt="o",
-        color="#1d1d1d",
+        color="#202020",
         markerfacecolor="white",
-        markeredgecolor="#1d1d1d",
-        markersize=5.6,
-        linewidth=1.0,
-        capsize=2.0,
-        label=f"{BIN_MINUTES:.0f}-minute bins",
+        markeredgecolor="#202020",
+        markersize=4.8,
+        linewidth=0.8,
+        capsize=1.8,
+        label=f"{BIN_MINUTES:.0f}-minute medians (display only)",
+        zorder=5,
     )
-    axis.axhline(1.0, color="#555555", linewidth=0.8)
-    axis.set_xlabel("Barycentric Julian Date (TDB) − 2459782")
-    axis.set_ylabel("Relative brightness (normalized)")
-    axis.set_xlim(float(np.nanmin(x_values)), float(np.nanmax(x_values)))
-    axis.grid(alpha=0.18)
-    axis.legend(
-        loc="upper left",
-        frameon=True,
-        framealpha=1.0,
-        facecolor="white",
-        fontsize=9.5,
-        ncol=2,
+    axis.axhline(1.0, color="#5f5f5f", linewidth=0.7, zorder=2)
+
+    diagnostic_specs = (
+        ("width", "Width_T1", "#b7b7b7", False, 1.1),
+        ("sky", "Sky/Pixel_T1", "#e6d400", False, 1.0),
+        ("airmass", "AIRMASS (inverted)", "#1596a6", True, 1.0),
+        ("comparison_counts", "tot_C_cnts", "#a67c52", False, 1.0),
+        ("x", "X(FITS)_T1", "#f09a9a", False, 0.75),
+        ("y", "Y(FITS)_T1", "#4db6e7", False, 0.75),
+    )
+    for key, label, color, invert, linewidth in diagnostic_specs:
+        display_values = page_relative_series(diagnostics[key], invert=invert)
+        axis.plot(
+            x_values,
+            display_values,
+            color=color,
+            linewidth=linewidth,
+            alpha=0.95,
+            label=f"{label} (page-relative, display only)",
+            zorder=2,
+        )
+
+    axis.text(
+        ingress_x,
+        0.9290,
+        "Ingress",
+        color="#d43f3a",
+        ha="center",
+        va="bottom",
+        fontsize=8.0,
+    )
+    axis.text(
+        egress_x,
+        0.9290,
+        "Egress",
+        color="#d43f3a",
+        ha="center",
+        va="bottom",
+        fontsize=8.0,
+    )
+    axis.text(
+        0.5 * (ingress_x + egress_x),
+        0.9263,
+        "2022 schedule window (EDT assumption)",
+        color="#d43f3a",
+        ha="center",
+        va="bottom",
+        fontsize=7.8,
     )
     axis.text(
         0.985,
-        0.965,
-        f"{source_radius:g} px aperture\n"
-        "70–139 px sky annulus\n"
-        "C2–C11 comparison stars\n"
-        "Fixed-window check: "
+        0.975,
+        "Undetrended; no transit fit\n"
+        "Historical-window depth: "
         f"{float(fixed_window['observed_depth_ppt']):+.2f} ± "
         f"{float(fixed_window['observed_depth_error_ppt']):.2f} ppt",
         transform=axis.transAxes,
         ha="right",
         va="top",
-        fontsize=9.5,
+        fontsize=8.5,
+        color="#202020",
     )
-    fig.suptitle("TOI-3505.01, UT 2022-07-22", fontsize=16, y=0.97)
+
+    axis.set_xlabel("Barycentric Julian Date (TDB) − 2459782")
+    axis.set_ylabel("rel_flux_T1 (normalized); diagnostics offset for display")
+    axis.set_xlim(float(np.nanmin(x_values)), float(np.nanmax(x_values)))
+    axis.set_ylim(0.925, 1.017)
+    axis.grid(axis="y", color="#bdbdbd", alpha=0.65, linewidth=0.65)
+    axis.tick_params(top=True, right=True, direction="in")
+    axis.legend(
+        loc="upper left",
+        frameon=False,
+        fontsize=7.25,
+        ncol=1,
+        handlelength=2.0,
+        handletextpad=0.55,
+        borderaxespad=0.5,
+        labelspacing=0.32,
+    )
+    fig.suptitle("TOI-3505.01, UT 2022-07-22", fontsize=15, y=0.982)
     fig.text(
         0.5,
-        0.925,
-        "GMU 0.8 m, R filter, 50 s exposures",
+        0.950,
+        f"GMU 0.8 m (R filter, 50 s exp, fap {source_radius:g}-70-139)",
         ha="center",
-        fontsize=11,
+        fontsize=10.5,
     )
     fig.text(
         0.5,
-        0.036,
-        "Schedule times interpreted as EDT (UTC−4); the source sheet has no "
-        "timezone. No detrending or transit fit.",
+        0.018,
+        "The historical sheet does not state its time zone; the current-catalog "
+        "transit is outside this sequence.",
         ha="center",
-        fontsize=9.0,
+        fontsize=8.2,
     )
-    fig.text(
-        0.5,
-        0.015,
-        "The current catalog midpoint is "
-        f"{abs(float(midpoint['hours_from_observation_start'])):.2f} hours before these observations.",
-        ha="center",
-        fontsize=9.0,
-    )
-    fig.tight_layout(rect=(0.04, 0.085, 0.98, 0.90))
-    fig.savefig(output_path, dpi=220, facecolor="white")
-    if output_path.suffix.lower() == ".png":
-        fig.savefig(output_path.with_suffix(".svg"), facecolor="white")
+    fig.tight_layout(rect=(0.055, 0.045, 0.985, 0.935))
+    _save_figure_variants(fig, output_path)
     plt.close(fig)
 
 
@@ -663,6 +824,11 @@ separate image problem and remain in the light curve.
 
 The scatter of the plotted measurements is {primary_scatter_ppt:.3f} ppt.
 The 10-minute bins are included only to make the overall shape easier to see.
+The posting figure also includes the program-requested width, sky, inverted
+airmass, comparison-count, X-position, and Y-position diagnostics. They are
+robustly scaled and shifted into a shared lower display band, like
+AstroImageJ's Page Rel option; those display transforms never enter the flux
+calculation or fixed-window result.
 
 ## Detrending
 
@@ -670,12 +836,11 @@ The 10-minute bins are included only to make the overall shape easier to see.
 
 ## Files to attach to the Discord post
 
-The four files are collected in `../toi3505_post/`:
+The current three-image package is collected in `../toi3505_discord_post/`:
 
-- `TOI_3505.01_2022-07-22_R_light_curve.png`
-- `TOI_3505.01_2022-07-22_R_measurements.xls`
-- `TOI_3505.01_2022-07-22_R_light_curve.plotcfg`
-- `TOI_3505.01_2022-07-22_R_seeing_profile.png`
+- `01_TOI_3505.01_final_light_curve.png`
+- `02_TOI_3505.01_data_set_fit_settings.png`
+- `03_TOI_3505.01_NEB_screen.png`
 
 ## Supporting files
 
@@ -685,6 +850,8 @@ The four files are collected in `../toi3505_post/`:
 - `detrending_checks.csv`: results of the trend checks.
 - `frame_review.csv` and the two review figures: image-by-image notes.
 - `analysis_settings.json`: settings used to make the light curve.
+- `TOI_3505.01_2022-07-22_R_AIJ_review.tbl`: compact, row-preserving AIJ
+  table used to reopen MultiPlot 6.0.7 for the fit-settings screenshot.
 - `historical_schedule_check.json` and `historical_schedule_times.csv`: the
   preserved schedule interpretation and fixed-window result.
 - `summary.json`: short numerical summary.
@@ -760,7 +927,7 @@ def main() -> None:
         raw_error,
         primary_use,
         exposure_seconds=50.0,
-        comparison_depth_ppt=2.910,
+        comparison_depth_ppt=CATALOG_DEPTH_PPT,
     )
 
     previous_35px_table = load_table(
@@ -930,20 +1097,23 @@ def main() -> None:
         float_format="%.10f",
     )
 
-    for figure_name in (
-        "TOI_3505.01_2022-07-22_R_light_curve.png",
-        "01_final_candidate_light_curve.png",
-    ):
-        plot_final_candidate(
-            output_dir / figure_name,
-            bjd_tdb=table["BJD_TDB"].to_numpy(dtype=float),
-            adopted_curve=adopted_curve,
-            primary_use=primary_use,
-            binned=bins,
-            midpoint=midpoint,
-            schedule=schedule_analysis,
-            source_radius=args.source_radius,
-        )
+    plot_final_candidate(
+        output_dir / "TOI_3505.01_2022-07-22_R_light_curve.png",
+        bjd_tdb=table["BJD_TDB"].to_numpy(dtype=float),
+        adopted_curve=adopted_curve,
+        primary_use=primary_use,
+        binned=bins,
+        diagnostics={
+            "airmass": features["airmass"].to_numpy(dtype=float),
+            "sky": features["sky"].to_numpy(dtype=float),
+            "width": features["width"].to_numpy(dtype=float),
+            "x": features["x"].to_numpy(dtype=float),
+            "y": features["y"].to_numpy(dtype=float),
+            "comparison_counts": comparison_counts,
+        },
+        schedule=schedule_analysis,
+        source_radius=args.source_radius,
+    )
 
     protocol = {
         "status": "frozen_for_final_candidate_generation",
@@ -1004,6 +1174,16 @@ def main() -> None:
         "historical_schedule_window_displayed": True,
         "historical_schedule_timezone_assumption": "America/New_York",
         "display_bin_minutes": BIN_MINUTES,
+        "final_plot_style": "TFOP/Schar diagnostic review layout",
+        "final_plot_page_relative_diagnostics": [
+            "Width_T1",
+            "Sky/Pixel_T1",
+            "AIRMASS (inverted)",
+            "tot_C_cnts",
+            "X(FITS)_T1",
+            "Y(FITS)_T1",
+        ],
+        "page_relative_diagnostics_are_display_only": True,
     }
     (output_dir / "analysis_settings.json").write_text(
         json.dumps(public_settings, indent=2) + "\n", encoding="utf-8"
@@ -1104,6 +1284,10 @@ def main() -> None:
         table_path,
         output_dir / "TOI_3505.01_2022-07-22_R_measurements.xls",
     )
+    write_aij_review_table(
+        table,
+        output_dir / "TOI_3505.01_2022-07-22_R_AIJ_review.tbl",
+    )
     write_target_plot_config(
         ROOT
         / "outputs"
@@ -1113,6 +1297,10 @@ def main() -> None:
         schedule_analysis,
         observation_start_bjd=start_bjd,
         observation_end_bjd=end_bjd,
+        orbital_period_days=TARGET_PERIOD_DAYS,
+        transit_center_bjd=float(midpoint["midpoint_bjd_tdb"]),
+        catalog_depth_ppt=CATALOG_DEPTH_PPT,
+        target_teff_k=TARGET_TEFF_K,
     )
     aperture_source = output_dir / "TOI_3505_final_25px.apertures"
     if aperture_source.exists():
@@ -1121,23 +1309,11 @@ def main() -> None:
             output_dir / "TOI_3505.01_2022-07-22_R.apertures",
         )
 
-    post_dir = DEFAULT_POST_DIR
+    post_dir = DEFAULT_DISCORD_POST_DIR
     post_dir.mkdir(parents=True, exist_ok=True)
     post_files = {
         output_dir / "TOI_3505.01_2022-07-22_R_light_curve.png": (
-            post_dir / "TOI_3505.01_2022-07-22_R_light_curve.png"
-        ),
-        ROOT
-        / "outputs"
-        / "toi3505_seeing"
-        / "02_seeing_profile_astroimagej.png": (
-            post_dir / "TOI_3505.01_2022-07-22_R_seeing_profile.png"
-        ),
-        output_dir / "TOI_3505.01_2022-07-22_R_measurements.xls": (
-            post_dir / "TOI_3505.01_2022-07-22_R_measurements.xls"
-        ),
-        output_dir / "TOI_3505.01_2022-07-22_R_light_curve.plotcfg": (
-            post_dir / "TOI_3505.01_2022-07-22_R_light_curve.plotcfg"
+            post_dir / "01_TOI_3505.01_final_light_curve.png"
         ),
     }
     for source, destination in post_files.items():

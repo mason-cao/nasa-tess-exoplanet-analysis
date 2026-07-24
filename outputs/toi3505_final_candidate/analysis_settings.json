@@ -23,5 +23,15 @@
   "transit_fit": "none",
   "historical_schedule_window_displayed": true,
   "historical_schedule_timezone_assumption": "America/New_York",
-  "display_bin_minutes": 10.0
+  "display_bin_minutes": 10.0,
+  "final_plot_style": "TFOP/Schar diagnostic review layout",
+  "final_plot_page_relative_diagnostics": [
+    "Width_T1",
+    "Sky/Pixel_T1",
+    "AIRMASS (inverted)",
+    "tot_C_cnts",
+    "X(FITS)_T1",
+    "Y(FITS)_T1"
+  ],
+  "page_relative_diagnostics_are_display_only": true
 }
