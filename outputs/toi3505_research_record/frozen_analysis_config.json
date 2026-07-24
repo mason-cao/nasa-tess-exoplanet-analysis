@@ -1,0 +1,225 @@
+{
+  "target": {
+    "name": "TOI-3505.01",
+    "tic_id": 390988385
+  },
+  "ground": {
+    "status": "frozen_for_final_candidate_generation",
+    "input_table": "TOI_3505.01_2022-07-22_R_measurements_25px_70-139_AIJ.tbl",
+    "source_radius_pixels": 25.0,
+    "sky_annulus_pixels": [
+      70,
+      139
+    ],
+    "primary_comparison_stars": [
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11"
+    ],
+    "comparison_selection_uses_target_scatter": false,
+    "measurements_archived": 281,
+    "measurements_used_in_primary_curve": 263,
+    "point_exclusion_policy": "exclude from the primary curve only for predeclared condition failures or a cross-star image artifact; target brightness alone never excludes a point",
+    "visual_quality_exclusions": {
+      "253": "field-wide vertical PSF trail confirmed in target and comparison stars"
+    },
+    "condition_fit_policy": "the primary quality mask is also the condition-model fit mask",
+    "candidate_models": {
+      "none": [],
+      "airmass": [
+        "airmass"
+      ],
+      "sky": [
+        "sky"
+      ],
+      "width": [
+        "width"
+      ],
+      "x": [
+        "x"
+      ],
+      "y": [
+        "y"
+      ],
+      "comparison_counts": [
+        "comparison_counts"
+      ],
+      "centroid_xy": [
+        "x",
+        "y"
+      ],
+      "airmass_sky": [
+        "airmass",
+        "sky"
+      ],
+      "airmass_meridian": [
+        "airmass",
+        "meridian_side"
+      ],
+      "conditions": [
+        "airmass",
+        "sky",
+        "width",
+        "x",
+        "y",
+        "comparison_counts",
+        "meridian_side"
+      ]
+    },
+    "blocked_cross_validation_blocks": 8,
+    "promotion_rules": {
+      "minimum_robust_scatter_improvement_fraction": 0.05,
+      "maximum_rmse_ratio": 1.01,
+      "minimum_fraction_of_blocks_better": 0.6,
+      "parsimony_near_best_fraction": 0.01
+    },
+    "display_bin_minutes": 10.0,
+    "transit_model_allowed": false,
+    "reason_no_transit_model": "the historical schedule and current ephemeris disagree, and the fixed historical window contains no significant transit-like dimming",
+    "historical_schedule": {
+      "source_record": "data/program_records/toi3505/observing_schedule_2022-07-21.json",
+      "working_timezone": "America/New_York",
+      "source_timezone_explicit": false,
+      "fixed_window_only": true
+    }
+  },
+  "historical_schedule": {
+    "source_record": "data/program_records/toi3505/observing_schedule_2022-07-21.json",
+    "working_interpretation": {
+      "timezone": "America/New_York",
+      "timezone_abbreviation": "EDT",
+      "utc_offset_hours": -4.0,
+      "source_timezone_explicit": false,
+      "times": {
+        "planned_start": {
+          "source_clock": "21:10",
+          "clock_datetime": "2022-07-21T21:10:00-04:00",
+          "utc_datetime": "2022-07-22T01:10:00+00:00",
+          "bjd_tdb": 2459782.5539275403
+        },
+        "ingress": {
+          "source_clock": "0:15",
+          "clock_datetime": "2022-07-22T00:15:00-04:00",
+          "utc_datetime": "2022-07-22T04:15:00+00:00",
+          "bjd_tdb": 2459782.682400599
+        },
+        "egress": {
+          "source_clock": "1:54",
+          "clock_datetime": "2022-07-22T01:54:00-04:00",
+          "utc_datetime": "2022-07-22T05:54:00+00:00",
+          "bjd_tdb": 2459782.7511509927
+        },
+        "planned_end": {
+          "source_clock": "4:55",
+          "clock_datetime": "2022-07-22T04:55:00-04:00",
+          "utc_datetime": "2022-07-22T08:55:00+00:00",
+          "bjd_tdb": 2459782.8768460616
+        }
+      },
+      "event_duration_hours": 1.6500094458460808,
+      "event_midpoint_bjd_tdb": 2459782.716775796
+    },
+    "utc_alternative": {
+      "timezone": "UTC",
+      "timezone_abbreviation": "UTC",
+      "utc_offset_hours": 0.0,
+      "source_timezone_explicit": false,
+      "times": {
+        "planned_start": {
+          "source_clock": "21:10",
+          "clock_datetime": "2022-07-21T21:10:00+00:00",
+          "utc_datetime": "2022-07-21T21:10:00+00:00",
+          "bjd_tdb": 2459782.3872596794
+        },
+        "ingress": {
+          "source_clock": "0:15",
+          "clock_datetime": "2022-07-22T00:15:00+00:00",
+          "utc_datetime": "2022-07-22T00:15:00+00:00",
+          "bjd_tdb": 2459782.5157328276
+        },
+        "egress": {
+          "source_clock": "1:54",
+          "clock_datetime": "2022-07-22T01:54:00+00:00",
+          "utc_datetime": "2022-07-22T01:54:00+00:00",
+          "bjd_tdb": 2459782.584483305
+        },
+        "planned_end": {
+          "source_clock": "4:55",
+          "clock_datetime": "2022-07-22T04:55:00+00:00",
+          "utc_datetime": "2022-07-22T04:55:00+00:00",
+          "bjd_tdb": 2459782.7101785406
+        }
+      },
+      "event_duration_hours": 1.650011457502842,
+      "event_midpoint_bjd_tdb": 2459782.5501080663
+    },
+    "fixed_window_check": {
+      "model": "straight baseline plus exposure-integrated fixed box",
+      "observed_depth_ppt": -0.6583833665306802,
+      "observed_depth_error_ppt": 0.39478212142599517,
+      "observed_depth_snr": -1.667713229141505,
+      "transit_like_dimming_above_3_sigma": false,
+      "points": 263,
+      "in_window_points": 90,
+      "outside_window_points": 173,
+      "median_inside": 1.0000645091856781,
+      "median_outside": 0.9998234892990056,
+      "residual_robust_scatter_ppt": 2.5401394189118545,
+      "reduced_chi_square": 2.9888860214352277,
+      "comparison_injection_depth_ppt": 2.91,
+      "injected_total_depth_ppt": 2.251577276407514,
+      "injected_increment_recovered_ppt": 2.909960642938194,
+      "injected_total_depth_snr": 5.7068111616105455,
+      "interpretation": "No transit-like dimming is measured in the exact historical window. This is conditional on the documented Eastern-time interpretation and is not a physical transit fit."
+    },
+    "historical_ephemeris_complete": false
+  },
+  "tess": {
+    "sectors": [
+      14,
+      41,
+      54,
+      81
+    ],
+    "primary_pipeline": "QLP",
+    "quality_rule": "finite flux and uncertainty with QUALITY equal to zero",
+    "period_days": 2.9151556,
+    "epoch_bjd_tdb": 2459793.534385,
+    "depth_model": "exposure-integrated box with a local straight baseline per event",
+    "physical_transit_model": false,
+    "reference_tesscut_aperture_radius_pixels": 3.0,
+    "tesscut_background_annulus_pixels": [
+      4.0,
+      7.0
+    ],
+    "official_spoc_report_sectors": [
+      54,
+      81
+    ],
+    "official_spoc_combined_report": {
+      "search_scope": "s0014-s0086",
+      "contributing_sectors": [
+        54,
+        81
+      ],
+      "cadence_minutes": 10,
+      "data_release": 122
+    },
+    "official_spoc_report_role": "same-observation method comparison"
+  },
+  "claim_limits": [
+    "The GMU night is off transit under the current ephemeris, but the recovered 2022 schedule placed an event inside it.",
+    "The schedule row has no explicit time zone, epoch, uncertainty, depth, or prediction source.",
+    "The GMU window falls in a Sector 54 data gap.",
+    "TESS-scale localization cannot separate the 0.517-arcsecond companion.",
+    "The dilution screen is not a final correction.",
+    "The box model is not a physical planet fit."
+  ]
+}

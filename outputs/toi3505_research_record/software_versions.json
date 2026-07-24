@@ -1,0 +1,24 @@
+{
+  "created_utc": "2026-07-24T05:46:38.408161+00:00",
+  "python": "3.13.5 (v3.13.5:6cb20a219a8, Jun 11 2025, 12:23:45) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "python_executable": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/.venv/bin/python",
+  "operating_system": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "packages": {
+    "numpy": "2.5.0",
+    "pandas": "2.3.3",
+    "astropy": "8.0.1",
+    "astroquery": "0.4.11",
+    "matplotlib": "3.11.0",
+    "scipy": "1.18.0",
+    "photutils": "3.0.0",
+    "lightkurve": "2.6.0"
+  },
+  "system_java": "The operation couldn\u2019t be completed. Unable to locate a Java Runtime.",
+  "astroimagej_bundled_java": "25.0.3",
+  "astroimagej": "6.0.7",
+  "git": {
+    "commit": "9cb015add4bab7505a372bf98030f9369528f6ce",
+    "worktree_clean": false
+  }
+}

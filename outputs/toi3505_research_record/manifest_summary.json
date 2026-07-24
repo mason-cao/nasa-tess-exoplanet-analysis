@@ -1,0 +1,36 @@
+{
+  "created_utc": "2026-07-24T05:46:38.484504+00:00",
+  "manifest_scope": "full",
+  "files": 727,
+  "bytes": 44721557583,
+  "category_counts": {
+    "analysis_code": 27,
+    "analysis_test": 13,
+    "catalog_snapshot": 9,
+    "ground_aligned_image": 281,
+    "ground_calibration": 4,
+    "ground_reduced_image": 283,
+    "load_bearing_table": 7,
+    "original_archive": 6,
+    "plate_solution": 1,
+    "program_record": 2,
+    "scientific_output": 58,
+    "tess_download": 36
+  },
+  "category_bytes": {
+    "analysis_code": 561433,
+    "analysis_test": 42855,
+    "catalog_snapshot": 999075,
+    "ground_aligned_image": 18860270400,
+    "ground_calibration": 218128320,
+    "ground_reduced_image": 18993692160,
+    "load_bearing_table": 1584206,
+    "original_archive": 6265040559,
+    "plate_solution": 67121280,
+    "program_record": 4326,
+    "scientific_output": 554239,
+    "tess_download": 313558730
+  },
+  "original_archive_count": 6,
+  "sha256_complete": true
+}

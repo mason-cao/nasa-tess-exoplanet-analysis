@@ -1,0 +1,59 @@
+{
+  "target": "TOI-3505.01",
+  "created_utc": "2026-07-24T05:46:08.664007+00:00",
+  "mode": "plan_only",
+  "representative_frames": [
+    {
+      "role": "early",
+      "row_index": 0,
+      "slice": 1,
+      "bjd_tdb": 2459782.598234811,
+      "airmass": 1.3202923982859234,
+      "input_path": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/reduced/TOI_3505.01_50.000s_R-0001_out.fits",
+      "output_path": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/plate_solved/representative/TOI_3505.01_50.000s_R-0001_wcs.fits",
+      "input_exists": true
+    },
+    {
+      "role": "before_meridian",
+      "row_index": 139,
+      "slice": 140,
+      "bjd_tdb": 2459782.7031324874,
+      "airmass": 1.0663307683776493,
+      "input_path": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/reduced/TOI_3505.01_50.000s_R-0140_out.fits",
+      "output_path": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/plate_solved/representative/TOI_3505.01_50.000s_R-0140_wcs.fits",
+      "input_exists": true
+    },
+    {
+      "role": "middle",
+      "row_index": 140,
+      "slice": 141,
+      "bjd_tdb": 2459782.7038899334,
+      "airmass": 1.0661160868734458,
+      "input_path": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/reduced/TOI_3505.01_50.000s_R-0141_out.fits",
+      "output_path": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/plate_solved/representative/TOI_3505.01_50.000s_R-0141_wcs.fits",
+      "input_exists": true
+    },
+    {
+      "role": "after_meridian",
+      "row_index": 163,
+      "slice": 164,
+      "bjd_tdb": 2459782.721217446,
+      "airmass": 1.0664167322480518,
+      "input_path": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/reduced/TOI_3505.01_50.000s_R-0164_out.fits",
+      "output_path": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/plate_solved/representative/TOI_3505.01_50.000s_R-0164_wcs.fits",
+      "input_exists": true
+    },
+    {
+      "role": "late",
+      "row_index": 280,
+      "slice": 281,
+      "bjd_tdb": 2459782.8094587056,
+      "airmass": 1.243256868314417,
+      "input_path": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/reduced/TOI_3505.01_50.000s_R-0281_out.fits",
+      "output_path": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/plate_solved/representative/TOI_3505.01_50.000s_R-0281_wcs.fits",
+      "input_exists": true
+    }
+  ],
+  "api_key_saved": false,
+  "independent_plate_solutions_complete": false
+}
