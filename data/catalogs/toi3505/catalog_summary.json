@@ -1,0 +1,22 @@
+{
+  "target": "TOI-3505.01",
+  "tic_id": 390988385,
+  "center_icrs_degrees": [
+    297.043476,
+    18.698914
+  ],
+  "radius_arcmin": 2.5,
+  "retrieved_utc": "2026-07-23T23:55:14.642900+00:00",
+  "gaia_dr3_rows": 2359,
+  "tic_v8_rows": 2357,
+  "target_tmag": 10.9372,
+  "target_tic_contamination_ratio": 0.5471626,
+  "files": {
+    "gaia_dr3_2p5arcmin.csv": "76238553f919aee1b3ea002327c78891022c419e9e241cba8654d16f18f73e00",
+    "tic_v8_2p5arcmin.csv": "174091bd780844066cb41af24db8d9f56317d6427b33efbdcc3eec56b7bac79d"
+  },
+  "sources": {
+    "gaia": "ESA Gaia Archive, gaiadr3.gaia_source",
+    "tic": "MAST TESS Input Catalog version 8 cone service"
+  }
+}

@@ -1,0 +1,25 @@
+SELECT
+    source_id,
+    ra,
+    dec,
+    phot_g_mean_mag,
+    phot_bp_mean_mag,
+    phot_rp_mean_mag,
+    bp_rp,
+    ruwe,
+    parallax,
+    parallax_error,
+    pmra,
+    pmdec,
+    phot_variable_flag,
+    non_single_star,
+    DISTANCE(
+        POINT('ICRS', ra, dec),
+        POINT('ICRS', 297.043476, 18.698914)
+    ) * 3600.0 AS separation_arcsec
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+    POINT('ICRS', ra, dec),
+    CIRCLE('ICRS', 297.043476, 18.698914, 0.0416666667)
+)
+ORDER BY separation_arcsec

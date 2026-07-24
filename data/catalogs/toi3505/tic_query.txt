@@ -1,0 +1,5 @@
+astroquery.mast.Catalogs.query_region
+center_icrs_deg = 297.043476, 18.698914
+radius_arcmin = 2.5
+catalog = TIC
+version = 8

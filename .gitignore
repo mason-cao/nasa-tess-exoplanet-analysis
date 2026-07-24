@@ -4,10 +4,8 @@ __pycache__/
 # Rendered lecture pages are temporary review files.
 tmp/pdfs/*.png
 
-# Personal notes and planning files stay on this computer.
+# Personal notes, planning, Discord records, and assistance records stay local.
 /docs/
-
-# Keep Discord posts, drafts, and announcements out of the repository.
 /docs/discord-messages.md
 /outputs/**/discord_post.txt
 /outputs/**/discord_update.txt
@@ -17,5 +15,12 @@ tmp/pdfs/*.png
 data/ground/toi3505/calibration/*.fits
 data/ground/toi3505/reduced/*.fits
 data/ground/toi3505/aligned/*.fits
-data/ground/toi3505/plate_solved/*.fits
+data/ground/toi3505/plate_solved/**/*.fits
 data/ground/toi3505/**/*.partial
+
+# Public TESS files are reproducibly downloaded from MAST and can be large.
+# Keep compact manifests and derived tables, but not the downloaded FITS files.
+data/tess/toi3505/**/*.fits
+data/tess/toi3505/**/*.fits.gz
+data/tess/toi3505/**/*.zip
+data/tess/toi3505/**/*.part

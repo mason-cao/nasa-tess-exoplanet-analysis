@@ -1,0 +1,28 @@
+{
+  "target": "TOI-3505.01",
+  "catalog": "Gaia DR3 gaiadr3.gaia_source",
+  "retrieved_utc": "2026-07-24T00:39:27.697012+00:00",
+  "search_radius_arcsec": 12.0,
+  "measured_positions": 11,
+  "returned_sources": 164,
+  "sources_per_measured_position": {
+    "T1": 15,
+    "C2": 15,
+    "C3": 19,
+    "C4": 12,
+    "C5": 17,
+    "C6": 9,
+    "C7": 17,
+    "C8": 9,
+    "C9": 16,
+    "C10": 21,
+    "C11": 14
+  },
+  "positions_without_a_gaia_source": [],
+  "plate_solution": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/data/ground/toi3505/plate_solved/TOI_3505.01_50.000s_R-0001_wcs.fits",
+  "files": {
+    "ground_star_wcs_positions.csv": "81d03beed726d7c6969a73335eb4a3dde1c354f40c8f586018ee394cdc914aa5",
+    "ground_star_gaia_dr3_query.adql": "4702f7e5da098a40a791fafed33468fea3089cf5b5d6d239fc0cfa6e18cf0155",
+    "ground_star_gaia_dr3_12arcsec.csv": "f5957ae756ce4783d47dbd68e97801a7f5982a06fb0c128f4fe3fdbeb75fca12"
+  }
+}
