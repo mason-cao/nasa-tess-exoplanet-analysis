@@ -60636,8 +60636,8 @@
 .plot.oplabel97=source-sky_T98
 .plot.oplabel98=source-sky_T99
 .plot.oplabel99=source-sky_T100
-.plot.orbitalPeriod0=3.0
-.plot.orbitalPeriod1=4.38
+.plot.orbitalPeriod0=2.9151556
+.plot.orbitalPeriod1=2.9151556
 .plot.orbitalPeriod10=3.0
 .plot.orbitalPeriod100=3.0
 .plot.orbitalPeriod101=3.0
@@ -61885,7 +61885,7 @@
 .plot.priorCenter[0][17]=0.0
 .plot.priorCenter[0][18]=0.0
 .plot.priorCenter[0][19]=0.0
-.plot.priorCenter[0][1]=0.009992341949390356
+.plot.priorCenter[0][1]=0.002910000
 .plot.priorCenter[0][20]=0.0
 .plot.priorCenter[0][21]=0.0
 .plot.priorCenter[0][22]=0.0
@@ -61894,7 +61894,7 @@
 .plot.priorCenter[0][25]=0.0
 .plot.priorCenter[0][26]=0.0
 .plot.priorCenter[0][2]=16.42457520855137
-.plot.priorCenter[0][3]=2457905.608
+.plot.priorCenter[0][3]=2459781.873762600
 .plot.priorCenter[0][4]=88.0
 .plot.priorCenter[0][5]=0.3
 .plot.priorCenter[0][6]=0.3
@@ -63682,7 +63682,7 @@
 .plot.priorCenter[1][17]=0.0
 .plot.priorCenter[1][18]=0.0
 .plot.priorCenter[1][19]=0.0
-.plot.priorCenter[1][1]=0.005000000000000033
+.plot.priorCenter[1][1]=0.002910000
 .plot.priorCenter[1][20]=0.0
 .plot.priorCenter[1][21]=0.0
 .plot.priorCenter[1][22]=0.0
@@ -63691,7 +63691,7 @@
 .plot.priorCenter[1][25]=0.0
 .plot.priorCenter[1][26]=0.0
 .plot.priorCenter[1][2]=16.974700006768483
-.plot.priorCenter[1][3]=2460366.779
+.plot.priorCenter[1][3]=2459781.873762600
 .plot.priorCenter[1][4]=88.1
 .plot.priorCenter[1][5]=0.62
 .plot.priorCenter[1][6]=0.12
@@ -88191,12 +88191,12 @@
 .plot.sortPriority=jd_mobs,hjd_mobs,ratio,source-sky
 .plot.subFrameLocationX=855
 .plot.subFrameLocationY=957
-.plot.subtitle=GMU 0.8 m (R filter, 50 s exposures)
+.plot.subtitle=GMU 0.8 m (R filter, 50 s exp, fap 25-70-139)
 .plot.subtitlePosX=0.5
 .plot.subtitlePosY=37.0
 .plot.tableName=Measurements
-.plot.teff0=5800.0
-.plot.teff1=6077.0
+.plot.teff0=6220.0
+.plot.teff1=6220.0
 .plot.teff10=5800.0
 .plot.teff100=5800.0
 .plot.teff101=5800.0

@@ -134,6 +134,18 @@ class ScheduleRecordTests(unittest.TestCase):
             ".plot.egressTime",
             ".plot.xMin",
             ".plot.xMax",
+            ".plot.orbitalPeriod0",
+            ".plot.teff0",
+            ".plot.priorCenter[0][1]",
+            ".plot.priorCenter[0][3]",
+            ".plot.useTransitFit0",
+            ".plot.detrendFit0",
+            ".plot.orbitalPeriod1",
+            ".plot.teff1",
+            ".plot.priorCenter[1][1]",
+            ".plot.priorCenter[1][3]",
+            ".plot.useTransitFit1",
+            ".plot.detrendFit1",
         )
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory) / "source.plotcfg"
@@ -149,15 +161,35 @@ class ScheduleRecordTests(unittest.TestCase):
                 schedule_context(),
                 observation_start_bjd=2459782.598234811,
                 observation_end_bjd=2459782.809458706,
+                orbital_period_days=2.9151556,
+                transit_center_bjd=2459781.8737626,
+                catalog_depth_ppt=2.910,
+                target_teff_k=6220.0,
             )
             result = destination.read_bytes()
 
         self.assertIn(b".plot.showVMarker1=true", result)
         self.assertIn(b".plot.title=TOI-3505.01, UT 2022-07-22", result)
+        self.assertIn(
+            b".plot.subtitle=GMU 0.8 m (R filter, 50 s exp, fap 25-70-139)",
+            result,
+        )
         self.assertIn(b".plot.vMarker1TopText=2022 schedule (EDT)", result)
         self.assertIn(b".plot.vMarker1Value=0.682400599", result)
         self.assertIn(b".plot.vMarker2Value=0.751150993", result)
         self.assertIn(b".plot.useInEgressMarkers=false", result)
+        self.assertIn(b".plot.orbitalPeriod0=2.9151556", result)
+        self.assertIn(b".plot.teff0=6220.0", result)
+        self.assertIn(b".plot.priorCenter[0][1]=0.002910000", result)
+        self.assertIn(b".plot.priorCenter[0][3]=2459781.873762600", result)
+        self.assertIn(b".plot.useTransitFit0=false", result)
+        self.assertIn(b".plot.detrendFit0=false", result)
+        self.assertIn(b".plot.orbitalPeriod1=2.9151556", result)
+        self.assertIn(b".plot.teff1=6220.0", result)
+        self.assertIn(b".plot.priorCenter[1][1]=0.002910000", result)
+        self.assertIn(b".plot.priorCenter[1][3]=2459781.873762600", result)
+        self.assertIn(b".plot.useTransitFit1=false", result)
+        self.assertIn(b".plot.detrendFit1=false", result)
         self.assertEqual(result.count(b"\r\n"), len(keys))
 
 
