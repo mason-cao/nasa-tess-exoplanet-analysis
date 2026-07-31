@@ -13,8 +13,8 @@ public TESS photometry, pixel data, and SPOC validation products.
 - The final ground light curve has 2.497 ppt robust scatter. No detrending or
   transit model was applied because no tested correction passed the frozen
   selection rules and no clear transit was measured.
-- The current ephemeris places the nearest transit midpoint 17.39 hours before
-  the ground sequence. A recovered historical schedule window falls within the
+- The adopted ephemeris places the nearest transit midpoint 17.46 hours before
+  the ground sequence, with a 1.3-minute prediction uncertainty at that epoch. A recovered historical schedule window falls within the
   observations only under a documented local-time interpretation; its fixed
   check gives −0.658 ± 0.395 ppt, not a significant dimming.
 - The 2.915-day signal is independently recovered in TESS Sectors 14, 41, 54,
