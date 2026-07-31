@@ -84,7 +84,12 @@ INJECTION_DURATION_HOURS = 2.0
 INJECTION_DEPTHS_PPT = (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0)
 INJECTION_MIDPOINT_COUNT = 13
 BIN_MINUTES = (2.0, 5.0, 10.0, 15.0, 20.0, 30.0, 45.0, 60.0)
-NEARBY_RADIUS_ARCSEC = 60.0
+# TFOP SG1 guidelines, revision 6.4, section 2: nearby-star clearance is
+# reported for stars inside a nominal 2.5 arcminute radius of the target, which
+# is wide enough to cover the TESS point response function rather than just the
+# photometric aperture.  Every candidate inside this radius lands comfortably
+# within the 4096 x 4096 field, so nothing is lost to the frame edges.
+NEARBY_RADIUS_ARCSEC = 150.0
 NEARBY_SOURCE_RADIUS_PIXELS = 15.0
 NEARBY_SKY_INNER_PIXELS = 30.0
 NEARBY_SKY_OUTER_PIXELS = 50.0
@@ -637,17 +642,31 @@ def measure_nearby_stars(
                 ),
                 "valid_measurement_fraction": finite_fraction,
                 "night_robust_scatter_ppt": scatter * 1000.0,
-                "night_standard_deviation_ppt": float(np.nanstd(values, ddof=1))
-                * 1000.0,
-                "maximum_absolute_deviation_ppt": float(np.nanmax(deviation))
-                * 1000.0,
+                # Widening the search to the full 2.5 arcminutes brings in
+                # sources faint enough that a frame can yield no usable
+                # measurement at all.  Those stay in the table as blanks so the
+                # count is honest, rather than being silently dropped.
+                "night_standard_deviation_ppt": (
+                    float(np.nanstd(values, ddof=1)) * 1000.0
+                    if len(values) > 1
+                    else float("nan")
+                ),
+                "maximum_absolute_deviation_ppt": (
+                    float(np.nanmax(deviation)) * 1000.0
+                    if len(deviation)
+                    else float("nan")
+                ),
                 "points_beyond_five_robust_sigma": int(
                     np.sum(deviation > 5.0 * scatter)
                 )
                 if np.isfinite(scatter) and scatter > 0
                 else 0,
-                "observed_phase_min": float(np.nanmin(phase[primary])),
-                "observed_phase_max": float(np.nanmax(phase[primary])),
+                "observed_phase_min": float(np.nanmin(phase[primary]))
+                if primary.any()
+                else float("nan"),
+                "observed_phase_max": float(np.nanmax(phase[primary]))
+                if primary.any()
+                else float("nan"),
                 "historical_schedule_timezone_assumption": "America/New_York",
                 "historical_window_points": int(inside.sum()),
                 "outside_window_points": int(outside.sum()),
@@ -899,7 +918,9 @@ def write_readme(
         cleared = int(nearby_measurements["transit_relevant_clearance"].sum())
         overlap = int(nearby_measurements["target_aperture_overlap"].sum())
         nearby_text = (
-            f"{len(nearby_measurements)} deduplicated TIC sources within 60 arcseconds "
+            f"{len(nearby_measurements)} deduplicated TIC sources within "
+            f"{NEARBY_RADIUS_ARCSEC:.0f} arcseconds ({NEARBY_RADIUS_ARCSEC / 60.0:.1f} "
+            f"arcminutes, the TFOP SG1 nominal radius) "
             "were bright enough to mimic a 2.91-ppt event in the simple total-eclipse "
             "screen and were measured on all 281 aligned images. Under the documented "
             "Eastern-time interpretation of the 2022 schedule, "

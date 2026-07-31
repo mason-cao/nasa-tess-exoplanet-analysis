@@ -82,21 +82,26 @@
 
   .body {
     display: grid;
-    grid-template-columns: 448px 1fr 424px;
+    grid-template-columns: 484px 1fr 452px;
     gap: 11px;
     flex: 1 1 auto;
     min-height: 0;
     align-items: start;
   }
 
-  .col { display: flex; flex-direction: column; gap: 9px; }
+  .col { display: flex; flex-direction: column; gap: 8px; }
+  .col.stretch { align-self: stretch; }
   .card { background: var(--panel); border: 1px solid var(--rule); overflow: hidden; }
+  /* Let the figure column fill its height instead of leaving a gap at the foot. */
+  .card.grow { flex: 1 1 auto; display: flex; flex-direction: column; }
+  .card.grow .inner { flex: 1 1 auto; display: flex; flex-direction: column;
+                      justify-content: space-between; }
 
   .card > h2 {
     margin: 0;
     background: var(--mason-green);
     color: #fff;
-    font-size: 16.5px;
+    font-size: 15.6px;
     font-weight: 700;
     text-align: center;
     padding: 4px 10px 5px;
@@ -105,15 +110,15 @@
 
   .card .inner { padding: 7px 10px 6px; }
 
-  p { margin: 0 0 5px; font-size: 10.8px; line-height: 1.31; text-align: justify; }
+  p { margin: 0 0 4px; font-size: 9.9px; line-height: 1.30; text-align: justify; }
   p:last-child { margin-bottom: 0; }
 
-  h3 { margin: 5px 0 2px; font-size: 11.4px; font-weight: 700; color: var(--mason-green-dark); }
+  h3 { margin: 4px 0 2px; font-size: 10.5px; font-weight: 700; color: var(--mason-green-dark); }
   h3:first-child { margin-top: 0; }
 
   ul, ol { margin: 0 0 5px; padding-left: 14px; }
   ul:last-child, ol:last-child { margin-bottom: 0; }
-  li { font-size: 10.8px; line-height: 1.28; margin-bottom: 2px; }
+  li { font-size: 9.9px; line-height: 1.27; margin-bottom: 1.5px; }
   li:last-child { margin-bottom: 0; }
   li b, p b { color: var(--mason-green-dark); }
 
@@ -125,25 +130,25 @@
 
   figure { margin: 0; }
   figure img { width: 100%; height: auto; display: block; border: 1px solid var(--rule); background: #fff; }
-  figcaption { font-size: 9.9px; line-height: 1.26; margin-top: 2px; text-align: justify; }
+  figcaption { font-size: 9.2px; line-height: 1.25; margin-top: 2px; text-align: justify; }
   figcaption b { color: var(--mason-green-dark); }
 
   /* ---------------- tables ---------------- */
 
-  table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
-  td { padding: 1.8px 4px; text-align: left; border-bottom: 1px solid var(--rule); }
+  table { width: 100%; border-collapse: collapse; font-size: 9.7px; }
+  td { padding: 1.2px 4px; text-align: left; border-bottom: 1px solid var(--rule); }
   td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  tr.sect td { background: var(--wash); font-weight: 700; color: var(--mason-green-dark); font-size: 10.2px; }
+  tr.sect td { background: var(--wash); font-weight: 700; color: var(--mason-green-dark); font-size: 9.4px; }
   tbody tr:last-child td { border-bottom: 0; }
   td .pass { color: var(--mason-green); font-weight: 700; }
-  .compare td { font-size: 10.2px; padding: 1.5px 5px; }
-  .compare tr.sect td { font-size: 9.6px; }
+  .compare td { font-size: 9.5px; padding: 1.2px 5px; }
+  .compare tr.sect td { font-size: 9.0px; }
   .compare td b { color: var(--mason-green-dark); }
   .footnote { font-size: 9.4px; color: var(--muted); line-height: 1.26; margin-top: 3px; }
 
   /* ---------------- footer ---------------- */
 
-  .footer { display: grid; grid-template-columns: 1fr 470px 424px; gap: 11px; flex: 0 0 auto; }
+  .footer { display: grid; grid-template-columns: 1fr 470px 452px; gap: 11px; flex: 0 0 auto; }
   .footer .card .inner { padding: 5px 10px 6px; }
   .footer h2 { font-size: 14px; padding: 2px 10px 3px; }
   .footer li { font-size: 9.6px; line-height: 1.24; margin-bottom: 1.5px; }
@@ -223,11 +228,31 @@
           </p>
           <p>
             We saw nothing because the prediction was off. With the period we have now, the closest
-            transit was 17.4 hours before we started. So we went to the TESS archive and timed 25
-            transits in Sectors 14, 41, 54, and 81, covering 5.05 years. Fitting a line through those
-            times gives a period of <b>2.9151503 &plusmn; 0.0000057 days</b>, twice as precise as the
-            TESS catalog value and matching it to within 0.4&sigma;. It also tightens the predicted
-            transit time for 2026 from 9 minutes to 3.
+            transit was 17.4 hours before we started. So we went to the TESS archive and timed 27
+            transits in Sectors 14, 41, 54, and 81, a 5.05 year stretch. Fitting a line through those
+            times gives <b>P = 2.9151516 &plusmn; 0.0000049 days</b>. That is 2.4 times tighter than
+            the TESS catalog period and 1.4 times tighter than the best published one, and it agrees
+            with both. It also cuts the predicted transit time for 2026 from 9 minutes to 3.
+          </p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Introduction</h2>
+        <div class="inner">
+          <p>
+            TESS watches one strip of sky at a time and looks for stars that dim on a schedule, which
+            is what a planet passing in front of one does (Ricker et al. 2015). It has found
+            thousands of candidates and most are still only that. Ground telescopes do the next step:
+            they check the dimming belongs to the star TESS blamed, at the depth and time predicted,
+            and not to a fainter star nearby whose light lands in the same pixels.
+          </p>
+          <p>
+            TOI-3505.01 has been in that queue since 2021 and nobody has published on it. Six
+            observatories have taken light curves and the TESS project still calls it a candidate. It
+            looks like a Jupiter-sized object grazing a star a little bigger and hotter than the Sun.
+            Here we present our own night of R band photometry and a new timing analysis of every
+            TESS sector that has observed it.
           </p>
         </div>
       </section>
@@ -253,53 +278,55 @@
 
           <h3>Working with the TESS archive</h3>
           <ul>
-            <li>We pulled QLP light curves for Sectors 14, 41, 54, and 81, plus the SPOC light curves
-                and the official Data Validation reports.</li>
-            <li>We ran a box least-squares search on each sector by itself, then fit each transit one
-                at a time to get 25 mid-transit times and fit a straight line through them.</li>
+            <li>We used QLP for Sectors 14 and 41, the only pipeline covering them, and the SPOC
+                2-minute curves for Sectors 54 and 81. Both pipelines measure the same photons, so
+                only the better-sampled one speaks for each sector. We also pulled every Data
+                Validation report.</li>
+            <li>We ran a box least-squares search per sector, then fit each transit one at a time for
+                27 mid-transit times and fit a straight line through them. The shape we fit is a
+                trapezoid, not a flat box: at b = 0.92 this transit spends most of its time in
+                ingress and egress, and a box has edges too sharp to describe that.</li>
+            <li>We dropped one Sector 81 event that straddles a data gap. It fills under half the fit
+                window, and with the middle missing the baseline and the depth stop being separable.</li>
             <li>We used the TESS pixel data to build difference images, find where on the sky the
                 dimming happens, and check how much light nearby stars add. We locked in our cuts
                 before looking at the final numbers.</li>
           </ul>
+
+          <h3>Checking the neighbours</h3>
+          <ul>
+            <li>TFOP asks for clearance inside 2.5&prime;, so we measured all 280 catalog stars in
+                that circle bright enough to matter, on our own images, across the whole night. A
+                star clears when our depth limit for it falls below the eclipse it would need.</li>
+          </ul>
         </div>
       </section>
 
+
       <section class="card">
-        <h2>System Parameters</h2>
+        <h2>Checks for False Alarms</h2>
         <div class="inner">
           <table>
             <tbody>
-              <tr class="sect"><td colspan="2">The star, TIC 390988385</td></tr>
-              <tr><td>Temperature, radius, mass</td><td class="num">6220 K, 1.335 R<sub>&#9737;</sub>, 1.25 M<sub>&#9737;</sub></td></tr>
-              <tr><td>Distance, TESS and V magnitude</td><td class="num">373 pc, 10.94, 11.24</td></tr>
-              <tr><td>Nearby star, extra light</td><td class="num">0.517&Prime; (&Delta;I = 1.7), 0.55</td></tr>
-
-              <tr class="sect"><td colspan="2">What we measured</td></tr>
-              <tr><td>Orbital period</td><td class="num">2.9151503 &plusmn; 0.0000057 d</td></tr>
-              <tr><td>Reference time, BJD<sub>TDB</sub></td><td class="num">2459793.5331 &plusmn; 0.0013</td></tr>
-              <tr><td>Depth and length, 4 sectors</td><td class="num">3.05 ppt, 2.06 h</td></tr>
-              <tr><td>Depth during our window</td><td class="num">&minus;0.66 &plusmn; 0.39 ppt</td></tr>
-
-              <tr class="sect"><td colspan="2">What that gives for the planet</td></tr>
-              <tr><td>Size next to the star, R<sub>p</sub>/R<sub>&#9733;</sub></td><td class="num">0.0618 &plusmn; 0.0016</td></tr>
-              <tr><td>Planet radius</td><td class="num">9.0 R<sub>&#8853;</sub> = 0.80 R<sub>J</sub></td></tr>
-              <tr><td>How centered the crossing is, tilt</td><td class="num">b = 0.85, 82.9&deg;</td></tr>
-              <tr><td>a/R<sub>&#9733;</sub>, orbit size, temperature</td><td class="num">6.93, 0.043 au, 1670 K</td></tr>
+              <tr><td>Same depth in all four sectors</td><td class="num"><span class="pass">&chi;&sup2; = 4.3 / 3</span></td></tr>
+              <tr><td>Odd and even transits match</td><td class="num"><span class="pass">&le; 1.7&sigma;</span></td></tr>
+              <tr><td>No second dip half an orbit later</td><td class="num"><span class="pass">S/N &le; 1.7</span></td></tr>
+              <tr><td>Dimming centered on our star</td><td class="num"><span class="pass">1.6&ndash;5.1&Prime;</span></td></tr>
+              <tr><td>Compared with one TESS pixel</td><td class="num"><span class="pass">inside 21&Prime;</span></td></tr>
+              <tr><td>Nearby stars ruled out, 2.5&prime;</td><td class="num"><span class="pass">222 of 280</span></td></tr>
+              <tr><td>SPOC odds of a false alarm</td><td class="num"><span class="pass">1 &times; 10<sup>&minus;143</sup></span></td></tr>
+              <tr><td>Star 0.517&Prime; away</td><td class="num">cannot separate</td></tr>
             </tbody>
           </table>
-          <p class="footnote">
-            Based on the TIC v8 star radius and the SPOC depth ratio, with no correction for the
-            nearby star.
-          </p>
         </div>
       </section>
 
     </div>
 
     <!-- ==================== MIDDLE ==================== -->
-    <div class="col">
+    <div class="col stretch">
 
-      <section class="card">
+      <section class="card grow">
         <h2>Results</h2>
         <div class="inner">
 
@@ -329,9 +356,9 @@
               <figcaption>
                 <b>Fig. 3. Our main result.</b> Each point is one transit we timed, compared with the
                 time the TESS catalog predicts. Grey is the catalog's 1&sigma; range and green is
-                ours. Because our transits stretch across 5.05 years, our period is twice as precise,
-                and the predicted transit time for 2026 tightens from 9 minutes to 3. We widened the
-                error bars by 2.30 first, so this is the careful version rather than the best-case one.
+                ours. Our transits stretch across 5.05 years, which is the whole reason the period
+                tightens, and the predicted transit time for 2026 goes from 9 minutes to 3. We
+                widened the error bars by 1.14 first, so this is the careful version.
               </figcaption>
             </figure>
           </div>
@@ -348,10 +375,11 @@
             <figure>
               <img src="{{neb}}" alt="Check on nearby stars that could fake the transit signal">
               <figcaption>
-                <b>Fig. 5.</b> The 44 catalog stars within 60&Prime; of our target. The red line is how
-                deep an eclipse each one would need to fake our signal. A star is ruled out if its own
-                light curve is good enough to say that eclipse did not happen. 32 are ruled out. The
-                rest are too faint to measure well or sit too close to our star.
+                <b>Fig. 5.</b> All 280 catalog stars inside 2.5&prime; that are bright enough to fake
+                our signal, the radius TFOP asks for. The red line is the eclipse depth each one
+                would need. A star is ruled out when its own light curve is good enough to say that
+                eclipse did not happen. 222 are. The rest are too faint to measure well, or sit
+                inside our aperture.
               </figcaption>
             </figure>
           </div>
@@ -367,9 +395,15 @@
               </tr>
               <tr>
                 <td>Orbital period (days)</td>
-                <td class="num"><b>2.9151503 &plusmn; 0.0000057</b></td>
+                <td class="num"><b>2.9151516 &plusmn; 0.0000049</b></td>
                 <td class="num">2.9151556 &plusmn; 0.0000117</td>
                 <td class="num">2.9151456 &plusmn; 0.0000070</td>
+              </tr>
+              <tr>
+                <td>Years of transits behind it</td>
+                <td class="num"><b>5.05</b></td>
+                <td class="num">3.0</td>
+                <td class="num">2.0</td>
               </tr>
               <tr>
                 <td>Transit depth (ppt)</td>
@@ -385,7 +419,10 @@
               </tr>
             </tbody>
           </table>
-
+          <p class="footnote">
+            Depth and length are our own four-sector fits. Sector counts are the transits behind
+            each period: ours span 5.05 years, the catalog row three sectors, SPOC two.
+          </p>
         </div>
       </section>
 
@@ -393,6 +430,30 @@
 
     <!-- ==================== RIGHT ==================== -->
     <div class="col">
+
+      <section class="card">
+        <h2>System Parameters</h2>
+        <div class="inner">
+          <table>
+            <tbody>
+              <tr class="sect"><td colspan="2">The star, TIC 390988385</td></tr>
+              <tr><td>Temperature</td><td class="num">6220 K</td></tr>
+              <tr><td>Radius, assumed mass</td><td class="num">1.335 R<sub>&#9737;</sub>, 1.25 M<sub>&#9737;</sub></td></tr>
+              <tr><td>Distance, TESS mag, V</td><td class="num">373 pc, 10.94, 11.24</td></tr>
+              <tr><td>Nearby star, extra light</td><td class="num">0.517&Prime; (&Delta;I = 1.7), 0.55</td></tr>
+              <tr class="sect"><td colspan="2">What that gives for the planet</td></tr>
+              <tr><td>R<sub>p</sub>/R<sub>&#9733;</sub></td><td class="num">0.0618 &plusmn; 0.0016</td></tr>
+              <tr><td>Planet radius</td><td class="num">9.0 R<sub>&#8853;</sub> = 0.80 R<sub>J</sub></td></tr>
+              <tr><td>How centered, tilt</td><td class="num">b = 0.85, 82.9&deg;</td></tr>
+              <tr><td>a/R<sub>&#9733;</sub>, orbit, temperature</td><td class="num">6.93, 0.043 au, 1670 K</td></tr>
+            </tbody>
+          </table>
+          <p class="footnote">
+            From the TIC v8 star radius and the SPOC depth ratio, with no correction for the
+            nearby star. Reference time BJD<sub>TDB</sub> 2459793.5311 &plusmn; 0.0009.
+          </p>
+        </div>
+      </section>
 
       <section class="card">
         <h2>Discussion</h2>
@@ -408,13 +469,14 @@
 
           <h3>What the TESS archive gave us</h3>
           <p>
-            One night could not fix the prediction, so we used the archive instead. Timing 25 transits
-            across four sectors gives <b>P = 2.9151503 &plusmn; 0.0000057 d</b>. That is 2.05 times
-            more precise than the catalog and agrees with it to 0.4&sigma;. The timing points scatter
-            more than their error bars allow (&chi;&sup2;/dof = 5.3, RMS 11.8 min). That is what we
-            expect from Sector 14, where each image covers 30 minutes, so we widened the error bars
-            instead of claiming the tighter number. Leaving Sector 14 out shifts the period by much
-            less than 1&sigma;.
+            One night could not fix the prediction, so we used the archive instead. Timing 27 transits
+            across four sectors gives <b>P = 2.9151516 &plusmn; 0.0000049 d</b>. What buys the
+            precision is the lever arm. Our transits span 5.05 years, while the catalog row rests on
+            three sectors and the official SPOC fit on two, so we come out 2.4 times tighter than the
+            catalog and 1.4 times tighter than SPOC while agreeing with both (0.3&sigma; and
+            0.7&sigma;). Scatter about the line is 8.5 min for &chi;&sup2;/dof = 1.30, so we widened
+            the error bars by 1.14. Dropping Sector 14, where each image covers 30 minutes, moves the
+            period by 0.6&sigma;.
           </p>
 
           <h3>Why the planet's size is uncertain</h3>
@@ -442,31 +504,14 @@
         </div>
       </section>
 
-      <section class="card">
-        <h2>Checks for False Alarms</h2>
-        <div class="inner">
-          <table>
-            <tbody>
-              <tr><td>Same depth in all four sectors</td><td class="num"><span class="pass">&chi;&sup2; = 4.3 / 3</span></td></tr>
-              <tr><td>Odd and even transits match</td><td class="num"><span class="pass">&le; 1.7&sigma;</span></td></tr>
-              <tr><td>No second dip half an orbit later</td><td class="num"><span class="pass">S/N &le; 1.7</span></td></tr>
-              <tr><td>Dimming centered on our star</td><td class="num"><span class="pass">1.6&ndash;5.1&Prime;</span></td></tr>
-              <tr><td>Compared with one TESS pixel</td><td class="num"><span class="pass">inside 21&Prime;</span></td></tr>
-              <tr><td>Nearby stars ruled out</td><td class="num"><span class="pass">32 of 44</span></td></tr>
-              <tr><td>SPOC odds of a false alarm</td><td class="num"><span class="pass">1 &times; 10<sup>&minus;143</sup></span></td></tr>
-              <tr><td>SPOC ghost-image check</td><td class="num"><span class="pass">6.9</span></td></tr>
-              <tr><td>Star 0.517&Prime; away</td><td class="num">cannot separate</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
 
       <section class="card">
         <h2>Conclusions</h2>
         <div class="inner">
           <ul>
-            <li><b>A better period.</b> Timing 25 transits over 5.05 years gives
-                P = 2.9151503 &plusmn; 0.0000057 d, twice as precise as the catalog value.</li>
+            <li><b>A better period.</b> Timing 27 transits over 5.05 years gives
+                P = 2.9151516 &plusmn; 0.0000049 d, tighter than both published values and
+                agreeing with each.</li>
             <li><b>Better predictions.</b> The transit time for 2026 is now good to 3 minutes instead
                 of 9, so the next person to observe needs much less time on either side of it.</li>
             <li><b>Our night still counts.</b> The 2.50 ppt light curve rules out a transit during the

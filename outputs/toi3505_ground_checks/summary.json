@@ -345,12 +345,12 @@
     "ground_aperture_radius_arcsec": 9.053091250000001
   },
   "nearby_star_screen": {
-    "radius_arcsec": 60.0,
-    "bright_enough_catalog_candidates": 44,
+    "radius_arcsec": 150.0,
+    "bright_enough_catalog_candidates": 280,
     "image_measurement_completed": true,
     "historical_schedule_window_covered": true,
     "working_timezone": "America/New_York",
-    "sources_cleared_by_conditional_screen": 32,
+    "sources_cleared_by_conditional_screen": 222,
     "source_apertures_overlapping_target": 2,
     "can_resolve_known_close_companion": false
   }

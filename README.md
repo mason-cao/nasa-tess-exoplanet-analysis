@@ -20,10 +20,18 @@ public TESS photometry, pixel data, and SPOC validation products.
 - The 2.915-day signal is independently recovered in TESS Sectors 14, 41, 54,
   and 81. The ground sequence falls inside a Sector 54 data gap, so there is no
   simultaneous TESS comparison.
-- A weighted linear fit to 25 mid-transit times across those four sectors spans
-  5.05 years and gives P = 2.9151503 ± 0.0000057 days, 2.05 times more precise
-  than the TOI catalog period and consistent with it at 0.41 sigma. Timing
-  errors were inflated by sqrt(chi2/dof) = 2.30 before quoting.
+- A weighted linear fit to 27 mid-transit times across those four sectors spans
+  5.05 years and gives P = 2.9151516 ± 0.0000049 days, 2.40 times more precise
+  than the TOI catalog period and 1.43 times more precise than the SPOC
+  multi-sector fit, consistent with both at 0.32 and 0.71 sigma. Timing errors
+  were inflated by sqrt(chi2/dof) = 1.14 before quoting. See
+  [`outputs/toi3505_ephemeris_refined`](outputs/toi3505_ephemeris_refined) for
+  the three changes that produced it: a trapezoidal transit shape instead of a
+  box, SPOC 2-minute data for Sectors 54 and 81, and the rejection of one
+  partially covered event.
+- All 280 catalog stars within 2.5 arcminutes that are bright enough to mimic
+  the signal were measured on the ground images; 222 are cleared. Two fall
+  inside the target aperture and cannot be separated.
 
 These results support a carefully scoped light-curve and timing analysis. They
 do not validate the planet or resolve the known 0.517-arcsecond companion.
@@ -41,15 +49,17 @@ The ready-to-post message is kept locally in `docs/discord-messages.md`.
 
 ## Symposium poster
 
-The 48 x 36 inch board and its figures are in
-[`outputs/toi3505_poster`](outputs/toi3505_poster), with
-`TOI-3505.01_Mason_Cao_poster.pdf` as the print master. See that folder's
-README for the regeneration steps.
+Two 48 x 36 inch boards and their figures are in
+[`outputs/toi3505_poster`](outputs/toi3505_poster). `v1` is the detailed board
+and `v2` the simpler one built from the AstroImageJ products the rest of the
+cohort shows. See that folder's README for the regeneration steps and for the
+unpublished ExoFOP follow-up this project does not analyse.
 
 ## Repository layout
 
 - `src/` — calibration, alignment, photometry, timing, TESS, and validation
-  scripts.
+  scripts. `refine_toi3505_ephemeris.py` produces the adopted ephemeris and must
+  run before the poster scripts.
 - `tests/` — unit tests for the analysis and reproducibility helpers.
 - `data/ground/toi3505/` — local calibrated and aligned FITS products. Large
   generated FITS files are ignored by Git.

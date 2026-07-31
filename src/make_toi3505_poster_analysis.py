@@ -130,7 +130,19 @@ class Ephemeris:
 
 
 def load_events() -> list[dict]:
-    path = ROOT / "outputs" / "toi3505_tess_analysis" / "event_times.csv"
+    """Read the adopted event list from the refined ephemeris run.
+
+    This is the trapezoid-shape, best-pipeline-per-sector list produced by
+    ``refine_toi3505_ephemeris.py``.  The earlier QLP-and-box list in
+    ``outputs/toi3505_tess_analysis`` is kept as the like-for-like comparison
+    and is not what the posters quote.
+    """
+    path = (
+        ROOT
+        / "outputs"
+        / "toi3505_ephemeris_refined"
+        / "event_times_best_per_sector.csv"
+    )
     with path.open() as handle:
         rows = list(csv.DictReader(handle))
     events = []
@@ -141,12 +153,15 @@ def load_events() -> list[dict]:
             {
                 "sector": int(row["sector"]),
                 "cycle": int(row["cycle"]),
+                "pipeline": row["pipeline"],
                 "measured_bjd": float(row["measured_bjd"]),
                 "time_error_days": float(row["time_error_days"]),
                 "depth_ppt": float(row["depth_ppt"]),
                 "depth_snr": float(row["depth_snr"]),
             }
         )
+    if not events:
+        raise RuntimeError(f"No accepted events in {path}")
     return events
 
 
@@ -504,8 +519,14 @@ def figure_timing(events: list[dict], refined: Ephemeris, path: Path) -> None:
         handletextpad=0.3, columnspacing=1.0, borderpad=0.4,
     )
 
+    sectors_used = len({e["sector"] for e in events})
+    baseline_years = (
+        max(e["measured_bjd"] for e in events)
+        - min(e["measured_bjd"] for e in events)
+    ) / 365.25
     note = (
-        "25 events, 4 sectors, 5.05-year baseline.   Refined period "
+        f"{refined.events} events, {sectors_used} sectors, "
+        f"{baseline_years:.2f}-year baseline.   Refined period "
         f"{refined.period_days:.7f} $\\pm$ {refined.period_error_days*1e6:.1f}$\\times$10$^{{-6}}$ d "
         f"vs catalog {CATALOG['period_days']:.7f} $\\pm$ {CATALOG['period_error_days']*1e6:.1f}$\\times$10$^{{-6}}$ d"
     )
@@ -1246,6 +1267,12 @@ def main() -> None:
     period_difference_sigma = abs(CATALOG["period_days"] - refined.period_days) / math.sqrt(
         CATALOG["period_error_days"] ** 2 + refined.period_error_days**2
     )
+    # The catalog row is the softer comparison. SPOC's multi-sector fit is the
+    # tightest published period, so the margin over it is the one that matters
+    # and both belong on the board.
+    spoc_difference_sigma = abs(SPOC["period_days"] - refined.period_days) / math.sqrt(
+        SPOC["period_error_days"] ** 2 + refined.period_error_days**2
+    )
 
     # Independent four-sector duration, weighted across the QLP box fits.
     with (ROOT / "outputs" / "toi3505_tess_analysis" / "sector_measurements.csv").open() as handle:
@@ -1397,8 +1424,17 @@ def main() -> None:
             "baseline_years": baseline_days / 365.25,
             "period_difference_from_catalog_seconds": period_difference_seconds,
             "period_difference_sigma": period_difference_sigma,
+            "period_difference_from_spoc_sigma": spoc_difference_sigma,
             "period_precision_gain": CATALOG["period_error_days"]
             / refined.period_error_days,
+            "period_precision_gain_over_spoc": SPOC["period_error_days"]
+            / refined.period_error_days,
+            "pipeline_per_sector": {
+                sector: pipeline
+                for sector, pipeline in sorted(
+                    {e["sector"]: e["pipeline"] for e in events}.items()
+                )
+            },
             "forward_propagation": propagation,
         },
         "transit_geometry": geometry,

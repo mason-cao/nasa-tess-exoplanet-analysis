@@ -60,63 +60,71 @@
   "ephemeris": {
     "formal": {
       "label": "four-sector, formal errors",
-      "events": 25,
-      "epoch_bjd_tdb": 2459793.5331420596,
-      "epoch_error_days": 0.0005601959682388272,
-      "period_days": 2.915150287593939,
-      "period_error_days": 2.4804218259228224e-06,
-      "covariance_days2": -8.577519177279809e-10,
-      "reduced_chi2": 5.28773713255773,
-      "residual_rms_minutes": 11.752270898234023,
+      "events": 27,
+      "epoch_bjd_tdb": 2459793.531145653,
+      "epoch_error_days": 0.0007715074687404448,
+      "period_days": 2.9151515671005948,
+      "period_error_days": 4.271210532822384e-06,
+      "covariance_days2": -1.077789007077187e-09,
+      "reduced_chi2": 1.3010946722009904,
+      "residual_rms_minutes": 8.509649207070094,
       "error_scale": 1.0
     },
     "adopted_error_scaled": {
       "label": "four-sector, errors scaled",
-      "events": 25,
-      "epoch_bjd_tdb": 2459793.5331420596,
-      "epoch_error_days": 0.0012881751215557701,
-      "period_days": 2.915150287593939,
-      "period_error_days": 5.703749880890801e-06,
-      "covariance_days2": -4.535566665892848e-09,
-      "reduced_chi2": 5.28773713255773,
-      "residual_rms_minutes": 11.752270898234023,
-      "error_scale": 2.299508019676759
+      "events": 27,
+      "epoch_bjd_tdb": 2459793.531145653,
+      "epoch_error_days": 0.0008800241369065363,
+      "period_days": 2.9151515671005948,
+      "period_error_days": 4.8719792289628144e-06,
+      "covariance_days2": -1.4023055348649236e-09,
+      "reduced_chi2": 1.3010946722009904,
+      "residual_rms_minutes": 8.509649207070094,
+      "error_scale": 1.1406553696016122
     },
     "without_sector_14": {
       "label": "sectors 41, 54, 81, errors scaled",
-      "events": 21,
-      "epoch_bjd_tdb": 2459793.533212834,
-      "epoch_error_days": 0.0013882974485630907,
-      "period_days": 2.915149922651201,
-      "period_error_days": 6.313080816592456e-06,
-      "covariance_days2": -6.1567924801255615e-09,
-      "reduced_chi2": 4.883567435356895,
-      "residual_rms_minutes": 9.176513890352716,
-      "error_scale": 2.2098795069769968
+      "events": 23,
+      "epoch_bjd_tdb": 2459793.531663347,
+      "epoch_error_days": 0.0009127691302126669,
+      "period_days": 2.9151474342647923,
+      "period_error_days": 5.508263481080679e-06,
+      "covariance_days2": -2.4163716488684257e-09,
+      "reduced_chi2": 1.1511014374754787,
+      "residual_rms_minutes": 6.683085568645159,
+      "error_scale": 1.0728939544407354
     },
-    "baseline_days": 1845.30149480002,
-    "baseline_years": 5.052160150034278,
-    "period_difference_from_catalog_seconds": 0.45899188365581267,
-    "period_difference_sigma": 0.4081364511386464,
-    "period_precision_gain": 2.0512820941181795,
+    "baseline_days": 1845.3076945520006,
+    "baseline_years": 5.052177124030118,
+    "period_difference_from_catalog_seconds": 0.3484425086000442,
+    "period_difference_sigma": 0.31820662809373323,
+    "period_difference_from_spoc_sigma": 0.7053496442135423,
+    "period_precision_gain": 2.4014880708945037,
+    "period_precision_gain_over_spoc": 1.4267955944220747,
+    "pipeline_per_sector": {
+      "14": "QLP",
+      "41": "QLP",
+      "54": "SPOC",
+      "81": "SPOC"
+    },
     "forward_propagation": {
       "2026-08-01": {
         "cycle": 501,
         "catalog_uncertainty_minutes": 8.95588786635295,
-        "refined_uncertainty_minutes": 3.309028922812699,
-        "improvement_factor": 2.706500328422751
+        "refined_uncertainty_minutes": 3.3236053679602535,
+        "improvement_factor": 2.6946303411013304
       },
       "2027-08-01": {
         "cycle": 626,
         "catalog_uncertainty_minutes": 10.963394330712,
-        "refined_uncertainty_minutes": 4.254627274041134,
-        "improvement_factor": 2.576816633880772
+        "refined_uncertainty_minutes": 4.153693879661394,
+        "improvement_factor": 2.6394324301062184
       },
       "2030-08-01": {
         "cycle": 1002,
         "catalog_uncertainty_minutes": 17.145018878729765,
-        "refined_uncertainty_minutes": 7.233494744483261,
-        "improvement_factor": 2.3702262162844154
+        "refined_uncertainty_minutes": 6.722725011169569,
+        "improvement_factor": 2.5503079257658055
       }
     }
   },
@@ -198,13 +206,13 @@
     }
   },
   "nearby_star_screen": {
-    "stars_measured": 44,
-    "cleared": 32,
-    "not_cleared_limit_too_shallow": 8,
-    "not_cleared_no_limit": 2,
+    "stars_measured": 280,
+    "cleared": 222,
+    "not_cleared_limit_too_shallow": 47,
+    "not_cleared_no_limit": 9,
     "blended_with_target": 2,
     "closest_unblended_arcsec": 17.7001883052,
-    "faintest_delta_tmag_cleared": 6.3047,
+    "faintest_delta_tmag_cleared": 6.3357,
     "clearance_criterion": "3 sigma depth limit in the scheduled window is below the eclipse depth the neighbour would need, with full window coverage and no aperture blending with the target."
   },
   "depth_consistency": {
@@ -241,11 +249,11 @@
       },
       {
         "sector": 41,
-        "points": 398
+        "points": 399
       },
       {
         "sector": 54,
-        "points": 329
+        "points": 328
       },
       {
         "sector": 81,

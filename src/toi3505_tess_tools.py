@@ -180,6 +180,87 @@ def integrated_box_fraction(
     return np.clip(overlap / cadence_days, 0.0, 1.0)
 
 
+def _trapezoid_integral(time: np.ndarray, half_total: float, half_flat: float) -> np.ndarray:
+    """Antiderivative of the unit-depth symmetric trapezoid, evaluated at ``time``.
+
+    The trapezoid is 1 inside +/-``half_flat``, falls linearly to 0 at
+    +/-``half_total``, and is 0 outside.  Its total area is
+    ``half_total + half_flat``.
+    """
+    ramp = half_total - half_flat
+    t = np.asarray(time, dtype=float)
+    area_ramp = 0.5 * ramp
+    result = np.empty_like(t)
+
+    before = t <= -half_total
+    rise = (t > -half_total) & (t <= -half_flat)
+    flat = (t > -half_flat) & (t <= half_flat)
+    fall = (t > half_flat) & (t <= half_total)
+    after = t > half_total
+
+    result[before] = 0.0
+    result[rise] = (t[rise] + half_total) ** 2 / (2.0 * ramp)
+    result[flat] = area_ramp + (t[flat] + half_flat)
+    result[fall] = (
+        area_ramp
+        + 2.0 * half_flat
+        + area_ramp
+        - (half_total - t[fall]) ** 2 / (2.0 * ramp)
+    )
+    result[after] = half_total + half_flat
+    return result
+
+
+def integrated_transit_fraction(
+    phase_days: np.ndarray,
+    duration_days: float,
+    cadence_days: float,
+    flat_fraction: float = 1.0,
+) -> np.ndarray:
+    """Exposure-averaged depth of a symmetric trapezoidal event.
+
+    ``duration_days`` is first-to-fourth contact and ``flat_fraction`` is the
+    ratio of the flat-bottomed part to that total, so ``flat_fraction = 1``
+    reproduces :func:`integrated_box_fraction` exactly and ``flat_fraction = 0``
+    is a fully V-shaped event.
+
+    A box has infinitely sharp edges.  Fitting one to a transit that really has
+    a long ingress makes the mid-transit time look more precise than the data
+    support, which matters once the sampling is fine enough to resolve the
+    ingress at all.
+    """
+    if duration_days <= 0 or cadence_days <= 0:
+        raise ValueError("Duration and cadence must be positive")
+    if not 0.0 <= flat_fraction <= 1.0:
+        raise ValueError("flat_fraction must lie between 0 and 1")
+    if flat_fraction >= 1.0:
+        return integrated_box_fraction(phase_days, duration_days, cadence_days)
+
+    phase = np.asarray(phase_days, dtype=float)
+    half_total = duration_days / 2.0
+    half_flat = half_total * flat_fraction
+    left = _trapezoid_integral(phase - cadence_days / 2.0, half_total, half_flat)
+    right = _trapezoid_integral(phase + cadence_days / 2.0, half_total, half_flat)
+    return np.clip((right - left) / cadence_days, 0.0, 1.0)
+
+
+def flat_fraction_from_geometry(radius_ratio: float, impact_parameter: float) -> float:
+    """T23/T14 for a circular orbit, from the radius ratio and impact parameter.
+
+    Returns 0 for a fully grazing event, where the planet never sits entirely
+    inside the stellar disk and there is no flat bottom at all.
+    """
+    k = float(radius_ratio)
+    b = float(impact_parameter)
+    total = (1.0 + k) ** 2 - b**2
+    flat = (1.0 - k) ** 2 - b**2
+    if total <= 0.0:
+        raise ValueError("No transit occurs for this geometry")
+    if flat <= 0.0:
+        return 0.0
+    return float(np.sqrt(flat / total))
+
+
 def robust_scatter(values: np.ndarray) -> float:
     values = np.asarray(values, dtype=float)
     finite = values[np.isfinite(values)]
@@ -217,6 +298,7 @@ def fit_repeating_box(
     window_days: float = 0.22,
     allowed_cycles: set[int] | None = None,
     extra_mask: np.ndarray | None = None,
+    flat_fraction: float = 1.0,
 ) -> BoxFit:
     """Fit one depth plus a local line around each predicted event."""
     reference_phase = phase_offset(curve.time_bjd, period_days, epoch_bjd)
@@ -251,8 +333,11 @@ def fit_repeating_box(
     shifted_phase = phase_offset(
         curve.time_bjd[indices], period_days, epoch_bjd + time_offset_days
     )
-    box = integrated_box_fraction(
-        shifted_phase, duration_days=duration_days, cadence_days=curve.cadence_days
+    box = integrated_transit_fraction(
+        shifted_phase,
+        duration_days=duration_days,
+        cadence_days=curve.cadence_days,
+        flat_fraction=flat_fraction,
     )
     columns.append(-box)
     design = np.column_stack(columns)
@@ -285,6 +370,7 @@ def grid_box_fit(
     offsets_days: np.ndarray,
     window_days: float = 0.22,
     allowed_cycles: set[int] | None = None,
+    flat_fraction: float = 1.0,
 ) -> tuple[BoxFit, np.ndarray, dict[str, float]]:
     """Search a small duration/time grid and return joint 68% profile bounds."""
     durations = np.asarray(durations_days, dtype=float)
@@ -301,6 +387,7 @@ def grid_box_fit(
                 time_offset_days=float(offset),
                 window_days=window_days,
                 allowed_cycles=allowed_cycles,
+                flat_fraction=flat_fraction,
             )
             chi2_grid[duration_index, offset_index] = fit.chi2
             fits[(duration_index, offset_index)] = fit
@@ -329,6 +416,7 @@ def fit_one_event(
     duration_days: float,
     offsets_days: np.ndarray,
     window_days: float = 0.20,
+    flat_fraction: float = 1.0,
 ) -> dict[str, float | int | bool]:
     """Measure one event time using a fixed duration and a local line."""
     predicted = epoch_bjd + cycle * period_days
@@ -347,10 +435,11 @@ def fit_one_event(
     chi2_values = np.full(len(offsets_days), np.nan)
     saved: list[tuple[np.ndarray, np.ndarray, np.ndarray, float, float]] = []
     for index, offset in enumerate(offsets_days):
-        box = integrated_box_fraction(
+        box = integrated_transit_fraction(
             dt[indices] - offset,
             duration_days=duration_days,
             cadence_days=curve.cadence_days,
+            flat_fraction=flat_fraction,
         )
         design = np.column_stack([np.ones(len(indices)), x, -box])
         result = _solve_weighted_model(design, y, error)

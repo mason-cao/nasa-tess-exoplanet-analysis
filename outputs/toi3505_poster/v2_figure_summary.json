@@ -22,9 +22,16 @@
     ]
   },
   "dmag_rms": {
-    "stars": 44,
-    "cleared": 32,
-    "not_cleared": 12,
+    "stars": 280,
+    "cleared": 222,
+    "not_cleared": 58,
     "observed_depth_ppt": 2.91
+  },
+  "neb_field": {
+    "radius_arcsec": 150.0,
+    "stars": 280,
+    "cleared": 222,
+    "not_cleared": 56,
+    "blended": 2
   }
 }

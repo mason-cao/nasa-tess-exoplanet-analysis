@@ -13,11 +13,67 @@ sys.path.insert(0, str(ROOT / "src"))
 from toi3505_tess_tools import (
     LightCurveData,
     event_cycles,
+    flat_fraction_from_geometry,
     grid_box_fit,
     integrated_box_fraction,
+    integrated_transit_fraction,
     phase_offset,
     weighted_linear_ephemeris,
 )
+
+
+class TransitShapeTests(unittest.TestCase):
+    """The trapezoid has to reduce to the box and conserve area."""
+
+    def test_flat_fraction_of_one_reproduces_the_box(self) -> None:
+        phase = np.linspace(-0.15, 0.15, 61)
+        np.testing.assert_allclose(
+            integrated_transit_fraction(phase, 0.11, 0.02, flat_fraction=1.0),
+            integrated_box_fraction(phase, 0.11, 0.02),
+            atol=1e-12,
+        )
+
+    def test_trapezoid_area_matches_the_analytic_value(self) -> None:
+        # Summing the exposure-averaged depth over contiguous exposures
+        # recovers the area of the trapezoid, (T14 + T23) / 2.
+        duration, cadence, flat = 0.12, 0.001, 0.4
+        centers = np.arange(-0.2, 0.2, cadence) + cadence / 2.0
+        area = integrated_transit_fraction(
+            centers, duration, cadence, flat_fraction=flat
+        ).sum() * cadence
+        expected = 0.5 * (duration + duration * flat)
+        self.assertAlmostEqual(area, expected, places=6)
+
+    def test_fully_grazing_shape_is_triangular(self) -> None:
+        # With no flat bottom the profile peaks at half depth for an exposure
+        # centered on mid-transit only in the limit of a long exposure; for a
+        # short one it reaches full depth.
+        depth_short = integrated_transit_fraction(
+            np.array([0.0]), 0.10, 1e-4, flat_fraction=0.0
+        )[0]
+        self.assertAlmostEqual(depth_short, 1.0, places=3)
+        half_way = integrated_transit_fraction(
+            np.array([0.025]), 0.10, 1e-4, flat_fraction=0.0
+        )[0]
+        self.assertAlmostEqual(half_way, 0.5, places=3)
+
+    def test_trapezoid_is_shallower_at_the_edges_than_a_box(self) -> None:
+        edge = np.array([0.04])
+        box = integrated_box_fraction(edge, 0.10, 1e-4)[0]
+        trapezoid = integrated_transit_fraction(edge, 0.10, 1e-4, flat_fraction=0.4)[0]
+        self.assertAlmostEqual(box, 1.0, places=3)
+        self.assertLess(trapezoid, box)
+
+    def test_flat_fraction_from_geometry(self) -> None:
+        # A central transit reduces to the analytic (1 - k) / (1 + k).
+        self.assertAlmostEqual(
+            flat_fraction_from_geometry(0.05, 0.0), 0.95 / 1.05, places=12
+        )
+        # Once the planet's disk crosses the stellar limb there is no flat part.
+        self.assertEqual(flat_fraction_from_geometry(0.06, 0.99), 0.0)
+        # The TOI-3505.01 official geometry sits between the two.
+        ratio = flat_fraction_from_geometry(0.061769367661928656, 0.9159642085456406)
+        self.assertAlmostEqual(ratio, 0.37838, places=5)
 
 
 class TessToolTests(unittest.TestCase):
