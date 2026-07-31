@@ -10,6 +10,9 @@ tmp/pdfs/*.png
 
 # The Discord posting log contains local communication notes.
 /docs/discord-messages.md
+
+# Working notes and running findings, kept local.
+/docs/project-record.md
 /outputs/**/discord_post.txt
 /outputs/**/discord_update.txt
 

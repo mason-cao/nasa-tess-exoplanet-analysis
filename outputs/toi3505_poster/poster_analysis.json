@@ -1,0 +1,257 @@
+{
+  "target": "TOI-3505.01",
+  "catalog": {
+    "tic_id": 390988385,
+    "toi": "3505.01",
+    "tfopwg_disposition": "PC",
+    "epoch_bjd_tdb": 2459793.534385,
+    "epoch_error_days": 0.0020787,
+    "period_days": 2.9151556,
+    "period_error_days": 1.17e-05,
+    "duration_hours": 2.004,
+    "duration_error_hours": 0.21,
+    "depth_ppt": 2.91,
+    "depth_error_ppt": 0.196266,
+    "planet_radius_rearth": 7.4578,
+    "insolation_earth": 504.746,
+    "tess_mag": 10.9372,
+    "sectors_in_toi_row": [
+      14,
+      41,
+      54
+    ]
+  },
+  "star": {
+    "teff_k": 6220.0,
+    "radius_rsun": 1.33515,
+    "distance_pc": 373.477,
+    "tic_contamination_ratio": 0.5471626,
+    "v_mag": 11.24,
+    "assumed_mass_msun": 1.25,
+    "assumed_mass_error_msun": 0.15
+  },
+  "spoc_multisector": {
+    "period_days": 2.915145579641331,
+    "period_error_days": 6.9513185e-06,
+    "duration_hours": 2.7111916374936995,
+    "duration_error_hours": 0.09769286,
+    "depth_ppt": 3.2918889004895218,
+    "depth_error_ppt": 0.118516266,
+    "radius_ratio": 0.061769367661928656,
+    "radius_ratio_error": 0.0015563034,
+    "impact_parameter": 0.9159642085456406,
+    "impact_parameter_error": 0.013228787,
+    "fit_snr": 34.111057,
+    "multiple_event_statistic": 27.673754,
+    "odd_even_difference_sigma": 0.7784450526530438,
+    "weak_secondary_mes": 2.4098403,
+    "weak_secondary_depth_ppt": 0.21794022000000002,
+    "bootstrap_false_alarm_probability": 1.070414881520924e-143,
+    "centroid_offset_arcsec": 2.6222534,
+    "centroid_offset_error_arcsec": 2.646006,
+    "ghost_core_halo_ratio": 6.905730715165484,
+    "observed_transits": 17,
+    "all_machine_checks_pass": true
+  },
+  "companion": {
+    "separation_arcsec": 0.517,
+    "delta_i_mag": 1.7
+  },
+  "ephemeris": {
+    "formal": {
+      "label": "four-sector, formal errors",
+      "events": 25,
+      "epoch_bjd_tdb": 2459793.5331420596,
+      "epoch_error_days": 0.0005601959682388272,
+      "period_days": 2.915150287593939,
+      "period_error_days": 2.4804218259228224e-06,
+      "covariance_days2": -8.577519177279809e-10,
+      "reduced_chi2": 5.28773713255773,
+      "residual_rms_minutes": 11.752270898234023,
+      "error_scale": 1.0
+    },
+    "adopted_error_scaled": {
+      "label": "four-sector, errors scaled",
+      "events": 25,
+      "epoch_bjd_tdb": 2459793.5331420596,
+      "epoch_error_days": 0.0012881751215557701,
+      "period_days": 2.915150287593939,
+      "period_error_days": 5.703749880890801e-06,
+      "covariance_days2": -4.535566665892848e-09,
+      "reduced_chi2": 5.28773713255773,
+      "residual_rms_minutes": 11.752270898234023,
+      "error_scale": 2.299508019676759
+    },
+    "without_sector_14": {
+      "label": "sectors 41, 54, 81, errors scaled",
+      "events": 21,
+      "epoch_bjd_tdb": 2459793.533212834,
+      "epoch_error_days": 0.0013882974485630907,
+      "period_days": 2.915149922651201,
+      "period_error_days": 6.313080816592456e-06,
+      "covariance_days2": -6.1567924801255615e-09,
+      "reduced_chi2": 4.883567435356895,
+      "residual_rms_minutes": 9.176513890352716,
+      "error_scale": 2.2098795069769968
+    },
+    "baseline_days": 1845.30149480002,
+    "baseline_years": 5.052160150034278,
+    "period_difference_from_catalog_seconds": 0.45899188365581267,
+    "period_difference_sigma": 0.4081364511386464,
+    "period_precision_gain": 2.0512820941181795,
+    "forward_propagation": {
+      "2026-08-01": {
+        "cycle": 501,
+        "catalog_uncertainty_minutes": 8.95588786635295,
+        "refined_uncertainty_minutes": 3.309028922812699,
+        "improvement_factor": 2.706500328422751
+      },
+      "2027-08-01": {
+        "cycle": 626,
+        "catalog_uncertainty_minutes": 10.963394330712,
+        "refined_uncertainty_minutes": 4.254627274041134,
+        "improvement_factor": 2.576816633880772
+      },
+      "2030-08-01": {
+        "cycle": 1002,
+        "catalog_uncertainty_minutes": 17.145018878729765,
+        "refined_uncertainty_minutes": 7.233494744483261,
+        "improvement_factor": 2.3702262162844154
+      }
+    }
+  },
+  "transit_geometry": {
+    "assumed_stellar_mass_msun": 1.25,
+    "assumed_stellar_mass_error_msun": 0.15,
+    "a_over_rstar_from_stellar_density": 6.928773863894753,
+    "a_over_rstar_from_stellar_density_range": [
+      6.6397329353125905,
+      7.195523484266717
+    ],
+    "a_over_rstar_from_spoc_duration": 4.515732693433286,
+    "spoc_duration_hours": 2.7111916374936995,
+    "duration_predicted_at_stellar_density_hours": 1.74304060397934,
+    "four_sector_box_duration_hours": 2.058456234934294,
+    "four_sector_box_duration_error_hours": 0.05345675092235993,
+    "toi_catalog_duration_hours": 2.004,
+    "spoc_minus_box_duration_hours": 0.6527354025594057,
+    "spoc_density_deficit_factor": 3.612305594041871,
+    "impact_parameter_at_stellar_density": 0.8511955740971602,
+    "spoc_impact_parameter": 0.9159642085456406,
+    "box_duration_caveat": "A box fit to a V-shaped grazing transit measures something closer to the flat-bottom width than to first-to-fourth contact, so the box and Mandel-Agol durations are not measuring the same quantity. The duration numbers are reported side by side, not differenced as a significance test.",
+    "interpretation": "The official solution is grazing at b = 0.92. Its first-to-fourth-contact duration requires a mean stellar density about 3.6 times lower than the TIC v8 radius and an assumed 1.25 solar-mass star imply, which is the familiar signature of the grazing degeneracy between depth, duration, impact parameter, and a/R*. Holding the stellar density fixed and matching the measured duration instead gives b = 0.85 and a/R* = 6.93. Because the transit is grazing under either solution, the radius ratio is weakly constrained and the formal error understates the true uncertainty on the planet radius."
+  },
+  "derived_parameters": {
+    "observed": {
+      "case": "SPOC multi-sector fit, no dilution correction",
+      "note": "Radius ratio, impact parameter, and duration are the official Mandel-Agol fit; a/R* is inverted from the duration equation.",
+      "radius_ratio": 0.061769367661928656,
+      "radius_ratio_error": 0.0015563034,
+      "planet_radius_rearth": 8.99564728870059,
+      "planet_radius_rearth_error": 0.22664885509641278,
+      "planet_radius_rjup": 0.8025371606134651,
+      "planet_radius_rjup_error": 0.020220237942615262,
+      "impact_parameter": 0.9159642085456406,
+      "a_over_rstar": 4.515732693433286,
+      "inclination_degrees": 78.29700700008644,
+      "semimajor_axis_au": 0.028038526850131383,
+      "implied_stellar_mass_msun": 0.3460393832852204,
+      "stellar_luminosity_lsun": 2.403899843914018,
+      "equilibrium_temperature_k": 2069.718462771835,
+      "insolation_earth": 3057.778236762593
+    },
+    "dilution_scenario": {
+      "case": "screening dilution scenario, not adopted",
+      "note": "Upper bound only. Scales the radius ratio by the screening flux budget for the 0.517-arcsec companion plus catalog contamination.",
+      "radius_ratio": 0.0818553017886816,
+      "radius_ratio_error": 0.0020623763736579205,
+      "planet_radius_rearth": 11.920818546034168,
+      "planet_radius_rearth_error": 0.3003496900845036,
+      "planet_radius_rjup": 1.063503221178931,
+      "planet_radius_rjup_error": 0.026795380002762412,
+      "impact_parameter": 0.9159642085456406,
+      "a_over_rstar": 4.828183232688334,
+      "inclination_degrees": 79.06402374430796,
+      "semimajor_axis_au": 0.029978555950387984,
+      "implied_stellar_mass_msun": 0.42295297232049445,
+      "stellar_luminosity_lsun": 2.403899843914018,
+      "equilibrium_temperature_k": 2001.6286800075122,
+      "insolation_earth": 2674.8223948361674
+    },
+    "density_constrained": {
+      "case": "density-constrained, four-sector duration",
+      "note": "Adopts the TIC v8 stellar radius and a 1.25 solar-mass star, then solves for the impact parameter that reproduces the measured duration.",
+      "radius_ratio": 0.061769367661928656,
+      "radius_ratio_error": 0.0015563034,
+      "planet_radius_rearth": 8.99564728870059,
+      "planet_radius_rearth_error": 0.22664885509641278,
+      "planet_radius_rjup": 0.8025371606134651,
+      "planet_radius_rjup_error": 0.020220237942615262,
+      "impact_parameter": 0.8511955740971602,
+      "a_over_rstar": 6.928773863894751,
+      "inclination_degrees": 82.94342290258892,
+      "semimajor_axis_au": 0.04302128252715445,
+      "implied_stellar_mass_msun": 1.2499999999999998,
+      "stellar_luminosity_lsun": 2.403899843914018,
+      "equilibrium_temperature_k": 1670.8874350260005,
+      "insolation_earth": 1298.8220795168497
+    }
+  },
+  "nearby_star_screen": {
+    "stars_measured": 44,
+    "cleared": 32,
+    "not_cleared_limit_too_shallow": 8,
+    "not_cleared_no_limit": 2,
+    "blended_with_target": 2,
+    "closest_unblended_arcsec": 17.7001883052,
+    "faintest_delta_tmag_cleared": 6.3047,
+    "clearance_criterion": "3 sigma depth limit in the scheduled window is below the eclipse depth the neighbour would need, with full window coverage and no aperture blending with the target."
+  },
+  "depth_consistency": {
+    "combined_depth_ppt": 3.0541691759318157,
+    "combined_depth_error_ppt": 0.13199372395186257,
+    "chi2_about_combined": 4.319220859685147,
+    "dof": 3,
+    "max_absolute_odd_even_sigma": 1.6899850881264693,
+    "max_secondary_snr": 1.6512733180087422
+  },
+  "ground_field": {
+    "source_radius_pixels": 25.0,
+    "source_radius_arcsec": 9.053091291821268,
+    "sky_annulus_pixels": [
+      70.0,
+      139.0
+    ],
+    "pixel_scale_arcsec": 0.3621236516728507,
+    "comparison_stars": 10,
+    "settings_file": "analysis_settings.json"
+  },
+  "ground_light_curve": {
+    "points_plotted": 263,
+    "points_excluded": 18,
+    "window_depth_ppt": -0.6583833665306802,
+    "window_depth_error_ppt": 0.39478212142599517,
+    "injection_snr": 5.7068111616105455
+  },
+  "phase_folded": {
+    "sectors": [
+      {
+        "sector": 14,
+        "points": 81
+      },
+      {
+        "sector": 41,
+        "points": 398
+      },
+      {
+        "sector": 54,
+        "points": 329
+      },
+      {
+        "sector": 81,
+        "points": 882
+      }
+    ],
+    "folded_on": "refined four-sector ephemeris"
+  }
+}

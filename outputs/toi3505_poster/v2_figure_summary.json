@@ -1,0 +1,30 @@
+{
+  "seeing": {
+    "fwhm_pixels": 13.64,
+    "fwhm_arcsec": 4.939366608817684,
+    "source_radius_pixels": 25.0,
+    "background_pixels": [
+      70.0,
+      139.0
+    ]
+  },
+  "comparison_field": {
+    "source": "06_apertures_70-139.png",
+    "crop_box": [
+      165,
+      452,
+      1462,
+      1742
+    ],
+    "size": [
+      1297,
+      1290
+    ]
+  },
+  "dmag_rms": {
+    "stars": 44,
+    "cleared": 32,
+    "not_cleared": 12,
+    "observed_depth_ppt": 2.91
+  }
+}

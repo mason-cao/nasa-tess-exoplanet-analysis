@@ -1,0 +1,472 @@
+<title>Follow-up Observations and an Improved Orbital Period for TOI-3505.01</title>
+
+<style>
+  :root {
+    --mason-green: #14603A;
+    --mason-green-dark: #0D4227;
+    --mason-gold: #FFCC33;
+    --page: #E8EAE8;
+    --panel: #FFFFFF;
+    --ink: #16211B;
+    --muted: #55665B;
+    --rule: #C7D1CA;
+    --wash: #F1F6F2;
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--page); }
+
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: "Source Sans 3", "Source Sans Pro", "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 48 x 36 inch board rendered at 33.3 px per inch. */
+  .poster {
+    width: 1600px;
+    height: 1200px;
+    margin: 0 auto;
+    padding: 12px 13px 13px;
+    background: var(--page);
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  /* ---------------- masthead ---------------- */
+
+  .masthead {
+    display: grid;
+    grid-template-columns: 96px 1fr 210px;
+    gap: 14px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    padding: 5px 12px;
+    flex: 0 0 auto;
+  }
+
+  .masthead img { width: 100%; height: auto; align-self: center; display: block; }
+  .titleblock { display: flex; flex-direction: column; justify-content: center; }
+  .titlebar { background: var(--mason-green); color: #fff; padding: 6px 18px 7px; text-align: center; }
+
+  .titlebar h1 {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.1;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  .authors { text-align: center; padding: 5px 6px 0; }
+  .authors .names { font-size: 15px; font-weight: 600; line-height: 1.22; }
+  .authors .affil { font-size: 11.6px; color: var(--muted); line-height: 1.28; margin-top: 2px; }
+  sup { font-size: 0.66em; vertical-align: super; }
+
+  .program {
+    background: var(--mason-gold);
+    color: #2A2100;
+    font-size: 11.8px;
+    font-weight: 700;
+    line-height: 1.28;
+    text-align: center;
+    padding: 7px 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---------------- columns ---------------- */
+
+  .body {
+    display: grid;
+    grid-template-columns: 322px 1fr 436px;
+    gap: 11px;
+    flex: 1 1 auto;
+    min-height: 0;
+    align-items: start;
+  }
+
+  .col { display: flex; flex-direction: column; gap: 9px; }
+  .col.stretch { align-self: stretch; }
+  .card.grow { flex: 1 1 auto; display: flex; flex-direction: column; }
+  .card.grow .inner { flex: 1 1 auto; display: flex; flex-direction: column;
+                      justify-content: space-evenly; }
+  .card { background: var(--panel); border: 1px solid var(--rule); overflow: hidden; }
+
+  .card > h2 {
+    margin: 0;
+    background: var(--mason-green);
+    color: #fff;
+    font-size: 16.5px;
+    font-weight: 700;
+    text-align: center;
+    padding: 4px 10px 5px;
+    letter-spacing: 0.3px;
+  }
+
+  .card .inner { padding: 7px 10px 6px; }
+
+  p { margin: 0 0 5px; font-size: 10.8px; line-height: 1.31; text-align: justify; }
+  p:last-child { margin-bottom: 0; }
+
+  h3 { margin: 5px 0 2px; font-size: 11.4px; font-weight: 700; color: var(--mason-green-dark); }
+  h3:first-child { margin-top: 0; }
+
+  ul, ol { margin: 0 0 5px; padding-left: 14px; }
+  ul:last-child, ol:last-child { margin-bottom: 0; }
+  li { font-size: 10.8px; line-height: 1.28; margin-bottom: 2px; }
+  li:last-child { margin-bottom: 0; }
+  li b, p b { color: var(--mason-green-dark); }
+
+  /* ---------------- figures ---------------- */
+
+  .figrow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 5px; }
+  .figrow3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; margin-bottom: 7px; }
+  .figrow-wide { grid-template-columns: 1.28fr 1fr; }
+  .figrow:last-child { margin-bottom: 0; }
+  .figfull { margin-bottom: 5px; }
+
+  figure { margin: 0; }
+  figure img { width: 100%; height: auto; display: block; border: 1px solid var(--rule); background: #fff; }
+  figcaption { font-size: 9.9px; line-height: 1.26; margin-top: 2px; text-align: justify; }
+  figcaption b { color: var(--mason-green-dark); }
+
+  /* ---------------- tables ---------------- */
+
+  table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+  td { padding: 1.1px 4px; text-align: left; border-bottom: 1px solid var(--rule); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.sect td { background: var(--wash); font-weight: 700; color: var(--mason-green-dark); font-size: 10.2px; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td .pass { color: var(--mason-green); font-weight: 700; }
+  .compare td { font-size: 10.2px; padding: 1.5px 5px; }
+  .compare tr.sect td { font-size: 9.6px; }
+  .compare td b { color: var(--mason-green-dark); }
+  .footnote { font-size: 9.4px; color: var(--muted); line-height: 1.26; margin-top: 3px; }
+
+  /* ---------------- footer ---------------- */
+
+  .footer { display: grid; grid-template-columns: 1fr 436px; gap: 11px; flex: 0 0 auto; }
+  .footer .card .inner { padding: 5px 10px 6px; }
+  .footer h2 { font-size: 14px; padding: 2px 10px 3px; }
+  .footer li { font-size: 9.6px; line-height: 1.24; margin-bottom: 1.5px; }
+  .footer p { font-size: 9.7px; text-align: left; line-height: 1.3; }
+  .reflist { columns: 3; column-gap: 18px; margin: 0; padding-left: 14px; }
+  .reflist li { break-inside: avoid; }
+
+  /* ---------------- screen and print ---------------- */
+
+  @media screen and (max-width: 1100px) {
+    .poster { width: 100%; height: auto; }
+    .body, .footer { grid-template-columns: 1fr; }
+    .figrow, .figrow3 { grid-template-columns: 1fr; }
+    .masthead { grid-template-columns: 76px 1fr; }
+    .program { grid-column: 1 / -1; }
+    .reflist { columns: 1; }
+  }
+
+  /* The 1600 x 1200 layout is authored at 33.3 px per inch. Print CSS maps
+     1 inch to 96 px, so the board is scaled by 96/33.3 = 2.88 to fill a real
+     48 x 36 inch page exactly. */
+  @media print {
+    @page { size: 48in 36in; margin: 0; }
+    html, body { background: #fff; width: 4608px; height: 3456px; overflow: hidden; }
+    .poster {
+      width: 1600px;
+      height: 1200px;
+      margin: 0;
+      transform: scale(2.88);
+      transform-origin: top left;
+    }
+  }
+</style>
+
+<div class="poster">
+
+  <header class="masthead">
+    <img src="{{logo}}" alt="George Mason University">
+    <div class="titleblock">
+      <div class="titlebar">
+        <h1>Follow-up Observations and an Improved Orbital Period for
+            Exoplanet Candidate <span style="white-space:nowrap">TOI-3505.01</span></h1>
+      </div>
+      <div class="authors">
+        <div class="names">
+          Mason Cao<sup>1</sup>, Annalyse Dickinson<sup>2</sup>, Owen Alfaro<sup>2</sup>,
+          Rianne Eccleston<sup>2</sup>, Kasey Davidson<sup>2</sup>, Peter Plavchan<sup>2</sup>
+        </div>
+        <div class="affil">
+          <sup>1</sup>Lambert High School, Suwanee, Georgia;
+          <sup>2</sup>Mason Space Center, Department of Physics and Astronomy, College of Science, George Mason University
+        </div>
+      </div>
+    </div>
+    <div class="program">
+      Schar Scholars three month internship:<br>NASA Data Science Analysis<br>and Scholarly Research Paper Writing
+    </div>
+  </header>
+
+  <div class="body">
+
+    <!-- ==================== LEFT ==================== -->
+    <div class="col">
+
+      <section class="card">
+        <h2>Abstract</h2>
+        <div class="inner">
+          <p>
+            TOI-3505.01 is a planet candidate found by NASA's TESS mission. It circles a 6220 K star
+            that is 1.34 times the radius of the Sun (TIC 390988385, V = 11.2) every 2.9151 days. On
+            July 22, 2022 we watched the star with the 0.8 m telescope at George Mason University
+            during the hours the transit was supposed to happen. We took 283 images in R band and kept
+            263 good measurements, with a scatter of 2.50 ppt. The star never dimmed
+            (&minus;0.66 &plusmn; 0.39 ppt). To see whether that meant anything, we added fake
+            transits to our data. A fake 2.91 ppt transit came back at 5.7&sigma;, so we would have
+            caught a real one.
+          </p>
+          <p>
+            We saw nothing because the prediction was off. With the period we have now, the closest
+            transit was 17.4 hours before we started. So we went to the TESS archive and timed 25
+            transits in Sectors 14, 41, 54, and 81, covering 5.05 years. Fitting a line through those
+            times gives a period of <b>2.9151503 &plusmn; 0.0000057 days</b>, twice as precise as the
+            TESS catalog value and matching it to within 0.4&sigma;. It also tightens the predicted
+            transit time for 2026 from 9 minutes to 3.
+          </p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Materials and Methods</h2>
+        <div class="inner">
+          <h3>Taking and measuring the images</h3>
+          <ul>
+            <li>Mason 0.8 m telescope, July 22, 2022 UT. R filter, 50 second exposures, 0.362&Prime;
+                per pixel. We got 283 images and 281 of them lined up into one 5.07 hour run.</li>
+            <li>We subtracted darks, divided by flats, and shifted every image so the stars matched,
+                using 25 reference stars, then redid each step in Python to check it. Astrometry.net
+                matched our field to sky coordinates and landed 0.47 px from our measured position.</li>
+            <li>We measured brightness in AstroImageJ with a <b>25 px (9.1&Prime;) aperture</b>, a
+                <b>70&ndash;139 px sky ring</b>, and comparison stars C2&ndash;C11 picked from the Gaia
+                DR3 list. We chose 25 px by trying every radius from 20 to 50 px and keeping the one
+                with the least scatter. Our own Python photometry agrees with AstroImageJ at
+                r = 0.990.</li>
+            <li>We cut 18 measurements for bad image quality and wrote down why for each, leaving
+                <b>263</b>. No detrending passed the test we set up ahead of time, so the light curve
+                is left as measured.</li>
+          </ul>
+
+          <h3>Working with the TESS archive</h3>
+          <ul>
+            <li>We pulled QLP light curves for Sectors 14, 41, 54, and 81, plus the SPOC light curves
+                and the official Data Validation reports.</li>
+            <li>We ran a box least-squares search on each sector by itself, then fit each transit one
+                at a time to get 25 mid-transit times and fit a straight line through them.</li>
+            <li>We used the TESS pixel data to build difference images, find where on the sky the
+                dimming happens, and check how much light nearby stars add. We locked in our cuts
+                before looking at the final numbers.</li>
+          </ul>
+
+          <h3>Checking the neighbours</h3>
+          <ul>
+            <li>We measured every catalog star within 60&Prime; on our own images across the whole
+                night, then worked out how deep each one would have to eclipse to fake our signal
+                once its light spills into our aperture.</li>
+            <li>A star is cleared when our depth limit for that star sits below the depth it would
+                need. 32 of the 44 clear this way.</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ==================== MIDDLE ==================== -->
+    <div class="col stretch">
+
+      <section class="card grow">
+        <h2>Results</h2>
+        <div class="inner">
+
+          <div class="figrow3">
+            <figure>
+              <img src="{{seeing}}" alt="Seeing profile of TOI-3505 with the aperture settings">
+              <figcaption>
+                <b>Fig. 1.</b> Seeing profile of our star on the first image. The star's light flattens
+                into the sky by about 25 px, which is where we set the aperture. FWHM is 13.6 px, or
+                4.94&Prime;.
+              </figcaption>
+            </figure>
+            <figure>
+              <img src="{{compfield}}" alt="Star field with the target and comparison star apertures">
+              <figcaption>
+                <b>Fig. 2.</b> Our field in AstroImageJ. T1 is the target and C2&ndash;C11 are the
+                comparison stars we picked off the Gaia DR3 list, with the counts each one gave.
+              </figcaption>
+            </figure>
+            <figure>
+              <img src="{{neb}}" alt="Catalog stars near TOI-3505 checked for eclipses">
+              <figcaption>
+                <b>Fig. 3.</b> The 44 catalog stars within 60&Prime; that we measured on our own
+                images. Two of them fall inside our aperture, so we cannot separate those from the
+                target.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="figrow figrow-wide">
+            <figure>
+              <img src="{{lightcurve}}" alt="Final light curve of TOI-3505 from the Mason 0.8 m">
+              <figcaption>
+                <b>Fig. 4. Our light curve.</b> 263 measurements at 2.50 ppt scatter. The shaded band
+                is when the transit was scheduled and the red dashed lines are the predicted ingress
+                and egress. Nothing dips there. The traces along the bottom are airmass, sky level,
+                star width, and centroid position, which we checked for trends. None of them earned a
+                detrend under our rules, so the curve is shown as measured.
+              </figcaption>
+            </figure>
+            <figure>
+              <img src="{{dmag}}" alt="dmag against RMS for the nearby stars">
+              <figcaption>
+                <b>Fig. 5.</b> Every neighbour's brightness difference against how deep we can see.
+                The magenta line is the eclipse depth each star would need to fake our signal. Red is
+                the scatter in a single frame, green is the depth limit after using the whole window,
+                and the grey bars connect the same star. Green points below the line are cleared.
+              </figcaption>
+            </figure>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ==================== RIGHT ==================== -->
+    <div class="col">
+
+      <section class="card">
+        <h2>Discussion</h2>
+        <div class="inner">
+          <h3>Why we saw no transit</h3>
+          <p>
+            We picked this night using a 2022 prediction. With the period we have now, the nearest
+            transit was 17.4 hours before we started, so there was nothing to catch. Our run also
+            lands in a gap in TESS Sector 54, so we cannot line the two up. We added fake 2.91 ppt
+            transits and pulled them back at 5.7&sigma;, so the flat curve is a real limit, not noise.
+          </p>
+
+          <h3>What the TESS archive gave us</h3>
+          <p>
+            One night could not fix the prediction, so we used the archive instead. Timing 25 transits
+            across four sectors gives <b>P = 2.9151503 &plusmn; 0.0000057 d</b>. That is 2.05 times
+            more precise than the catalog and agrees with it to 0.4&sigma;. The timing points scatter
+            more than their error bars allow (&chi;&sup2;/dof = 5.3, RMS 11.8 min). That is what we
+            expect from Sector 14, where each image covers 30 minutes, so we widened the error bars
+            instead of claiming the tighter number. Leaving Sector 14 out shifts the period by much
+            less than 1&sigma;.
+          </p>
+
+          <h3>Why the planet's size is uncertain</h3>
+          <p>
+            In the official SPOC fit the planet barely clips the edge of the star (b = 0.92). For
+            that to work the star would have to be 3.6 times less dense than a
+            1.34 R<sub>&#9737;</sub>, 1.25 M<sub>&#9737;</sub> star can be. This close to the edge,
+            depth, length, b, and a/R<sub>&#9733;</sub> all trade off. Keeping the star's density and
+            matching our 2.06 h length gives b = 0.85 and a/R<sub>&#9733;</sub> = 6.93. Either way
+            the planet only grazes the star, so 9.0 R<sub>&#8853;</sub> is much less certain than its
+            error bar looks.
+          </p>
+
+          <h3>What we cannot claim</h3>
+          <p>
+            Another star sits 0.517&Prime; away and adds about 21 percent of the primary's light.
+            Adaptive optics on the Shane 3 m sees it at &Delta;J = 1.53 and &Delta;Ks = 1.59, so it
+            is redder than our target. Neither our telescope nor TESS can split the pair, so if the
+            transit is on that star the depth and radius are bigger than we quote. Our SPOC
+            comparisons use the same TESS data we did, so they check our method rather than add a
+            detection. We are not the first here either: TFOP holds six other ground light curves,
+            imaging, and five spectra, none of it published. Nobody had fit an ephemeris across all
+            four sectors.
+          </p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Checks for False Alarms</h2>
+        <div class="inner">
+          <table>
+            <tbody>
+              <tr><td>Same depth in all four sectors</td><td class="num"><span class="pass">&chi;&sup2; = 4.3 / 3</span></td></tr>
+              <tr><td>Odd and even transits match</td><td class="num"><span class="pass">&le; 1.7&sigma;</span></td></tr>
+              <tr><td>No second dip half an orbit later</td><td class="num"><span class="pass">S/N &le; 1.7</span></td></tr>
+              <tr><td>Dimming centered on our star</td><td class="num"><span class="pass">1.6&ndash;5.1&Prime;</span></td></tr>
+              <tr><td>Compared with one TESS pixel</td><td class="num"><span class="pass">inside 21&Prime;</span></td></tr>
+              <tr><td>Nearby stars ruled out</td><td class="num"><span class="pass">32 of 44</span></td></tr>
+              <tr><td>SPOC odds of a false alarm</td><td class="num"><span class="pass">1 &times; 10<sup>&minus;143</sup></span></td></tr>
+              <tr><td>Star 0.517&Prime; away</td><td class="num">cannot separate</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Conclusions and Future Work</h2>
+        <div class="inner">
+          <ul>
+            <li><b>A better period.</b> Timing 25 transits over 5.05 years gives
+                P = 2.9151503 &plusmn; 0.0000057 d, twice as precise as the catalog value, and the
+                2026 transit time is now good to 3 minutes instead of 9.</li>
+            <li><b>Our night still counts.</b> The 2.50 ppt light curve rules out a transit during the
+                window we watched, and our fake-transit tests show we would have seen one.</li>
+            <li><b>Still a good candidate.</b> Nothing we checked points to a false alarm. The signal
+                looks like a roughly Jupiter-sized planet grazing the edge of its star. What limits us
+                now is that grazing path and the star 0.517&Prime; away, not our photometry.</li>
+            <li><b>Next:</b> watch a transit on the new period, since a 3 minute window makes that
+                worth doing on a 0.8 m telescope.</li>
+            <li><b>Next:</b> fit a real limb-darkened model with MCMC and a density prior to pin down
+                b and the planet's size.</li>
+            <li><b>Next:</b> pull the four-colour photometry and the six Keck velocities other
+                groups already filed and test them against this geometry. A depth that changes with
+                colour would mean a blended eclipsing binary.</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <div class="footer">
+
+    <section class="card">
+      <h2>Major Citations</h2>
+      <div class="inner">
+        <ol class="reflist">
+          <li>Ricker, G. R. et al. 2015, <i>JATIS</i>, <b>1</b>, 014003.</li>
+          <li>Collins, K. A. et al. 2017, <i>AJ</i>, <b>153</b>, 77.</li>
+          <li>Reefe, M. et al. 2022, <i>JATIS</i>, <b>8</b>, 027002.</li>
+          <li>Huang, C. X. et al. 2020, <i>RNAAS</i>, <b>4</b>, 204.</li>
+          <li>Jenkins, J. M. et al. 2016, <i>Proc. SPIE</i>, <b>9913</b>, 99133E.</li>
+          <li>Twicken, J. D. et al. 2018, <i>PASP</i>, <b>130</b>, 064502.</li>
+          <li>Mandel, K. &amp; Agol, E. 2002, <i>ApJ</i>, <b>580</b>, L171.</li>
+          <li>Stassun, K. G. et al. 2019, <i>AJ</i>, <b>158</b>, 138.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Acknowledgements</h2>
+      <div class="inner">
+        <p>
+          This research was made possible through the support of George Mason University's College of
+          Science, which supports the Schar Scholars Program. We used data from NASA's TESS mission,
+          which we got through the Mikulski Archive for Space Telescopes, and data from ESA's Gaia
+          mission.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+</div>
