@@ -127,6 +127,10 @@ def main() -> None:
         "Compare official SPOC reports",
         script("analyze_toi3505_data_validation.py"),
     )
+    run_stage("Refine TESS ephemeris", script("refine_toi3505_ephemeris.py"))
+    run_stage(
+        "Plan upcoming observations", script("plan_toi3505_observations.py")
+    )
 
     plate_arguments = script("plate_solve_toi3505_representative.py")
     if args.plate_solve_representative:
@@ -137,16 +141,20 @@ def main() -> None:
         plate_arguments.append("--run")
     run_stage("Update representative plate-solve plan", plate_arguments)
 
+    manifest_arguments = script("make_toi3505_research_record.py")
+    if args.skip_large_manifest:
+        manifest_arguments.append("--skip-large-derived")
+    run_stage("Refresh research record", manifest_arguments)
+    run_stage(
+        "Check public-product consistency",
+        script("check_toi3505_consistency.py"),
+    )
+
     if not args.skip_tests:
         run_stage(
             "Run tests",
             [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"],
         )
-
-    manifest_arguments = script("make_toi3505_research_record.py")
-    if args.skip_large_manifest:
-        manifest_arguments.append("--skip-large-derived")
-    run_stage("Refresh research record", manifest_arguments)
     print("\nTOI-3505.01 analysis completed successfully.", flush=True)
 
 

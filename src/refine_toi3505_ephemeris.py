@@ -16,14 +16,16 @@ QLP and SPOC measure the *same photons* for Sectors 54 and 81, so their event
 times are not independent and must never both enter one fit.  Choosing the
 better-sampled pipeline per sector keeps every transit represented exactly once.
 
-Everything else matches the frozen pipeline: the same exposure-integrated box
-model, the same local linear baseline, the same acceptance rules, and the same
-square-root-of-reduced-chi-square error inflation.  Three fits are reported so
-the effect of the pipeline swap is auditable:
+Everything else matches the frozen pipeline except the event shape: the same
+local linear baseline, the same core acceptance rules, and the same
+square-root-of-reduced-chi-square error inflation are retained, while an
+exposure-integrated trapezoid represents the near-grazing transit. Four fits
+are reported so the pipeline and shape choices remain auditable:
 
 1. ``qlp_only`` reproduces the frozen four-sector result.
 2. ``best_per_sector`` is the adopted fit.
 3. ``spoc_only`` uses Sectors 54 and 81 alone, as a consistency check.
+4. ``box_shape_control`` repeats the adopted pipeline choice with a box.
 """
 
 from __future__ import annotations

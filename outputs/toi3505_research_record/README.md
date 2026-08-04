@@ -2,11 +2,13 @@
 
 This folder freezes the reproducibility record for the current analysis.
 
-- `723` files are listed with size, modification time, and SHA-256.
+- `741` files are listed with size, modification time, and SHA-256.
 - The six original archives are included.
 - Reduced and aligned images are included.
 - Software and system versions are in `software_versions.json`.
 - Ground and TESS choices are in `frozen_analysis_config.json`.
+- The adopted refined ephemeris and observation-planning limits are frozen in
+  that configuration from their canonical JSON outputs.
 - Claims, decisions, and shared-data dependencies have separate CSV ledgers.
 
 Regenerate the full record with:

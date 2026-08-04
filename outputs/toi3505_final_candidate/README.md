@@ -57,9 +57,9 @@ calculation or fixed-window result.
 
 No correction was applied. Checks against airmass, sky level, star width, image position, and comparison-star counts did not improve the light curve consistently.
 
-## Files to attach to the Discord post
+## Mentor review package
 
-The current three-image package is collected in `../toi3505_discord_post/`:
+The current three-image package is collected in `../toi3505_review_package/`:
 
 - `01_TOI_3505.01_final_light_curve.png`
 - `02_TOI_3505.01_data_set_fit_settings.png`

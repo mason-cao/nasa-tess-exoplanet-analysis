@@ -8,13 +8,11 @@ tmp/
 # Rendered lecture pages are temporary review files.
 tmp/pdfs/*.png
 
-# The Discord posting log contains local communication notes.
-/docs/discord-messages.md
+# Private communication notes stay local.
+/docs/*-messages.md
 
 # Working notes and running findings, kept local.
 /docs/project-record.md
-/outputs/**/discord_post.txt
-/outputs/**/discord_update.txt
 
 # Reproducible TOI-3505 calibration products are too large for normal Git.
 # Keep the generated README and compact QA artifacts, but not the FITS images.

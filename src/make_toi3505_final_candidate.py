@@ -37,7 +37,6 @@ import pandas as pd
 from analyze_toi3505_photometry import (
     COMPARISON_STARS,
     DEFAULT_WIDE_TABLE,
-    TARGET_EPOCH_BJD_TDB,
     TARGET_PERIOD_DAYS,
     clipped_standard_deviation,
     closest_predicted_midpoint,
@@ -57,7 +56,7 @@ from toi3505_schedule import (
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "toi3505_final_candidate"
-DEFAULT_DISCORD_POST_DIR = ROOT / "outputs" / "toi3505_discord_post"
+DEFAULT_REVIEW_PACKAGE_DIR = ROOT / "outputs" / "toi3505_review_package"
 DEFAULT_FINAL_TABLE = (
     ROOT
     / "outputs"
@@ -834,9 +833,9 @@ calculation or fixed-window result.
 
 {detrending_text}
 
-## Files to attach to the Discord post
+## Mentor review package
 
-The current three-image package is collected in `../toi3505_discord_post/`:
+The current three-image package is collected in `../toi3505_review_package/`:
 
 - `01_TOI_3505.01_final_light_curve.png`
 - `02_TOI_3505.01_data_set_fit_settings.png`
@@ -1309,14 +1308,14 @@ def main() -> None:
             output_dir / "TOI_3505.01_2022-07-22_R.apertures",
         )
 
-    post_dir = DEFAULT_DISCORD_POST_DIR
-    post_dir.mkdir(parents=True, exist_ok=True)
-    post_files = {
+    review_dir = DEFAULT_REVIEW_PACKAGE_DIR
+    review_dir.mkdir(parents=True, exist_ok=True)
+    review_files = {
         output_dir / "TOI_3505.01_2022-07-22_R_light_curve.png": (
-            post_dir / "01_TOI_3505.01_final_light_curve.png"
+            review_dir / "01_TOI_3505.01_final_light_curve.png"
         ),
     }
-    for source, destination in post_files.items():
+    for source, destination in review_files.items():
         shutil.copyfile(source, destination)
 
     print(f"Wrote light-curve files to {output_dir}")

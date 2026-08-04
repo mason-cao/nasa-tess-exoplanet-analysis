@@ -782,7 +782,7 @@ def figure_phase_folded(path: Path, refined: "Ephemeris") -> dict:
 def figure_ground_light_curve(path: Path) -> dict:
     """Poster version of the final ground light curve.
 
-    The AstroImageJ deliverable in ``outputs/toi3505_discord_post`` carries the
+    The AstroImageJ deliverable in ``outputs/toi3505_review_package`` carries the
     full diagnostic stack and a y-range set by those traces. For the poster the
     same adopted measurements are replotted on a flux range matched to the data,
     with the scheduled window and the injected-signal comparison shown directly.

@@ -1,6 +1,7 @@
 product,depends_on,shared_data_warning
 ground final light curve,original archives; calibration masters; reduced and aligned images; 25-pixel AstroImageJ table; 2022 observing-schedule row,Photutils and AstroImageJ extractions use the same ground images; the schedule time zone is a documented assumption.
 four-sector TESS measurements,MAST QLP light curves; catalog ephemeris,SPOC and TESS-SPOC checks reuse the same TESS observations.
+adopted refined ephemeris,MAST QLP light curves for Sectors 14 and 41; MAST SPOC two-minute light curves for Sectors 54 and 81; SPOC transit geometry,Only one pipeline represents each transit; pipeline-control fits reuse the same TESS observations and are not independent detections.
 TESS custom-aperture depths and difference images,MAST TESScut cubes; TESS box timing results,Aperture variants are not independent observations.
 official SPOC report comparison,"MAST DVR, DVM, and DVS PDFs; DVR XML; DVT FITS; DR122 target table; Exo.MAST combined TCE table; project QLP and SPOC measurements",The official and project results reuse the same Sector 54 and 81 TESS observations.
 dilution screen,TIC v8; Delta-I companion measurement stated in project context; catalog depth,Delta I is only a proxy for TESS-band contrast.

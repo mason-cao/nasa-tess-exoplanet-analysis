@@ -13,7 +13,6 @@ import argparse
 import hashlib
 import importlib.metadata
 import json
-import os
 import platform
 import plistlib
 import subprocess
@@ -141,6 +140,8 @@ def manifest_paths(include_large_derived: bool) -> list[tuple[str, Path]]:
         "toi3505_tess_analysis",
         "toi3505_tess_pixels",
         "toi3505_data_validation",
+        "toi3505_ephemeris_refined",
+        "toi3505_observation_plan",
         "toi3505_representative_plate_solve",
     )
     evidence: list[Path] = []
@@ -151,7 +152,8 @@ def manifest_paths(include_large_derived: bool) -> list[tuple[str, Path]]:
         evidence.extend(
             path
             for path in directory.iterdir()
-            if path.is_file() and path.suffix.lower() in {".csv", ".json", ".md"}
+            if path.is_file()
+            and path.suffix.lower() in {".csv", ".json", ".md", ".ics"}
         )
     add_group(groups, "scientific_output", evidence)
     add_group(groups, "analysis_code", list((ROOT / "src").glob("*.py")))
@@ -270,6 +272,17 @@ def frozen_config() -> dict[str, object]:
         / "historical_schedule_check.json"
     )
     schedule = json.loads(schedule_path.read_text(encoding="utf-8"))
+    refined_path = (
+        ROOT
+        / "outputs"
+        / "toi3505_ephemeris_refined"
+        / "ephemeris_refined.json"
+    )
+    refined = json.loads(refined_path.read_text(encoding="utf-8"))
+    plan_path = (
+        ROOT / "outputs" / "toi3505_observation_plan" / "observation_plan.json"
+    )
+    plan = json.loads(plan_path.read_text(encoding="utf-8")) if plan_path.exists() else None
     return {
         "target": {"name": "TOI-3505.01", "tic_id": 390988385},
         "ground": ground_protocol,
@@ -282,11 +295,18 @@ def frozen_config() -> dict[str, object]:
         },
         "tess": {
             "sectors": [14, 41, 54, 81],
-            "primary_pipeline": "QLP",
             "quality_rule": "finite flux and uncertainty with QUALITY equal to zero",
-            "period_days": 2.9151556,
-            "epoch_bjd_tdb": 2459793.534385,
-            "depth_model": "exposure-integrated box with a local straight baseline per event",
+            "sector_comparison": {
+                "pipeline": "QLP in all four sectors",
+                "period_days": 2.9151556,
+                "epoch_bjd_tdb": 2459793.534385,
+                "depth_model": "exposure-integrated box with a local straight baseline per event",
+            },
+            "adopted_ephemeris": refined["ephemeris"]["adopted"],
+            "adopted_pipeline_choice": refined["pipeline_choice"],
+            "adopted_transit_shape": refined["transit_shape"],
+            "ephemeris_comparisons": refined["comparisons"],
+            "forward_propagation": refined["forward_propagation"],
             "physical_transit_model": False,
             "reference_tesscut_aperture_radius_pixels": 3.0,
             "tesscut_background_annulus_pixels": [4.0, 7.0],
@@ -299,18 +319,49 @@ def frozen_config() -> dict[str, object]:
             },
             "official_spoc_report_role": "same-observation method comparison",
         },
+        "observation_planning": (
+            {
+                "date_range": plan["date_range"],
+                "duration_hours": plan["duration_hours"],
+                "planning_limits": plan["planning_limits"],
+                "observable_event_count": plan["observable_event_count"],
+                "approval_status": plan["approval_status"],
+            }
+            if plan is not None
+            else None
+        ),
         "claim_limits": [
             "The GMU night is off transit under the current ephemeris, but the recovered 2022 schedule placed an event inside it.",
             "The schedule row has no explicit time zone, epoch, uncertainty, depth, or prediction source.",
             "The GMU window falls in a Sector 54 data gap.",
             "TESS-scale localization cannot separate the 0.517-arcsecond companion.",
             "The dilution screen is not a final correction.",
-            "The box model is not a physical planet fit.",
+            "The trapezoidal timing model is not a physical limb-darkened planet fit; first-pass sector measurements retain their box model.",
         ],
     }
 
 
 def claim_evidence_rows() -> list[dict[str, str]]:
+    refined = json.loads(
+        (
+            ROOT
+            / "outputs"
+            / "toi3505_ephemeris_refined"
+            / "ephemeris_refined.json"
+        ).read_text(encoding="utf-8")
+    )
+    ground = json.loads(
+        (
+            ROOT / "outputs" / "toi3505_ground_checks" / "summary.json"
+        ).read_text(encoding="utf-8")
+    )
+    adopted = refined["ephemeris"]["adopted"]
+    comparisons = refined["comparisons"]
+    nearby = ground["nearby_star_screen"]
+    period_text = (
+        f"{float(adopted['period_days']):.7f} +/- "
+        f"{float(adopted['period_error_days']):.7f} days"
+    )
     return [
         {
             "claim": "The measured ground target is TOI-3505.01.",
@@ -325,7 +376,7 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "limit": "Mentor review remains requested.",
         },
         {
-            "claim": "No detrending correction was justified for the posted ground curve.",
+            "claim": "No detrending correction was justified for the mentor-review ground curve.",
             "evidence": "outputs/toi3505_final_candidate/model_selection.csv",
             "status": "supported",
             "limit": "Applies to the tested variables and blocked checks only.",
@@ -343,8 +394,8 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "limit": "This is a straight-baseline exposure-integrated box check, not a physical transit fit, and the schedule timezone is unconfirmed.",
         },
         {
-            "claim": "The GMU sequence does not cover a predicted transit under the current catalog ephemeris.",
-            "evidence": "outputs/toi3505_final_candidate/summary.json; outputs/toi3505_tess_analysis/ephemeris_checks.json",
+            "claim": "The GMU sequence does not cover a predicted transit under the adopted refined ephemeris.",
+            "evidence": "outputs/toi3505_final_candidate/summary.json; outputs/toi3505_ephemeris_refined/ephemeris_refined.json",
             "status": "supported",
             "limit": "This does not erase the conflicting historical schedule window; the schedule's full ephemeris is still unavailable.",
         },
@@ -353,6 +404,22 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "evidence": "outputs/toi3505_tess_analysis/sector_measurements.csv; outputs/toi3505_tess_analysis/period_search.csv",
             "status": "supported",
             "limit": "All products are measurements of the same star system, not four independent instruments.",
+        },
+        {
+            "claim": (
+                f"The adopted linear ephemeris uses {int(adopted['events'])} "
+                f"accepted mid-transit times over {float(refined['baseline_years']):.2f} "
+                f"years and gives P = {period_text}."
+            ),
+            "evidence": "outputs/toi3505_ephemeris_refined/ephemeris_refined.json; outputs/toi3505_ephemeris_refined/event_times_best_per_sector.csv",
+            "status": "supported",
+            "limit": (
+                "The timing fit uses one light curve per sector and an "
+                "exposure-integrated trapezoid, not a physical limb-darkened model. "
+                f"Its precision gains are {float(comparisons['precision_gain_over_catalog']):.2f} "
+                f"over the TOI catalog and {float(comparisons['precision_gain_over_spoc']):.2f} "
+                "over the SPOC multi-sector fit."
+            ),
         },
         {
             "claim": "The two per-sector and one combined SPOC reports recover the same signal without a strong odd/even, secondary-event, or centroid warning in Sectors 54 and 81.",
@@ -379,8 +446,15 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "limit": "QLP crowding treatment and band-dependent companion contrast remain unresolved.",
         },
         {
-            "claim": "The preliminary ground screen conditionally clears 32 of 44 bright-enough catalog candidates in the historical window; two target-aperture overlaps and ten incomplete or noisy cases remain.",
-            "evidence": "outputs/toi3505_ground_checks/nearby_star_image_measurements.csv",
+            "claim": (
+                "The preliminary ground screen conditionally clears "
+                f"{int(nearby['sources_cleared_by_conditional_screen'])} of "
+                f"{int(nearby['bright_enough_catalog_candidates'])} bright-enough "
+                "catalog candidates in the historical window; "
+                f"{int(nearby['source_apertures_overlapping_target'])} source "
+                "apertures overlap the target aperture."
+            ),
+            "evidence": "outputs/toi3505_ground_checks/nearby_star_image_measurements.csv; outputs/toi3505_ground_checks/summary.json",
             "status": "conditional screening result",
             "limit": "It assumes Eastern local time, is not the formal program NEB procedure, and cannot resolve the 0.517-arcsecond companion.",
         },
@@ -431,6 +505,12 @@ def decision_rows() -> list[dict[str, str]]:
             "reason": "The sheet's planned 21:10-04:55 range brackets the actual image sequence only under the Eastern civil-time interpretation.",
             "alternative": "Obtain the original workbook or Transit Info file and replace the assumption if its metadata says otherwise.",
         },
+        {
+            "date": "2026-07-31",
+            "decision": "Adopt the 27-event mixed-pipeline trapezoidal ephemeris for timing and poster claims.",
+            "reason": "QLP is the only pipeline available for Sectors 14 and 41, while SPOC two-minute data improve timing in Sectors 54 and 81; the trapezoid represents the near-grazing shape without counting any event twice.",
+            "alternative": "Retain the QLP-only and box-shape fits as explicit controls in the same output record.",
+        },
     ]
 
 
@@ -445,6 +525,11 @@ def dependence_rows() -> list[dict[str, str]]:
             "product": "four-sector TESS measurements",
             "depends_on": "MAST QLP light curves; catalog ephemeris",
             "shared_data_warning": "SPOC and TESS-SPOC checks reuse the same TESS observations.",
+        },
+        {
+            "product": "adopted refined ephemeris",
+            "depends_on": "MAST QLP light curves for Sectors 14 and 41; MAST SPOC two-minute light curves for Sectors 54 and 81; SPOC transit geometry",
+            "shared_data_warning": "Only one pipeline represents each transit; pipeline-control fits reuse the same TESS observations and are not independent detections.",
         },
         {
             "product": "TESS custom-aperture depths and difference images",
@@ -519,6 +604,8 @@ This folder freezes the reproducibility record for the current analysis.
 - Reduced and aligned images are {'included' if include_large else 'not included in this refresh'}.
 - Software and system versions are in `software_versions.json`.
 - Ground and TESS choices are in `frozen_analysis_config.json`.
+- The adopted refined ephemeris and observation-planning limits are frozen in
+  that configuration from their canonical JSON outputs.
 - Claims, decisions, and shared-data dependencies have separate CSV ledgers.
 
 Regenerate the full record with:

@@ -465,7 +465,7 @@ def write_target_plot_config(
         ".plot.xMax": f"{observation_end_bjd:.9f}",
         # Keep both rel_flux_T1 data-set entries internally consistent. Data set
         # 0 is the visible raw series; data set 1 is the disabled fit-settings
-        # entry used for review and the Discord settings screenshot.
+        # entry used for review and the mentor-package settings screenshot.
         ".plot.orbitalPeriod0": f"{orbital_period_days:.7f}",
         ".plot.teff0": f"{target_teff_k:.1f}",
         # AIJ stores this field as transit depth = (Rp/R*)^2, not Rp/R*.

@@ -82,7 +82,7 @@ VARIANTS = {
             "seeing": (OUT / "v2_01_seeing_profile.png", 1672),
             "compfield": (OUT / "v2_02_comparison_field.png", 1297),
             "neb": (OUT / "v2_04_neb_field.png", 1629),
-            "lightcurve": (ROOT / "outputs" / "toi3505_discord_post" / "01_TOI_3505.01_final_light_curve.png", 2023),
+            "lightcurve": (ROOT / "outputs" / "toi3505_review_package" / "01_TOI_3505.01_final_light_curve.png", 2023),
             "dmag": (OUT / "v2_03_dmag_rms.png", 1716),
         },
     },

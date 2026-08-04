@@ -44,7 +44,7 @@ v2:
 | `v2_01_seeing_profile.png` | Fig. 1, seeing profile at the adopted 25 px aperture |
 | `v2_02_comparison_field.png` | Fig. 2, AstroImageJ frame with T1 and C2-C11 |
 | `v2_04_neb_field.png` | Fig. 3, the 2.5 arcminute nearby-star screen on our own image |
-| `../toi3505_discord_post/01_TOI_3505.01_final_light_curve.png` | Fig. 4, the finished light curve |
+| `../toi3505_review_package/01_TOI_3505.01_final_light_curve.png` | Fig. 4, the finished light curve |
 | `v2_03_dmag_rms.png` | Fig. 5, delta magnitude against depth reached |
 
 Three v2 figures are regenerated rather than reused. The saved AstroImageJ

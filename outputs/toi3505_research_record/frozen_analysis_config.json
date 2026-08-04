@@ -188,11 +188,94 @@
       54,
       81
     ],
-    "primary_pipeline": "QLP",
     "quality_rule": "finite flux and uncertainty with QUALITY equal to zero",
-    "period_days": 2.9151556,
-    "epoch_bjd_tdb": 2459793.534385,
-    "depth_model": "exposure-integrated box with a local straight baseline per event",
+    "sector_comparison": {
+      "pipeline": "QLP in all four sectors",
+      "period_days": 2.9151556,
+      "epoch_bjd_tdb": 2459793.534385,
+      "depth_model": "exposure-integrated box with a local straight baseline per event"
+    },
+    "adopted_ephemeris": {
+      "label": "best pipeline per sector, trapezoid",
+      "events": 27,
+      "sectors": [
+        14,
+        41,
+        54,
+        81
+      ],
+      "epoch_bjd_tdb": 2459793.531145653,
+      "epoch_error_days": 0.0008800241369065363,
+      "period_days": 2.9151515671005948,
+      "period_error_days": 4.8719792289628144e-06,
+      "covariance_days2": -1.4023055348649236e-09,
+      "reduced_chi2": 1.3010946722009904,
+      "residual_rms_minutes": 8.509649207070096,
+      "error_scale": 1.1406553696016122
+    },
+    "adopted_pipeline_choice": {
+      "14": {
+        "pipeline": "QLP",
+        "cadence_minutes": 29.999999999999993,
+        "file": "hlsp_qlp_tess_ffi_s0014-0000000390988385_tess_v01_llc.fits",
+        "crowdsap": null
+      },
+      "41": {
+        "pipeline": "QLP",
+        "cadence_minutes": 10.0,
+        "file": "hlsp_qlp_tess_ffi_s0041-0000000390988385_tess_v01_llc.fits",
+        "crowdsap": null
+      },
+      "54": {
+        "pipeline": "SPOC",
+        "cadence_minutes": 2.0,
+        "file": "tess2022190063128-s0054-0000000390988385-0227-s_lc.fits",
+        "crowdsap": 0.79649907
+      },
+      "81": {
+        "pipeline": "SPOC",
+        "cadence_minutes": 2.000000000000016,
+        "file": "tess2024196212429-s0081-0000000390988385-0276-s_lc.fits",
+        "crowdsap": 0.79754138
+      }
+    },
+    "adopted_transit_shape": {
+      "model": "exposure-integrated symmetric trapezoid",
+      "flat_fraction_t23_over_t14": 0.3783838402533266,
+      "from": "SPOC multi-sector radius ratio and impact parameter",
+      "note": "The event is close to grazing, so ingress and egress take up most of it. A box has infinitely sharp edges and reports mid-transit times that look more precise than the data allow."
+    },
+    "ephemeris_comparisons": {
+      "catalog_period_days": 2.9151556,
+      "catalog_period_error_days": 1.17e-05,
+      "spoc_period_days": 2.915145579641331,
+      "spoc_period_error_days": 6.9513185e-06,
+      "precision_gain_over_catalog": 2.4014880708945037,
+      "precision_gain_over_spoc": 1.4267955944220747,
+      "sigma_from_catalog": 0.31820662809373323,
+      "sigma_from_spoc": 0.7053496442135423,
+      "sigma_adopted_from_qlp_only": 0.679712857841184
+    },
+    "forward_propagation": {
+      "2026-08-01": {
+        "cycle": 501.0,
+        "catalog_uncertainty_minutes": 8.95588786635295,
+        "refined_uncertainty_minutes": 3.3236053679602535,
+        "improvement_factor": 2.6946303411013304
+      },
+      "2027-08-01": {
+        "cycle": 626.0,
+        "catalog_uncertainty_minutes": 10.963394330711997,
+        "refined_uncertainty_minutes": 4.153693879661394,
+        "improvement_factor": 2.639432430106218
+      },
+      "2030-08-01": {
+        "cycle": 1002.0,
+        "catalog_uncertainty_minutes": 17.145018878729765,
+        "refined_uncertainty_minutes": 6.722725011169569,
+        "improvement_factor": 2.5503079257658055
+      }
+    },
     "physical_transit_model": false,
     "reference_tesscut_aperture_radius_pixels": 3.0,
     "tesscut_background_annulus_pixels": [
@@ -214,12 +297,26 @@
     },
     "official_spoc_report_role": "same-observation method comparison"
   },
+  "observation_planning": {
+    "date_range": {
+      "start_local": "2026-08-04",
+      "end_local_exclusive": "2026-11-02"
+    },
+    "duration_hours": 2.7111916374936995,
+    "planning_limits": {
+      "baseline_hours": 1.0,
+      "min_target_altitude_deg": 25.0,
+      "max_sun_altitude_deg": -18.0
+    },
+    "observable_event_count": 1,
+    "approval_status": "planning output; mentor confirmation required"
+  },
   "claim_limits": [
     "The GMU night is off transit under the current ephemeris, but the recovered 2022 schedule placed an event inside it.",
     "The schedule row has no explicit time zone, epoch, uncertainty, depth, or prediction source.",
     "The GMU window falls in a Sector 54 data gap.",
     "TESS-scale localization cannot separate the 0.517-arcsecond companion.",
     "The dilution screen is not a final correction.",
-    "The box model is not a physical planet fit."
+    "The trapezoidal timing model is not a physical limb-darkened planet fit; first-pass sector measurements retain their box model."
   ]
 }
