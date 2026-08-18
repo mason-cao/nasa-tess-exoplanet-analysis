@@ -1,0 +1,461 @@
+{
+  "transcript": " But just like we started with the NASA test mission data, we go to the Mikulski Archive for Space Telescopes. And instead of going to the test page, which we did before, and then there's tools, access, test data, go to the webpage instead. It's that easy. Oh, there was Hubble there too, if you're curious. You want to explore the archive of Hubble Space Telescope data. But here it is, nice artist picture. That's not useful. But the different types of observing modes for each of the cameras and instruments that... And so for exoplanets, we do single object and time series spectroscopy. So all four JWST instruments have this mode. But primarily for exoplanets spectroscopy, you'll mostly see data from Mirrors and NERSPEC. And so one of the first places you'll go to is how to understand James Webb Space Telescope data, which has a science data overview, the four stages of science data products. So before I scare everybody, before I get too deep into this, I have you start working with the test data because it is simple. And I have you work with our campus telescope data. because it's the next level up in simple. It's the next more complex data set that you would work with. Do not attempt to dive into the web data until you've worked with some of this earlier data sets with the campus telescope and the test mission, because the web data is another level up in complexity. probably several levels up in complexity. And so you can see here, it describes the data analysis pipeline. And so it's really not, you know, what the hell is flux calibration? You know, you're not going to learn that until you see my videos this upcoming week. But there's the different stages, data formats, and guess what? They're FITS files. So if you watch this second video, I started talking about FITS files. In the third video, I go into more detail about what FITS files are, but most of you have not seen that yet. Well, the test mission and the James Webb Space Telescope, their data comes in FITS files. Data produced is primarily stored in FITS files, but they also include some advanced scientific data format files and JSON files and enhanced characters separated. uh value files so so there's lots of data formats i mentioned that in the videos and yes fitz files are like half a century old file format this is more of the future uh json is pretty wide wide uh widely adopted standard and in computer science fields and csv files are pretty common as well but in any event um there you go there's some more details about that so this tells you about the science data overview. And then you go back here, conventions and data products. That's actually where we just were. And then documentation on how these data products were made. This is the same thing, same page. No, different page. But in any event, you can work with various levels of data products. from raw to stage three, depending on what level you trust and the science you're trying to do. But once you have the data products, you then need tools to analyze them. And look what it is. So this is the website for James Webb Space Telescope, the Space Telescope Science Institute. Guess what? It's Python, AstroPy, Specutils and Photutils, two common... Python libraries, astronomy. And then this is the custom one for James web data. The JDAviz, I don't know what they call it, JDAviz tool. And then I'll show you a few more things here in a minute. We'll come back to that in a little bit, but let's go back here for a second and talk about how to access the data before we... Before we go ahead and work with the data, we just search on an object name. So here's a search, my favorite star system, AMIC. I'll do a search around it in arc seconds. And there's eight results. Here it is. Now I've already gone and downloaded these data. Now this is not a light curve. It's of the transient planet. It's actually imaging data. And so I went ahead and downloaded it, and I'm going to switch my screen share here, share desktop. I've gone ahead and extracted this data, and I can load it. There it is. So here's a raw, I actually don't know what stage it is, but in Astro Image, same tool we're using for our campus telescope data, I can look at and interrogate and investigate a data set of observations AUMIC with the James Webb Space Telescope. Very bright stars, very saturated. We see what are called speckles or diffraction spikes from the data. And this is the level 0, 1, 2, or 3 data set. I can look and you'll see this in the third asynchronous video when we dive into information about FIS files. We can look at the header information and it'll talk about how it was processed. It should have some more, but actually this looks pretty raw. Very simple header here. This looks like a minimally processed data set. There's flat fields. Where did it go? So you don't know what flat fields are yet, but you will soon. There's a flat field for the image, which kind of shows the responsivity of the detector. uh so what do you do with this and how do you produce a final data product well i happen to have excuse me pull it up here i had i should say let me bring it back up again i have the processed image of this data set you still see my give me a thumbs up if you still see my desktop i think you do i don't see the participant list hold on participants yeah good okay good um did my t-shirt disappear here for a second michael i'm not sure what you mean by that question oh no sorry i was just doing like a because i know for immature photography you have to like it's not fields i just don't know how to do that for space sorry lab-based flats oh okay got it got you or launch um but yeah no great question um it shows you're already familiar with that um so good um oh who's already familiar with exo fast Evan Paps. Okay. Well, Evan, yes. Basically, ExoFast is the step after Astro Image is done. When you have a detrended light curve of your candidate, you then feed it into ExoFast to produce the MCMC analysis of the light curve model parameters and their uncertainties. But that's getting a little bit ahead of us here. But that's the short answer to that question. So how do you go from this raw image on the left of the star with all the bad? You can see the bad pixels there. There's plenty. Bad pixels. I'll zoom in on some of them there. Those are just bad pixels. How do you go from this raw image? It's not even totally raw. I mean, there's already been some processing applied here. How do you go from this raw image where you can't even actually see the disk? I think this is the disk sticking out here, but it's hard to see what's going on. How do you go from that to this image processed image on the right? Well, in this particular case, you have to subtract off the image of the star using something called point spread function, subtracting and using some pretty advanced software algorithms, completely hidden. And we're not going to get into this for direct imaging. But the star system has a disk. I didn't discover the disk, but it has a disk around it. It's been known since the 1980s. Here it is. So this is the final product on the right that was published from a sequence of images here on the left. This is actually a data cube. There's multiple epics of data here collected over time. And I don't think they're rotating anything here. Let me double check. Let me throw up the contrast very high. Oh, wow. You can actually see some cosmic rays there. That was fun. Let's do that again. Go one by one. So what I'm doing right now is I'm changing that one. There was some pretty gnarly data there. I don't know what's going on with that data. So it almost looks like an Apple logo. It's not. But this is a specialized near infrared sensor. So it's something went very bad with that exposure. My God. I wonder what happened. But there's a sequence of exposures. There's some cosmic rays. That's a cosmic ray right there. But you can kind of see there's a little bit of an asymmetry in this image. And it is the disk. So most of the light from the star is being blocked out. And what I'm doing here is I'm getting a little bit ahead of the lectures here let me look at the time um each pixel records a processed number of photo electrons that it's counted so these images are being combined and you'll notice that if i and what i'm changing down here is how i map the numerical values in each pixel into a grayscale intensity on the screen. And I think my video will cover some of this. This is the actual leftover light from the star after the starlight has been mostly, but not completely blocked. We call these speckles. These need to be modeled and subtracted out. If I just play it like this, you can see they're pretty stable. They didn't change very much. But in any event, there is the faintest hint. of the disk showing through, it should be roughly this direction with my mouse, but it's buried in the speckle noise. So they use a reference star that doesn't have a disk to observe these speckles and then do the subtraction. And they combine all these images to get to this final data product shown here on the right. But part of this internship is learning about how you go from the left to the right. Long story short. And we had a direct message question there. Do they also stack thousands of images to create one finalized image? Yes, not thousands. It depends on the exposure times. AUMIC is very bright. So the exposure times are very short. So they do collect a lot of images. But for faint targets, you'll have very long exposure times. So part of this course is learning how to process data like this to turn it into something like on the right. But getting back to this tutorial here, you could search on data. I searched on one more data set and I loaded it. Actually, just downloaded just now. And let me bring it over. I haven't looked at it yet. I searched on something. What did I search on? I think it was K2 18B. Was it that one? I don't remember. No, I don't remember. But it's a huge data set. And this is the transmission spectroscopic data set. And it's like 11 gigabytes. You can see it. I mean, this is an M3 MacBook Pro. Got plenty of CPU power on here and cores. It's still extracting the data here. Pop it out there. Oh, but it's playing on iCloud. What target is this? I don't remember now. But let me try taking a look at one of these. It should be spectroscopy. Keep it in doc. Look, there's some JSON files, CSV files. This is a data archive. So you can see this is already far more complicated than a test data set. But let me see on Cal. I don't know if I want on Cal. Let's look at on Cal, see what it looks like. Oh, it doesn't like me because it's a 1.49 gigabyte file. Oops. It might struggle to load that. I might have just broken it. All right. Did I break Astro Image J? I'm a little bit worried I did. So let me just restart it. Dark, flat, gain, saturation, spec profile. Yeah, I'm not upgrading that. Sorry, I'm looking off screen right now on my other monitor because my main monitor is enormous. I didn't want to share that whole screen. Segment two and segment one. Let's take a look. Yeah, these are all really big files. I don't think this is all that useful, but let's take a look. Oh, there it is. Yeah. Okay. So here's the raw data. So this is a spectrum, but this is just one spectrum. It's like there's two pieces of it. One there that's fainter, one there that's brighter. So the light is dispersed horizontally here in a curved. So this is just one time epic. And these files are so big because I suspect it is many epics in time. Let's see if I can get that one to load. Yeah, there we go. So this is what the raw data looks like. So this is the raw data. Getting back to this. This is the raw data of the web space telescope. uh images of i think just go back to the search page and figure out what i was searching for does it show me my search history no what did i search on it wasn't aiming because they don't have transit spectra of it yet oh trapeze 1b that's what this was let me rename the data set so i remember what it was uh so this is a transit of the b planet the system famous transiting planet and here's the data as a function of time. And you can't really see the spectrum changing, can you, by eye? But somehow miraculously out of all of this, they're able to pull out trapeze 1B JWST transmission spectrum. I'm guessing, yeah, here's the paper and there's the data. So what did we see there? We saw like 42 data sets. So count them here. One, although this is a function of wavelength, not as a function of time. Never mind. But this is the brightness, the change in brightness to the planet as a function of wavelength. And we'll talk a little bit about this in the videos during the week. But how do we go from that image I was just showing you and Astrid Mache to these data points here on the screen? That's what we're teaching to you. But this is more complex with the Webb telescope. uh and what you'll get to get to look at so how if you get past the campus telescope data um and you're ready for a challenge let's say you're good at coding if you're not good at coding don't don't worry about it you don't have to do this part but if you really want to challenge yourself and see what the professionals are doing today there is this page um so again um i went to the mast archive went to jwst data I went to what page did I go to? I went to understanding the data. And then down here under data, the bottom here, there's post pipeline data analysis. Now there will be a recording of this if you can't find it. And under here on this page, which is the same page as this page, there's a bunch of tools available. And Jupyter Notebooks are working with data. So if we go to Notebooks, there's a GitHub repository for that. And they're organized by instrument. So spacetelescope.github.io. Oops, didn't work. Slash jdat underscore notebooks have notebooks organized by instrument. And here is a near-spec time series observation of how to extract a spectrum of the simulated observations of the planet GJ436b. And it's just a Jupiter notebook. It's more complicated than the one I've given you already. But it's essentially the same thing. Look, there's even a T0 in there, too. I know some of you are wondering what T0 is. It's the time of conjunction or time of transit. And you get that from by interrogating your data and knowing what the minimum time and maximum time is. But there's the raw image at one time. You extract the raw image of the spectrum. So you have brightness as a function of wavelength at one time. And then you do this for all the different times. You de-trend the data. which is what we do in astro image j with the with the ash so we'll do this detrending step um in astro image j with the campus telescope data but there are similar systematics in when you know if you don't know what a systematic is we'll watch the videos next week um but we have to deal with those systematics in the data here it's being done in python and software you'll get to do it by hand with astro image j first and then you get a light curve as a function of time and as a function of wavelength. And you can eventually fit a model to that, loop over different wavelength bins, and this is a very long notebook, but at the very end, get the plot of the transit depth, basically the atmospheric opacity as a function of wavelength, these orange data points, as well as fitting them to a model shown in here in blue. So that's the aim that you could do. And that's where we are headed with this course. So I will mostly stop there for questions. And there was something else I was going to...",
+  "segments": [
+    {
+      "text": "But just like we started with the NASA test mission data, we go to the Mikulski Archive for Space Telescopes.",
+      "endTime": 10.0600004196167,
+      "startTime": 0.0
+    },
+    {
+      "text": "And instead of going to the test page, which we did before, and then there's tools, access, test data, go to the webpage instead.",
+      "startTime": 10.34000015258789,
+      "endTime": 22.06999969482422
+    },
+    {
+      "text": "It's that easy. Oh, there was Hubble there too, if you're curious. You want to explore the archive of Hubble Space Telescope data. But here it is, nice artist picture. That's not useful. But the different types of observing modes for each of the cameras and instruments that...",
+      "startTime": 22.290000915527344,
+      "endTime": 38.93000030517578
+    },
+    {
+      "text": "And so for exoplanets, we do single object and time series spectroscopy. So all four JWST instruments have this mode.",
+      "startTime": 38.93000030517578,
+      "endTime": 50.25
+    },
+    {
+      "text": "But primarily for exoplanets spectroscopy, you'll mostly see data from Mirrors and NERSPEC. And so one of the first places you'll go to is how to understand James Webb Space Telescope data,",
+      "startTime": 50.779998779296875,
+      "endTime": 65.86000061035156
+    },
+    {
+      "text": "which has a science data overview, the four stages of science data products. So before I scare everybody,",
+      "startTime": 66.61000061035156,
+      "endTime": 76.87000274658203
+    },
+    {
+      "text": "before I get too deep into this, I have you start working with the test data because it is simple. And I have you work with our campus telescope data.",
+      "startTime": 77.8499984741211,
+      "endTime": 88.55000305175781
+    },
+    {
+      "text": "because it's the next level up in simple. It's the next more complex data set that you would work with. Do not attempt to dive into the web data until you've worked with some of this earlier data sets with the campus telescope and the test mission,",
+      "startTime": 89.19000244140625,
+      "endTime": 105.98999786376953
+    },
+    {
+      "text": "because the web data is another level up in complexity. probably several levels up in complexity. And so you can see here, it describes the data analysis pipeline.",
+      "startTime": 105.98999786376953,
+      "endTime": 117.20999908447266
+    },
+    {
+      "text": "And so it's really not, you know, what the hell is flux calibration? You know, you're not going to learn that until you see my videos this upcoming week. But there's the different stages,",
+      "startTime": 117.55000305175781,
+      "endTime": 131.4600067138672
+    },
+    {
+      "text": "data formats, and guess what? They're FITS files. So if you watch this second video, I started talking about FITS files. In the third video, I go into more detail about what FITS files are,",
+      "startTime": 131.82000732421875,
+      "endTime": 147.77999877929688
+    },
+    {
+      "text": "but most of you have not seen that yet. Well, the test mission and the James Webb Space Telescope, their data comes in FITS files. Data produced is primarily stored in FITS files,",
+      "startTime": 148.97999572753906,
+      "endTime": 161.6699981689453
+    },
+    {
+      "text": "but they also include some advanced scientific data format files and JSON files and enhanced characters separated. uh value files so so there's lots of data formats i mentioned that in the videos and yes fitz files are like half a century old file format this is more of the future uh json is pretty wide wide uh widely adopted standard and in computer science fields and csv files are pretty common as well but in any event um there you go there's some more details about that so this tells you",
+      "startTime": 161.77000427246094,
+      "endTime": 201.63999938964844
+    },
+    {
+      "text": "about the science data overview. And then you go back here, conventions and data products. That's actually where we just were.",
+      "startTime": 202.3000030517578,
+      "endTime": 219.4600067138672
+    },
+    {
+      "text": "And then documentation on how these data products were made. This is the same thing, same page. No, different page. But in any event,",
+      "startTime": 223.91000366210938,
+      "endTime": 235.41000366210938
+    },
+    {
+      "text": "you can work with various levels of data products. from raw to stage three, depending on what level you trust and the science you're trying to do. But once you have the data products,",
+      "startTime": 235.50999450683594,
+      "endTime": 246.8699951171875
+    },
+    {
+      "text": "you then need tools to analyze them. And look what it is. So this is the website for James Webb Space Telescope, the Space Telescope Science Institute. Guess what? It's Python,",
+      "startTime": 247.1699981689453,
+      "endTime": 257.6300048828125
+    },
+    {
+      "text": "AstroPy, Specutils and Photutils, two common... Python libraries, astronomy. And then this is the custom one for James web data.",
+      "startTime": 258.4100036621094,
+      "endTime": 269.7799987792969
+    },
+    {
+      "text": "The JDAviz, I don't know what they call it, JDAviz tool. And then I'll show you a few more things here in a minute.",
+      "startTime": 270.29998779296875,
+      "endTime": 283.2099914550781
+    },
+    {
+      "text": "We'll come back to that in a little bit, but let's go back here for a second and talk about how to access the data before we... Before we go ahead and work with the data,",
+      "startTime": 284.1700134277344,
+      "endTime": 297.9599914550781
+    },
+    {
+      "text": "we just search on an object name. So here's a search, my favorite star system, AMIC. I'll do a search around it in arc seconds. And there's eight results.",
+      "startTime": 300.3900146484375,
+      "endTime": 312.70001220703125
+    },
+    {
+      "text": "Here it is. Now I've already gone and downloaded these data. Now this is not a light curve. It's of the transient planet. It's actually imaging data.",
+      "startTime": 313.0,
+      "endTime": 323.5199890136719
+    },
+    {
+      "text": "And so I went ahead and downloaded it, and I'm going to switch my screen share here, share desktop. I've gone ahead and extracted this data,",
+      "startTime": 324.510009765625,
+      "endTime": 336.5299987792969
+    },
+    {
+      "text": "and I can load it. There it is. So here's a raw, I actually don't know what stage it is, but in Astro Image, same tool we're using for our campus telescope data,",
+      "startTime": 337.54998779296875,
+      "endTime": 350.29998779296875
+    },
+    {
+      "text": "I can look at and interrogate and investigate a data set of observations AUMIC with the James Webb Space Telescope. Very bright stars,",
+      "startTime": 350.5199890136719,
+      "endTime": 360.7300109863281
+    },
+    {
+      "text": "very saturated. We see what are called speckles or diffraction spikes from the data. And this is the level 0,",
+      "startTime": 360.7900085449219,
+      "endTime": 371.67999267578125
+    },
+    {
+      "text": "1, 2, or 3 data set. I can look and you'll see this in the third asynchronous video when we dive into information about FIS files. We can look at the header information and it'll talk about how it was processed.",
+      "startTime": 371.8399963378906,
+      "endTime": 388.6499938964844
+    },
+    {
+      "text": "It should have some more, but actually this looks pretty raw. Very simple header here. This looks like a minimally processed data set.",
+      "startTime": 389.3500061035156,
+      "endTime": 402.9100036621094
+    },
+    {
+      "text": "There's flat fields. Where did it go? So you don't know what flat fields are yet, but you will soon. There's a flat field for the image, which kind of shows the responsivity of the detector.",
+      "startTime": 404.2900085449219,
+      "endTime": 418.6700134277344
+    },
+    {
+      "text": "uh so what do you do with this and how do you produce a final data product well i happen to have excuse me pull it up here i had i should say let me bring it back up again i have the processed image of this data set you still see my give me a thumbs up if you still see my desktop i think you do i don't see the participant list hold on participants yeah good okay good um did my t-shirt disappear here for a second michael i'm not sure what you mean by that question oh no sorry i was just doing",
+      "startTime": 423.1600036621094,
+      "endTime": 489.6499938964844
+    },
+    {
+      "text": "like a because i know for immature photography you have to like it's not fields i just don't know how to do that for space sorry lab-based flats oh okay got it got you or launch um but yeah no great question um it shows you're already familiar with that um so good um oh who's already familiar with exo fast Evan Paps.",
+      "startTime": 489.6499938964844,
+      "endTime": 515.0999755859375
+    },
+    {
+      "text": "Okay. Well, Evan, yes. Basically, ExoFast is the step after Astro Image is done. When you have a detrended light curve of your candidate,",
+      "startTime": 515.3599853515625,
+      "endTime": 529.3599853515625
+    },
+    {
+      "text": "you then feed it into ExoFast to produce the MCMC analysis of the light curve model parameters and their uncertainties.",
+      "startTime": 529.3599853515625,
+      "endTime": 541.97998046875
+    },
+    {
+      "text": "But that's getting a little bit ahead of us here. But that's the short answer to that question. So how do you go from this raw image on the left of the star with all the bad?",
+      "startTime": 542.739990234375,
+      "endTime": 554.1799926757812
+    },
+    {
+      "text": "You can see the bad pixels there. There's plenty. Bad pixels. I'll zoom in on some of them there. Those are just bad pixels. How do you go from this raw image?",
+      "startTime": 554.280029296875,
+      "endTime": 565.4000244140625
+    },
+    {
+      "text": "It's not even totally raw. I mean, there's already been some processing applied here. How do you go from this raw image where you can't even actually see the disk? I think this is the disk sticking out here, but it's hard to see what's going on.",
+      "startTime": 568.3599853515625,
+      "endTime": 579.780029296875
+    },
+    {
+      "text": "How do you go from that to this image processed image on the right? Well, in this particular case, you have to subtract off the image of the star using something called point spread function,",
+      "startTime": 579.8599853515625,
+      "endTime": 592.3599853515625
+    },
+    {
+      "text": "subtracting and using some pretty advanced software algorithms, completely hidden. And we're not going to get into this for direct imaging. But the star system has a disk.",
+      "startTime": 592.6799926757812,
+      "endTime": 603.239990234375
+    },
+    {
+      "text": "I didn't discover the disk, but it has a disk around it. It's been known since the 1980s. Here it is. So this is the final product on the right that was published from a sequence of images here on the left.",
+      "startTime": 603.3599853515625,
+      "endTime": 616.47998046875
+    },
+    {
+      "text": "This is actually a data cube. There's multiple epics of data here collected over time. And I don't think they're rotating anything here.",
+      "startTime": 617.8900146484375,
+      "endTime": 630.989990234375
+    },
+    {
+      "text": "Let me double check. Let me throw up the contrast very high. Oh,",
+      "startTime": 631.1300048828125,
+      "endTime": 641.1500244140625
+    },
+    {
+      "text": "wow. You can actually see some cosmic rays there. That was fun. Let's do that again. Go one by one. So what I'm doing right now is I'm changing that one.",
+      "startTime": 641.2100219726562,
+      "endTime": 654.2899780273438
+    },
+    {
+      "text": "There was some pretty gnarly data there. I don't know what's going on with that data. So it almost looks like an Apple logo. It's not. But this is a specialized near infrared sensor.",
+      "startTime": 654.510009765625,
+      "endTime": 667.8599853515625
+    },
+    {
+      "text": "So it's something went very bad with that exposure. My God. I wonder what happened. But there's a sequence of exposures.",
+      "startTime": 668.239990234375,
+      "endTime": 682.6799926757812
+    },
+    {
+      "text": "There's some cosmic rays. That's a cosmic ray right there. But you can kind of see there's a little bit of an asymmetry in this image. And it is the disk.",
+      "startTime": 684.4400024414062,
+      "endTime": 695.47998046875
+    },
+    {
+      "text": "So most of the light from the star is being blocked out. And what I'm doing here is I'm getting a little bit ahead of the lectures here let me look at the time um each pixel records a processed number of photo electrons that it's counted so these images are being combined and you'll notice that if i and what i'm changing down here is how i map the numerical values in each pixel into a grayscale intensity on the screen.",
+      "startTime": 696.0800170898438,
+      "endTime": 730.1799926757812
+    },
+    {
+      "text": "And I think my video will cover some of this. This is the actual leftover light from the star after the starlight has been mostly, but not completely blocked.",
+      "startTime": 731.0399780273438,
+      "endTime": 741.1599731445312
+    },
+    {
+      "text": "We call these speckles. These need to be modeled and subtracted out. If I just play it like this, you can see they're pretty stable. They didn't change very much.",
+      "startTime": 741.1599731445312,
+      "endTime": 757.8099975585938
+    },
+    {
+      "text": "But in any event, there is the faintest hint. of the disk showing through, it should be roughly this direction with my mouse, but it's buried in the speckle noise.",
+      "startTime": 758.2100219726562,
+      "endTime": 771.4099731445312
+    },
+    {
+      "text": "So they use a reference star that doesn't have a disk to observe these speckles and then do the subtraction. And they combine all these images to get to this final data product shown here on the right.",
+      "startTime": 771.5900268554688,
+      "endTime": 783.989990234375
+    },
+    {
+      "text": "But part of this internship is learning about how you go from the left to the right. Long story short. And we had a direct message question there.",
+      "startTime": 784.25,
+      "endTime": 795.6599731445312
+    },
+    {
+      "text": "Do they also stack thousands of images to create one finalized image? Yes, not thousands. It depends on the exposure times. AUMIC is very bright.",
+      "startTime": 795.8400268554688,
+      "endTime": 806.2000122070312
+    },
+    {
+      "text": "So the exposure times are very short. So they do collect a lot of images. But for faint targets, you'll have very long exposure times. So part of this course is learning how to process data like this to turn it into something like on the right.",
+      "startTime": 806.5399780273438,
+      "endTime": 820.6099853515625
+    },
+    {
+      "text": "But getting back to this tutorial here, you could search on data. I searched on one more data set and I loaded it. Actually, just downloaded just now.",
+      "startTime": 821.27001953125,
+      "endTime": 833.4299926757812
+    },
+    {
+      "text": "And let me bring it over. I haven't looked at it yet. I searched on something. What did I search on? I think it was K2 18B.",
+      "startTime": 833.7899780273438,
+      "endTime": 844.4400024414062
+    },
+    {
+      "text": "Was it that one? I don't remember. No, I don't remember. But it's a huge data set. And this is the transmission spectroscopic data set.",
+      "startTime": 844.760009765625,
+      "endTime": 855.7100219726562
+    },
+    {
+      "text": "And it's like 11 gigabytes. You can see it. I mean, this is an M3 MacBook Pro. Got plenty of CPU power on here and cores. It's still extracting the data here.",
+      "startTime": 856.5900268554688,
+      "endTime": 868.8599853515625
+    },
+    {
+      "text": "Pop it out there. Oh, but it's playing on iCloud. What target is this? I don't remember now.",
+      "startTime": 870.2999877929688,
+      "endTime": 880.52001953125
+    },
+    {
+      "text": "But let me try taking a look at one of these. It should be spectroscopy. Keep it in doc. Look,",
+      "startTime": 884.030029296875,
+      "endTime": 896.8200073242188
+    },
+    {
+      "text": "there's some JSON files, CSV files. This is a data archive. So you can see this is already far more complicated than a test data set. But let me see on Cal.",
+      "startTime": 896.9199829101562,
+      "endTime": 907.9400024414062
+    },
+    {
+      "text": "I don't know if I want on Cal. Let's look at on Cal, see what it looks like. Oh, it doesn't like me because it's a 1.49 gigabyte file.",
+      "startTime": 908.260009765625,
+      "endTime": 920.47998046875
+    },
+    {
+      "text": "Oops. It might struggle to load that. I might have just broken it. All right. Did I break Astro Image J?",
+      "startTime": 920.6400146484375,
+      "endTime": 936.7000122070312
+    },
+    {
+      "text": "I'm a little bit worried I did. So let me just restart it. Dark, flat, gain, saturation, spec profile. Yeah,",
+      "startTime": 937.260009765625,
+      "endTime": 947.5499877929688
+    },
+    {
+      "text": "I'm not upgrading that. Sorry, I'm looking off screen right now on my other monitor because my main monitor is enormous. I didn't want to share that whole screen.",
+      "startTime": 947.6500244140625,
+      "endTime": 959.2899780273438
+    },
+    {
+      "text": "Segment two and segment one. Let's take a look. Yeah, these are all really big files. I don't think this is all that useful, but let's take a look.",
+      "startTime": 961.0399780273438,
+      "endTime": 971.219970703125
+    },
+    {
+      "text": "Oh, there it is. Yeah. Okay. So here's the raw data. So this is a spectrum, but this is just one spectrum.",
+      "startTime": 971.3200073242188,
+      "endTime": 981.3599853515625
+    },
+    {
+      "text": "It's like there's two pieces of it. One there that's fainter, one there that's brighter. So the light is dispersed horizontally here in a curved.",
+      "startTime": 984.0700073242188,
+      "endTime": 995.1099853515625
+    },
+    {
+      "text": "So this is just one time epic. And these files are so big because I suspect it is many epics in time.",
+      "startTime": 997.0599975585938,
+      "endTime": 1013.9199829101562
+    },
+    {
+      "text": "Let's see if I can get that one to load. Yeah, there we go. So this is what the raw data looks like. So this is the raw data. Getting back to this. This is the raw data of the web space telescope.",
+      "startTime": 1014.0399780273438,
+      "endTime": 1025.02001953125
+    },
+    {
+      "text": "uh images of i think just go back to the search page and figure out what i was searching for does it show me my search history no what did i search on it wasn't aiming because they don't have transit spectra of it yet oh trapeze 1b that's what this was let me rename the data set so i remember what it was uh so this is a transit of the b planet the system famous transiting planet and here's the data as a function of time.",
+      "startTime": 1025.739990234375,
+      "endTime": 1061.0
+    },
+    {
+      "text": "And you can't really see the spectrum changing, can you, by eye? But somehow miraculously out of all of this, they're able to pull out trapeze 1B JWST transmission spectrum.",
+      "startTime": 1064.0999755859375,
+      "endTime": 1081.56005859375
+    },
+    {
+      "text": "I'm guessing, yeah, here's the paper and there's the data. So what did we see there?",
+      "startTime": 1085.8399658203125,
+      "endTime": 1096.1300048828125
+    },
+    {
+      "text": "We saw like 42 data sets. So count them here. One, although this is a function of wavelength, not as a function of time. Never mind.",
+      "startTime": 1096.18994140625,
+      "endTime": 1106.6300048828125
+    },
+    {
+      "text": "But this is the brightness, the change in brightness to the planet as a function of wavelength. And we'll talk a little bit about this in the videos during the week.",
+      "startTime": 1107.739990234375,
+      "endTime": 1117.8199462890625
+    },
+    {
+      "text": "But how do we go from that image I was just showing you and Astrid Mache to these data points here on the screen? That's what we're teaching to you. But this is more complex with the Webb telescope.",
+      "startTime": 1118.3800048828125,
+      "endTime": 1130.260009765625
+    },
+    {
+      "text": "uh and what you'll get to get to look at so how if you get past the campus telescope data um and you're ready for a challenge let's say you're good at coding if you're not good at coding don't don't worry about it you don't have to do this part but if you really want to challenge yourself and see what the professionals are doing today there is this page um so again um i went to the mast archive went to jwst data I went to what page did I go to?",
+      "startTime": 1130.6700439453125,
+      "endTime": 1171.5799560546875
+    },
+    {
+      "text": "I went to understanding the data. And then down here under data, the bottom here,",
+      "startTime": 1171.8399658203125,
+      "endTime": 1183.760009765625
+    },
+    {
+      "text": "there's post pipeline data analysis. Now there will be a recording of this if you can't find it. And under here on this page, which is the same page as this page,",
+      "startTime": 1183.9000244140625,
+      "endTime": 1195.1600341796875
+    },
+    {
+      "text": "there's a bunch of tools available. And Jupyter Notebooks are working with data. So if we go to Notebooks,",
+      "startTime": 1195.43994140625,
+      "endTime": 1212.260009765625
+    },
+    {
+      "text": "there's a GitHub repository for that. And they're organized by instrument.",
+      "startTime": 1213.6099853515625,
+      "endTime": 1225.77001953125
+    },
+    {
+      "text": "So spacetelescope.github.io. Oops, didn't work. Slash jdat underscore notebooks have notebooks organized by instrument.",
+      "startTime": 1226.3800048828125,
+      "endTime": 1240.1600341796875
+    },
+    {
+      "text": "And here is a near-spec time series observation of how to extract a spectrum of the simulated observations of the planet GJ436b.",
+      "startTime": 1240.780029296875,
+      "endTime": 1257.97998046875
+    },
+    {
+      "text": "And it's just a Jupiter notebook. It's more complicated than the one I've given you already. But it's essentially the same thing. Look, there's even a T0 in there, too. I know some of you are wondering what T0 is.",
+      "startTime": 1258.300048828125,
+      "endTime": 1271.02001953125
+    },
+    {
+      "text": "It's the time of conjunction or time of transit. And you get that from by interrogating your data and knowing what the minimum time and maximum time is. But there's the raw image at one time.",
+      "startTime": 1271.1199951171875,
+      "endTime": 1285.699951171875
+    },
+    {
+      "text": "You extract the raw image of the spectrum. So you have brightness as a function of wavelength at one time. And then you do this for all the different times.",
+      "startTime": 1285.9599609375,
+      "endTime": 1296.0799560546875
+    },
+    {
+      "text": "You de-trend the data. which is what we do in astro image j with the with the ash so we'll do this detrending step um in astro image j with the campus telescope data but there are similar systematics in when you know if you don't know what a systematic is we'll watch the videos next week um but we have to deal with those systematics in the data here it's being done in python and software you'll get to do it by hand with astro image j first and then you get a light curve as a function of time",
+      "startTime": 1296.9100341796875,
+      "endTime": 1329.3399658203125
+    },
+    {
+      "text": "and as a function of wavelength. And you can eventually fit a model to that, loop over different wavelength bins, and this is a very long notebook,",
+      "startTime": 1330.3299560546875,
+      "endTime": 1341.27001953125
+    },
+    {
+      "text": "but at the very end, get the plot of the transit depth, basically the atmospheric opacity as a function of wavelength,",
+      "startTime": 1342.199951171875,
+      "endTime": 1353.56005859375
+    },
+    {
+      "text": "these orange data points, as well as fitting them to a model shown in here in blue. So that's the aim that you could do.",
+      "startTime": 1353.56005859375,
+      "endTime": 1365.0999755859375
+    },
+    {
+      "text": "And that's where we are headed with this course. So I will mostly stop there for questions.",
+      "startTime": 1365.8199462890625,
+      "endTime": 1378.0
+    },
+    {
+      "text": "And there was something else I was going to...",
+      "startTime": 1378.760009765625,
+      "endTime": 1381.4000244140625
+    }
+  ],
+  "transcriptLocale": "en"
+}

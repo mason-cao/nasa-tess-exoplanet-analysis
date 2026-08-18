@@ -1,0 +1,1615 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.560
+But just like we started with the NASA test
+
+00:00:05.560 --> 00:00:06.180
+mission data,
+
+00:00:06.460 --> 00:00:09.240
+we go to the Mikulski Archive for Space
+
+00:00:09.240 --> 00:00:10.060
+Telescopes.
+
+00:00:10.340 --> 00:00:12.500
+And instead of going to the test page,
+
+00:00:13.240 --> 00:00:14.960
+which we did before,
+
+00:00:15.200 --> 00:00:16.280
+and then there's tools,
+
+00:00:17.260 --> 00:00:17.799
+access,
+
+00:00:18.280 --> 00:00:19.280
+test data,
+
+00:00:20.830 --> 00:00:22.070
+go to the webpage instead.
+
+00:00:22.290 --> 00:00:22.830
+It's that easy.
+
+00:00:23.070 --> 00:00:23.250
+Oh,
+
+00:00:23.330 --> 00:00:24.230
+there was Hubble there too,
+
+00:00:24.250 --> 00:00:25.030
+if you're curious.
+
+00:00:25.430 --> 00:00:27.549
+You want to explore the archive of Hubble Space
+
+00:00:27.549 --> 00:00:28.370
+Telescope data.
+
+00:00:28.940 --> 00:00:29.559
+But here it is,
+
+00:00:29.639 --> 00:00:30.520
+nice artist picture.
+
+00:00:30.719 --> 00:00:32.119
+That's not useful.
+
+00:00:32.419 --> 00:00:35.740
+But the different types of observing modes for
+
+00:00:36.130 --> 00:00:38.930
+each of the cameras and instruments that...
+
+00:00:38.930 --> 00:00:40.669
+And so for exoplanets,
+
+00:00:40.849 --> 00:00:45.650
+we do single object and time series spectroscopy.
+
+00:00:45.770 --> 00:00:46.790
+So all four
+
+00:00:47.070 --> 00:00:50.250
+JWST instruments have this mode.
+
+00:00:50.779 --> 00:00:54.160
+But primarily for exoplanets spectroscopy,
+
+00:00:54.200 --> 00:00:57.919
+you'll mostly see data from Mirrors and NERSPEC.
+
+00:00:59.660 --> 00:01:03.060
+And so one of the first places you'll go to is
+
+00:01:03.060 --> 00:01:05.559
+how to understand James Webb Space Telescope
+
+00:01:05.559 --> 00:01:05.860
+data,
+
+00:01:06.610 --> 00:01:09.970
+which has a science data overview,
+
+00:01:10.250 --> 00:01:13.250
+the four stages of science data products.
+
+00:01:13.589 --> 00:01:15.070
+So before
+
+00:01:16.089 --> 00:01:16.870
+I scare everybody,
+
+00:01:17.849 --> 00:01:19.730
+before I get too deep into this,
+
+00:01:20.180 --> 00:01:22.839
+I have you start working with the test data
+
+00:01:22.839 --> 00:01:24.980
+because it is simple.
+
+00:01:25.709 --> 00:01:28.169
+And I have you work with our campus telescope
+
+00:01:28.169 --> 00:01:28.550
+data.
+
+00:01:29.190 --> 00:01:31.410
+because it's the next level up in simple.
+
+00:01:32.589 --> 00:01:35.370
+It's the next more complex data set that you
+
+00:01:35.370 --> 00:01:35.970
+would work with.
+
+00:01:36.430 --> 00:01:40.169
+Do not attempt to dive into the web data until
+
+00:01:40.169 --> 00:01:43.790
+you've worked with some of this earlier data sets
+
+00:01:43.790 --> 00:01:45.989
+with the campus telescope and the test mission,
+
+00:01:45.989 --> 00:01:49.669
+because the web data is another level up in
+
+00:01:49.669 --> 00:01:50.250
+complexity.
+
+00:01:51.449 --> 00:01:53.629
+probably several levels up in complexity.
+
+00:01:53.989 --> 00:01:55.029
+And so you can see here,
+
+00:01:55.070 --> 00:01:57.209
+it describes the data analysis pipeline.
+
+00:01:57.550 --> 00:01:58.790
+And so it's really not,
+
+00:01:58.930 --> 00:01:59.089
+you know,
+
+00:01:59.550 --> 00:02:01.089
+what the hell is flux calibration?
+
+00:02:01.930 --> 00:02:02.570
+You know,
+
+00:02:02.629 --> 00:02:04.070
+you're not going to learn that until you see my
+
+00:02:04.070 --> 00:02:05.930
+videos this upcoming week.
+
+00:02:08.660 --> 00:02:11.460
+But there's the different stages,
+
+00:02:11.820 --> 00:02:12.860
+data formats,
+
+00:02:13.000 --> 00:02:13.500
+and guess what?
+
+00:02:13.660 --> 00:02:14.500
+They're FITS files.
+
+00:02:14.820 --> 00:02:17.139
+So if you watch this second video,
+
+00:02:17.139 --> 00:02:19.979
+I started talking about FITS files.
+
+00:02:20.550 --> 00:02:21.809
+In the third video,
+
+00:02:21.850 --> 00:02:23.070
+I go into more detail
+
+00:02:23.360 --> 00:02:27.779
+about what FITS files are,
+
+00:02:28.979 --> 00:02:30.899
+but most of you have not seen that yet.
+
+00:02:31.259 --> 00:02:31.839
+Well,
+
+00:02:32.000 --> 00:02:33.839
+the test mission and the James Webb Space
+
+00:02:33.839 --> 00:02:34.440
+Telescope,
+
+00:02:34.559 --> 00:02:37.479
+their data comes in FITS files.
+
+00:02:38.809 --> 00:02:41.669
+Data produced is primarily stored in FITS files,
+
+00:02:41.770 --> 00:02:44.550
+but they also include some advanced scientific
+
+00:02:44.550 --> 00:02:48.850
+data format files and JSON files and enhanced
+
+00:02:48.850 --> 00:02:50.009
+characters separated.
+
+00:02:50.509 --> 00:02:53.589
+uh value files so so there's lots of data formats
+
+00:02:53.589 --> 00:02:56.470
+i mentioned that in the videos and yes fitz files
+
+00:02:56.470 --> 00:02:59.570
+are like half a century old file format this is
+
+00:02:59.570 --> 00:03:01.470
+more of the future uh
+
+00:03:03.490 --> 00:03:08.149
+json is pretty wide wide uh widely adopted
+
+00:03:08.149 --> 00:03:13.229
+standard and in computer science fields and csv
+
+00:03:13.229 --> 00:03:16.070
+files are pretty common as well but in any event
+
+00:03:16.070 --> 00:03:17.770
+um there
+
+00:03:19.240 --> 00:03:21.020
+you go there's some more details about that so
+
+00:03:21.020 --> 00:03:21.639
+this tells you
+
+00:03:22.300 --> 00:03:24.759
+about the science data overview.
+
+00:03:25.860 --> 00:03:27.460
+And then you go back here,
+
+00:03:27.699 --> 00:03:30.660
+conventions and data products.
+
+00:03:37.800 --> 00:03:39.460
+That's actually where we just were.
+
+00:03:43.910 --> 00:03:47.029
+And then documentation on how these data products
+
+00:03:47.029 --> 00:03:47.589
+were made.
+
+00:03:47.889 --> 00:03:49.350
+This is the same thing,
+
+00:03:49.550 --> 00:03:50.250
+same page.
+
+00:03:50.770 --> 00:03:50.869
+No,
+
+00:03:52.259 --> 00:03:52.880
+different page.
+
+00:03:53.990 --> 00:03:55.410
+But in any event,
+
+00:03:55.509 --> 00:03:57.309
+you can work with various levels of data
+
+00:03:57.309 --> 00:03:57.789
+products.
+
+00:03:58.300 --> 00:03:59.899
+from raw to stage three,
+
+00:04:00.059 --> 00:04:02.860
+depending on what level you trust and the science
+
+00:04:02.860 --> 00:04:03.759
+you're trying to do.
+
+00:04:04.910 --> 00:04:06.869
+But once you have the data products,
+
+00:04:07.169 --> 00:04:09.690
+you then need tools to analyze them.
+
+00:04:09.910 --> 00:04:11.029
+And look what it is.
+
+00:04:11.149 --> 00:04:13.490
+So this is the website for James Webb Space
+
+00:04:13.490 --> 00:04:14.070
+Telescope,
+
+00:04:14.270 --> 00:04:16.130
+the Space Telescope Science Institute.
+
+00:04:16.329 --> 00:04:16.750
+Guess what?
+
+00:04:16.950 --> 00:04:17.630
+It's Python,
+
+00:04:18.410 --> 00:04:19.250
+AstroPy,
+
+00:04:20.369 --> 00:04:22.089
+Specutils and Photutils,
+
+00:04:22.269 --> 00:04:23.250
+two common...
+
+00:04:24.320 --> 00:04:25.119
+Python libraries,
+
+00:04:25.160 --> 00:04:25.799
+astronomy.
+
+00:04:26.820 --> 00:04:29.399
+And then this is the custom one for James web
+
+00:04:29.399 --> 00:04:29.779
+data.
+
+00:04:30.299 --> 00:04:32.440
+The JDAviz,
+
+00:04:32.459 --> 00:04:34.019
+I don't know what they call it,
+
+00:04:34.100 --> 00:04:37.579
+JDAviz tool.
+
+00:04:39.630 --> 00:04:42.730
+And then I'll show you a few more things here in
+
+00:04:42.730 --> 00:04:43.209
+a minute.
+
+00:04:44.170 --> 00:04:45.429
+We'll come back to that in a little bit,
+
+00:04:45.489 --> 00:04:48.410
+but let's go back here for a second and talk
+
+00:04:48.410 --> 00:04:51.709
+about how to access the data before we...
+
+00:04:53.100 --> 00:04:56.899
+Before we go ahead and work
+
+00:04:57.380 --> 00:04:57.959
+with the data,
+
+00:05:00.390 --> 00:05:01.970
+we just search on an object name.
+
+00:05:02.170 --> 00:05:03.049
+So here's a search,
+
+00:05:03.619 --> 00:05:05.399
+my favorite star system,
+
+00:05:05.600 --> 00:05:06.040
+AMIC.
+
+00:05:06.459 --> 00:05:09.559
+I'll do a search around it in arc seconds.
+
+00:05:09.980 --> 00:05:12.700
+And there's eight results.
+
+00:05:13.000 --> 00:05:13.880
+Here it is.
+
+00:05:15.500 --> 00:05:18.100
+Now I've already gone and downloaded these data.
+
+00:05:18.579 --> 00:05:20.480
+Now this is not a light curve.
+
+00:05:20.480 --> 00:05:22.220
+It's of the transient planet.
+
+00:05:22.359 --> 00:05:23.519
+It's actually imaging data.
+
+00:05:24.510 --> 00:05:26.890
+And so I went ahead and downloaded it,
+
+00:05:26.989 --> 00:05:28.809
+and I'm going to switch my screen share here,
+
+00:05:30.480 --> 00:05:31.640
+share desktop.
+
+00:05:33.350 --> 00:05:36.529
+I've gone ahead and extracted this data,
+
+00:05:37.549 --> 00:05:38.950
+and I can load it.
+
+00:05:40.500 --> 00:05:41.459
+There it is.
+
+00:05:41.820 --> 00:05:43.079
+So here's a raw,
+
+00:05:43.660 --> 00:05:45.380
+I actually don't know what stage it is,
+
+00:05:45.559 --> 00:05:46.920
+but in Astro Image,
+
+00:05:46.959 --> 00:05:49.779
+same tool we're using for our campus telescope
+
+00:05:49.779 --> 00:05:50.299
+data,
+
+00:05:50.519 --> 00:05:54.850
+I can look at and interrogate and investigate a
+
+00:05:54.850 --> 00:05:57.529
+data set of observations AUMIC
+
+00:05:58.010 --> 00:05:59.649
+with the James Webb Space Telescope.
+
+00:05:59.790 --> 00:06:00.730
+Very bright stars,
+
+00:06:00.790 --> 00:06:01.750
+very saturated.
+
+00:06:02.029 --> 00:06:05.130
+We see what are called speckles or diffraction
+
+00:06:05.130 --> 00:06:06.989
+spikes from the data.
+
+00:06:07.149 --> 00:06:11.109
+And this is the level
+
+00:06:11.399 --> 00:06:11.679
+0,
+
+00:06:11.839 --> 00:06:11.940
+1,
+
+00:06:12.040 --> 00:06:12.160
+2,
+
+00:06:12.179 --> 00:06:13.220
+or 3 data set.
+
+00:06:13.700 --> 00:06:16.820
+I can look and you'll see this in the third
+
+00:06:16.820 --> 00:06:19.160
+asynchronous video when we dive into information
+
+00:06:19.160 --> 00:06:20.019
+about FIS files.
+
+00:06:20.299 --> 00:06:22.399
+We can look at the header information
+
+00:06:25.149 --> 00:06:28.649
+and it'll talk about how it was processed.
+
+00:06:29.350 --> 00:06:31.929
+It should have some more,
+
+00:06:32.049 --> 00:06:33.549
+but actually this looks pretty raw.
+
+00:06:34.390 --> 00:06:35.910
+Very simple header here.
+
+00:06:37.369 --> 00:06:40.790
+This looks like a minimally processed data
+
+00:06:42.489 --> 00:06:42.910
+set.
+
+00:06:44.290 --> 00:06:45.869
+There's flat fields.
+
+00:06:46.350 --> 00:06:47.369
+Where did it go?
+
+00:06:48.070 --> 00:06:50.029
+So you don't know what flat fields are yet,
+
+00:06:50.149 --> 00:06:50.709
+but you will soon.
+
+00:06:51.500 --> 00:06:53.500
+There's a flat field for the image,
+
+00:06:53.769 --> 00:06:58.190
+which kind of shows the responsivity of the
+
+00:06:58.190 --> 00:06:58.670
+detector.
+
+00:07:03.160 --> 00:07:06.459
+uh so what do you do with this and how do you
+
+00:07:06.459 --> 00:07:09.160
+produce a final data product well i happen to
+
+00:07:09.160 --> 00:07:09.579
+have
+
+00:07:10.760 --> 00:07:13.799
+excuse me pull
+
+00:07:16.170 --> 00:07:17.529
+it up here i
+
+00:07:18.269 --> 00:07:21.010
+had i should say let
+
+00:07:29.549 --> 00:07:31.209
+me bring it back up again i
+
+00:07:35.920 --> 00:07:38.320
+have the processed image of
+
+00:07:38.730 --> 00:07:40.829
+this data set you still see my give me a thumbs
+
+00:07:40.829 --> 00:07:43.709
+up if you still see my desktop i think you do i
+
+00:07:48.510 --> 00:07:50.489
+don't see the participant list hold on
+
+00:07:51.230 --> 00:07:55.290
+participants yeah good okay good um did
+
+00:07:58.940 --> 00:08:00.720
+my t-shirt disappear here for a second
+
+00:08:04.750 --> 00:08:07.750
+michael i'm not sure what you mean by that
+
+00:08:07.750 --> 00:08:10.070
+question oh no sorry i was just doing like a
+
+00:08:10.070 --> 00:08:12.630
+because i know for immature photography you have
+
+00:08:12.630 --> 00:08:14.790
+to like it's not fields i just don't know how to
+
+00:08:14.790 --> 00:08:20.500
+do that for space sorry lab-based flats oh okay
+
+00:08:20.500 --> 00:08:23.839
+got it got you or launch um but yeah no great
+
+00:08:23.839 --> 00:08:26.260
+question um it shows you're already familiar with
+
+00:08:26.260 --> 00:08:29.399
+that um so good um oh
+
+00:08:30.959 --> 00:08:33.099
+who's already familiar with exo fast
+
+00:08:33.840 --> 00:08:35.099
+Evan Paps.
+
+00:08:35.359 --> 00:08:35.500
+Okay.
+
+00:08:35.960 --> 00:08:36.020
+Well,
+
+00:08:36.099 --> 00:08:36.359
+Evan,
+
+00:08:36.659 --> 00:08:36.979
+yes.
+
+00:08:38.340 --> 00:08:39.140
+Basically,
+
+00:08:39.419 --> 00:08:43.859
+ExoFast is the step after Astro Image is done.
+
+00:08:44.080 --> 00:08:48.820
+When you have a detrended light curve of your
+
+00:08:48.820 --> 00:08:49.359
+candidate,
+
+00:08:49.359 --> 00:08:54.260
+you then feed it into ExoFast to produce the MCMC
+
+00:08:54.260 --> 00:09:01.140
+analysis of the light curve model parameters and
+
+00:09:01.140 --> 00:09:01.979
+their uncertainties.
+
+00:09:02.739 --> 00:09:05.239
+But that's getting a little bit ahead of us here.
+
+00:09:05.580 --> 00:09:07.239
+But that's the short answer to that question.
+
+00:09:07.380 --> 00:09:10.679
+So how do you go from this raw image on the left
+
+00:09:11.000 --> 00:09:14.179
+of the star with all the bad?
+
+00:09:14.280 --> 00:09:15.539
+You can see the bad pixels there.
+
+00:09:18.359 --> 00:09:19.039
+There's plenty.
+
+00:09:19.419 --> 00:09:19.739
+Bad pixels.
+
+00:09:20.000 --> 00:09:20.880
+I'll zoom in on some of them there.
+
+00:09:21.000 --> 00:09:22.159
+Those are just bad pixels.
+
+00:09:23.659 --> 00:09:25.400
+How do you go from this raw image?
+
+00:09:28.359 --> 00:09:29.679
+It's not even totally raw.
+
+00:09:29.900 --> 00:09:30.000
+I mean,
+
+00:09:30.080 --> 00:09:31.539
+there's already been some processing applied
+
+00:09:31.539 --> 00:09:31.820
+here.
+
+00:09:32.119 --> 00:09:34.380
+How do you go from this raw image where you can't
+
+00:09:34.380 --> 00:09:35.500
+even actually see the disk?
+
+00:09:35.619 --> 00:09:38.179
+I think this is the disk sticking out here,
+
+00:09:38.219 --> 00:09:39.780
+but it's hard to see what's going on.
+
+00:09:39.859 --> 00:09:42.400
+How do you go from that to this image processed
+
+00:09:42.400 --> 00:09:43.299
+image on the right?
+
+00:09:45.539 --> 00:09:45.979
+Well,
+
+00:09:46.000 --> 00:09:47.080
+in this particular case,
+
+00:09:47.140 --> 00:09:49.280
+you have to subtract off the image of the star
+
+00:09:49.280 --> 00:09:52.359
+using something called point spread function,
+
+00:09:52.679 --> 00:09:54.859
+subtracting and using some pretty advanced
+
+00:09:54.859 --> 00:09:55.880
+software algorithms,
+
+00:09:56.159 --> 00:09:57.320
+completely hidden.
+
+00:09:57.619 --> 00:09:59.419
+And we're not going to get into this for direct
+
+00:09:59.419 --> 00:09:59.780
+imaging.
+
+00:10:00.099 --> 00:10:03.239
+But the star system has a disk.
+
+00:10:03.359 --> 00:10:04.419
+I didn't discover the disk,
+
+00:10:04.619 --> 00:10:06.200
+but it has a disk around it.
+
+00:10:06.960 --> 00:10:08.919
+It's been known since the 1980s.
+
+00:10:09.039 --> 00:10:09.940
+Here it is.
+
+00:10:10.059 --> 00:10:12.539
+So this is the final product on the right that
+
+00:10:12.539 --> 00:10:15.960
+was published from a sequence of images here on
+
+00:10:15.960 --> 00:10:16.479
+the left.
+
+00:10:17.890 --> 00:10:20.130
+This is actually a data cube.
+
+00:10:21.450 --> 00:10:26.130
+There's multiple epics of data here collected
+
+00:10:27.059 --> 00:10:27.739
+over time.
+
+00:10:28.409 --> 00:10:30.989
+And I don't think they're rotating anything here.
+
+00:10:31.130 --> 00:10:32.349
+Let me double check.
+
+00:10:33.190 --> 00:10:35.789
+Let me throw up the contrast very high.
+
+00:10:40.710 --> 00:10:41.150
+Oh,
+
+00:10:41.210 --> 00:10:41.309
+wow.
+
+00:10:41.309 --> 00:10:43.369
+You can actually see some cosmic rays there.
+
+00:10:43.530 --> 00:10:44.390
+That was fun.
+
+00:10:44.530 --> 00:10:45.169
+Let's do that again.
+
+00:10:45.710 --> 00:10:46.789
+Go one by one.
+
+00:10:51.190 --> 00:10:54.070
+So what I'm doing right now is I'm changing that
+
+00:10:54.070 --> 00:10:54.289
+one.
+
+00:10:54.510 --> 00:10:57.710
+There was some pretty gnarly data there.
+
+00:10:58.619 --> 00:11:00.419
+I don't know what's going on with that data.
+
+00:11:00.500 --> 00:11:02.000
+So it almost looks like an Apple logo.
+
+00:11:03.020 --> 00:11:03.679
+It's not.
+
+00:11:05.020 --> 00:11:07.859
+But this is a specialized near infrared sensor.
+
+00:11:08.239 --> 00:11:10.960
+So it's something went very bad with that
+
+00:11:10.960 --> 00:11:11.479
+exposure.
+
+00:11:11.700 --> 00:11:12.239
+My God.
+
+00:11:12.830 --> 00:11:13.830
+I wonder what happened.
+
+00:11:20.380 --> 00:11:22.679
+But there's a sequence of exposures.
+
+00:11:24.440 --> 00:11:25.880
+There's some cosmic rays.
+
+00:11:25.900 --> 00:11:27.640
+That's a cosmic ray right there.
+
+00:11:28.960 --> 00:11:32.219
+But you can kind of see there's a little bit of
+
+00:11:32.219 --> 00:11:33.919
+an asymmetry in this image.
+
+00:11:34.059 --> 00:11:35.479
+And it is the disk.
+
+00:11:36.080 --> 00:11:38.580
+So most of the light from the star is being
+
+00:11:38.580 --> 00:11:39.099
+blocked out.
+
+00:11:39.200 --> 00:11:40.299
+And what I'm doing here is I'm
+
+00:11:41.900 --> 00:11:44.159
+getting a little bit ahead of the lectures here
+
+00:11:44.159 --> 00:11:50.039
+let me look at the time um each pixel records a
+
+00:11:50.039 --> 00:11:53.340
+processed number of photo electrons that it's
+
+00:11:53.340 --> 00:11:57.989
+counted so these images are being combined and
+
+00:11:59.140 --> 00:12:01.960
+you'll notice that if i and what i'm changing
+
+00:12:01.960 --> 00:12:05.880
+down here is how i map the numerical values in
+
+00:12:05.880 --> 00:12:06.599
+each pixel
+
+00:12:07.320 --> 00:12:10.179
+into a grayscale intensity on the screen.
+
+00:12:11.039 --> 00:12:13.700
+And I think my video will cover some of this.
+
+00:12:13.840 --> 00:12:16.859
+This is the actual leftover light from the star
+
+00:12:16.859 --> 00:12:18.840
+after the starlight has been mostly,
+
+00:12:19.140 --> 00:12:21.159
+but not completely blocked.
+
+00:12:21.159 --> 00:12:22.719
+We call these speckles.
+
+00:12:23.000 --> 00:12:26.020
+These need to be modeled and subtracted out.
+
+00:12:26.320 --> 00:12:27.960
+If I just play it like this,
+
+00:12:28.099 --> 00:12:29.840
+you can see they're pretty stable.
+
+00:12:36.330 --> 00:12:37.809
+They didn't change very much.
+
+00:12:38.210 --> 00:12:39.549
+But in any event,
+
+00:12:39.710 --> 00:12:41.289
+there is the faintest hint.
+
+00:12:41.809 --> 00:12:43.549
+of the disk showing through,
+
+00:12:43.890 --> 00:12:47.130
+it should be roughly this direction with my
+
+00:12:47.130 --> 00:12:47.590
+mouse,
+
+00:12:47.830 --> 00:12:51.409
+but it's buried in the speckle noise.
+
+00:12:51.590 --> 00:12:54.750
+So they use a reference star that doesn't have a
+
+00:12:54.750 --> 00:12:57.909
+disk to observe these speckles and then do the
+
+00:12:57.909 --> 00:12:58.750
+subtraction.
+
+00:12:58.890 --> 00:13:01.510
+And they combine all these images to get to this
+
+00:13:01.510 --> 00:13:03.989
+final data product shown here on the right.
+
+00:13:04.250 --> 00:13:07.929
+But part of this internship is learning about how
+
+00:13:07.929 --> 00:13:09.429
+you go from the left to the right.
+
+00:13:10.030 --> 00:13:11.349
+Long story short.
+
+00:13:12.780 --> 00:13:15.659
+And we had a direct message question there.
+
+00:13:15.840 --> 00:13:18.419
+Do they also stack thousands of images to create
+
+00:13:18.419 --> 00:13:19.479
+one finalized image?
+
+00:13:19.619 --> 00:13:19.859
+Yes,
+
+00:13:20.099 --> 00:13:20.760
+not thousands.
+
+00:13:20.979 --> 00:13:21.659
+It depends on the
+
+00:13:21.940 --> 00:13:23.900
+exposure times.
+
+00:13:25.200 --> 00:13:26.200
+AUMIC is very bright.
+
+00:13:26.539 --> 00:13:28.380
+So the exposure times are very short.
+
+00:13:28.559 --> 00:13:30.239
+So they do collect a lot of images.
+
+00:13:30.239 --> 00:13:31.359
+But for faint targets,
+
+00:13:31.539 --> 00:13:33.700
+you'll have very long exposure times.
+
+00:13:34.869 --> 00:13:37.250
+So part of this course is learning how to process
+
+00:13:37.250 --> 00:13:40.270
+data like this to turn it into something like on
+
+00:13:40.270 --> 00:13:40.609
+the right.
+
+00:13:41.270 --> 00:13:43.429
+But getting back to this tutorial here,
+
+00:13:44.150 --> 00:13:45.690
+you could search on data.
+
+00:13:45.849 --> 00:13:49.669
+I searched on one more data set and I loaded it.
+
+00:13:50.010 --> 00:13:50.530
+Actually,
+
+00:13:50.630 --> 00:13:53.429
+just downloaded just now.
+
+00:13:53.789 --> 00:13:55.590
+And let me bring it over.
+
+00:13:55.710 --> 00:13:56.710
+I haven't looked at it yet.
+
+00:13:57.049 --> 00:13:59.450
+I searched on something.
+
+00:13:59.630 --> 00:14:00.590
+What did I search on?
+
+00:14:02.500 --> 00:14:04.440
+I think it was K2 18B.
+
+00:14:04.760 --> 00:14:05.780
+Was it that one?
+
+00:14:08.179 --> 00:14:09.099
+I don't remember.
+
+00:14:09.359 --> 00:14:09.820
+No,
+
+00:14:09.880 --> 00:14:10.340
+I don't remember.
+
+00:14:10.679 --> 00:14:12.559
+But it's a huge data set.
+
+00:14:12.729 --> 00:14:15.289
+And this is the transmission spectroscopic data
+
+00:14:15.289 --> 00:14:15.710
+set.
+
+00:14:16.590 --> 00:14:18.710
+And it's
+
+00:14:19.000 --> 00:14:19.799
+like 11 gigabytes.
+
+00:14:20.020 --> 00:14:20.460
+You can see it.
+
+00:14:20.599 --> 00:14:20.700
+I mean,
+
+00:14:20.760 --> 00:14:22.340
+this is an M3 MacBook Pro.
+
+00:14:22.599 --> 00:14:25.239
+Got plenty of CPU power on here and cores.
+
+00:14:25.780 --> 00:14:28.859
+It's still extracting the data here.
+
+00:14:30.299 --> 00:14:31.580
+Pop it out there.
+
+00:14:33.919 --> 00:14:34.440
+Oh,
+
+00:14:34.559 --> 00:14:35.679
+but it's playing on iCloud.
+
+00:14:36.409 --> 00:14:37.830
+What target is this?
+
+00:14:39.400 --> 00:14:40.520
+I don't remember now.
+
+00:14:44.030 --> 00:14:46.309
+But let me try taking a look at one of these.
+
+00:14:47.979 --> 00:14:50.000
+It should be spectroscopy.
+
+00:14:52.669 --> 00:14:53.510
+Keep it in doc.
+
+00:14:56.380 --> 00:14:56.820
+Look,
+
+00:14:56.919 --> 00:14:58.039
+there's some JSON files,
+
+00:14:58.099 --> 00:14:58.719
+CSV files.
+
+00:14:58.780 --> 00:14:59.719
+This is a data archive.
+
+00:14:59.859 --> 00:15:01.460
+So you can see this is already far more
+
+00:15:01.460 --> 00:15:04.380
+complicated than a test data set.
+
+00:15:04.960 --> 00:15:07.940
+But let me see on Cal.
+
+00:15:08.260 --> 00:15:09.460
+I don't know if I want on Cal.
+
+00:15:10.239 --> 00:15:11.679
+Let's look at on Cal,
+
+00:15:11.780 --> 00:15:12.580
+see what it looks like.
+
+00:15:17.400 --> 00:15:17.840
+Oh,
+
+00:15:17.880 --> 00:15:20.140
+it doesn't like me because it's a 1.49 gigabyte
+
+00:15:20.140 --> 00:15:20.479
+file.
+
+00:15:20.640 --> 00:15:20.820
+Oops.
+
+00:15:22.530 --> 00:15:24.070
+It might struggle to load that.
+
+00:15:26.049 --> 00:15:27.510
+I might have just broken it.
+
+00:15:27.809 --> 00:15:28.210
+All right.
+
+00:15:33.669 --> 00:15:36.700
+Did I break Astro Image J?
+
+00:15:37.260 --> 00:15:38.619
+I'm a little bit worried I did.
+
+00:15:38.799 --> 00:15:39.900
+So let me just restart it.
+
+00:15:43.630 --> 00:15:43.969
+Dark,
+
+00:15:44.190 --> 00:15:44.489
+flat,
+
+00:15:44.669 --> 00:15:44.890
+gain,
+
+00:15:45.070 --> 00:15:45.570
+saturation,
+
+00:15:45.849 --> 00:15:46.429
+spec profile.
+
+00:15:47.109 --> 00:15:47.549
+Yeah,
+
+00:15:47.650 --> 00:15:48.809
+I'm not upgrading that.
+
+00:15:51.969 --> 00:15:52.409
+Sorry,
+
+00:15:52.549 --> 00:15:54.150
+I'm looking off screen right now on my other
+
+00:15:54.150 --> 00:15:56.869
+monitor because my main monitor is enormous.
+
+00:15:57.549 --> 00:15:59.289
+I didn't want to share that whole screen.
+
+00:16:01.039 --> 00:16:02.880
+Segment two and segment one.
+
+00:16:04.340 --> 00:16:05.200
+Let's take a look.
+
+00:16:05.320 --> 00:16:05.359
+Yeah,
+
+00:16:05.419 --> 00:16:07.020
+these are all really big files.
+
+00:16:08.739 --> 00:16:10.359
+I don't think this is all that useful,
+
+00:16:10.419 --> 00:16:11.219
+but let's take a look.
+
+00:16:11.320 --> 00:16:11.479
+Oh,
+
+00:16:11.500 --> 00:16:11.940
+there it is.
+
+00:16:12.039 --> 00:16:12.159
+Yeah.
+
+00:16:12.340 --> 00:16:12.520
+Okay.
+
+00:16:12.679 --> 00:16:13.780
+So here's the raw data.
+
+00:16:15.020 --> 00:16:16.380
+So this is a spectrum,
+
+00:16:19.340 --> 00:16:21.359
+but this is just one spectrum.
+
+00:16:24.070 --> 00:16:26.630
+It's like there's two pieces of it.
+
+00:16:27.070 --> 00:16:28.450
+One there that's fainter,
+
+00:16:28.609 --> 00:16:29.549
+one there that's brighter.
+
+00:16:30.349 --> 00:16:34.549
+So the light is dispersed horizontally here in a
+
+00:16:34.549 --> 00:16:35.109
+curved.
+
+00:16:37.059 --> 00:16:39.299
+So this is just one time epic.
+
+00:16:40.630 --> 00:16:44.109
+And these files are so big because
+
+00:16:45.320 --> 00:16:46.460
+I suspect
+
+00:16:47.419 --> 00:16:51.539
+it is many
+
+00:16:53.140 --> 00:16:53.919
+epics in time.
+
+00:16:54.039 --> 00:16:55.219
+Let's see if I can get that one to load.
+
+00:16:55.380 --> 00:16:55.479
+Yeah,
+
+00:16:55.580 --> 00:16:55.940
+there we go.
+
+00:16:57.020 --> 00:16:59.340
+So this is what the raw data looks like.
+
+00:16:59.700 --> 00:17:01.400
+So this is the raw data.
+
+00:17:01.539 --> 00:17:02.239
+Getting back to this.
+
+00:17:02.340 --> 00:17:05.020
+This is the raw data of the web space telescope.
+
+00:17:05.739 --> 00:17:08.719
+uh images of i think just go back to the search
+
+00:17:08.719 --> 00:17:11.819
+page and figure out what i was searching for does
+
+00:17:11.819 --> 00:17:14.260
+it show me my search history no
+
+00:17:14.869 --> 00:17:17.369
+what did i search on it wasn't aiming because
+
+00:17:17.369 --> 00:17:20.089
+they don't have transit spectra of it yet oh
+
+00:17:20.089 --> 00:17:23.489
+trapeze 1b that's what this was let
+
+00:17:24.260 --> 00:17:26.579
+me rename the data set so i remember what it was
+
+00:17:27.949 --> 00:17:30.170
+uh so
+
+00:17:30.910 --> 00:17:34.310
+this is a transit of the b planet the system
+
+00:17:34.530 --> 00:17:37.609
+famous transiting planet and here's the data
+
+00:17:39.560 --> 00:17:41.000
+as a function of time.
+
+00:17:44.099 --> 00:17:46.780
+And you can't really see the spectrum changing,
+
+00:17:46.959 --> 00:17:47.260
+can you,
+
+00:17:47.420 --> 00:17:47.880
+by eye?
+
+00:17:48.439 --> 00:17:51.239
+But somehow miraculously out of all of this,
+
+00:17:52.979 --> 00:17:54.959
+they're able to pull out
+
+00:17:56.459 --> 00:18:01.560
+trapeze 1B JWST transmission spectrum.
+
+00:18:05.839 --> 00:18:06.880
+I'm guessing,
+
+00:18:07.219 --> 00:18:07.599
+yeah,
+
+00:18:07.680 --> 00:18:08.439
+here's the paper
+
+00:18:09.560 --> 00:18:12.140
+and there's the data.
+
+00:18:14.349 --> 00:18:16.130
+So what did we see there?
+
+00:18:16.189 --> 00:18:17.949
+We saw like 42 data sets.
+
+00:18:21.089 --> 00:18:22.329
+So count them here.
+
+00:18:22.510 --> 00:18:22.729
+One,
+
+00:18:22.969 --> 00:18:24.550
+although this is a function of wavelength,
+
+00:18:24.689 --> 00:18:25.729
+not as a function of time.
+
+00:18:26.010 --> 00:18:26.630
+Never mind.
+
+00:18:27.739 --> 00:18:30.000
+But this is the brightness,
+
+00:18:30.599 --> 00:18:33.160
+the change in brightness to the planet as a
+
+00:18:33.160 --> 00:18:33.900
+function of wavelength.
+
+00:18:33.900 --> 00:18:36.739
+And we'll talk a little bit about this in the
+
+00:18:36.739 --> 00:18:37.819
+videos during the week.
+
+00:18:38.380 --> 00:18:41.160
+But how do we go from that image I was just
+
+00:18:41.160 --> 00:18:43.859
+showing you and Astrid Mache to these data points
+
+00:18:43.859 --> 00:18:44.719
+here on the screen?
+
+00:18:45.239 --> 00:18:46.660
+That's what we're teaching to you.
+
+00:18:47.500 --> 00:18:50.260
+But this is more complex with the Webb telescope.
+
+00:18:50.670 --> 00:18:53.550
+uh and what you'll get to get to look at so how
+
+00:18:53.550 --> 00:18:58.069
+if you get past the campus telescope data um and
+
+00:18:58.069 --> 00:19:00.130
+you're ready for a challenge let's say you're
+
+00:19:00.130 --> 00:19:02.369
+good at coding if you're not good at coding don't
+
+00:19:02.369 --> 00:19:04.130
+don't worry about it you don't have to do this
+
+00:19:04.130 --> 00:19:06.849
+part but if you really want to challenge yourself
+
+00:19:06.849 --> 00:19:07.890
+and
+
+00:19:08.140 --> 00:19:10.859
+see what the professionals are doing today there
+
+00:19:10.859 --> 00:19:15.719
+is this page um so again um i went to the mast
+
+00:19:15.719 --> 00:19:17.640
+archive went
+
+00:19:18.310 --> 00:19:19.569
+to jwst data
+
+00:19:20.650 --> 00:19:22.930
+I went to what
+
+00:19:29.579 --> 00:19:31.579
+page did I go to?
+
+00:19:31.839 --> 00:19:34.739
+I went to understanding the data.
+
+00:19:36.640 --> 00:19:39.880
+And then down here under
+
+00:19:40.709 --> 00:19:41.250
+data,
+
+00:19:42.560 --> 00:19:43.760
+the bottom here,
+
+00:19:43.900 --> 00:19:45.819
+there's post pipeline data analysis.
+
+00:19:46.040 --> 00:19:47.599
+Now there will be a recording of this if you
+
+00:19:47.599 --> 00:19:48.239
+can't find it.
+
+00:19:48.640 --> 00:19:51.939
+And under here on this page,
+
+00:19:52.599 --> 00:19:55.160
+which is the same page as this page,
+
+00:19:55.439 --> 00:19:58.280
+there's a bunch of tools available.
+
+00:19:59.459 --> 00:20:02.920
+And Jupyter Notebooks are working with data.
+
+00:20:03.140 --> 00:20:04.540
+So if we go to
+
+00:20:10.520 --> 00:20:12.260
+Notebooks,
+
+00:20:13.609 --> 00:20:15.790
+there's a GitHub repository
+
+00:20:16.520 --> 00:20:19.160
+for that.
+
+00:20:23.510 --> 00:20:25.770
+And they're organized by instrument.
+
+00:20:26.380 --> 00:20:30.680
+So spacetelescope.github.io.
+
+00:20:30.800 --> 00:20:31.800
+Oops,
+
+00:20:32.079 --> 00:20:33.060
+didn't work.
+
+00:20:33.959 --> 00:20:38.040
+Slash jdat underscore notebooks have notebooks
+
+00:20:38.040 --> 00:20:40.160
+organized by instrument.
+
+00:20:40.780 --> 00:20:46.500
+And here is a near-spec time series observation
+
+00:20:46.500 --> 00:20:53.560
+of how to extract a spectrum of the simulated
+
+00:20:53.560 --> 00:20:57.979
+observations of the planet GJ436b.
+
+00:20:58.300 --> 00:21:00.300
+And it's just a Jupiter notebook.
+
+00:21:00.800 --> 00:21:03.959
+It's more complicated than the one I've given you
+
+00:21:03.959 --> 00:21:04.300
+already.
+
+00:21:04.479 --> 00:21:05.920
+But it's essentially the same thing.
+
+00:21:06.020 --> 00:21:06.099
+Look,
+
+00:21:06.199 --> 00:21:07.599
+there's even a T0 in there,
+
+00:21:07.599 --> 00:21:07.900
+too.
+
+00:21:08.739 --> 00:21:11.020
+I know some of you are wondering what T0 is.
+
+00:21:11.119 --> 00:21:13.359
+It's the time of conjunction or time of transit.
+
+00:21:14.680 --> 00:21:18.020
+And you get that from by interrogating your data
+
+00:21:18.020 --> 00:21:19.819
+and knowing what the minimum time and maximum
+
+00:21:19.819 --> 00:21:20.420
+time is.
+
+00:21:20.619 --> 00:21:24.060
+But there's the raw image at
+
+00:21:25.020 --> 00:21:25.699
+one time.
+
+00:21:25.959 --> 00:21:28.599
+You extract the raw image of the spectrum.
+
+00:21:29.040 --> 00:21:31.439
+So you have brightness as a function of
+
+00:21:31.439 --> 00:21:33.079
+wavelength at one time.
+
+00:21:33.420 --> 00:21:36.079
+And then you do this for all the different times.
+
+00:21:36.910 --> 00:21:38.670
+You de-trend the data.
+
+00:21:39.130 --> 00:21:41.550
+which is what we do in astro image j with the
+
+00:21:41.550 --> 00:21:45.349
+with the ash so we'll do this detrending step um
+
+00:21:45.410 --> 00:21:48.550
+in astro image j with the campus telescope data
+
+00:21:48.550 --> 00:21:52.189
+but there are similar systematics in when you
+
+00:21:52.189 --> 00:21:53.770
+know if you don't know what a systematic is we'll
+
+00:21:53.770 --> 00:21:57.430
+watch the videos next week um but we have to deal
+
+00:21:57.430 --> 00:21:59.650
+with those systematics in the data here it's
+
+00:21:59.650 --> 00:22:01.829
+being done in python and software you'll get to
+
+00:22:01.829 --> 00:22:05.650
+do it by hand with astro image j first and
+
+00:22:06.839 --> 00:22:09.339
+then you get a light curve as a function of time
+
+00:22:10.329 --> 00:22:12.689
+and as a function of wavelength.
+
+00:22:13.729 --> 00:22:16.869
+And you can eventually fit a model to that,
+
+00:22:17.229 --> 00:22:19.689
+loop over different wavelength bins,
+
+00:22:19.890 --> 00:22:21.270
+and this is a very long notebook,
+
+00:22:22.199 --> 00:22:24.040
+but at the very end,
+
+00:22:25.339 --> 00:22:28.479
+get the plot of the transit depth,
+
+00:22:28.819 --> 00:22:32.739
+basically the atmospheric opacity as a function
+
+00:22:32.739 --> 00:22:33.560
+of wavelength,
+
+00:22:33.560 --> 00:22:35.000
+these orange data points,
+
+00:22:35.219 --> 00:22:39.199
+as well as fitting them to a model shown in here
+
+00:22:39.199 --> 00:22:40.520
+in blue.
+
+00:22:41.380 --> 00:22:45.099
+So that's the aim that you could do.
+
+00:22:45.819 --> 00:22:50.520
+And that's where we are headed with this course.
+
+00:22:51.479 --> 00:22:52.900
+So I will
+
+00:22:53.859 --> 00:22:58.000
+mostly stop there for questions.
+
+00:22:58.760 --> 00:23:01.400
+And there was something else I was going to...

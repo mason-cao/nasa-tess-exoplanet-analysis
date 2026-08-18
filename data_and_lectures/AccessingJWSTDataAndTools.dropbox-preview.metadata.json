@@ -1,0 +1,42 @@
+{
+  "title": "Accessing JWST Data and Tools",
+  "retrieved_utc": "2026-08-18T08:41:23Z",
+  "source": {
+    "provider": "Dropbox",
+    "shared_file_id": "id:l1fs8cIr6eAAAAAAAHsNZg",
+    "reported_original_filename": "AccessingJWSTDataAndTools.mp4",
+    "reported_original_size_bytes": 485272479
+  },
+  "saved_artifact": {
+    "filename": "AccessingJWSTDataAndTools.dropbox-preview.mp4",
+    "artifact_kind": "password-authorized Dropbox HLS preview remux",
+    "size_bytes": 525550225,
+    "duration_seconds": 1381.162667,
+    "sha256": "8f4cc963735e475c98ce9fea31c42facc4fd85c26b25e9893c53164ec2f5af5a",
+    "video": {
+      "codec": "h264",
+      "width": 1670,
+      "height": 1080,
+      "average_frame_rate": "3452800/138103",
+      "average_bit_rate_bits_per_second": 2817322
+    },
+    "audio": {
+      "codec": "aac",
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "average_bit_rate_bits_per_second": 220974
+    }
+  },
+  "supplemental_artifacts": {
+    "captions": {
+      "filename": "AccessingJWSTDataAndTools.dropbox-preview.captions.vtt",
+      "sha256": "87048be441af0ef81f5fca6638cb4d3812a098deca1ab2e9a53631563081ce86"
+    },
+    "transcript": {
+      "filename": "AccessingJWSTDataAndTools.dropbox-preview.transcript.json",
+      "sha256": "85ca89a0010f613b4f8422a2e30ce90bbe953738ea38f6cea4b66d9d99e5809e"
+    },
+    "warning": "Dropbox-generated captions and transcript can contain recognition errors and are not authoritative transcriptions."
+  },
+  "provenance_note": "No matching MP4 or partial download was present in /Users/mason/Downloads or elsewhere under /Users/mason when checked. Dropbox accepted the supplied link password but required a signed-in Dropbox account for original-file download (DenyReason.ACTOR_NOT_LOGIN). This saved artifact therefore remuxes the authorized 1080p HLS preview video with its highest-quality advertised audio rendition and must not be represented as the untouched original file."
+}

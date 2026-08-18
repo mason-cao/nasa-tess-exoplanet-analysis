@@ -1,3 +1,4 @@
 *.zip filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
 *.plotcfg -diff -merge -text
 outputs/toi3505_poster/**/*.html linguist-generated
