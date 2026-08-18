@@ -689,7 +689,7 @@ def plot_final_candidate(
     axis.text(
         0.5 * (ingress_x + egress_x),
         0.9263,
-        "2022 schedule window (EDT assumption)",
+        "2022 schedule window (confirmed EDT)",
         color="#d43f3a",
         ha="center",
         va="bottom",
@@ -736,8 +736,8 @@ def plot_final_candidate(
     fig.text(
         0.5,
         0.018,
-        "The historical sheet does not state its time zone; the current-catalog "
-        "transit is outside this sequence.",
+        "Schedule times confirmed as Eastern; the current-catalog transit is "
+        "outside this sequence.",
         ha="center",
         fontsize=8.2,
     )
@@ -778,9 +778,10 @@ def write_readme(
 
 ## Result
 
-This light curve is ready for mentor review. A recovered observing-schedule
-row lists ingress at 00:15 and egress at 01:54. Interpreting those sheet clocks
-as Eastern local time gives BJD_TDB
+The final light curve has been reviewed. The reviewer did not see a transit and
+said the curve looked good, but noted that the plot key covers some data. A
+recovered observing-schedule row lists ingress at 00:15 and egress at 01:54.
+Mason confirmed that those sheet clocks use Eastern time, giving BJD_TDB
 {float(schedule_times['ingress']['bjd_tdb']):.6f}-
 {float(schedule_times['egress']['bjd_tdb']):.6f}, fully inside the measured
 sequence. A straight-baseline, fixed-window check gives
@@ -791,9 +792,8 @@ at the same times gives a total recovered depth of
 {float(fixed['injected_total_depth_ppt']):.3f} ppt at
 {float(fixed['injected_total_depth_snr']):.2f} sigma.
 
-The source row does not state its time zone, epoch, timing uncertainty, or
-prediction source. The Eastern-time interpretation is used because the
-sheet's planned 21:10-04:55 range brackets the actual image sequence. Under
+The source row gives the observing-night date and period but does not provide
+the prediction epoch, timing uncertainty, depth, or prediction source. Under
 the current catalog period and epoch, the nearest predicted midpoint is
 BJD_TDB
 {float(midpoint['midpoint_bjd_tdb']):.6f}, or
@@ -857,12 +857,13 @@ The current three-image package is collected in `../toi3505_review_package/`:
 
 ## Still needed
 
-The mentor still needs to confirm the original spreadsheet or Transit Info
-source, its time zone, prediction epoch and uncertainty, and review the
-{source_radius:g}-pixel aperture and comparison stars. The stored BJD_TDB
-values agree with an independent calculation to within 0.000201 seconds, but
-the observatory clock-sync record has not been found. Describe this as a light
-curve submitted for review, not as a transit detection.
+Move the plot key so it does not cover the data. If available, preserve the
+original Transit Info file or another record of the prediction epoch, timing
+uncertainty, depth, and source. The stored BJD_TDB values agree with an
+independent calculation to within 0.000201 seconds, but the observatory
+clock-sync record has not been found. Confirm whether the program's formal
+AstroImageJ NEB procedure is required. Do not describe this as a transit
+detection.
 """
     (output_dir / "README.md").write_text(text, encoding="utf-8")
 
@@ -1154,7 +1155,9 @@ def main() -> None:
         "historical_schedule": {
             "source_record": schedule_analysis["source_record"],
             "working_timezone": "America/New_York",
-            "source_timezone_explicit": False,
+            "source_row_has_timezone_field": False,
+            "timezone_confirmed": True,
+            "timezone_confirmation_date": "2026-08-18",
             "fixed_window_only": True,
         },
     }
@@ -1171,7 +1174,8 @@ def main() -> None:
         "detrending": "none" if model_name == "none" else model_name,
         "transit_fit": "none",
         "historical_schedule_window_displayed": True,
-        "historical_schedule_timezone_assumption": "America/New_York",
+        "historical_schedule_timezone": "America/New_York",
+        "historical_schedule_timezone_confirmed": True,
         "display_bin_minutes": BIN_MINUTES,
         "final_plot_style": "TFOP/Schar diagnostic review layout",
         "final_plot_page_relative_diagnostics": [
@@ -1254,8 +1258,10 @@ def main() -> None:
         },
         "remaining_finalization_gates": [
             "observatory clock-sync provenance",
-            "original scheduling workbook or Transit Info file, time zone, epoch, and timing uncertainty",
-            f"mentor timing and {args.source_radius:g}-pixel photometry review",
+            "original Transit Info file or equivalent prediction source, epoch, and timing uncertainty",
+            "formal AstroImageJ NEB requirement",
+            "refined TESS timing review",
+            "move the final plot key so it does not cover data",
         ],
     }
     (output_dir / "summary.json").write_text(

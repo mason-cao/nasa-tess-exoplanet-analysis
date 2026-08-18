@@ -35,14 +35,15 @@ aperture so blends are visible instead of hidden.
 
 ## Nearby-star scope
 
-280 deduplicated TIC sources within 150 arcseconds (2.5 arcminutes, the TFOP SG1 nominal radius) were bright enough to mimic a 2.91-ppt event in the simple total-eclipse screen and were measured on all 281 aligned images. Under the documented Eastern-time interpretation of the 2022 schedule, 222 sources are inconsistent with the required eclipse at this screen's three-sigma level. 2 source apertures overlap the target aperture and are not cleared.
+280 deduplicated TIC sources within 150 arcseconds (2.5 arcminutes, the TFOP SG1 nominal radius) were bright enough to mimic a 2.91-ppt event in the simple total-eclipse screen and were measured on all 281 aligned images. Using the confirmed Eastern times from the 2022 schedule, 222 sources are inconsistent with the required eclipse at this screen's three-sigma level. 2 source apertures overlap the target aperture and are not cleared.
 
 The schedule-window result uses ingress BJD_TDB
 2459782.682401 and egress
-2459782.751151. The source row does not state
-its time zone, epoch, uncertainty, or prediction source. Clearance here is a
-conservative image-level screen, not the program's formal AstroImageJ NEB
-procedure or planet validation. It cannot resolve or clear the known
+2459782.751151. Mason confirmed that the
+schedule clocks are Eastern time. The row does not provide the prediction
+epoch, uncertainty, depth, or source. Clearance here is a conservative
+image-level screen, not the program's formal AstroImageJ NEB procedure or
+planet validation. It cannot resolve or clear the known
 0.517-arcsecond companion. The current ephemeris still places its nearest
 event about 17.4 hours before this sequence.
 

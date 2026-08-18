@@ -2,9 +2,10 @@
 
 ## Result
 
-This light curve is ready for mentor review. A recovered observing-schedule
-row lists ingress at 00:15 and egress at 01:54. Interpreting those sheet clocks
-as Eastern local time gives BJD_TDB
+The final light curve has been reviewed. The reviewer did not see a transit and
+said the curve looked good, but noted that the plot key covers some data. A
+recovered observing-schedule row lists ingress at 00:15 and egress at 01:54.
+Mason confirmed that those sheet clocks use Eastern time, giving BJD_TDB
 2459782.682401-
 2459782.751151, fully inside the measured
 sequence. A straight-baseline, fixed-window check gives
@@ -15,9 +16,8 @@ at the same times gives a total recovered depth of
 2.252 ppt at
 5.71 sigma.
 
-The source row does not state its time zone, epoch, timing uncertainty, or
-prediction source. The Eastern-time interpretation is used because the
-sheet's planned 21:10-04:55 range brackets the actual image sequence. Under
+The source row gives the observing-night date and period but does not provide
+the prediction epoch, timing uncertainty, depth, or prediction source. Under
 the current catalog period and epoch, the nearest predicted midpoint is
 BJD_TDB
 2459781.873763, or
@@ -81,9 +81,10 @@ The current three-image package is collected in `../toi3505_review_package/`:
 
 ## Still needed
 
-The mentor still needs to confirm the original spreadsheet or Transit Info
-source, its time zone, prediction epoch and uncertainty, and review the
-25-pixel aperture and comparison stars. The stored BJD_TDB
-values agree with an independent calculation to within 0.000201 seconds, but
-the observatory clock-sync record has not been found. Describe this as a light
-curve submitted for review, not as a transit detection.
+Move the plot key so it does not cover the data. If available, preserve the
+original Transit Info file or another record of the prediction epoch, timing
+uncertainty, depth, and source. The stored BJD_TDB values agree with an
+independent calculation to within 0.000201 seconds, but the observatory
+clock-sync record has not been found. Confirm whether the program's formal
+AstroImageJ NEB procedure is required. Do not describe this as a transit
+detection.

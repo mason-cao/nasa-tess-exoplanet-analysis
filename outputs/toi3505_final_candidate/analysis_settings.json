@@ -22,7 +22,8 @@
   "detrending": "none",
   "transit_fit": "none",
   "historical_schedule_window_displayed": true,
-  "historical_schedule_timezone_assumption": "America/New_York",
+  "historical_schedule_timezone": "America/New_York",
+  "historical_schedule_timezone_confirmed": true,
   "display_bin_minutes": 10.0,
   "final_plot_style": "TFOP/Schar diagnostic review layout",
   "final_plot_page_relative_diagnostics": [

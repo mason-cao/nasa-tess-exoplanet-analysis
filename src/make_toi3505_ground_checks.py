@@ -667,7 +667,7 @@ def measure_nearby_stars(
                 "observed_phase_max": float(np.nanmax(phase[primary]))
                 if primary.any()
                 else float("nan"),
-                "historical_schedule_timezone_assumption": "America/New_York",
+                "historical_schedule_timezone": "America/New_York",
                 "historical_window_points": int(inside.sum()),
                 "outside_window_points": int(outside.sum()),
                 "historical_window_depth_ppt": schedule_depth * 1000.0,
@@ -922,8 +922,8 @@ def write_readme(
             f"{NEARBY_RADIUS_ARCSEC:.0f} arcseconds ({NEARBY_RADIUS_ARCSEC / 60.0:.1f} "
             f"arcminutes, the TFOP SG1 nominal radius) "
             "were bright enough to mimic a 2.91-ppt event in the simple total-eclipse "
-            "screen and were measured on all 281 aligned images. Under the documented "
-            "Eastern-time interpretation of the 2022 schedule, "
+            "screen and were measured on all 281 aligned images. Using the confirmed "
+            "Eastern times from the 2022 schedule, "
             f"{cleared} sources are inconsistent with the required eclipse at this "
             f"screen's three-sigma level. {overlap} source apertures overlap the "
             "target aperture and are not cleared."
@@ -973,10 +973,11 @@ aperture so blends are visible instead of hidden.
 
 The schedule-window result uses ingress BJD_TDB
 {float(schedule_times['ingress']['bjd_tdb']):.6f} and egress
-{float(schedule_times['egress']['bjd_tdb']):.6f}. The source row does not state
-its time zone, epoch, uncertainty, or prediction source. Clearance here is a
-conservative image-level screen, not the program's formal AstroImageJ NEB
-procedure or planet validation. It cannot resolve or clear the known
+{float(schedule_times['egress']['bjd_tdb']):.6f}. Mason confirmed that the
+schedule clocks are Eastern time. The row does not provide the prediction
+epoch, uncertainty, depth, or source. Clearance here is a conservative
+image-level screen, not the program's formal AstroImageJ NEB procedure or
+planet validation. It cannot resolve or clear the known
 0.517-arcsecond companion. The current ephemeris still places its nearest
 event about 17.4 hours before this sequence.
 
@@ -1119,7 +1120,7 @@ def main() -> None:
     summary = {
         "target": "TOI-3505.01",
         "observation_interpretation": (
-            "historical scheduled window under an EDT assumption; off transit "
+            "historical scheduled window in confirmed EDT; off transit "
             "under the current ephemeris"
         ),
         "historical_schedule": schedule,
@@ -1145,7 +1146,7 @@ def main() -> None:
             "bright_enough_catalog_candidates": len(candidates),
             "image_measurement_completed": nearby_measurements is not None,
             "historical_schedule_window_covered": True,
-            "working_timezone": "America/New_York",
+            "confirmed_timezone": "America/New_York",
             "sources_cleared_by_conditional_screen": int(
                 nearby_measurements["transit_relevant_clearance"].sum()
             )

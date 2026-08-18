@@ -81,7 +81,9 @@
   "historical_schedule": {
     "source_record": "data/program_records/toi3505/observing_schedule_2022-07-21.json",
     "working_timezone": "America/New_York",
-    "source_timezone_explicit": false,
+    "source_row_has_timezone_field": false,
+    "timezone_confirmed": true,
+    "timezone_confirmation_date": "2026-08-18",
     "fixed_window_only": true
   }
 }
