@@ -36,8 +36,14 @@ class ScheduleRecordTests(unittest.TestCase):
         self.assertEqual(
             row["Notes"], "bad RA jumps at the beginning of the night"
         )
+        self.assertEqual(row["Apertures File"], "")
+        self.assertNotIn("Finder Chart", row)
+        self.assertEqual(
+            record["timezone_confirmation"]["iana_timezone"],
+            "America/New_York",
+        )
 
-    def test_eastern_interpretation_brackets_data_but_utc_does_not(self) -> None:
+    def test_confirmed_eastern_times_bracket_data_but_utc_does_not(self) -> None:
         context = schedule_context(
             observation_start_bjd=2459782.598234811,
             observation_end_bjd=2459782.809458706,
@@ -45,6 +51,7 @@ class ScheduleRecordTests(unittest.TestCase):
         comparison = context["observation_comparison"]
         working = context["working_interpretation"]
 
+        self.assertTrue(working["timezone_confirmed"])
         self.assertTrue(comparison["working_planned_range_brackets_observation"])
         self.assertTrue(comparison["working_event_fully_covered"])
         self.assertFalse(comparison["utc_event_fully_covered"])
@@ -55,13 +62,16 @@ class ScheduleRecordTests(unittest.TestCase):
             working["times"]["egress"]["bjd_tdb"], 2459782.751150993
         )
 
-    def test_eastern_interpretation_matches_nighttime_geometry(self) -> None:
+    def test_confirmed_eastern_times_match_nighttime_geometry(self) -> None:
         context = schedule_context()
         working = context["working_interpretation"]
         plausibility = context["timezone_plausibility"]
 
         self.assertEqual(working["timezone_abbreviation"], "EDT")
         self.assertEqual(working["utc_offset_hours"], -4.0)
+        self.assertEqual(
+            plausibility["confirmed_interpretation"], "America/New_York"
+        )
         self.assertTrue(plausibility["working_start_is_observable"])
         self.assertTrue(plausibility["working_end_is_observable"])
         self.assertFalse(plausibility["utc_start_is_observable"])

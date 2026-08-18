@@ -1,9 +1,9 @@
 """Preserve and interpret the TOI-3505.01 2022 scheduling-sheet row.
 
-The source row contains clock times but no time-zone field.  This module keeps
-that limitation explicit, evaluates both Eastern civil time and UTC, and uses
-Eastern time only as a working interpretation because its planned start/end
-bracket the actual GMU image sequence.
+The spreadsheet row has no time-zone column, but Mason confirmed on 2026-08-18
+that its clocks use Eastern time. This module uses America/New_York, which was
+EDT (UTC-4) on the observing night. The older UTC comparison remains only as a
+diagnostic record of the ambiguity that existed before that confirmation.
 """
 
 from __future__ import annotations
@@ -31,6 +31,31 @@ DEFAULT_SCHEDULE_RECORD = (
     / "observing_schedule_2022-07-21.json"
 )
 WORKING_TIMEZONE = "America/New_York"
+EXPECTED_COLUMNS = (
+    "NoD",
+    "NoW",
+    "Target",
+    "Vmag",
+    "Ingress",
+    "Egress",
+    "Start",
+    "End",
+    "Filter",
+    "Exp",
+    "Priority",
+    "Dis",
+    "TOC",
+    "Student Sign Up",
+    "Observer 1",
+    "Observer 2",
+    "Observer 3",
+    "Observer 4",
+    "Notes",
+    "RA",
+    "Dec",
+    "Orbital Period",
+    "Apertures File",
+)
 OBSERVATORY = EarthLocation.from_geodetic(
     lon=-77.3053299972 * u.deg,
     lat=38.82817 * u.deg,
@@ -52,6 +77,8 @@ def load_schedule_record(path: Path = DEFAULT_SCHEDULE_RECORD) -> dict[str, obje
         raise ValueError("Schedule record must contain column and value lists")
     if len(columns) != len(values) or len(columns) != len(set(columns)):
         raise ValueError("Schedule columns and values are mismatched or duplicated")
+    if tuple(columns) != EXPECTED_COLUMNS:
+        raise ValueError("Schedule columns do not match the supplied spreadsheet headers")
     row = dict(zip(columns, values, strict=True))
     if row["Target"] != "TOI 3505.01":
         raise ValueError(f"Unexpected schedule target: {row['Target']}")
@@ -61,6 +88,11 @@ def load_schedule_record(path: Path = DEFAULT_SCHEDULE_RECORD) -> dict[str, obje
         raise ValueError("The schedule weekday is inconsistent with its date")
     if row["Filter"] != "R" or row["Exp"] != "50s":
         raise ValueError("The schedule no longer matches the R/50-second data set")
+    confirmation = payload.get("timezone_confirmation")
+    if not isinstance(confirmation, dict):
+        raise ValueError("Schedule record must include the time-zone confirmation")
+    if confirmation.get("iana_timezone") != WORKING_TIMEZONE:
+        raise ValueError("Schedule time-zone confirmation is not America/New_York")
     payload["row"] = row
     payload["path"] = str(path.resolve())
     return payload
@@ -135,7 +167,7 @@ def build_clock_interpretation(
         "timezone": timezone_name,
         "timezone_abbreviation": start_datetime.tzname(),
         "utc_offset_hours": utc_offset.total_seconds() / 3600.0,
-        "source_timezone_explicit": False,
+        "source_row_has_timezone_field": False,
         "times": values,
         "event_duration_hours": (ordered[2] - ordered[1]) * 24.0,
         "event_midpoint_bjd_tdb": 0.5 * (ordered[1] + ordered[2]),
@@ -177,6 +209,12 @@ def schedule_context(
     assert isinstance(row, dict)
     working = build_clock_interpretation(row, WORKING_TIMEZONE)
     utc_alternative = build_clock_interpretation(row, "UTC")
+    confirmation = payload["timezone_confirmation"]
+    assert isinstance(confirmation, dict)
+    working["timezone_confirmed"] = True
+    working["timezone_confirmation"] = confirmation
+    utc_alternative["timezone_confirmed"] = False
+    utc_alternative["status"] = "rejected comparison retained for audit"
     working_altitudes = schedule_altitudes(working)
     utc_altitudes = schedule_altitudes(utc_alternative)
     working_start = working_altitudes["planned_start"]
@@ -192,11 +230,13 @@ def schedule_context(
             "original_workbook_or_url_archived"
         ],
         "source_limits": payload["source_limits"],
+        "timezone_confirmation": confirmation,
         "row": row,
         "working_interpretation": working,
         "utc_alternative": utc_alternative,
         "timezone_plausibility": {
             "preferred_interpretation": WORKING_TIMEZONE,
+            "confirmed_interpretation": WORKING_TIMEZONE,
             "working_interpretation_altitudes": working_altitudes,
             "utc_alternative_altitudes": utc_altitudes,
             "working_start_is_observable": bool(
@@ -212,19 +252,18 @@ def schedule_context(
                 and float(utc_start["target_altitude_degrees"]) > 20.0
             ),
             "assessment": (
-                "America/New_York is strongly favored: on this date it is EDT "
-                "(UTC-4), its planned start and end occur with the Sun below "
-                "the horizon and the target above 20 degrees, and its planned "
-                "range brackets the images. Treating the clocks as UTC starts "
+                "Mason confirmed that the schedule uses Eastern time. On this "
+                "date America/New_York is EDT (UTC-4). The sky geometry and "
+                "image times independently agree: the planned Eastern range "
+                "brackets the images, while the rejected UTC comparison starts "
                 "in daylight with the target below the horizon."
             ),
         },
         "working_interpretation_reason": (
-            "America/New_York civil time is used because the planned 21:10-04:55 "
-            "range brackets the actual GMU sequence and has physically plausible "
-            "Sun and target altitudes under that interpretation. On this date "
-            "America/New_York is EDT (UTC-4). The source row itself does not "
-            "state a time zone."
+            "Mason confirmed on 2026-08-18 that the schedule clocks use Eastern "
+            "time. America/New_York is EDT (UTC-4) on the 2022-07-21 observing "
+            "night. The planned 21:10-04:55 range also brackets the GMU sequence "
+            "and has physically plausible Sun and target altitudes."
         ),
         "historical_ephemeris_complete": False,
     }
@@ -418,8 +457,8 @@ def analyze_schedule_window(
         "injected_total_depth_snr": injected["depth_snr"],
         "interpretation": (
             "No transit-like dimming is measured in the exact historical window. "
-            "This is conditional on the documented Eastern-time interpretation "
-            "and is not a physical transit fit."
+            "The schedule times are confirmed as Eastern, and this remains a "
+            "fixed-window check rather than a physical transit fit."
         ),
     }
     context["fixed_window_check"] = fit_summary

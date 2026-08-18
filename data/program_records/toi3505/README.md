@@ -15,26 +15,25 @@ The source row records:
 - Mason Cao as the student and Kevin / Schar Students as observers;
 - the note `bad RA jumps at the beginning of the night`.
 
-The row does not identify its time zone. The analysis uses
-`America/New_York` as a documented working interpretation because the planned
-21:10–04:55 interval then brackets the actual GMU sequence, which began at
-22:13 EDT and ended at 03:18 EDT. The derived BJD_TDB values are never written
-back into this source record. A UTC alternative is retained in the generated
-timing output so the assumption remains visible.
+Mason confirmed on 2026-08-18 that the spreadsheet times are Eastern time.
+For the 2022-07-21 observing night, `America/New_York` is EDT (UTC-4). The
+21:10 start is therefore on July 21, while the 00:15 ingress, 01:54 egress,
+and 04:55 end are on July 22. The derived BJD_TDB values are never written
+back into the transcribed row.
 
-The sky geometry strongly supports that interpretation. On 2022-07-21,
-America/New_York was EDT (UTC-4). At the planned 21:10 EDT start, the Sun was
+The sky geometry independently agrees with the confirmed time zone. At the
+planned 21:10 EDT start, the Sun was
 about 7.6 degrees below the horizon and TOI-3505 was about 36.9 degrees high.
 At the planned 04:55 EDT end, the Sun was about 11.8 degrees below the horizon
 and the target was about 35.4 degrees high. Reading the same clock cells as UTC
 would place the start at 17:10 EDT, with the Sun about 36.8 degrees high and
-the target about 8.0 degrees below the horizon. This makes UTC implausible for
-an observing schedule, although the absent source timezone remains recorded.
+the target about 8.0 degrees below the horizon. The UTC calculation is retained
+only as an audit of the earlier ambiguity; it is not an active alternative.
 
 This row recovers the historical scheduled window, but it is not a complete
-historical ephemeris. The original workbook or URL, prediction epoch, timing
-uncertainty, depth, and Transit Info file still need to be obtained from the
-program.
+historical ephemeris. The prediction epoch, timing uncertainty, depth,
+prediction source, original Transit Info file, and observatory clock-sync
+record are not present in the supplied row.
 
 Checks against the delivered data:
 

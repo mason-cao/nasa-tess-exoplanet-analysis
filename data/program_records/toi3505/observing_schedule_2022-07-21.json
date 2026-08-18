@@ -1,6 +1,6 @@
 {
   "record_type": "program_observing_schedule_row",
-  "schema_version": 1,
+  "schema_version": 2,
   "received_date": "2026-07-24",
   "source_description": "TOI-3505.01 row copied by Mason from the internship observing-schedule spreadsheet and pasted into the project conversation",
   "original_workbook_or_url_archived": false,
@@ -29,8 +29,7 @@
     "RA",
     "Dec",
     "Orbital Period",
-    "Apertures File",
-    "Finder Chart"
+    "Apertures File"
   ],
   "values": [
     "2022-07-21",
@@ -55,13 +54,20 @@
     "19:48:10",
     "#N/A",
     "2.9151488",
-    "",
-    "Finder Chart"
+    ""
   ],
+  "timezone_confirmation": {
+    "confirmed_date": "2026-08-18",
+    "confirmed_by": "Mason Cao",
+    "source": "project conversation",
+    "label_provided": "Eastern time",
+    "iana_timezone": "America/New_York",
+    "civil_time_on_observing_night": "EDT (UTC-4)"
+  },
   "source_limits": [
-    "The pasted row does not state a time zone.",
+    "The spreadsheet row has no time-zone column; Eastern time was confirmed separately by Mason on 2026-08-18.",
     "The workbook name, URL, revision history, formulas, and cell formatting were not supplied.",
-    "The row gives ingress, egress, and period but no epoch, timing uncertainty, depth, or source for those predictions.",
-    "Finder Chart is display text; its underlying link target was not present in the pasted data."
+    "The row gives the observing-night date, ingress, egress, and period but no prediction epoch, timing uncertainty, depth, or source for those predictions.",
+    "The Apertures File cell is blank."
   ]
 }
