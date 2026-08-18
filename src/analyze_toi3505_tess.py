@@ -440,7 +440,8 @@ def measure_event_times(
         "historical_schedule": historical_schedule,
         "warning": (
             "The scheduling row recovers a historical ingress/egress window but "
-            "not its epoch, uncertainty, time-zone field, or prediction source. "
+            "not its prediction epoch, uncertainty, depth, or prediction source. "
+            "The schedule clocks were separately confirmed as Eastern time. "
             "The TESS box timings remain preliminary checks."
         ),
     }
@@ -812,7 +813,7 @@ def make_timing_window_plot(
         display_historical_egress,
         color="#8a5a9b",
         linewidth=9,
-        label="2022 schedule window (EDT assumed)",
+        label="2022 schedule window (confirmed EDT)",
     )
     ax.vlines(
         [display_historical_ingress, display_historical_egress],
@@ -1025,7 +1026,7 @@ def write_readme(
             "",
             f"{selected} individual events pass the stated timing-quality rule. The Sector 14-only box ephemeris predicts the catalog cycle nearest the GMU night at BJD_TDB {s14_prediction['bjd']:.6f} +/- {s14_prediction['uncertainty_minutes']:.1f} minutes. This is a modern reconstruction from the public Sector 14 light curve.",
             "",
-            f"The recovered 2022 schedule row lists ingress at 00:15 and egress at 01:54. Under the documented Eastern-time interpretation, those become BJD_TDB {float(historical_times['ingress']['bjd_tdb']):.6f}-{float(historical_times['egress']['bjd_tdb']):.6f}, inside the GMU images. Its midpoint is {float(historical_comparison['schedule_midpoint_minus_current_prediction_hours']):.2f} hours later than the nearest current-catalog prediction.",
+            f"The recovered 2022 schedule row lists ingress at 00:15 and egress at 01:54. Mason confirmed that the schedule uses Eastern time, so those become BJD_TDB {float(historical_times['ingress']['bjd_tdb']):.6f}-{float(historical_times['egress']['bjd_tdb']):.6f}, inside the GMU images. Its midpoint is {float(historical_comparison['schedule_midpoint_minus_current_prediction_hours']):.2f} hours later than the nearest current-catalog prediction.",
             "",
             "The schedule period is close to the later measured periods, but the source row contains no epoch or timing uncertainty. The disagreement therefore cannot be attributed to period drift alone. The historical window is a recovered scheduling prediction, not proof that a transit occurred.",
             "",

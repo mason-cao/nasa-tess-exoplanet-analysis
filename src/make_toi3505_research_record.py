@@ -332,7 +332,7 @@ def frozen_config() -> dict[str, object]:
         ),
         "claim_limits": [
             "The GMU night is off transit under the current ephemeris, but the recovered 2022 schedule placed an event inside it.",
-            "The schedule row has no explicit time zone, epoch, uncertainty, depth, or prediction source.",
+            "The schedule clocks are confirmed as Eastern time, but the row has no prediction epoch, uncertainty, depth, or prediction source.",
             "The GMU window falls in a Sector 54 data gap.",
             "TESS-scale localization cannot separate the 0.517-arcsecond companion.",
             "The dilution screen is not a final correction.",
@@ -373,7 +373,7 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "claim": "The adopted ground curve uses a 25-pixel aperture and all ten comparison stars.",
             "evidence": "outputs/toi3505_aperture_check/aperture_radius_metrics.csv; outputs/toi3505_final_candidate/frozen_protocol.json",
             "status": "supported",
-            "limit": "Mentor review remains requested.",
+            "limit": "The reviewer said the final curve looked good; the formal NEB question remains unanswered.",
         },
         {
             "claim": "No detrending correction was justified for the mentor-review ground curve.",
@@ -382,16 +382,16 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "limit": "Applies to the tested variables and blocked checks only.",
         },
         {
-            "claim": "The 2022 program schedule placed ingress and egress inside the GMU sequence under the documented Eastern-time interpretation.",
+            "claim": "The 2022 program schedule placed ingress and egress inside the GMU sequence using the confirmed Eastern schedule times.",
             "evidence": "data/program_records/toi3505/observing_schedule_2022-07-21.json; outputs/toi3505_final_candidate/historical_schedule_check.json",
-            "status": "supported with a stated time-zone assumption",
-            "limit": "The pasted row has no explicit time zone, epoch, uncertainty, depth, or original workbook/URL.",
+            "status": "supported",
+            "limit": "The time zone was confirmed separately; the row has no prediction epoch, uncertainty, depth, prediction source, or archived workbook URL.",
         },
         {
             "claim": "The fixed historical-window check measures -0.658 +/- 0.395 ppt, so it finds no transit-like dimming; a 2.91-ppt same-window injection is recovered with a 2.910-ppt increment.",
             "evidence": "outputs/toi3505_final_candidate/historical_schedule_check.json; outputs/toi3505_final_candidate/historical_schedule_times.csv",
-            "status": "supported under the Eastern-time schedule interpretation",
-            "limit": "This is a straight-baseline exposure-integrated box check, not a physical transit fit, and the schedule timezone is unconfirmed.",
+            "status": "supported using the confirmed Eastern schedule times",
+            "limit": "This is a straight-baseline exposure-integrated box check, not a physical transit fit.",
         },
         {
             "claim": "The GMU sequence does not cover a predicted transit under the adopted refined ephemeris.",
@@ -456,7 +456,7 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             ),
             "evidence": "outputs/toi3505_ground_checks/nearby_star_image_measurements.csv; outputs/toi3505_ground_checks/summary.json",
             "status": "conditional screening result",
-            "limit": "It assumes Eastern local time, is not the formal program NEB procedure, and cannot resolve the 0.517-arcsecond companion.",
+            "limit": "It uses the confirmed Eastern schedule window, is not the formal program NEB procedure, and cannot resolve the 0.517-arcsecond companion.",
         },
     ]
 
@@ -490,8 +490,8 @@ def decision_rows() -> list[dict[str, str]]:
         {
             "date": "2026-07-23",
             "decision": "Treat nearby-star and dilution calculations as screens.",
-            "reason": "The ground clearance is conditional on an unlabeled schedule timezone, the current run is not the formal program NEB procedure, and neither the ground apertures nor TESS resolve the close companion.",
-            "alternative": "Confirm the schedule source, complete the formal program NEB procedure, and use resolving observations or permitted ExoFOP products.",
+            "reason": "At the time the schedule timezone was not yet confirmed; the run is not the formal program NEB procedure, and neither the ground apertures nor TESS resolve the close companion.",
+            "alternative": "Confirm the schedule timezone, complete the formal program NEB procedure, and use resolving observations or permitted ExoFOP products.",
         },
         {
             "date": "2026-07-23",
@@ -501,15 +501,21 @@ def decision_rows() -> list[dict[str, str]]:
         },
         {
             "date": "2026-07-24",
-            "decision": "Use America/New_York as the working interpretation of the schedule clocks while preserving a UTC alternative.",
+            "decision": "Before direct confirmation, use America/New_York as the working interpretation and preserve a UTC comparison.",
             "reason": "The sheet's planned 21:10-04:55 range brackets the actual image sequence only under the Eastern civil-time interpretation.",
-            "alternative": "Obtain the original workbook or Transit Info file and replace the assumption if its metadata says otherwise.",
+            "alternative": "Obtain a direct time-zone confirmation; this was completed on 2026-08-18.",
         },
         {
             "date": "2026-07-31",
             "decision": "Adopt the 27-event mixed-pipeline trapezoidal ephemeris for timing and poster claims.",
             "reason": "QLP is the only pipeline available for Sectors 14 and 41, while SPOC two-minute data improve timing in Sectors 54 and 81; the trapezoid represents the near-grazing shape without counting any event twice.",
             "alternative": "Retain the QLP-only and box-shape fits as explicit controls in the same output record.",
+        },
+        {
+            "date": "2026-08-18",
+            "decision": "Treat the 2022 schedule clocks as confirmed Eastern time.",
+            "reason": "Mason confirmed that the spreadsheet times are Eastern; America/New_York was EDT (UTC-4) on the observing night.",
+            "alternative": "The UTC calculation is retained only as an audit comparison, not as an active interpretation.",
         },
     ]
 
@@ -519,7 +525,7 @@ def dependence_rows() -> list[dict[str, str]]:
         {
             "product": "ground final light curve",
             "depends_on": "original archives; calibration masters; reduced and aligned images; 25-pixel AstroImageJ table; 2022 observing-schedule row",
-            "shared_data_warning": "Photutils and AstroImageJ extractions use the same ground images; the schedule time zone is a documented assumption.",
+            "shared_data_warning": "Photutils and AstroImageJ extractions use the same ground images; the schedule clocks are confirmed as Eastern time.",
         },
         {
             "product": "four-sector TESS measurements",
@@ -549,7 +555,7 @@ def dependence_rows() -> list[dict[str, str]]:
         {
             "product": "ground nearby-star screen",
             "depends_on": "TIC v8; first-frame WCS; all aligned ground images; comparison counts",
-            "shared_data_warning": "Clearance is conditional on the EDT schedule interpretation, and the target aperture cannot separate the 0.517-arcsecond companion.",
+            "shared_data_warning": "The screen uses the confirmed EDT schedule window, and the target aperture cannot separate the 0.517-arcsecond companion.",
         },
     ]
 

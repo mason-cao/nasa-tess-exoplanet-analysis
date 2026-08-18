@@ -278,11 +278,19 @@
       "source_description": "TOI-3505.01 row copied by Mason from the internship observing-schedule spreadsheet and pasted into the project conversation",
       "original_workbook_or_url_archived": false,
       "source_limits": [
-        "The pasted row does not state a time zone.",
+        "The spreadsheet row has no time-zone column; Eastern time was confirmed separately by Mason on 2026-08-18.",
         "The workbook name, URL, revision history, formulas, and cell formatting were not supplied.",
-        "The row gives ingress, egress, and period but no epoch, timing uncertainty, depth, or source for those predictions.",
-        "Finder Chart is display text; its underlying link target was not present in the pasted data."
+        "The row gives the observing-night date, ingress, egress, and period but no prediction epoch, timing uncertainty, depth, or source for those predictions.",
+        "The Apertures File cell is blank."
       ],
+      "timezone_confirmation": {
+        "confirmed_date": "2026-08-18",
+        "confirmed_by": "Mason Cao",
+        "source": "project conversation",
+        "label_provided": "Eastern time",
+        "iana_timezone": "America/New_York",
+        "civil_time_on_observing_night": "EDT (UTC-4)"
+      },
       "row": {
         "NoD": "2022-07-21",
         "NoW": "Thursday",
@@ -306,14 +314,13 @@
         "RA": "19:48:10",
         "Dec": "#N/A",
         "Orbital Period": "2.9151488",
-        "Apertures File": "",
-        "Finder Chart": "Finder Chart"
+        "Apertures File": ""
       },
       "working_interpretation": {
         "timezone": "America/New_York",
         "timezone_abbreviation": "EDT",
         "utc_offset_hours": -4.0,
-        "source_timezone_explicit": false,
+        "source_row_has_timezone_field": false,
         "times": {
           "planned_start": {
             "source_clock": "21:10",
@@ -341,13 +348,22 @@
           }
         },
         "event_duration_hours": 1.6500094458460808,
-        "event_midpoint_bjd_tdb": 2459782.716775796
+        "event_midpoint_bjd_tdb": 2459782.716775796,
+        "timezone_confirmed": true,
+        "timezone_confirmation": {
+          "confirmed_date": "2026-08-18",
+          "confirmed_by": "Mason Cao",
+          "source": "project conversation",
+          "label_provided": "Eastern time",
+          "iana_timezone": "America/New_York",
+          "civil_time_on_observing_night": "EDT (UTC-4)"
+        }
       },
       "utc_alternative": {
         "timezone": "UTC",
         "timezone_abbreviation": "UTC",
         "utc_offset_hours": 0.0,
-        "source_timezone_explicit": false,
+        "source_row_has_timezone_field": false,
         "times": {
           "planned_start": {
             "source_clock": "21:10",
@@ -375,10 +391,13 @@
           }
         },
         "event_duration_hours": 1.650011457502842,
-        "event_midpoint_bjd_tdb": 2459782.5501080663
+        "event_midpoint_bjd_tdb": 2459782.5501080663,
+        "timezone_confirmed": false,
+        "status": "rejected comparison retained for audit"
       },
       "timezone_plausibility": {
         "preferred_interpretation": "America/New_York",
+        "confirmed_interpretation": "America/New_York",
         "working_interpretation_altitudes": {
           "planned_start": {
             "utc_datetime": "2022-07-22T01:10:00+00:00",
@@ -406,9 +425,9 @@
         "working_start_is_observable": true,
         "working_end_is_observable": true,
         "utc_start_is_observable": false,
-        "assessment": "America/New_York is strongly favored: on this date it is EDT (UTC-4), its planned start and end occur with the Sun below the horizon and the target above 20 degrees, and its planned range brackets the images. Treating the clocks as UTC starts in daylight with the target below the horizon."
+        "assessment": "Mason confirmed that the schedule uses Eastern time. On this date America/New_York is EDT (UTC-4). The sky geometry and image times independently agree: the planned Eastern range brackets the images, while the rejected UTC comparison starts in daylight with the target below the horizon."
       },
-      "working_interpretation_reason": "America/New_York civil time is used because the planned 21:10-04:55 range brackets the actual GMU sequence and has physically plausible Sun and target altitudes under that interpretation. On this date America/New_York is EDT (UTC-4). The source row itself does not state a time zone.",
+      "working_interpretation_reason": "Mason confirmed on 2026-08-18 that the schedule clocks use Eastern time. America/New_York is EDT (UTC-4) on the 2022-07-21 observing night. The planned 21:10-04:55 range also brackets the GMU sequence and has physically plausible Sun and target altitudes.",
       "historical_ephemeris_complete": false,
       "observation_comparison": {
         "observation_start_bjd_tdb": 2459782.598234811,
@@ -426,6 +445,6 @@
         "period_interpretation": "The schedule period is close to the later periods; without the schedule epoch, the large event-time difference cannot be assigned to period drift alone."
       }
     },
-    "warning": "The scheduling row recovers a historical ingress/egress window but not its epoch, uncertainty, time-zone field, or prediction source. The TESS box timings remain preliminary checks."
+    "warning": "The scheduling row recovers a historical ingress/egress window but not its prediction epoch, uncertainty, depth, or prediction source. The schedule clocks were separately confirmed as Eastern time. The TESS box timings remain preliminary checks."
   }
 }

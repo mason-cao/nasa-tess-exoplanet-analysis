@@ -1,8 +1,8 @@
 {
-  "created_utc": "2026-08-04T20:35:28.489071+00:00",
+  "created_utc": "2026-08-18T09:13:40.608204+00:00",
   "manifest_scope": "full",
   "files": 741,
-  "bytes": 44722704340,
+  "bytes": 44722711202,
   "category_counts": {
     "analysis_code": 29,
     "analysis_test": 17,
@@ -18,17 +18,17 @@
     "tess_download": 36
   },
   "category_bytes": {
-    "analysis_code": 647013,
-    "analysis_test": 60357,
+    "analysis_code": 649055,
+    "analysis_test": 60748,
     "catalog_snapshot": 999075,
     "ground_aligned_image": 18860270400,
     "ground_calibration": 218128320,
     "ground_reduced_image": 18993692160,
-    "load_bearing_table": 1584485,
+    "load_bearing_table": 1584609,
     "original_archive": 6265040559,
     "plate_solution": 67121280,
-    "program_record": 4326,
-    "scientific_output": 1597635,
+    "program_record": 4501,
+    "scientific_output": 1601765,
     "tess_download": 313558730
   },
   "original_archive_count": 6,

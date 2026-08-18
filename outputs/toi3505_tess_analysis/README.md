@@ -24,7 +24,7 @@ This folder contains a reproducible first-pass measurement of the public TESS si
 
 25 individual events pass the stated timing-quality rule. The Sector 14-only box ephemeris predicts the catalog cycle nearest the GMU night at BJD_TDB 2459783.504888 +/- 440.9 minutes. This is a modern reconstruction from the public Sector 14 light curve.
 
-The recovered 2022 schedule row lists ingress at 00:15 and egress at 01:54. Under the documented Eastern-time interpretation, those become BJD_TDB 2459782.682401-2459782.751151, inside the GMU images. Its midpoint is 20.23 hours later than the nearest current-catalog prediction.
+The recovered 2022 schedule row lists ingress at 00:15 and egress at 01:54. Mason confirmed that the schedule uses Eastern time, so those become BJD_TDB 2459782.682401-2459782.751151, inside the GMU images. Its midpoint is 20.23 hours later than the nearest current-catalog prediction.
 
 The schedule period is close to the later measured periods, but the source row contains no epoch or timing uncertainty. The disagreement therefore cannot be attributed to period drift alone. The historical window is a recovered scheduling prediction, not proof that a transit occurred.
 
