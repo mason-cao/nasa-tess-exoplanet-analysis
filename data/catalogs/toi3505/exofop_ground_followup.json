@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "target": "TOI-3505.01",
+  "tic_id": 390988385,
+  "retrieved_utc": "2026-08-22T17:34:05Z",
+  "source": {
+    "name": "Exoplanet Follow-up Observing Program for TESS (ExoFOP-TESS)",
+    "target_url": "https://exofop.ipac.caltech.edu/tess/target.php?id=390988385",
+    "target_json_url": "https://exofop.ipac.caltech.edu/tess/target.php?id=390988385&json",
+    "access": "public HTTPS target metadata and public report-text files"
+  },
+  "current_status": {
+    "tess_disposition": "PC",
+    "tfopwg_disposition": "PC",
+    "confirmed_planets_listed": 0,
+    "interpretation": "TOI-3505.01 remains a planet candidate; these records do not establish statistical validation or confirmation."
+  },
+  "time_series_inventory": {
+    "table_rows": 7,
+    "unique_observing_nights": 6,
+    "duplicate_note": "The UT 2021-06-28 GMU observation appears twice with the same facility, camera, filter, duration, exposure count, tag, and observation ID but different ExoFOP time-series row IDs (12220 and 12215). It is counted once.",
+    "rows": [
+      {
+        "date_utc": "2021-06-28",
+        "facility": "GMU 0.8 m",
+        "instrument": "SBIG STX16803",
+        "filter": "R",
+        "coverage": "Full",
+        "duration_minutes": 359,
+        "exposures": 272,
+        "exofop_row_ids": [12220, 12215],
+        "unique_observation": true,
+        "result_scope": "Public metadata and products are present, but no quantitative result from this night is adopted here."
+      },
+      {
+        "date_utc": "2021-10-15",
+        "facility": "ULMT 0.6 m",
+        "instrument": "STX 16803",
+        "filter": "rp",
+        "coverage": "Full",
+        "duration_minutes": 250,
+        "exposures": 197,
+        "exofop_row_ids": [9823],
+        "unique_observation": true,
+        "result_scope": "The original report described a possible approximately 2.1 ppt feature at low significance. A later ExoFOP report states that a revised Sector 41 ephemeris placed the candidate event about 20 hours later, so this feature is not used as a candidate-transit timing."
+      },
+      {
+        "date_utc": "2022-06-14",
+        "facility": "KeplerCam 1.2 m",
+        "instrument": "KeplerCam",
+        "filter": "ip",
+        "coverage": "Full",
+        "duration_minutes": 343,
+        "exposures": 741,
+        "exofop_row_ids": [12660],
+        "unique_observation": true,
+        "result_scope": "A later ExoFOP report says the approximately 3.3 ppt event was ruled out during the observed window and no nearby eclipsing binaries were seen, but that the revised ephemeris placed the candidate event after the sequence."
+      },
+      {
+        "date_utc": "2023-05-05",
+        "facility": "CMO-SAI-RC-600 0.6 m",
+        "instrument": "Andor iKon-L",
+        "filter": "g-prime",
+        "coverage": "Full",
+        "duration_minutes": 134,
+        "exposures": 143,
+        "exofop_row_ids": [20377],
+        "unique_observation": true,
+        "result_scope": "The report describes a full on-target event of approximately 2 ppt and records both the superseded and revised periods."
+      },
+      {
+        "date_utc": "2023-07-11",
+        "facility": "OAA 0.4 m",
+        "instrument": "Moravian G4-9000",
+        "filter": "Ic",
+        "coverage": "Full",
+        "duration_minutes": 219,
+        "exposures": 100,
+        "exofop_row_ids": [20939],
+        "unique_observation": true,
+        "result_scope": "The report describes strong evidence for an on-target event close to the revised ephemeris."
+      },
+      {
+        "date_utc": "2023-07-14",
+        "facility": "TCS 1.52 m",
+        "instrument": "MuSCAT2",
+        "filter": "g, r, i, z_s",
+        "coverage": "Egress",
+        "duration_minutes": 150,
+        "exposures": 429,
+        "exofop_row_ids": [21003],
+        "unique_observation": true,
+        "result_scope": "The report describes a tentative on-target egress and supplies a fitted mid-transit time used only as an external ephemeris control."
+      }
+    ]
+  },
+  "report_values": {
+    "ulmt_2021_10_15": {
+      "report_file_id": 241156,
+      "url": "https://exofop.ipac.caltech.edu/tess/get_file.php?id=241156",
+      "predicted_ingress_bjd_tdb": 2459502.6093,
+      "predicted_midpoint_bjd_tdb": 2459502.6441,
+      "predicted_egress_bjd_tdb": 2459502.6790,
+      "reported_measured_midpoint_bjd_tdb": 2459502.6381,
+      "reported_feature_depth_ppt": 2.1,
+      "reported_significance_sigma": 1.0,
+      "use_in_this_work": "The predicted markers are used for archival schedule reconstruction. The possible feature and fitted values are not used in the ephemeris."
+    },
+    "keplercam_2022_06_14": {
+      "neb_file_id": 875200,
+      "url": "https://exofop.ipac.caltech.edu/tess/get_file.php?id=875200",
+      "use_in_this_work": "Qualitative public context only; no timing point is fitted."
+    },
+    "cmo_2023_05_05": {
+      "report_file_id": 919323,
+      "url": "https://exofop.ipac.caltech.edu/tess/get_file.php?id=919323",
+      "predicted_midpoint_bjd_tdb": 2460070.4723,
+      "reported_measured_minus_predicted_days": 0.0054,
+      "reported_approximate_depth_ppt": 2.0,
+      "superseded_period_days": 2.9174250,
+      "revised_period_days": 2.9151488,
+      "historical_comment": "The report states that an unpublished QLP Sector 41 ephemeris placed the event about 20 hours later than the earlier ULMT and KeplerCam windows.",
+      "use_in_this_work": "The two explicitly reported periods and the historical comment are used as provenance. The approximate event is not added to the timing fit because the report does not give a fitted timing uncertainty."
+    },
+    "oaa_2023_07_11": {
+      "report_file_id": 925894,
+      "url": "https://exofop.ipac.caltech.edu/tess/get_file.php?id=925894",
+      "predicted_midpoint_bjd_tdb": 2460137.5147,
+      "reported_measured_midpoint_bjd_tdb": 2460137.508879,
+      "reported_arrival_offset_minutes": -17.0,
+      "use_in_this_work": "Qualitative public context only; no timing point is fitted because the report does not give a fitted midpoint uncertainty."
+    },
+    "muscat2_2023_07_14": {
+      "report_file_id": 927127,
+      "url": "https://exofop.ipac.caltech.edu/tess/get_file.php?id=927127",
+      "midpoint_bjd_tdb": 2460140.4350453,
+      "midpoint_error_days": 0.000639,
+      "duration_days": 0.08747,
+      "duration_error_days": 0.00151,
+      "depths_ppt": {
+        "g": 2.72,
+        "r": 2.02,
+        "i": 2.59,
+        "z_s": 2.40
+      },
+      "nearby_stars_ruled_out": 133,
+      "report_language": "tentative egress on target",
+      "use_in_this_work": "One fitted midpoint is appended to the TESS event list only in a named external-control fit; it is not part of the primary TESS-only result."
+    }
+  },
+  "scope_limits": [
+    "The inventory records public ExoFOP metadata and report-level summaries; it does not re-reduce the external observers' images or photometry.",
+    "The public time-series rows and reports are contextual evidence, not six independent validations of the candidate.",
+    "Only MuSCAT2 publishes a midpoint uncertainty suitable for the numerical external-control fit used here.",
+    "Public-data use and citation do not by themselves imply coauthorship, endorsement, or a change to the established project author list.",
+    "Historical comments copied into older reports may contain superseded classifications; the live ExoFOP dispositions, both PC at retrieval, control the status stated in this work."
+  ]
+}

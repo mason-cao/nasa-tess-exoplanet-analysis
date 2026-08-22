@@ -1,0 +1,89 @@
+{
+  "target": "TOI-3505.01",
+  "analysis_type": "archival ephemeris consistency reconstruction",
+  "source_files": {
+    "schedule_check": "outputs/toi3505_final_candidate/historical_schedule_check.json",
+    "ground_summary": "outputs/toi3505_final_candidate/summary.json",
+    "refined_ephemeris": "outputs/toi3505_ephemeris_refined/ephemeris_refined.json",
+    "exofop_context": "data/catalogs/toi3505/exofop_ground_followup.json"
+  },
+  "source_event": {
+    "facility": "ULMT",
+    "date_utc": "2021-10-15",
+    "markers_bjd_tdb": {
+      "ingress": 2459502.6093,
+      "midpoint": 2459502.6441,
+      "egress": 2459502.679
+    },
+    "source_url": "https://exofop.ipac.caltech.edu/tess/get_file.php?id=241156"
+  },
+  "periods": {
+    "superseded_period_days": 2.917425,
+    "displayed_revised_period_days": 2.9151488,
+    "schedule_row_period_days": 2.9151488,
+    "adopted_tess_period_days": 2.9151515671005948
+  },
+  "reconstruction": {
+    "cycles": 96,
+    "marker_comparison": [
+      {
+        "marker": "ingress",
+        "source_bjd_tdb": 2459502.6093,
+        "cycles": 96,
+        "propagated_bjd_tdb": 2459782.6821000003,
+        "schedule_bjd_tdb": 2459782.682400599,
+        "schedule_minus_propagated_seconds": 25.971736013889313,
+        "absolute_offset_seconds": 25.971736013889313
+      },
+      {
+        "marker": "midpoint",
+        "source_bjd_tdb": 2459502.6441,
+        "cycles": 96,
+        "propagated_bjd_tdb": 2459782.7169000003,
+        "schedule_bjd_tdb": 2459782.716775796,
+        "schedule_minus_propagated_seconds": -10.73126345872879,
+        "absolute_offset_seconds": 10.73126345872879
+      },
+      {
+        "marker": "egress",
+        "source_bjd_tdb": 2459502.679,
+        "cycles": 96,
+        "propagated_bjd_tdb": 2459782.7518,
+        "schedule_bjd_tdb": 2459782.7511509927,
+        "schedule_minus_propagated_seconds": -56.074248254299164,
+        "absolute_offset_seconds": 56.074248254299164
+      }
+    ],
+    "maximum_absolute_marker_offset_seconds": 56.074248254299164,
+    "all_markers_agree_within_one_minute": true,
+    "displayed_period_propagated_midpoint_bjd_tdb": 2459782.4983848003,
+    "schedule_minus_displayed_period_midpoint_hours": 5.241383895277977
+  },
+  "timeline": {
+    "schedule_markers_bjd_tdb": {
+      "ingress": 2459782.682400599,
+      "midpoint": 2459782.716775796,
+      "egress": 2459782.7511509927
+    },
+    "reconstructed_old_ephemeris_markers_bjd_tdb": {
+      "ingress": 2459782.6821000003,
+      "midpoint": 2459782.7169000003,
+      "egress": 2459782.7518
+    },
+    "observation_start_bjd_tdb": 2459782.598234811,
+    "observation_end_bjd_tdb": 2459782.8094587056,
+    "adopted_ephemeris_cycle": -4,
+    "adopted_ephemeris_midpoint_bjd_tdb": 2459781.870539385,
+    "schedule_minus_adopted_midpoint_hours": 20.309673864394426
+  },
+  "assessment": {
+    "strength": "strongly supported archival reconstruction, not proof",
+    "supported_statement": "The 2022 schedule ingress, midpoint, and egress are each within one minute of the public 2021 prediction propagated by 96 cycles with the superseded 2.9174250-day period.",
+    "likely_history": "The timing cells are consistent with having retained a prediction from the superseded ephemeris while the visible period cell was later changed to 2.9151488 days.",
+    "limits": [
+      "The original workbook, formulas, revision history, and Transit Info file are unavailable.",
+      "The agreement cannot distinguish a stale formula from manually copied timing cells.",
+      "This reconstruction explains the schedule window but does not turn the 2022 null into a transit detection."
+    ]
+  }
+}
