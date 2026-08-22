@@ -40,6 +40,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Do not rehash the reduced and aligned FITS collections.",
     )
+    parser.add_argument(
+        "--build-paper-pdf",
+        action="store_true",
+        help="Build the manuscript PDF with Chrome in addition to the HTML.",
+    )
     parser.add_argument("--skip-tests", action="store_true")
     parser.add_argument(
         "--plate-solve-representative",
@@ -71,6 +76,9 @@ def require_local_inputs() -> None:
         / "program_records"
         / "toi3505"
         / "observing_schedule_2022-07-21.json",
+        ROOT / "data" / "catalogs" / "toi3505" / "exofop_ground_followup.json",
+        ROOT / "data" / "catalogs" / "toi3505" / "literature_context.json",
+        ROOT / "paper" / "TOI-3505.01_manuscript.md",
         ROOT / "data" / "tess" / "toi3505" / "tesscut",
         ROOT / "data" / "tess" / "toi3505" / "data_validation",
         ROOT
@@ -129,6 +137,14 @@ def main() -> None:
     )
     run_stage("Refine TESS ephemeris", script("refine_toi3505_ephemeris.py"))
     run_stage(
+        "Quantify ephemeris robustness",
+        script("analyze_toi3505_ephemeris_robustness.py"),
+    )
+    run_stage(
+        "Reconstruct historical schedule",
+        script("reconstruct_toi3505_schedule.py"),
+    )
+    run_stage(
         "Plan upcoming observations", script("plan_toi3505_observations.py")
     )
 
@@ -141,13 +157,18 @@ def main() -> None:
         plate_arguments.append("--run")
     run_stage("Update representative plate-solve plan", plate_arguments)
 
+    paper_arguments = script("build_toi3505_paper.py")
+    if args.build_paper_pdf:
+        paper_arguments.extend(("--pdf-output", "default"))
+    run_stage("Build research paper", paper_arguments)
+
     manifest_arguments = script("make_toi3505_research_record.py")
     if args.skip_large_manifest:
         manifest_arguments.append("--skip-large-derived")
     run_stage("Refresh research record", manifest_arguments)
     run_stage(
         "Check public-product consistency",
-        script("check_toi3505_consistency.py"),
+        script("check_toi3505_consistency.py", "--verify-manifest"),
     )
 
     if not args.skip_tests:

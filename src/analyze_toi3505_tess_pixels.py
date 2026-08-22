@@ -45,7 +45,6 @@ from toi3505_tess_tools import (
     grid_box_fit,
     integrated_box_fraction,
     phase_offset,
-    robust_scatter,
 )
 
 
@@ -751,7 +750,8 @@ def write_readme(
         "",
         "- The same 15x15-pixel TESScut size is used in every sector.",
         f"- Circular radii {', '.join(str(value) for value in APERTURE_RADII)} pixels are compared.",
-        f"- The 3.0-pixel aperture is the named reference aperture because it matches the QLP best-aperture radius in the downloaded headers.",
+        "- The 3.0-pixel aperture is the named reference aperture because it "
+        "matches the QLP best-aperture radius in the downloaded headers.",
         "- The depth comparison fixes the duration to 2.004 hours.",
         "",
         "## Reference-aperture results",

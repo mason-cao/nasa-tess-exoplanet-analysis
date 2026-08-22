@@ -1,10 +1,11 @@
 {
-  "created_utc": "2026-08-18T09:13:40.493180+00:00",
+  "created_utc": "2026-08-22T18:24:35.979025+00:00",
   "python": "3.13.5 (v3.13.5:6cb20a219a8, Jun 11 2025, 12:23:45) [Clang 16.0.0 (clang-1600.0.26.6)]",
   "python_executable": "/Users/mason/Documents/GitHub/projects/nasa-tess-exoplanet-analysis/.venv/bin/python",
-  "operating_system": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+  "operating_system": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
   "machine": "arm64",
   "packages": {
+    "Markdown": "3.10.3",
     "numpy": "2.5.0",
     "pandas": "2.3.3",
     "astropy": "8.0.1",
@@ -18,7 +19,7 @@
   "astroimagej_bundled_java": "25.0.3",
   "astroimagej": "6.0.7",
   "git": {
-    "commit": "7089e4bfb40c161d325cf35f0ac669e0fb98d36d",
+    "commit": "0792826b372c7274c63feb22ac217e89fefa22c6",
     "worktree_clean": false
   }
 }

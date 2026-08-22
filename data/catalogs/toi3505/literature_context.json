@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "target": "TOI-3505.01",
+  "tic_id": 390988385,
+  "searched_utc": "2026-08-22T17:50:41Z",
+  "purpose": "Freeze the evidence and limits behind the paper's qualified novelty wording.",
+  "searches": [
+    {
+      "service": "arXiv API",
+      "query": "all:\"TOI-3505.01\"",
+      "url": "https://export.arxiv.org/api/query?search_query=all:%22TOI-3505.01%22&start=0&max_results=10",
+      "total_results": 0
+    },
+    {
+      "service": "arXiv API",
+      "query": "all:\"TOI 3505\"",
+      "url": "https://export.arxiv.org/api/query?search_query=all:%22TOI%203505%22&start=0&max_results=10",
+      "total_results": 0
+    },
+    {
+      "service": "arXiv API",
+      "query": "all:\"390988385\"",
+      "url": "https://export.arxiv.org/api/query?search_query=all:%22390988385%22&start=0&max_results=10",
+      "total_results": 0
+    },
+    {
+      "service": "general scholarly web search",
+      "queries": [
+        "\"TOI-3505.01\" exoplanet paper",
+        "\"TOI 3505.01\" astronomy",
+        "\"TIC 390988385\" exoplanet",
+        "site:arxiv.org \"TOI-3505\""
+      ],
+      "result_summary": "No dedicated scientific paper or preprint about TOI-3505.01 was found. Results included this project repository, non-scholarly target lists, and a population-level Ariel target-list paper containing TOI-3505.01 as a table entry."
+    }
+  ],
+  "known_scholarly_mentions": [
+    {
+      "authors": "Edwards, Billy; Tinetti, Giovanna",
+      "year": 2022,
+      "title": "The Ariel Target List: The Impact of TESS and the Potential for Characterizing Multiple Planets within a System",
+      "journal": "The Astronomical Journal",
+      "volume": 164,
+      "article": 15,
+      "doi": "10.3847/1538-3881/ac6bf9",
+      "primary_metadata_url": "https://discovery.ucl.ac.uk/id/eprint/10148955/",
+      "mention_scope": "TOI-3505.01 appears in a population target table as a Tier 1 transit target; the paper is not a dedicated classification or follow-up study of this candidate."
+    }
+  ],
+  "novelty_assessment": {
+    "supported_wording": "To our knowledge, this is the first dedicated study to combine all four publicly available TESS sectors of TOI-3505.01 and trace the 2022 GMU null result to a schedule window consistent with a superseded ephemeris.",
+    "required_qualifier": "To our knowledge",
+    "unsupported_wording": [
+      "first classification of TOI-3505.01",
+      "first follow-up observation of TOI-3505.01",
+      "first detection of TOI-3505.01",
+      "validation or confirmation of TOI-3505.01"
+    ],
+    "reason": "Public ground follow-up predates this work, the candidate already appears in a published population catalog, and TOI-3505.01 remains PC. The new contribution is the dedicated four-sector timing synthesis plus the archival schedule reconstruction."
+  },
+  "limits": [
+    "A zero-result exact-name search does not prove that no relevant paper exists under an unexpected identifier or in an unindexed venue.",
+    "The literature search is a dated snapshot and should be repeated immediately before journal submission or public preprint posting.",
+    "The novelty sentence concerns this study's combination and reconstruction, not discovery, classification, validation, or first follow-up."
+  ]
+}

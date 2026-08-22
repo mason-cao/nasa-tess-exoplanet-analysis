@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "paper_date": "2026-08-22",
+  "title": "A Four-Sector TESS Ephemeris for TOI-3505.01 and the Origin of a 2022 Ground-Based Null Observation",
+  "authors": [
+    "Mason Cao",
+    "Annalyse Dickinson",
+    "Owen Alfaro",
+    "Rianne Eccleston",
+    "Kasey Davidson",
+    "Peter Plavchan"
+  ],
+  "status_statement": "TOI-3505.01 remains a planet candidate; the paper does not claim validation or confirmation.",
+  "primary_result": {
+    "events": 27,
+    "sectors": [
+      14,
+      41,
+      54,
+      81
+    ],
+    "baseline_years": 5.052177124030118,
+    "epoch_bjd_tdb": 2459793.531145653,
+    "epoch_error_days": 0.0008800241369065363,
+    "period_days": 2.9151515671005948,
+    "period_error_days": 4.8719792289628144e-06,
+    "covariance_days2": -1.4023055348649236e-09,
+    "reduced_chi2": 1.3010946722009904,
+    "residual_rms_minutes": 8.509649207070096
+  },
+  "ground_result": {
+    "used_measurements": 263,
+    "robust_scatter_ppt": 2.4968989195518168,
+    "historical_window_depth_ppt": -0.6583833665306802,
+    "historical_window_depth_error_ppt": 0.39478212142599517
+  },
+  "schedule_reconstruction": {
+    "cycles": 96,
+    "superseded_period_days": 2.917425,
+    "maximum_marker_offset_seconds": 56.074248254299164,
+    "strength": "strongly supported archival reconstruction, not proof"
+  },
+  "novelty_wording": "To our knowledge, this is the first dedicated study to combine all four publicly available TESS sectors of TOI-3505.01 and trace the 2022 GMU null result to a schedule window consistent with a superseded ephemeris.",
+  "source_files": [
+    "src/build_toi3505_paper.py",
+    "paper/TOI-3505.01_manuscript.md",
+    "outputs/toi3505_ephemeris_refined/ephemeris_refined.json",
+    "outputs/toi3505_ephemeris_refined/event_times_best_per_sector.csv",
+    "outputs/toi3505_ephemeris_robustness/ephemeris_robustness.json",
+    "outputs/toi3505_schedule_reconstruction/schedule_reconstruction.json",
+    "outputs/toi3505_final_candidate/summary.json",
+    "outputs/toi3505_ground_checks/summary.json",
+    "outputs/toi3505_tess_analysis/analysis_summary.json",
+    "outputs/toi3505_tess_pixels/analysis_summary.json",
+    "data/catalogs/toi3505/catalog_summary.json",
+    "data/catalogs/toi3505/tic_v8_2p5arcmin.csv",
+    "data/catalogs/toi3505/exofop_ground_followup.json",
+    "data/catalogs/toi3505/literature_context.json",
+    "outputs/toi3505_tess_analysis/02_phase_folded_sectors.svg",
+    "outputs/toi3505_final_candidate/TOI_3505.01_2022-07-22_R_light_curve.svg",
+    "outputs/toi3505_ephemeris_robustness/01_ephemeris_robustness.svg",
+    "outputs/toi3505_schedule_reconstruction/01_schedule_reconstruction.svg"
+  ]
+}

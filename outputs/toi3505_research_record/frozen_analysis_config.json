@@ -192,7 +192,96 @@
       "injected_total_depth_snr": 5.7068111616105455,
       "interpretation": "No transit-like dimming is measured in the exact historical window. The schedule times are confirmed as Eastern, and this remains a fixed-window check rather than a physical transit fit."
     },
-    "historical_ephemeris_complete": false
+    "historical_ephemeris_complete": false,
+    "archival_reconstruction": {
+      "target": "TOI-3505.01",
+      "analysis_type": "archival ephemeris consistency reconstruction",
+      "source_files": {
+        "schedule_check": "outputs/toi3505_final_candidate/historical_schedule_check.json",
+        "ground_summary": "outputs/toi3505_final_candidate/summary.json",
+        "refined_ephemeris": "outputs/toi3505_ephemeris_refined/ephemeris_refined.json",
+        "exofop_context": "data/catalogs/toi3505/exofop_ground_followup.json"
+      },
+      "source_event": {
+        "facility": "ULMT",
+        "date_utc": "2021-10-15",
+        "markers_bjd_tdb": {
+          "ingress": 2459502.6093,
+          "midpoint": 2459502.6441,
+          "egress": 2459502.679
+        },
+        "source_url": "https://exofop.ipac.caltech.edu/tess/get_file.php?id=241156"
+      },
+      "periods": {
+        "superseded_period_days": 2.917425,
+        "displayed_revised_period_days": 2.9151488,
+        "schedule_row_period_days": 2.9151488,
+        "adopted_tess_period_days": 2.9151515671005948
+      },
+      "reconstruction": {
+        "cycles": 96,
+        "marker_comparison": [
+          {
+            "marker": "ingress",
+            "source_bjd_tdb": 2459502.6093,
+            "cycles": 96,
+            "propagated_bjd_tdb": 2459782.6821000003,
+            "schedule_bjd_tdb": 2459782.682400599,
+            "schedule_minus_propagated_seconds": 25.971736013889313,
+            "absolute_offset_seconds": 25.971736013889313
+          },
+          {
+            "marker": "midpoint",
+            "source_bjd_tdb": 2459502.6441,
+            "cycles": 96,
+            "propagated_bjd_tdb": 2459782.7169000003,
+            "schedule_bjd_tdb": 2459782.716775796,
+            "schedule_minus_propagated_seconds": -10.73126345872879,
+            "absolute_offset_seconds": 10.73126345872879
+          },
+          {
+            "marker": "egress",
+            "source_bjd_tdb": 2459502.679,
+            "cycles": 96,
+            "propagated_bjd_tdb": 2459782.7518,
+            "schedule_bjd_tdb": 2459782.7511509927,
+            "schedule_minus_propagated_seconds": -56.074248254299164,
+            "absolute_offset_seconds": 56.074248254299164
+          }
+        ],
+        "maximum_absolute_marker_offset_seconds": 56.074248254299164,
+        "all_markers_agree_within_one_minute": true,
+        "displayed_period_propagated_midpoint_bjd_tdb": 2459782.4983848003,
+        "schedule_minus_displayed_period_midpoint_hours": 5.241383895277977
+      },
+      "timeline": {
+        "schedule_markers_bjd_tdb": {
+          "ingress": 2459782.682400599,
+          "midpoint": 2459782.716775796,
+          "egress": 2459782.7511509927
+        },
+        "reconstructed_old_ephemeris_markers_bjd_tdb": {
+          "ingress": 2459782.6821000003,
+          "midpoint": 2459782.7169000003,
+          "egress": 2459782.7518
+        },
+        "observation_start_bjd_tdb": 2459782.598234811,
+        "observation_end_bjd_tdb": 2459782.8094587056,
+        "adopted_ephemeris_cycle": -4,
+        "adopted_ephemeris_midpoint_bjd_tdb": 2459781.870539385,
+        "schedule_minus_adopted_midpoint_hours": 20.309673864394426
+      },
+      "assessment": {
+        "strength": "strongly supported archival reconstruction, not proof",
+        "supported_statement": "The 2022 schedule ingress, midpoint, and egress are each within one minute of the public 2021 prediction propagated by 96 cycles with the superseded 2.9174250-day period.",
+        "likely_history": "The timing cells are consistent with having retained a prediction from the superseded ephemeris while the visible period cell was later changed to 2.9151488 days.",
+        "limits": [
+          "The original workbook, formulas, revision history, and Transit Info file are unavailable.",
+          "The agreement cannot distinguish a stale formula from manually copied timing cells.",
+          "This reconstruction explains the schedule window but does not turn the 2022 null into a transit detection."
+        ]
+      }
+    }
   },
   "tess": {
     "sectors": [
@@ -269,6 +358,152 @@
       "sigma_from_spoc": 0.7053496442135423,
       "sigma_adopted_from_qlp_only": 0.679712857841184
     },
+    "ephemeris_robustness": {
+      "four_sector_anchor_fit": {
+        "label": "four conservative sector anchors",
+        "events": 4,
+        "epoch_bjd_tdb": 2459793.531405806,
+        "epoch_error_days": 0.0010123487460053041,
+        "period_days": 2.9151495461090207,
+        "period_error_days": 5.171419894505105e-06,
+        "covariance_days2": -2.417448983775688e-09,
+        "chi_square": 0.9854245599095295,
+        "degrees_of_freedom": 2,
+        "reduced_chi2": 0.49271227995476474,
+        "residual_rms_minutes": 3.6772790652855973,
+        "error_scale": 1.0
+      },
+      "delete_one_sector_jackknife": {
+        "clusters": 4,
+        "jackknife_standard_error_days": 7.289445316090324e-06,
+        "ratio_to_primary_formal_error": 1.4961979386948974,
+        "replicates": [
+          {
+            "omitted_sector": 14,
+            "events": 23,
+            "period_days": 2.9151474342667942,
+            "period_error_days": 5.5082634932847605e-06,
+            "period_shift_days": -4.132834461767487e-06,
+            "period_shift_seconds_per_orbit": -0.3570768974967109,
+            "shift_in_primary_formal_sigma": -0.8482865478138021,
+            "reduced_chi2": 1.1511014425762283
+          },
+          {
+            "omitted_sector": 41,
+            "events": 19,
+            "period_days": 2.9151535399652215,
+            "period_error_days": 5.939863683391007e-06,
+            "period_shift_days": 1.972863965526983e-06,
+            "period_shift_seconds_per_orbit": 0.17045544662153134,
+            "shift_in_primary_formal_sigma": 0.40494096197296137,
+            "reduced_chi2": 1.5462654937187772
+          },
+          {
+            "omitted_sector": 54,
+            "events": 18,
+            "period_days": 2.915152164345941,
+            "period_error_days": 4.9537842195521566e-06,
+            "period_shift_days": 5.972446848190316e-07,
+            "period_shift_seconds_per_orbit": 0.05160194076836433,
+            "shift_in_primary_formal_sigma": 0.12258769049961088,
+            "reduced_chi2": 1.2109537656576423
+          },
+          {
+            "omitted_sector": 81,
+            "events": 21,
+            "period_days": 2.9151592382897014,
+            "period_error_days": 1.0607916725239512e-05,
+            "period_shift_days": 7.671188445357302e-06,
+            "period_shift_seconds_per_orbit": 0.6627906816788709,
+            "shift_in_primary_formal_sigma": 1.574552773439242,
+            "reduced_chi2": 1.3635627520214142
+          }
+        ],
+        "interpretation": "Sensitivity diagnostic only: four sectors are too few for a well-calibrated cluster-resampling uncertainty."
+      },
+      "delete_one_event_jackknife": {
+        "replicates": 27,
+        "jackknife_standard_error_days": 5.776720725129322e-06,
+        "maximum_absolute_period_shift_days": 3.1595083105351307e-06,
+        "maximum_absolute_period_shift_seconds_per_orbit": 0.2729815180302353
+      },
+      "selection_sensitivity": [
+        {
+          "minimum_depth_snr": 2.5,
+          "events": 27,
+          "period_days": 2.915151567101256,
+          "period_error_days": 4.871979253258935e-06,
+          "period_shift_days": 0.0,
+          "period_shift_seconds_per_orbit": 0.0,
+          "reduced_chi2": 1.3010946851778735
+        },
+        {
+          "minimum_depth_snr": 3.0,
+          "events": 26,
+          "period_days": 2.9151515154632115,
+          "period_error_days": 4.989734995400073e-06,
+          "period_shift_days": -5.163804450702969e-08,
+          "period_shift_seconds_per_orbit": -0.004461527045407365,
+          "reduced_chi2": 1.3545019714854025
+        },
+        {
+          "minimum_depth_snr": 4.0,
+          "events": 23,
+          "period_days": 2.9151511858550188,
+          "period_error_days": 5.207329590125144e-06,
+          "period_shift_days": -3.812462372465575e-07,
+          "period_shift_seconds_per_orbit": -0.03293967489810257,
+          "reduced_chi2": 1.311534505928253
+        }
+      ],
+      "quadratic_model_control": {
+        "model": "time = a + b(E-E_pivot) + q(E-E_pivot)^2",
+        "events": 27,
+        "pivot_cycle": 59.078817227496955,
+        "time_at_pivot_bjd_tdb": 2459965.7555933767,
+        "period_at_pivot_days": 2.9151497154825847,
+        "quadratic_term_days_per_cycle2": -2.5435241468585446e-08,
+        "quadratic_term_error_days_per_cycle2": 2.2952263813494314e-08,
+        "period_derivative_days_per_cycle": -5.087048293717089e-08,
+        "epoch_at_cycle_zero_bjd_tdb": 2459793.531907368,
+        "period_at_cycle_zero_days": 2.9151527208505486,
+        "chi_square": 30.943982874867277,
+        "degrees_of_freedom": 24,
+        "reduced_chi2": 1.2893326197861366,
+        "linear_bic": 39.119040861455495,
+        "quadratic_bic": 40.83149347288027,
+        "delta_chi_square_linear_minus_quadratic": 1.5833842545795598,
+        "delta_bic_quadratic_minus_linear": 1.712452611424773,
+        "quadratic_term_significance_sigma": -1.1081800764956053,
+        "assessment": "The quadratic model is not favored over the linear ephemeris."
+      },
+      "external_muscat2_control": {
+        "point": {
+          "facility": "TCS 1.52 m / MuSCAT2",
+          "cycle": 119,
+          "midpoint_bjd_tdb": 2460140.4350453,
+          "midpoint_error_days": 0.000639,
+          "source_url": "https://exofop.ipac.caltech.edu/tess/get_file.php?id=927127",
+          "report_language": "tentative egress on target",
+          "role": "external control only; not part of the primary TESS-only fit"
+        },
+        "fit": {
+          "label": "TESS + MuSCAT2 timing control",
+          "events": 28,
+          "epoch_bjd_tdb": 2459793.531546566,
+          "epoch_error_days": 0.000695769793216138,
+          "period_days": 2.9151525056299192,
+          "period_error_days": 4.671439425670446e-06,
+          "covariance_days2": -2.028771201248096e-09,
+          "chi_square": 33.2684337386218,
+          "degrees_of_freedom": 26,
+          "reduced_chi2": 1.2795551437931463,
+          "residual_rms_minutes": 8.34173913495903,
+          "error_scale": 1.1311742322883536
+        },
+        "period_precision_change_percent": 4.1161880452250434
+      }
+    },
     "forward_propagation": {
       "2026-08-01": {
         "cycle": 501.0,
@@ -324,12 +559,186 @@
     "observable_event_count": 1,
     "approval_status": "planning output; mentor confirmation required"
   },
+  "public_followup_context": {
+    "retrieved_utc": "2026-08-22T17:34:05Z",
+    "current_status": {
+      "tess_disposition": "PC",
+      "tfopwg_disposition": "PC",
+      "confirmed_planets_listed": 0,
+      "interpretation": "TOI-3505.01 remains a planet candidate; these records do not establish statistical validation or confirmation."
+    },
+    "time_series_inventory": {
+      "table_rows": 7,
+      "unique_observing_nights": 6,
+      "duplicate_note": "The UT 2021-06-28 GMU observation appears twice with the same facility, camera, filter, duration, exposure count, tag, and observation ID but different ExoFOP time-series row IDs (12220 and 12215). It is counted once.",
+      "rows": [
+        {
+          "date_utc": "2021-06-28",
+          "facility": "GMU 0.8 m",
+          "instrument": "SBIG STX16803",
+          "filter": "R",
+          "coverage": "Full",
+          "duration_minutes": 359,
+          "exposures": 272,
+          "exofop_row_ids": [
+            12220,
+            12215
+          ],
+          "unique_observation": true,
+          "result_scope": "Public metadata and products are present, but no quantitative result from this night is adopted here."
+        },
+        {
+          "date_utc": "2021-10-15",
+          "facility": "ULMT 0.6 m",
+          "instrument": "STX 16803",
+          "filter": "rp",
+          "coverage": "Full",
+          "duration_minutes": 250,
+          "exposures": 197,
+          "exofop_row_ids": [
+            9823
+          ],
+          "unique_observation": true,
+          "result_scope": "The original report described a possible approximately 2.1 ppt feature at low significance. A later ExoFOP report states that a revised Sector 41 ephemeris placed the candidate event about 20 hours later, so this feature is not used as a candidate-transit timing."
+        },
+        {
+          "date_utc": "2022-06-14",
+          "facility": "KeplerCam 1.2 m",
+          "instrument": "KeplerCam",
+          "filter": "ip",
+          "coverage": "Full",
+          "duration_minutes": 343,
+          "exposures": 741,
+          "exofop_row_ids": [
+            12660
+          ],
+          "unique_observation": true,
+          "result_scope": "A later ExoFOP report says the approximately 3.3 ppt event was ruled out during the observed window and no nearby eclipsing binaries were seen, but that the revised ephemeris placed the candidate event after the sequence."
+        },
+        {
+          "date_utc": "2023-05-05",
+          "facility": "CMO-SAI-RC-600 0.6 m",
+          "instrument": "Andor iKon-L",
+          "filter": "g-prime",
+          "coverage": "Full",
+          "duration_minutes": 134,
+          "exposures": 143,
+          "exofop_row_ids": [
+            20377
+          ],
+          "unique_observation": true,
+          "result_scope": "The report describes a full on-target event of approximately 2 ppt and records both the superseded and revised periods."
+        },
+        {
+          "date_utc": "2023-07-11",
+          "facility": "OAA 0.4 m",
+          "instrument": "Moravian G4-9000",
+          "filter": "Ic",
+          "coverage": "Full",
+          "duration_minutes": 219,
+          "exposures": 100,
+          "exofop_row_ids": [
+            20939
+          ],
+          "unique_observation": true,
+          "result_scope": "The report describes strong evidence for an on-target event close to the revised ephemeris."
+        },
+        {
+          "date_utc": "2023-07-14",
+          "facility": "TCS 1.52 m",
+          "instrument": "MuSCAT2",
+          "filter": "g, r, i, z_s",
+          "coverage": "Egress",
+          "duration_minutes": 150,
+          "exposures": 429,
+          "exofop_row_ids": [
+            21003
+          ],
+          "unique_observation": true,
+          "result_scope": "The report describes a tentative on-target egress and supplies a fitted mid-transit time used only as an external ephemeris control."
+        }
+      ]
+    },
+    "scope_limits": [
+      "The inventory records public ExoFOP metadata and report-level summaries; it does not re-reduce the external observers' images or photometry.",
+      "The public time-series rows and reports are contextual evidence, not six independent validations of the candidate.",
+      "Only MuSCAT2 publishes a midpoint uncertainty suitable for the numerical external-control fit used here.",
+      "Public-data use and citation do not by themselves imply coauthorship, endorsement, or a change to the established project author list.",
+      "Historical comments copied into older reports may contain superseded classifications; the live ExoFOP dispositions, both PC at retrieval, control the status stated in this work."
+    ]
+  },
+  "literature_context": {
+    "searched_utc": "2026-08-22T17:50:41Z",
+    "known_scholarly_mentions": [
+      {
+        "authors": "Edwards, Billy; Tinetti, Giovanna",
+        "year": 2022,
+        "title": "The Ariel Target List: The Impact of TESS and the Potential for Characterizing Multiple Planets within a System",
+        "journal": "The Astronomical Journal",
+        "volume": 164,
+        "article": 15,
+        "doi": "10.3847/1538-3881/ac6bf9",
+        "primary_metadata_url": "https://discovery.ucl.ac.uk/id/eprint/10148955/",
+        "mention_scope": "TOI-3505.01 appears in a population target table as a Tier 1 transit target; the paper is not a dedicated classification or follow-up study of this candidate."
+      }
+    ],
+    "novelty_assessment": {
+      "supported_wording": "To our knowledge, this is the first dedicated study to combine all four publicly available TESS sectors of TOI-3505.01 and trace the 2022 GMU null result to a schedule window consistent with a superseded ephemeris.",
+      "required_qualifier": "To our knowledge",
+      "unsupported_wording": [
+        "first classification of TOI-3505.01",
+        "first follow-up observation of TOI-3505.01",
+        "first detection of TOI-3505.01",
+        "validation or confirmation of TOI-3505.01"
+      ],
+      "reason": "Public ground follow-up predates this work, the candidate already appears in a published population catalog, and TOI-3505.01 remains PC. The new contribution is the dedicated four-sector timing synthesis plus the archival schedule reconstruction."
+    },
+    "limits": [
+      "A zero-result exact-name search does not prove that no relevant paper exists under an unexpected identifier or in an unindexed venue.",
+      "The literature search is a dated snapshot and should be repeated immediately before journal submission or public preprint posting.",
+      "The novelty sentence concerns this study's combination and reconstruction, not discovery, classification, validation, or first follow-up."
+    ]
+  },
+  "paper": {
+    "paper_date": "2026-08-22",
+    "title": "A Four-Sector TESS Ephemeris for TOI-3505.01 and the Origin of a 2022 Ground-Based Null Observation",
+    "authors": [
+      "Mason Cao",
+      "Annalyse Dickinson",
+      "Owen Alfaro",
+      "Rianne Eccleston",
+      "Kasey Davidson",
+      "Peter Plavchan"
+    ],
+    "status_statement": "TOI-3505.01 remains a planet candidate; the paper does not claim validation or confirmation.",
+    "primary_result": {
+      "events": 27,
+      "sectors": [
+        14,
+        41,
+        54,
+        81
+      ],
+      "baseline_years": 5.052177124030118,
+      "epoch_bjd_tdb": 2459793.531145653,
+      "epoch_error_days": 0.0008800241369065363,
+      "period_days": 2.9151515671005948,
+      "period_error_days": 4.8719792289628144e-06,
+      "covariance_days2": -1.4023055348649236e-09,
+      "reduced_chi2": 1.3010946722009904,
+      "residual_rms_minutes": 8.509649207070096
+    },
+    "novelty_wording": "To our knowledge, this is the first dedicated study to combine all four publicly available TESS sectors of TOI-3505.01 and trace the 2022 GMU null result to a schedule window consistent with a superseded ephemeris."
+  },
   "claim_limits": [
     "The GMU night is off transit under the current ephemeris, but the recovered 2022 schedule placed an event inside it.",
-    "The schedule clocks are confirmed as Eastern time, but the row has no prediction epoch, uncertainty, depth, or prediction source.",
+    "The schedule clocks are confirmed as Eastern time. Public reports enable a strong stale-ephemeris reconstruction, but the original workbook and formulas remain unavailable.",
     "The GMU window falls in a Sector 54 data gap.",
     "TESS-scale localization cannot separate the 0.517-arcsecond companion.",
     "The dilution screen is not a final correction.",
-    "The trapezoidal timing model is not a physical limb-darkened planet fit; first-pass sector measurements retain their box model."
+    "The trapezoidal timing model is not a physical limb-darkened planet fit; first-pass sector measurements retain their box model.",
+    "The four-sector jackknife is a sensitivity diagnostic, not a calibrated replacement uncertainty.",
+    "The public MuSCAT2 midpoint is an external control and not part of the primary TESS-only result.",
+    "TOI-3505.01 remains a planet candidate; this work does not statistically validate or confirm it."
   ]
 }

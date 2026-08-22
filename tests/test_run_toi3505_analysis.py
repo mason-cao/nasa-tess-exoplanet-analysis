@@ -22,6 +22,7 @@ class AnalysisRunnerTests(unittest.TestCase):
             skip_large_manifest=True,
             skip_tests=False,
             plate_solve_representative=False,
+            build_paper_pdf=False,
         )
         calls: list[tuple[str, list[str]]] = []
 
@@ -46,10 +47,22 @@ class AnalysisRunnerTests(unittest.TestCase):
         )
         self.assertLess(
             labels.index("Refine TESS ephemeris"),
+            labels.index("Quantify ephemeris robustness"),
+        )
+        self.assertLess(
+            labels.index("Quantify ephemeris robustness"),
+            labels.index("Reconstruct historical schedule"),
+        )
+        self.assertLess(
+            labels.index("Reconstruct historical schedule"),
             labels.index("Plan upcoming observations"),
         )
         self.assertLess(
             labels.index("Plan upcoming observations"),
+            labels.index("Build research paper"),
+        )
+        self.assertLess(
+            labels.index("Build research paper"),
             labels.index("Refresh research record"),
         )
         self.assertLess(
@@ -60,6 +73,12 @@ class AnalysisRunnerTests(unittest.TestCase):
             labels.index("Check public-product consistency"),
             labels.index("Run tests"),
         )
+        consistency_call = next(
+            arguments
+            for label, arguments in calls
+            if label == "Check public-product consistency"
+        )
+        self.assertEqual(consistency_call[-1], "--verify-manifest")
 
         manifest_call = next(
             arguments
@@ -67,6 +86,39 @@ class AnalysisRunnerTests(unittest.TestCase):
             if label == "Refresh research record"
         )
         self.assertIn("--skip-large-derived", manifest_call)
+
+        paper_call = next(
+            arguments for label, arguments in calls if label == "Build research paper"
+        )
+        self.assertNotIn("--pdf-output", paper_call)
+
+    def test_paper_pdf_flag_is_forwarded(self) -> None:
+        args = SimpleNamespace(
+            download=False,
+            remeasure_ground_apertures=False,
+            skip_nearby_images=True,
+            skip_large_manifest=True,
+            skip_tests=True,
+            plate_solve_representative=False,
+            build_paper_pdf=True,
+        )
+        calls: list[tuple[str, list[str]]] = []
+
+        with (
+            patch.object(runner, "parse_args", return_value=args),
+            patch.object(runner, "require_local_inputs"),
+            patch.object(
+                runner,
+                "run_stage",
+                side_effect=lambda label, arguments: calls.append((label, arguments)),
+            ),
+        ):
+            runner.main()
+
+        paper_call = next(
+            arguments for label, arguments in calls if label == "Build research paper"
+        )
+        self.assertEqual(paper_call[-2:], ["--pdf-output", "default"])
 
 
 if __name__ == "__main__":

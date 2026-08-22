@@ -27,6 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "toi3505_research_record"
 ORIGINAL_ARCHIVE_PATTERN = "TOI_3505.01-20260714T190730Z-1-*.zip"
 PACKAGE_NAMES = (
+    "Markdown",
     "numpy",
     "pandas",
     "astropy",
@@ -141,7 +142,10 @@ def manifest_paths(include_large_derived: bool) -> list[tuple[str, Path]]:
         "toi3505_tess_pixels",
         "toi3505_data_validation",
         "toi3505_ephemeris_refined",
+        "toi3505_ephemeris_robustness",
+        "toi3505_schedule_reconstruction",
         "toi3505_observation_plan",
+        "toi3505_paper",
         "toi3505_representative_plate_solve",
     )
     evidence: list[Path] = []
@@ -153,11 +157,40 @@ def manifest_paths(include_large_derived: bool) -> list[tuple[str, Path]]:
             path
             for path in directory.iterdir()
             if path.is_file()
-            and path.suffix.lower() in {".csv", ".json", ".md", ".ics"}
+            and path.suffix.lower()
+            in {".csv", ".json", ".md", ".ics", ".png", ".svg", ".pdf", ".html"}
         )
     add_group(groups, "scientific_output", evidence)
+    add_group(
+        groups,
+        "paper_source",
+        [
+            ROOT / "paper" / "TOI-3505.01_manuscript.md",
+            ROOT / "paper" / "README.md",
+        ],
+    )
+    add_group(
+        groups,
+        "paper_artifact",
+        [
+            ROOT / "paper" / "TOI-3505.01_manuscript.html",
+            ROOT / "output" / "pdf" / "TOI-3505.01_research_paper.pdf",
+            ROOT / "output" / "pdf" / "README.md",
+        ],
+    )
     add_group(groups, "analysis_code", list((ROOT / "src").glob("*.py")))
     add_group(groups, "analysis_test", list((ROOT / "tests").glob("test_*.py")))
+    add_group(
+        groups,
+        "project_metadata",
+        [
+            ROOT / "README.md",
+            ROOT / "LICENSE",
+            ROOT / "requirements.txt",
+            ROOT / "pyproject.toml",
+            ROOT / ".gitignore",
+        ],
+    )
 
     # Deduplicate paths while preserving the first, most fundamental category.
     unique: list[tuple[str, Path]] = []
@@ -279,6 +312,30 @@ def frozen_config() -> dict[str, object]:
         / "ephemeris_refined.json"
     )
     refined = json.loads(refined_path.read_text(encoding="utf-8"))
+    robustness_path = (
+        ROOT
+        / "outputs"
+        / "toi3505_ephemeris_robustness"
+        / "ephemeris_robustness.json"
+    )
+    robustness = json.loads(robustness_path.read_text(encoding="utf-8"))
+    reconstruction_path = (
+        ROOT
+        / "outputs"
+        / "toi3505_schedule_reconstruction"
+        / "schedule_reconstruction.json"
+    )
+    reconstruction = json.loads(reconstruction_path.read_text(encoding="utf-8"))
+    exofop_path = (
+        ROOT / "data" / "catalogs" / "toi3505" / "exofop_ground_followup.json"
+    )
+    exofop = json.loads(exofop_path.read_text(encoding="utf-8"))
+    literature_path = (
+        ROOT / "data" / "catalogs" / "toi3505" / "literature_context.json"
+    )
+    literature = json.loads(literature_path.read_text(encoding="utf-8"))
+    paper_path = ROOT / "outputs" / "toi3505_paper" / "manuscript_values.json"
+    paper = json.loads(paper_path.read_text(encoding="utf-8"))
     plan_path = (
         ROOT / "outputs" / "toi3505_observation_plan" / "observation_plan.json"
     )
@@ -292,6 +349,7 @@ def frozen_config() -> dict[str, object]:
             "utc_alternative": schedule["utc_alternative"],
             "fixed_window_check": schedule["fixed_window_check"],
             "historical_ephemeris_complete": False,
+            "archival_reconstruction": reconstruction,
         },
         "tess": {
             "sectors": [14, 41, 54, 81],
@@ -306,6 +364,20 @@ def frozen_config() -> dict[str, object]:
             "adopted_pipeline_choice": refined["pipeline_choice"],
             "adopted_transit_shape": refined["transit_shape"],
             "ephemeris_comparisons": refined["comparisons"],
+            "ephemeris_robustness": {
+                "four_sector_anchor_fit": robustness["four_sector_anchor_fit"],
+                "delete_one_sector_jackknife": robustness[
+                    "delete_one_sector_jackknife"
+                ],
+                "delete_one_event_jackknife": robustness[
+                    "delete_one_event_jackknife"
+                ],
+                "selection_sensitivity": robustness["selection_sensitivity"],
+                "quadratic_model_control": robustness["quadratic_model_control"],
+                "external_muscat2_control": robustness[
+                    "external_muscat2_control"
+                ],
+            },
             "forward_propagation": refined["forward_propagation"],
             "physical_transit_model": False,
             "reference_tesscut_aperture_radius_pixels": 3.0,
@@ -330,13 +402,36 @@ def frozen_config() -> dict[str, object]:
             if plan is not None
             else None
         ),
+        "public_followup_context": {
+            "retrieved_utc": exofop["retrieved_utc"],
+            "current_status": exofop["current_status"],
+            "time_series_inventory": exofop["time_series_inventory"],
+            "scope_limits": exofop["scope_limits"],
+        },
+        "literature_context": {
+            "searched_utc": literature["searched_utc"],
+            "known_scholarly_mentions": literature["known_scholarly_mentions"],
+            "novelty_assessment": literature["novelty_assessment"],
+            "limits": literature["limits"],
+        },
+        "paper": {
+            "paper_date": paper["paper_date"],
+            "title": paper["title"],
+            "authors": paper["authors"],
+            "status_statement": paper["status_statement"],
+            "primary_result": paper["primary_result"],
+            "novelty_wording": paper["novelty_wording"],
+        },
         "claim_limits": [
             "The GMU night is off transit under the current ephemeris, but the recovered 2022 schedule placed an event inside it.",
-            "The schedule clocks are confirmed as Eastern time, but the row has no prediction epoch, uncertainty, depth, or prediction source.",
+            "The schedule clocks are confirmed as Eastern time. Public reports enable a strong stale-ephemeris reconstruction, but the original workbook and formulas remain unavailable.",
             "The GMU window falls in a Sector 54 data gap.",
             "TESS-scale localization cannot separate the 0.517-arcsecond companion.",
             "The dilution screen is not a final correction.",
             "The trapezoidal timing model is not a physical limb-darkened planet fit; first-pass sector measurements retain their box model.",
+            "The four-sector jackknife is a sensitivity diagnostic, not a calibrated replacement uncertainty.",
+            "The public MuSCAT2 midpoint is an external control and not part of the primary TESS-only result.",
+            "TOI-3505.01 remains a planet candidate; this work does not statistically validate or confirm it.",
         ],
     }
 
@@ -353,6 +448,40 @@ def claim_evidence_rows() -> list[dict[str, str]]:
     ground = json.loads(
         (
             ROOT / "outputs" / "toi3505_ground_checks" / "summary.json"
+        ).read_text(encoding="utf-8")
+    )
+    reconstruction = json.loads(
+        (
+            ROOT
+            / "outputs"
+            / "toi3505_schedule_reconstruction"
+            / "schedule_reconstruction.json"
+        ).read_text(encoding="utf-8")
+    )
+    robustness = json.loads(
+        (
+            ROOT
+            / "outputs"
+            / "toi3505_ephemeris_robustness"
+            / "ephemeris_robustness.json"
+        ).read_text(encoding="utf-8")
+    )
+    exofop = json.loads(
+        (
+            ROOT
+            / "data"
+            / "catalogs"
+            / "toi3505"
+            / "exofop_ground_followup.json"
+        ).read_text(encoding="utf-8")
+    )
+    literature = json.loads(
+        (
+            ROOT
+            / "data"
+            / "catalogs"
+            / "toi3505"
+            / "literature_context.json"
         ).read_text(encoding="utf-8")
     )
     adopted = refined["ephemeris"]["adopted"]
@@ -385,7 +514,18 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "claim": "The 2022 program schedule placed ingress and egress inside the GMU sequence using the confirmed Eastern schedule times.",
             "evidence": "data/program_records/toi3505/observing_schedule_2022-07-21.json; outputs/toi3505_final_candidate/historical_schedule_check.json",
             "status": "supported",
-            "limit": "The time zone was confirmed separately; the row has no prediction epoch, uncertainty, depth, prediction source, or archived workbook URL.",
+            "limit": "The time zone was confirmed separately; the original workbook, formulas, and revision history are unavailable.",
+        },
+        {
+            "claim": (
+                "The public 2021 prediction propagated by 96 cycles at the "
+                "superseded 2.9174250-day period reproduces all three 2022 "
+                "schedule markers within "
+                f"{float(reconstruction['reconstruction']['maximum_absolute_marker_offset_seconds']):.1f} seconds."
+            ),
+            "evidence": "data/catalogs/toi3505/exofop_ground_followup.json; outputs/toi3505_schedule_reconstruction/schedule_reconstruction.json; outputs/toi3505_schedule_reconstruction/marker_comparison.csv",
+            "status": "strongly supported archival reconstruction",
+            "limit": "The agreement does not prove the missing workbook's formula history and cannot distinguish a stale formula from manually copied timing cells.",
         },
         {
             "claim": "The fixed historical-window check measures -0.658 +/- 0.395 ppt, so it finds no transit-like dimming; a 2.91-ppt same-window injection is recovered with a 2.910-ppt increment.",
@@ -397,7 +537,7 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "claim": "The GMU sequence does not cover a predicted transit under the adopted refined ephemeris.",
             "evidence": "outputs/toi3505_final_candidate/summary.json; outputs/toi3505_ephemeris_refined/ephemeris_refined.json",
             "status": "supported",
-            "limit": "This does not erase the conflicting historical schedule window; the schedule's full ephemeris is still unavailable.",
+            "limit": "The direct workbook provenance remains unavailable; the separate archival reconstruction explains why its timing window was stale.",
         },
         {
             "claim": "The TESS signal is recovered in Sectors 14, 41, 54, and 81.",
@@ -418,8 +558,37 @@ def claim_evidence_rows() -> list[dict[str, str]]:
                 "exposure-integrated trapezoid, not a physical limb-darkened model. "
                 f"Its precision gains are {float(comparisons['precision_gain_over_catalog']):.2f} "
                 f"over the TOI catalog and {float(comparisons['precision_gain_over_spoc']):.2f} "
-                "over the SPOC multi-sector fit."
+                "over the SPOC multi-sector fit. The conservative four-sector "
+                f"fit gives {float(robustness['four_sector_anchor_fit']['period_error_days']):.2e} days, "
+                "and the four-cluster jackknife is reported separately as a "
+                "sensitivity scale."
             ),
+        },
+        {
+            "claim": (
+                "A quadratic timing model is not favored: Delta BIC is "
+                f"{float(robustness['quadratic_model_control']['delta_bic_quadratic_minus_linear']):+.2f} "
+                "relative to the adopted linear model."
+            ),
+            "evidence": "outputs/toi3505_ephemeris_robustness/ephemeris_robustness.json; outputs/toi3505_ephemeris_robustness/model_comparison.csv",
+            "status": "supported model comparison",
+            "limit": "This is not evidence that the period is exactly constant; it means these 27 timings do not justify an added quadratic term.",
+        },
+        {
+            "claim": (
+                "The 2026-08-22 public ExoFOP snapshot lists six unique prior "
+                "ground observing nights and retains both TESS and TFOPWG "
+                f"dispositions as {exofop['current_status']['tfopwg_disposition']}."
+            ),
+            "evidence": "data/catalogs/toi3505/exofop_ground_followup.json",
+            "status": "supported public-data snapshot",
+            "limit": "The external light curves were not re-reduced here; their report summaries provide context, and the MuSCAT2 midpoint enters only a named external-control fit. Public status can change after the retrieval date.",
+        },
+        {
+            "claim": literature["novelty_assessment"]["supported_wording"],
+            "evidence": "data/catalogs/toi3505/literature_context.json",
+            "status": "qualified, search-based novelty statement",
+            "limit": "The wording must retain 'To our knowledge'; exact-name searches cannot exclude every unexpected identifier or unindexed venue, and the search must be refreshed before journal or preprint submission.",
         },
         {
             "claim": "The two per-sector and one combined SPOC reports recover the same signal without a strong odd/even, secondary-event, or centroid warning in Sectors 54 and 81.",
@@ -517,6 +686,24 @@ def decision_rows() -> list[dict[str, str]]:
             "reason": "Mason confirmed that the spreadsheet times are Eastern; America/New_York was EDT (UTC-4) on the observing night.",
             "alternative": "The UTC calculation is retained only as an audit comparison, not as an active interpretation.",
         },
+        {
+            "date": "2026-08-22",
+            "decision": "Interpret the 2022 timing cells through a qualified stale-ephemeris reconstruction.",
+            "reason": "The public 2021 ingress, midpoint, and egress propagated by 96 cycles at the reported old period match the schedule markers within 56.1 seconds.",
+            "alternative": "Do not claim the original workbook history is proven; retain the missing formulas and revision history as explicit limits.",
+        },
+        {
+            "date": "2026-08-22",
+            "decision": "Keep the 27-event TESS-only linear ephemeris primary and report robustness controls separately.",
+            "reason": "Sector aggregation, selection thresholds, event and sector resampling, and the MuSCAT2 external control give consistent periods; a quadratic term is not favored by BIC.",
+            "alternative": "Do not replace the primary formal uncertainty with a four-cluster jackknife or mix a tentative public ground timing into the headline fit.",
+        },
+        {
+            "date": "2026-08-22",
+            "decision": "Limit the novelty claim to the dedicated four-sector synthesis and stale-schedule reconstruction.",
+            "reason": "Exact-name literature searches found no dedicated paper, but prior ground observations exist and TOI-3505.01 appears in an Ariel population target table.",
+            "alternative": "Do not claim first classification, first follow-up, discovery, validation, or confirmation; retain the phrase 'To our knowledge.'",
+        },
     ]
 
 
@@ -538,6 +725,16 @@ def dependence_rows() -> list[dict[str, str]]:
             "shared_data_warning": "Only one pipeline represents each transit; pipeline-control fits reuse the same TESS observations and are not independent detections.",
         },
         {
+            "product": "ephemeris robustness controls",
+            "depends_on": "accepted 27-event TESS timing table; public MuSCAT2 report for the named external control",
+            "shared_data_warning": "All primary robustness fits reuse the same TESS events; the four-sector jackknife has only four clusters, and MuSCAT2 is tentative and external-control only.",
+        },
+        {
+            "product": "2022 schedule reconstruction",
+            "depends_on": "confirmed EDT schedule conversion; public ULMT prediction; public CMO report preserving old and revised periods",
+            "shared_data_warning": "The reconstruction strongly explains the timing cells but cannot recover or prove the missing workbook formulas and history.",
+        },
+        {
             "product": "TESS custom-aperture depths and difference images",
             "depends_on": "MAST TESScut cubes; TESS box timing results",
             "shared_data_warning": "Aperture variants are not independent observations.",
@@ -556,6 +753,11 @@ def dependence_rows() -> list[dict[str, str]]:
             "product": "ground nearby-star screen",
             "depends_on": "TIC v8; first-frame WCS; all aligned ground images; comparison counts",
             "shared_data_warning": "The screen uses the confirmed EDT schedule window, and the target aperture cannot separate the 0.517-arcsecond companion.",
+        },
+        {
+            "product": "research manuscript and PDF",
+            "depends_on": "canonical ground, TESS, timing-robustness, schedule-reconstruction, ExoFOP-status, and literature-snapshot products; four lossless SVG figures",
+            "shared_data_warning": "The manuscript is a synthesis of the listed products, not an independent detection; quantitative fields are injected from canonical files and the candidate, companion, dilution, and novelty limits remain binding.",
         },
     ]
 
@@ -612,6 +814,8 @@ This folder freezes the reproducibility record for the current analysis.
 - Ground and TESS choices are in `frozen_analysis_config.json`.
 - The adopted refined ephemeris and observation-planning limits are frozen in
   that configuration from their canonical JSON outputs.
+- The manuscript source, self-contained HTML, PDF, and machine-readable paper
+  values are included in the manifest and frozen configuration.
 - Claims, decisions, and shared-data dependencies have separate CSV ledgers.
 
 Regenerate the full record with:

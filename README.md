@@ -13,6 +13,14 @@ products.
 - A fit to 27 transit times spanning 5.05 years gives
   **P = 2.9151516 ± 0.0000049 days**. Details are in
   [`outputs/toi3505_ephemeris_refined`](outputs/toi3505_ephemeris_refined).
+- Sector aggregation, event and sector deletion, selection-threshold tests,
+  pipeline controls, and one public MuSCAT2 external control support the
+  headline period. A quadratic timing term is not favored (ΔBIC = +1.71).
+- Propagating a public 2021 timing prediction by 96 cycles with its superseded
+  2.9174250-day period reproduces all three 2022 schedule markers within 56.1
+  seconds. The adopted TESS ephemeris places the relevant midpoint 20.31 hours
+  before the stale schedule; applying the schedule's visible revised period to
+  the same 2021 midpoint instead gives a 5.24-hour offset.
 - Nearby-star screening measured all 280 catalog stars bright enough to mimic
   the signal within 2.5 arcminutes; 222 were cleared, while two sources inside
   the target aperture remain unresolved.
@@ -20,28 +28,28 @@ products.
 This work refines the light curve and ephemeris but does not independently
 validate the planet or resolve its known 0.517-arcsecond companion.
 
-## Current status
+## Research paper
 
-The project owner provided the following status update on 2026-08-18:
+The analysis and a complete manuscript draft are ready for internal scientific
+review:
 
-- The symposium posters have already been presented. Poster-version selection
-  and pre-presentation approval are no longer pending tasks.
-- The proposed GMU 0.8 m observation on 2026-08-12 to 2026-08-13 did not occur,
-  so no new ground-based data are expected from that window.
-- The internship program permits the repository to remain public and to carry
-  a license.
-- Final light-curve feedback has been received: the reviewer did not see a
-  transit, said the curve looked good, and noted that the plot key covers some
-  of the data.
-- The 2022 spreadsheet row and its headers are preserved, and the project owner
-  confirmed that its clocks use Eastern time. On that night this means EDT
-  (UTC-4).
+- [Final research-paper PDF](output/pdf/TOI-3505.01_research_paper.pdf)
+- [Editable manuscript](paper/TOI-3505.01_manuscript.md)
+- [Self-contained HTML manuscript](paper/TOI-3505.01_manuscript.html)
+- [Machine-readable manuscript values](outputs/toi3505_paper/manuscript_values.json)
 
-The remaining project work is archival and scientific review: recover or
-formally document any unavailable 2022 prediction source, epoch, uncertainty,
-Transit Info file, and clock-sync record; move the plot key; obtain review of
-the TESS-timing choices; and run the formal AstroImageJ NEB procedure only if
-the program requires it.
+To our knowledge, this is the first dedicated study to combine all four
+publicly available TESS sectors of TOI-3505.01 and trace the 2022 GMU null
+result to a schedule window consistent with a superseded ephemeris. This is a
+qualified, search-based novelty statement—not a claim of first detection,
+classification, follow-up, validation, or confirmation.
+
+Before journal or preprint submission, the dated literature search and live
+ExoFOP status should be refreshed and the manuscript should receive scientific
+review. The missing original scheduling-workbook formulas, formal program NEB
+procedure, unresolved close companion, and absent dilution-corrected radius are
+explicit scope limits; they do not block the paper's narrower timing and
+archival result.
 
 ## Repository
 
@@ -53,6 +61,8 @@ the program requires it.
   lecture added on 2026-08-18 is labeled as training material with a provenance
   sidecar and is not TOI-3505 observation data
 - `outputs/` — generated figures and analysis results
+- `paper/` — editable manuscript and self-contained HTML build
+- `output/pdf/` — final rendered paper artifact
 - [`outputs/toi3505_poster`](outputs/toi3505_poster) — symposium posters and
   source figures
 
@@ -61,7 +71,7 @@ the program requires it.
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
-.venv/bin/python src/run_toi3505_analysis.py
+.venv/bin/python src/run_toi3505_analysis.py --build-paper-pdf
 ```
 
 Run the tests with:
@@ -71,4 +81,6 @@ Run the tests with:
 ```
 
 The analysis runner also supports `--download`, `--remeasure-ground-apertures`,
-`--skip-nearby-images`, and `--skip-large-manifest`.
+`--skip-nearby-images`, and `--skip-large-manifest`. Omit
+`--build-paper-pdf` when Chrome is unavailable; the self-contained HTML and
+machine-readable paper record are still rebuilt.

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import sys
 import tempfile
 import unittest
@@ -14,7 +15,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from download_toi3505_comparison_gaia import gaia_query
-from make_toi3505_research_record import claim_evidence_rows, sha256_file
+from make_toi3505_research_record import (
+    claim_evidence_rows,
+    frozen_config,
+    sha256_file,
+)
 from plate_solve_toi3505_representative import reduced_name, representative_indices
 
 
@@ -58,6 +63,37 @@ class ReproducibilityTests(unittest.TestCase):
         self.assertGreaterEqual(len(rows), 8)
         self.assertTrue(all(row["evidence"] for row in rows))
         self.assertTrue(all(row["limit"] for row in rows))
+
+    def test_new_timing_controls_are_frozen_in_research_config(self) -> None:
+        config = frozen_config()
+        tess = config["tess"]
+        historical = config["historical_schedule"]
+        self.assertIn("ephemeris_robustness", tess)
+        self.assertIn("archival_reconstruction", historical)
+        self.assertIn("paper", config)
+        self.assertEqual(len(config["paper"]["authors"]), 6)
+        self.assertEqual(config["paper"]["primary_result"]["events"], 27)
+        self.assertEqual(
+            historical["archival_reconstruction"]["reconstruction"]["cycles"], 96
+        )
+
+    def test_novelty_claim_remains_qualified_and_candidate_limited(self) -> None:
+        context = json.loads(
+            (
+                ROOT / "data" / "catalogs" / "toi3505" / "literature_context.json"
+            ).read_text(encoding="utf-8")
+        )
+        wording = context["novelty_assessment"]["supported_wording"]
+        self.assertTrue(wording.startswith("To our knowledge,"))
+        lowered = wording.lower()
+        for unsupported in (
+            "first classification",
+            "first follow-up observation",
+            "first detection",
+            "validation",
+            "confirmation",
+        ):
+            self.assertNotIn(unsupported, lowered)
 
 
 if __name__ == "__main__":
