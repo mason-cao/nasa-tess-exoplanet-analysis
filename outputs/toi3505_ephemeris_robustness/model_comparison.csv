@@ -1,0 +1,10 @@
+model,role,events,period_days,period_error_days,difference_from_primary_seconds_per_orbit,reduced_chi2,note
+Adopted TESS linear,primary,27,2.915151567101256,4.871979253258935e-06,0.0,1.3010946851778735,Best available pipeline per sector; trapezoid event model.
+Four-sector conservative anchors,robustness,4,2.9151495461090207,5.171419894505105e-06,-0.17461372913345485,0.49271227995476474,"One anchor per sector; error is max(formal, empirical sector SEM)."
+Depth S/N >= 3,selection control,26,2.9151515154632115,4.989734995400073e-06,-0.004461527045407365,1.3545019714854025,Stricter accepted-event depth threshold.
+Depth S/N >= 4,selection control,23,2.9151511858550188,5.207329590125144e-06,-0.03293967489810257,1.311534505928253,Stricter accepted-event depth threshold.
+TESS + MuSCAT2,external control,28,2.9151525056299192,4.671439425670446e-06,0.08108887650308816,1.2795551437931463,Adds one public multiband ground midpoint with reported uncertainty.
+QLP all sectors,pipeline control,24,2.9151569718053203,6.284060825975421e-06,0.4669664311549582,1.0982910434040893,Same TESS observations; not an independent detection.
+SPOC Sectors 54 and 81,pipeline subset control,15,2.915148568408143,7.7030505325334e-06,-0.25908708495734345,1.4378939605148664,Two-minute subset only; same TESS observations.
+ExoFOP TOI catalog,catalog comparison,,2.9151556,1.17e-05,0.348442451468145,,Public catalog value defining cycle zero.
+Official SPOC multi-sector,pipeline comparison,,2.915145579641331,6.9513185e-06,-0.5173165375367716,,Official SPOC fit; overlaps the same TESS observations.

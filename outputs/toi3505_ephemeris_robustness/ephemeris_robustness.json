@@ -1,0 +1,258 @@
+{
+  "target": "TOI-3505.01",
+  "analysis_scope": "Controls derived from the accepted TESS event table plus one named public MuSCAT2 external timing; no light curves are remeasured here.",
+  "primary_tess_linear": {
+    "label": "adopted TESS linear ephemeris",
+    "events": 27,
+    "epoch_bjd_tdb": 2459793.5311456528,
+    "epoch_error_days": 0.0008800241412951371,
+    "period_days": 2.915151567101256,
+    "period_error_days": 4.871979253258935e-06,
+    "covariance_days2": -1.4023055488512655e-09,
+    "chi_square": 32.52736712944684,
+    "degrees_of_freedom": 25,
+    "reduced_chi2": 1.3010946851778735,
+    "residual_rms_minutes": 8.50964923386536,
+    "error_scale": 1.1406553752899573
+  },
+  "sector_residuals": [
+    {
+      "sector": 14,
+      "events": 4,
+      "weighted_mean_residual_minutes": -5.760622726242539,
+      "formal_sem_minutes": 4.94848771450212,
+      "rms_residual_minutes": 14.988909298364161,
+      "lag1_residual_correlation": 0.9662287395708987
+    },
+    {
+      "sector": 41,
+      "events": 8,
+      "weighted_mean_residual_minutes": 2.0458956041731744,
+      "formal_sem_minutes": 2.7268748233548097,
+      "rms_residual_minutes": 7.441218289577504,
+      "lag1_residual_correlation": -0.3169817944674594
+    },
+    {
+      "sector": 54,
+      "events": 9,
+      "weighted_mean_residual_minutes": 0.435892910148368,
+      "formal_sem_minutes": 1.6211019898431478,
+      "rms_residual_minutes": 7.550227339916895,
+      "lag1_residual_correlation": 0.02330878969519586
+    },
+    {
+      "sector": 81,
+      "events": 6,
+      "weighted_mean_residual_minutes": -0.5855123934961918,
+      "formal_sem_minutes": 1.6868971521929454,
+      "rms_residual_minutes": 4.092363887228633,
+      "lag1_residual_correlation": -0.40840389203957195
+    }
+  ],
+  "four_sector_anchors": [
+    {
+      "sector": 14,
+      "events": 4,
+      "anchor_cycle": -377.1703353112758,
+      "anchor_bjd_tdb": 2458694.018451174,
+      "formal_error_days": 0.003436449801737583,
+      "empirical_error_days": 0.00581098452356599,
+      "adopted_error_days": 0.00581098452356599,
+      "error_source": "empirical within-sector scatter"
+    },
+    {
+      "sector": 41,
+      "events": 8,
+      "anchor_cycle": -124.11441694906166,
+      "anchor_bjd_tdb": 2459431.720229344,
+      "formal_error_days": 0.0018936630717741733,
+      "empirical_error_days": 0.0019362632160963055,
+      "adopted_error_days": 0.0019362632160963055,
+      "error_source": "empirical within-sector scatter"
+    },
+    {
+      "sector": 54,
+      "events": 9,
+      "anchor_cycle": -4.324967381779576,
+      "anchor_bjd_tdb": 2459780.923512915,
+      "formal_error_days": 0.001125765270724408,
+      "empirical_error_days": 0.001798205617014332,
+      "adopted_error_days": 0.001798205617014332,
+      "error_source": "empirical within-sector scatter"
+    },
+    {
+      "sector": 81,
+      "events": 6,
+      "anchor_cycle": 248.5351108323048,
+      "anchor_bjd_tdb": 2460518.0482568694,
+      "formal_error_days": 0.0011714563556895455,
+      "empirical_error_days": 0.001255318985537536,
+      "adopted_error_days": 0.001255318985537536,
+      "error_source": "empirical within-sector scatter"
+    }
+  ],
+  "four_sector_anchor_fit": {
+    "label": "four conservative sector anchors",
+    "events": 4,
+    "epoch_bjd_tdb": 2459793.531405806,
+    "epoch_error_days": 0.0010123487460053041,
+    "period_days": 2.9151495461090207,
+    "period_error_days": 5.171419894505105e-06,
+    "covariance_days2": -2.417448983775688e-09,
+    "chi_square": 0.9854245599095295,
+    "degrees_of_freedom": 2,
+    "reduced_chi2": 0.49271227995476474,
+    "residual_rms_minutes": 3.6772790652855973,
+    "error_scale": 1.0
+  },
+  "four_sector_formal_anchor_fit": {
+    "label": "four formal sector anchors",
+    "events": 4,
+    "epoch_bjd_tdb": 2459793.531141424,
+    "epoch_error_days": 0.000792556839506707,
+    "period_days": 2.9151516386731746,
+    "period_error_days": 4.38820102366024e-06,
+    "covariance_days2": -1.1376399140451595e-09,
+    "chi_square": 2.1105698009165756,
+    "degrees_of_freedom": 2,
+    "reduced_chi2": 1.0552849004582878,
+    "residual_rms_minutes": 3.061612578088209,
+    "error_scale": 1.0272706072200684
+  },
+  "delete_one_sector_jackknife": {
+    "clusters": 4,
+    "jackknife_standard_error_days": 7.289445316090324e-06,
+    "ratio_to_primary_formal_error": 1.4961979386948974,
+    "replicates": [
+      {
+        "omitted_sector": 14,
+        "events": 23,
+        "period_days": 2.9151474342667942,
+        "period_error_days": 5.5082634932847605e-06,
+        "period_shift_days": -4.132834461767487e-06,
+        "period_shift_seconds_per_orbit": -0.3570768974967109,
+        "shift_in_primary_formal_sigma": -0.8482865478138021,
+        "reduced_chi2": 1.1511014425762283
+      },
+      {
+        "omitted_sector": 41,
+        "events": 19,
+        "period_days": 2.9151535399652215,
+        "period_error_days": 5.939863683391007e-06,
+        "period_shift_days": 1.972863965526983e-06,
+        "period_shift_seconds_per_orbit": 0.17045544662153134,
+        "shift_in_primary_formal_sigma": 0.40494096197296137,
+        "reduced_chi2": 1.5462654937187772
+      },
+      {
+        "omitted_sector": 54,
+        "events": 18,
+        "period_days": 2.915152164345941,
+        "period_error_days": 4.9537842195521566e-06,
+        "period_shift_days": 5.972446848190316e-07,
+        "period_shift_seconds_per_orbit": 0.05160194076836433,
+        "shift_in_primary_formal_sigma": 0.12258769049961088,
+        "reduced_chi2": 1.2109537656576423
+      },
+      {
+        "omitted_sector": 81,
+        "events": 21,
+        "period_days": 2.9151592382897014,
+        "period_error_days": 1.0607916725239512e-05,
+        "period_shift_days": 7.671188445357302e-06,
+        "period_shift_seconds_per_orbit": 0.6627906816788709,
+        "shift_in_primary_formal_sigma": 1.574552773439242,
+        "reduced_chi2": 1.3635627520214142
+      }
+    ],
+    "interpretation": "Sensitivity diagnostic only: four sectors are too few for a well-calibrated cluster-resampling uncertainty."
+  },
+  "delete_one_event_jackknife": {
+    "replicates": 27,
+    "jackknife_standard_error_days": 5.776720725129322e-06,
+    "maximum_absolute_period_shift_days": 3.1595083105351307e-06,
+    "maximum_absolute_period_shift_seconds_per_orbit": 0.2729815180302353
+  },
+  "selection_sensitivity": [
+    {
+      "minimum_depth_snr": 2.5,
+      "events": 27,
+      "period_days": 2.915151567101256,
+      "period_error_days": 4.871979253258935e-06,
+      "period_shift_days": 0.0,
+      "period_shift_seconds_per_orbit": 0.0,
+      "reduced_chi2": 1.3010946851778735
+    },
+    {
+      "minimum_depth_snr": 3.0,
+      "events": 26,
+      "period_days": 2.9151515154632115,
+      "period_error_days": 4.989734995400073e-06,
+      "period_shift_days": -5.163804450702969e-08,
+      "period_shift_seconds_per_orbit": -0.004461527045407365,
+      "reduced_chi2": 1.3545019714854025
+    },
+    {
+      "minimum_depth_snr": 4.0,
+      "events": 23,
+      "period_days": 2.9151511858550188,
+      "period_error_days": 5.207329590125144e-06,
+      "period_shift_days": -3.812462372465575e-07,
+      "period_shift_seconds_per_orbit": -0.03293967489810257,
+      "reduced_chi2": 1.311534505928253
+    }
+  ],
+  "quadratic_model_control": {
+    "model": "time = a + b(E-E_pivot) + q(E-E_pivot)^2",
+    "events": 27,
+    "pivot_cycle": 59.078817227496955,
+    "time_at_pivot_bjd_tdb": 2459965.7555933767,
+    "period_at_pivot_days": 2.9151497154825847,
+    "quadratic_term_days_per_cycle2": -2.5435241468585446e-08,
+    "quadratic_term_error_days_per_cycle2": 2.2952263813494314e-08,
+    "period_derivative_days_per_cycle": -5.087048293717089e-08,
+    "epoch_at_cycle_zero_bjd_tdb": 2459793.531907368,
+    "period_at_cycle_zero_days": 2.9151527208505486,
+    "chi_square": 30.943982874867277,
+    "degrees_of_freedom": 24,
+    "reduced_chi2": 1.2893326197861366,
+    "linear_bic": 39.119040861455495,
+    "quadratic_bic": 40.83149347288027,
+    "delta_chi_square_linear_minus_quadratic": 1.5833842545795598,
+    "delta_bic_quadratic_minus_linear": 1.712452611424773,
+    "quadratic_term_significance_sigma": -1.1081800764956053,
+    "assessment": "The quadratic model is not favored over the linear ephemeris."
+  },
+  "external_muscat2_control": {
+    "point": {
+      "facility": "TCS 1.52 m / MuSCAT2",
+      "cycle": 119,
+      "midpoint_bjd_tdb": 2460140.4350453,
+      "midpoint_error_days": 0.000639,
+      "source_url": "https://exofop.ipac.caltech.edu/tess/get_file.php?id=927127",
+      "report_language": "tentative egress on target",
+      "role": "external control only; not part of the primary TESS-only fit"
+    },
+    "fit": {
+      "label": "TESS + MuSCAT2 timing control",
+      "events": 28,
+      "epoch_bjd_tdb": 2459793.531546566,
+      "epoch_error_days": 0.000695769793216138,
+      "period_days": 2.9151525056299192,
+      "period_error_days": 4.671439425670446e-06,
+      "covariance_days2": -2.028771201248096e-09,
+      "chi_square": 33.2684337386218,
+      "degrees_of_freedom": 26,
+      "reduced_chi2": 1.2795551437931463,
+      "residual_rms_minutes": 8.34173913495903,
+      "error_scale": 1.1311742322883536
+    },
+    "period_precision_change_percent": 4.1161880452250434
+  },
+  "reporting_decision": {
+    "headline": "primary TESS-only linear fit",
+    "robustness": "Report the conservative sector-anchor fit and four-sector delete-one scale separately.",
+    "curvature": "Do not claim a period derivative or transit-timing variation.",
+    "external": "MuSCAT2 remains a named external control, not primary input."
+  }
+}
