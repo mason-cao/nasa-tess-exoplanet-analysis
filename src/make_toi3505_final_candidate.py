@@ -592,7 +592,10 @@ def plot_final_candidate(
     ingress_x = float(schedule_times["ingress"]["bjd_tdb"]) - bjd_zero
     egress_x = float(schedule_times["egress"]["bjd_tdb"]) - bjd_zero
 
-    fig, axis = plt.subplots(figsize=(9.2, 8.2))
+    # Extra vertical room keeps the full nine-entry diagnostic key outside the
+    # data axes. This directly addresses the reviewer note that the earlier key
+    # obscured measurements.
+    fig, axis = plt.subplots(figsize=(9.2, 8.7))
     axis.axvspan(ingress_x, egress_x, color="#d9534f", alpha=0.045, zorder=0)
     axis.axvline(
         ingress_x,
@@ -716,13 +719,15 @@ def plot_final_candidate(
     axis.grid(axis="y", color="#bdbdbd", alpha=0.65, linewidth=0.65)
     axis.tick_params(top=True, right=True, direction="in")
     axis.legend(
-        loc="upper left",
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.105),
         frameon=False,
-        fontsize=7.25,
-        ncol=1,
+        fontsize=7.0,
+        ncol=2,
         handlelength=2.0,
         handletextpad=0.55,
-        borderaxespad=0.5,
+        borderaxespad=0.0,
+        columnspacing=1.0,
         labelspacing=0.32,
     )
     fig.suptitle("TOI-3505.01, UT 2022-07-22", fontsize=15, y=0.982)
@@ -741,7 +746,7 @@ def plot_final_candidate(
         ha="center",
         fontsize=8.2,
     )
-    fig.tight_layout(rect=(0.055, 0.045, 0.985, 0.935))
+    fig.subplots_adjust(left=0.11, right=0.985, bottom=0.25, top=0.83)
     _save_figure_variants(fig, output_path)
     plt.close(fig)
 
@@ -779,8 +784,9 @@ def write_readme(
 ## Result
 
 The final light curve has been reviewed. The reviewer did not see a transit and
-said the curve looked good, but noted that the plot key covers some data. A
-recovered observing-schedule row lists ingress at 00:15 and egress at 01:54.
+said the curve looked good. The plot key is now below the data axes, resolving
+the reviewer's presentation note. A recovered observing-schedule row lists
+ingress at 00:15 and egress at 01:54.
 Mason confirmed that those sheet clocks use Eastern time, giving BJD_TDB
 {float(schedule_times['ingress']['bjd_tdb']):.6f}-
 {float(schedule_times['egress']['bjd_tdb']):.6f}, fully inside the measured
@@ -792,9 +798,10 @@ at the same times gives a total recovered depth of
 {float(fixed['injected_total_depth_ppt']):.3f} ppt at
 {float(fixed['injected_total_depth_snr']):.2f} sigma.
 
-The source row gives the observing-night date and period but does not provide
-the prediction epoch, timing uncertainty, depth, or prediction source. Under
-the current catalog period and epoch, the nearest predicted midpoint is
+The source row alone does not provide the prediction epoch, timing uncertainty,
+depth, or prediction source. A separate archival reconstruction in
+`../toi3505_schedule_reconstruction/` compares it with public ExoFOP reports.
+Under the current catalog period and epoch, the nearest predicted midpoint is
 BJD_TDB
 {float(midpoint['midpoint_bjd_tdb']):.6f}, or
 {abs(float(midpoint['hours_from_observation_start'])):.2f} hours before the
@@ -855,15 +862,15 @@ The current three-image package is collected in `../toi3505_review_package/`:
   preserved schedule interpretation and fixed-window result.
 - `summary.json`: short numerical summary.
 
-## Still needed
+## Documented limits
 
-Move the plot key so it does not cover the data. If available, preserve the
-original Transit Info file or another record of the prediction epoch, timing
-uncertainty, depth, and source. The stored BJD_TDB values agree with an
-independent calculation to within 0.000201 seconds, but the observatory
-clock-sync record has not been found. Confirm whether the program's formal
-AstroImageJ NEB procedure is required. Do not describe this as a transit
-detection.
+The original workbook, formulas, revision history, and Transit Info file have
+not been recovered. The stored BJD_TDB values agree with an independent
+calculation to within 0.000201 seconds, but the observatory clock-sync record
+has not been found. The nearby-star result remains a conditional project screen,
+not the program's formal AstroImageJ NEB procedure, and neither it nor TESS can
+resolve the 0.517-arcsecond companion. Do not describe this ground sequence as
+a transit detection.
 """
     (output_dir / "README.md").write_text(text, encoding="utf-8")
 
@@ -1256,12 +1263,15 @@ def main() -> None:
             str(slice_number): reason
             for slice_number, reason in VISUAL_QUALITY_EXCLUSIONS.items()
         },
-        "remaining_finalization_gates": [
+        "figure_presentation": {
+            "legend_position": "outside the data axes, centered below",
+            "reviewer_overlap_note_resolved": True,
+        },
+        "documented_nonblocking_limits": [
             "observatory clock-sync provenance",
-            "original Transit Info file or equivalent prediction source, epoch, and timing uncertainty",
-            "formal AstroImageJ NEB requirement",
-            "refined TESS timing review",
-            "move the final plot key so it does not cover data",
+            "original workbook, formulas, revision history, and Transit Info file",
+            "nearby-star result is a conditional project screen, not formal AstroImageJ NEB",
+            "0.517-arcsecond companion remains unresolved",
         ],
     }
     (output_dir / "summary.json").write_text(

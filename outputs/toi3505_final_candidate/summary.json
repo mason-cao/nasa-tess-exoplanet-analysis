@@ -245,11 +245,14 @@
   "visual_quality_exclusions": {
     "253": "field-wide vertical PSF trail confirmed in target and comparison stars"
   },
-  "remaining_finalization_gates": [
+  "figure_presentation": {
+    "legend_position": "outside the data axes, centered below",
+    "reviewer_overlap_note_resolved": true
+  },
+  "documented_nonblocking_limits": [
     "observatory clock-sync provenance",
-    "original Transit Info file or equivalent prediction source, epoch, and timing uncertainty",
-    "formal AstroImageJ NEB requirement",
-    "refined TESS timing review",
-    "move the final plot key so it does not cover data"
+    "original workbook, formulas, revision history, and Transit Info file",
+    "nearby-star result is a conditional project screen, not formal AstroImageJ NEB",
+    "0.517-arcsecond companion remains unresolved"
   ]
 }

@@ -3,8 +3,9 @@
 ## Result
 
 The final light curve has been reviewed. The reviewer did not see a transit and
-said the curve looked good, but noted that the plot key covers some data. A
-recovered observing-schedule row lists ingress at 00:15 and egress at 01:54.
+said the curve looked good. The plot key is now below the data axes, resolving
+the reviewer's presentation note. A recovered observing-schedule row lists
+ingress at 00:15 and egress at 01:54.
 Mason confirmed that those sheet clocks use Eastern time, giving BJD_TDB
 2459782.682401-
 2459782.751151, fully inside the measured
@@ -16,9 +17,10 @@ at the same times gives a total recovered depth of
 2.252 ppt at
 5.71 sigma.
 
-The source row gives the observing-night date and period but does not provide
-the prediction epoch, timing uncertainty, depth, or prediction source. Under
-the current catalog period and epoch, the nearest predicted midpoint is
+The source row alone does not provide the prediction epoch, timing uncertainty,
+depth, or prediction source. A separate archival reconstruction in
+`../toi3505_schedule_reconstruction/` compares it with public ExoFOP reports.
+Under the current catalog period and epoch, the nearest predicted midpoint is
 BJD_TDB
 2459781.873763, or
 17.39 hours before the
@@ -79,12 +81,12 @@ The current three-image package is collected in `../toi3505_review_package/`:
   preserved schedule interpretation and fixed-window result.
 - `summary.json`: short numerical summary.
 
-## Still needed
+## Documented limits
 
-Move the plot key so it does not cover the data. If available, preserve the
-original Transit Info file or another record of the prediction epoch, timing
-uncertainty, depth, and source. The stored BJD_TDB values agree with an
-independent calculation to within 0.000201 seconds, but the observatory
-clock-sync record has not been found. Confirm whether the program's formal
-AstroImageJ NEB procedure is required. Do not describe this as a transit
-detection.
+The original workbook, formulas, revision history, and Transit Info file have
+not been recovered. The stored BJD_TDB values agree with an independent
+calculation to within 0.000201 seconds, but the observatory clock-sync record
+has not been found. The nearby-star result remains a conditional project screen,
+not the program's formal AstroImageJ NEB procedure, and neither it nor TESS can
+resolve the 0.517-arcsecond companion. Do not describe this ground sequence as
+a transit detection.
