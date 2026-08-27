@@ -28,7 +28,10 @@
         "coverage": "Full",
         "duration_minutes": 359,
         "exposures": 272,
-        "exofop_row_ids": [12220, 12215],
+        "exofop_row_ids": [
+          12220,
+          12215
+        ],
         "unique_observation": true,
         "result_scope": "Public metadata and products are present, but no quantitative result from this night is adopted here."
       },
@@ -40,7 +43,9 @@
         "coverage": "Full",
         "duration_minutes": 250,
         "exposures": 197,
-        "exofop_row_ids": [9823],
+        "exofop_row_ids": [
+          9823
+        ],
         "unique_observation": true,
         "result_scope": "The original report described a possible approximately 2.1 ppt feature at low significance. A later ExoFOP report states that a revised Sector 41 ephemeris placed the candidate event about 20 hours later, so this feature is not used as a candidate-transit timing."
       },
@@ -52,7 +57,9 @@
         "coverage": "Full",
         "duration_minutes": 343,
         "exposures": 741,
-        "exofop_row_ids": [12660],
+        "exofop_row_ids": [
+          12660
+        ],
         "unique_observation": true,
         "result_scope": "A later ExoFOP report says the approximately 3.3 ppt event was ruled out during the observed window and no nearby eclipsing binaries were seen, but that the revised ephemeris placed the candidate event after the sequence."
       },
@@ -64,7 +71,9 @@
         "coverage": "Full",
         "duration_minutes": 134,
         "exposures": 143,
-        "exofop_row_ids": [20377],
+        "exofop_row_ids": [
+          20377
+        ],
         "unique_observation": true,
         "result_scope": "The report describes a full on-target event of approximately 2 ppt and records both the superseded and revised periods."
       },
@@ -76,7 +85,9 @@
         "coverage": "Full",
         "duration_minutes": 219,
         "exposures": 100,
-        "exofop_row_ids": [20939],
+        "exofop_row_ids": [
+          20939
+        ],
         "unique_observation": true,
         "result_scope": "The report describes strong evidence for an on-target event close to the revised ephemeris."
       },
@@ -88,7 +99,9 @@
         "coverage": "Egress",
         "duration_minutes": 150,
         "exposures": 429,
-        "exofop_row_ids": [21003],
+        "exofop_row_ids": [
+          21003
+        ],
         "unique_observation": true,
         "result_scope": "The report describes a tentative on-target egress and supplies a fitted mid-transit time used only as an external ephemeris control."
       }
@@ -100,7 +113,7 @@
       "url": "https://exofop.ipac.caltech.edu/tess/get_file.php?id=241156",
       "predicted_ingress_bjd_tdb": 2459502.6093,
       "predicted_midpoint_bjd_tdb": 2459502.6441,
-      "predicted_egress_bjd_tdb": 2459502.6790,
+      "predicted_egress_bjd_tdb": 2459502.679,
       "reported_measured_midpoint_bjd_tdb": 2459502.6381,
       "reported_feature_depth_ppt": 2.1,
       "reported_significance_sigma": 1.0,
@@ -117,7 +130,7 @@
       "predicted_midpoint_bjd_tdb": 2460070.4723,
       "reported_measured_minus_predicted_days": 0.0054,
       "reported_approximate_depth_ppt": 2.0,
-      "superseded_period_days": 2.9174250,
+      "superseded_period_days": 2.917425,
       "revised_period_days": 2.9151488,
       "historical_comment": "The report states that an unpublished QLP Sector 41 ephemeris placed the event about 20 hours later than the earlier ULMT and KeplerCam windows.",
       "use_in_this_work": "The two explicitly reported periods and the historical comment are used as provenance. The approximate event is not added to the timing fit because the report does not give a fitted timing uncertainty."
@@ -141,7 +154,7 @@
         "g": 2.72,
         "r": 2.02,
         "i": 2.59,
-        "z_s": 2.40
+        "z_s": 2.4
       },
       "nearby_stars_ruled_out": 133,
       "report_language": "tentative egress on target",
@@ -154,5 +167,100 @@
     "Only MuSCAT2 publishes a midpoint uncertainty suitable for the numerical external-control fit used here.",
     "Public-data use and citation do not by themselves imply coauthorship, endorsement, or a change to the established project author list.",
     "Historical comments copied into older reports may contain superseded classifications; the live ExoFOP dispositions, both PC at retrieval, control the status stated in this work."
-  ]
+  ],
+  "imaging_and_spectroscopy_inventory": {
+    "provenance": "Transcribed from the ExoFOP-TESS target page for TIC 390988385 alongside the time-series inventory in this file, and previously recorded in outputs/toi3505_poster/README.md. These rows are an inventory of what exists; no image, spectrum, or velocity was retrieved or reduced here.",
+    "use_in_this_work": "Establishes that resolved imaging and spectroscopic constraints already exist for this target. Only the speckle separation and delta-I are used numerically, as the companion parameters in the dilution screen.",
+    "high_resolution_imaging": [
+      {
+        "date_utc": "2021-10-01",
+        "facility": "SOAR",
+        "instrument": "HRCam",
+        "technique": "speckle",
+        "companion_separation_arcsec": 0.517,
+        "companion_delta_mag": 1.7,
+        "companion_delta_band": "I",
+        "used_numerically": true
+      },
+      {
+        "date_utc": "2021-07-19",
+        "facility": "Shane 3 m",
+        "instrument": "ShARCS",
+        "technique": "adaptive optics",
+        "companion_separation_arcsec": 0.51,
+        "companion_delta_mag_j": 1.53,
+        "companion_delta_mag_ks": 1.59,
+        "additional_sources": "five sources between 6 and 8 arcsec",
+        "used_numerically": false
+      }
+    ],
+    "spectroscopy": [
+      {
+        "facility": "TRES",
+        "year": 2021,
+        "epochs": 3,
+        "used_numerically": false
+      },
+      {
+        "facility": "Keck",
+        "instrument": "HIRES",
+        "year": 2022,
+        "epochs": 2,
+        "used_numerically": false
+      }
+    ],
+    "radial_velocities_on_file": 6,
+    "limits": [
+      "Row-level inventory only; the underlying data products were not retrieved.",
+      "No radial-velocity amplitude, mass limit, or spectroscopic-binary assessment is derived or implied by this work.",
+      "Band-dependent companion contrast in the TESS band is constrained by the I and J measurements that bracket it, but is not measured directly."
+    ]
+  },
+  "status_reverification": {
+    "checked_utc": "2026-08-26",
+    "method": "Direct read of the live ExoFOP-TESS target page and observing notes.",
+    "tess_disposition": "PC",
+    "tfopwg_disposition": "PC",
+    "tfopwg_disposition_note": "Active planet candidate",
+    "toi_row_last_modified_at_exofop": "2025-07-31 12:59:22",
+    "confirmed_planets_listed": 0,
+    "result": "Unchanged from the 2026-08-22 snapshot. The dispositions used throughout this analysis remain current."
+  },
+  "reconnaissance_spectroscopy_notes": {
+    "source": "ExoFOP observing notes for TIC 390988385, author latham",
+    "retrieved_utc": "2026-08-26",
+    "instrument": "FLWO 1.5 m / TRES",
+    "radial_velocities_km_s": [
+      -21.595,
+      -24.111,
+      -23.319
+    ],
+    "epochs_utc": [
+      "2021-08-02",
+      "2021-10-04",
+      "2021-10-07"
+    ],
+    "velocity_span_km_s": 2.516,
+    "reported_findings": [
+      {
+        "date": "2021-08-02",
+        "text": "The first TRES observation reveals an F star, perhaps slightly evolved."
+      },
+      {
+        "date": "2021-10-04",
+        "text": "The two TRES observations yield a velocity offset that is in phase with the photometric ephemeris and is consistent with a companion with about 10 Jupiter masses."
+      },
+      {
+        "date": "2021-10-07",
+        "text": "The velocities from the three TRES observations are in phase with the photometric ephemeris, but with a fair amount of scatter. Let's see if a multi-order analysis tightens up the residuals. In the meantime, I have put this on hold."
+      }
+    ],
+    "use_in_this_work": "Report-level context only. The velocities are not re-reduced, no orbit is fitted, and no mass is derived or adopted here.",
+    "limits": [
+      "Reconnaissance velocities from a recon spectrograph, not precise RVs.",
+      "The reporting astronomer described a fair amount of scatter and placed the target on hold pending a multi-order analysis; no closing assessment is recorded in the notes.",
+      "A phase-consistent velocity offset supports a companion on the star TRES observed but does not by itself validate the candidate or exclude the unresolved 0.517-arcsecond companion.",
+      "No SB2 or double-lined designation appears anywhere in the observing notes, the spectroscopy table, or the file list as of 2026-08-26."
+    ]
+  }
 }

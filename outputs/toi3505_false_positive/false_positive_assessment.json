@@ -1,0 +1,118 @@
+{
+  "target": "TOI-3505.01",
+  "analysis_type": "false-positive scenario evidence summary",
+  "purpose": "Gather the imaging, spectroscopic, and TESS light-curve evidence bearing on each standard false-positive scenario, as the program's paper guidance directs.",
+  "scenarios": {
+    "nearby_eclipsing_binary": {
+      "evidence": "Image-level screen of every catalogued neighbour within 2.5 arcmin bright enough to mimic the signal, evaluated at the 2022 schedule window with the TFOP band correction applied.",
+      "measured_sources": 409,
+      "disposition_counts": {
+        "cleared": 288,
+        "not cleared - flux too low": 115,
+        "not cleared - blended with the target aperture": 4,
+        "not cleared - depth limit too weak": 2
+      },
+      "uncleared_with_eclipse_consistent_shape": 0,
+      "spoc_difference_image_offset_sigma": [
+        0.7158049578680605,
+        0.7608349843611643
+      ],
+      "spoc_difference_image_offset_note": "Offset between the difference-image centroid and the catalogued target position, in sigma. Values below three indicate the transit source coincides with the target at TESS resolution.",
+      "public_neb_checks_on_file": [
+        "KeplerCam 2022-06-14",
+        "ULMT 2021-10-15",
+        "MuSCAT2 2023-07-14 (133 nearby stars ruled out)"
+      ],
+      "assessment": "Disfavoured. No measured neighbour shows an eclipse-shaped event of the required depth, independent public NEB checks report the same, and the SPOC difference-image centroid stays within three sigma of the target in both sectors.",
+      "not_excluded": "Neighbours too faint for a decisive limit, and any source inside the target aperture."
+    },
+    "blended_eclipsing_binary": {
+      "evidence": "Wavelength dependence of the reported MuSCAT2 four-band depths.",
+      "chromatic_depth_test": {
+        "bands": [
+          "g",
+          "r",
+          "i",
+          "z_s"
+        ],
+        "wavelengths_nm": [
+          477.0,
+          623.0,
+          762.0,
+          870.0
+        ],
+        "depths_ppt": [
+          2.72,
+          2.02,
+          2.59,
+          2.4
+        ],
+        "mean_depth_ppt": 2.4325,
+        "depth_scatter_ppt": 0.30478134238608945,
+        "residual_scatter_about_fit_ppt": 0.36716356779617254,
+        "slope_ppt_per_100nm": -0.032219242142906335,
+        "slope_error_ppt_per_100nm": 0.12430449081431538,
+        "slope_sigma": 0.25919612342111653,
+        "consistent_with_achromatic": true,
+        "monotonic_with_wavelength": false,
+        "error_source": "residual scatter about the fitted line; the public report gives no per-band uncertainties",
+        "limits": [
+          "The reporting team described this as a tentative egress, so the depths come from a partial event at modest significance.",
+          "A blend whose colour closely matches the target would not produce a measurable trend and is not excluded by this test."
+        ]
+      },
+      "assessment": "Disfavoured. The reported depths show no monotonic trend with wavelength and are consistent with a constant depth within their scatter.",
+      "not_excluded": "A blend whose colour matches the target, and any blend at separations below the follow-up resolution."
+    },
+    "eclipsing_binary_on_target": {
+      "evidence": "SPOC odd/even and weak-secondary diagnostics, plus the amplitude of the public reconnaissance velocities.",
+      "odd_even_difference_sigma": [
+        0.21895605951879935,
+        0.6167933770720954
+      ],
+      "weak_secondary_mes": [
+        2.5197134,
+        2.1133375
+      ],
+      "suspected_eclipsing_binary_flags": [
+        false,
+        false
+      ],
+      "eclipsing_companion_velocity_bound": {
+        "assumed_host_mass_solar": 1.25,
+        "period_days": 2.9151515671005948,
+        "predicted_semi_amplitude_km_s": {
+          "0.1 solar mass": 12.201588127224285,
+          "0.3 solar mass": 33.384047984690135,
+          "0.6 solar mass": 59.33928441744085
+        },
+        "observed_velocity_span_km_s": 2.516,
+        "smallest_stellar_scenario_km_s": 12.201588127224285,
+        "ratio_smallest_stellar_to_observed": 4.849597824810925,
+        "stellar_companion_disfavoured": true,
+        "limits": [
+          "The observed span is the range of three reconnaissance velocities, not a fitted orbital semi-amplitude.",
+          "The host mass is assumed, not measured.",
+          "This bounds a companion to the star the spectrograph observed. It says nothing about the unresolved 0.517-arcsecond companion."
+        ]
+      },
+      "reported_companion_mass_note": "The public observing notes report the velocities as in phase with the photometric ephemeris and consistent with a companion of about 10 Jupiter masses, with scatter, on hold.",
+      "assessment": "Disfavoured. No significant odd/even difference, no secondary eclipse detection, no SPOC eclipsing-binary flag, and a velocity span far below any stellar companion.",
+      "not_excluded": "A definitive mass requires the multi-order velocity analysis the public notes leave open."
+    },
+    "unresolved_close_companion": {
+      "evidence": "SOAR speckle and Shane adaptive-optics imaging both resolve a companion near 0.51 arcsec that no dataset in this work can separate.",
+      "separation_arcsec": 0.517,
+      "flux_ratio_tess_band_proxy": 0.20892961308540392,
+      "assessment": "Not addressed. This is the limiting scenario and the reason no validation, dilution correction, or radius is claimed.",
+      "not_excluded": "Everything; the companion remains unresolved here."
+    }
+  },
+  "overall": "The nearby, blended, and on-target eclipsing-binary scenarios are each disfavoured by at least one line of evidence. The unresolved 0.517-arcsecond companion is not addressed, so this summary supports the existing planet-candidate disposition without validating it.",
+  "limits": [
+    "An evidence summary, not a statistical validation. No false-positive probability is computed and no validation framework is run.",
+    "External report values are used as published and are not re-reduced.",
+    "The MuSCAT2 depths come from a tentative partial event and carry no published per-band uncertainties.",
+    "The velocity bound assumes a host mass and treats a range of three reconnaissance velocities as a span, not a fitted amplitude."
+  ]
+}

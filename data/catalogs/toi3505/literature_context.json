@@ -61,6 +61,13 @@
   "limits": [
     "A zero-result exact-name search does not prove that no relevant paper exists under an unexpected identifier or in an unindexed venue.",
     "The literature search is a dated snapshot and should be repeated immediately before journal submission or public preprint posting.",
-    "The novelty sentence concerns this study's combination and reconstruction, not discovery, classification, validation, or first follow-up."
-  ]
+    "The novelty sentence concerns this study's combination and reconstruction, not discovery, classification, validation, or first follow-up.",
+    "The project owner confirmed on 2026-08-25 that no parallel paper is in progress within the program; this narrows but does not eliminate the risk that unpublished work exists elsewhere."
+  ],
+  "parallel_work_check": {
+    "confirmed_date": "2026-08-25",
+    "confirmed_by": "project owner",
+    "statement": "No other paper on TOI-3505.01 is in progress within the program.",
+    "scope": "Covers work the project owner is aware of. It does not extend to unpublished work elsewhere, so the 'To our knowledge' qualifier on the novelty sentence still stands."
+  }
 }
