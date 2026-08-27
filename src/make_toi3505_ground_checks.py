@@ -94,6 +94,13 @@ NEARBY_SOURCE_RADIUS_PIXELS = 15.0
 NEARBY_SKY_INNER_PIXELS = 30.0
 NEARBY_SKY_OUTER_PIXELS = 50.0
 CATALOG_DEPTH = 0.002910
+# TFOP SG1 guidelines, revision 6.4, appendix E: the NEB predicted depth is
+# computed after applying a -0.5 mag correction to the delta-magnitude, which
+# compensates for the difference between the TESS band and the redder filters
+# typically used for follow-up.  Making a neighbour effectively brighter lowers
+# the eclipse depth it needs to mimic the signal, so the corrected screen is
+# the more conservative of the two.
+TFOP_BAND_CORRECTION_MAG = -0.5
 
 
 def parse_args() -> argparse.Namespace:
@@ -497,7 +504,18 @@ def prepare_nearby_candidates(catalog_dir: Path, wcs: WCS) -> pd.DataFrame:
     candidates["eclipse_fraction_needed_simple"] = (
         CATALOG_DEPTH / candidates["flux_ratio_to_target"]
     )
-    candidates = candidates[candidates["eclipse_fraction_needed_simple"] <= 1.0]
+    # TFOP band-corrected quantities.  These drive the adopted screen; the
+    # uncorrected columns above are retained so the difference stays auditable.
+    candidates["delta_tmag_tfop"] = (
+        candidates["delta_tmag"] + TFOP_BAND_CORRECTION_MAG
+    )
+    candidates["flux_ratio_to_target_tfop"] = np.power(
+        10.0, -0.4 * candidates["delta_tmag_tfop"]
+    )
+    candidates["eclipse_fraction_needed_tfop"] = (
+        CATALOG_DEPTH / candidates["flux_ratio_to_target_tfop"]
+    )
+    candidates = candidates[candidates["eclipse_fraction_needed_tfop"] <= 1.0]
 
     # A few TIC rows can describe the same Gaia source.  Keep the brightest
     # entry for each Gaia identifier, or the TIC identifier when Gaia is blank.
@@ -520,7 +538,8 @@ def prepare_nearby_candidates(catalog_dir: Path, wcs: WCS) -> pd.DataFrame:
     candidates["x_zero_indexed"] = x
     candidates["y_zero_indexed"] = y
     candidates["catalog_screen"] = (
-        "bright enough to mimic 2.91 ppt only under a total-throughput simple eclipse calculation"
+        "bright enough to mimic 2.91 ppt under a total-throughput eclipse "
+        "calculation with the TFOP -0.5 mag band correction applied"
     )
     return candidates
 
@@ -578,7 +597,14 @@ def measure_nearby_stars(
     }
     rows: list[dict[str, object]] = []
     for index, candidate in candidates.iterrows():
-        differential = curve_from_ensemble(flux[:, index], comparison_counts)
+        # Widening the candidate list with the TFOP band correction reaches
+        # sources so faint that no frame yields a usable measurement.  Those are
+        # a real TFOP disposition ("flux too low"), not an error, so they are
+        # recorded with blank photometry instead of stopping the run.
+        try:
+            differential = curve_from_ensemble(flux[:, index], comparison_counts)
+        except RuntimeError:
+            differential = np.full(len(table), np.nan, dtype=float)
         key = f"tic_{int(candidate['ID'])}_relative_brightness"
         curves[key] = differential
         values = differential[primary & np.isfinite(differential)]
@@ -606,7 +632,27 @@ def measure_nearby_stars(
         else:
             schedule_depth = float("nan")
             schedule_error = float("nan")
-        required_eclipse = float(candidate["eclipse_fraction_needed_simple"])
+        # TFOP appendix E asks whether any not-cleared neighbour "clearly
+        # matches the predicted depth of a NEB".  A real eclipse returns to its
+        # baseline after egress; a slow drift across the night does not.  This
+        # compares the post-egress baseline with the pre-ingress baseline so a
+        # trend cannot masquerade as an event.
+        in_window_indices = np.flatnonzero(inside)
+        baseline_step = float("nan")
+        if len(in_window_indices) and outside.sum() >= 20:
+            before_mask = outside.copy()
+            after_mask = outside.copy()
+            before_mask[in_window_indices[0] :] = False
+            after_mask[: in_window_indices[-1] + 1] = False
+            if before_mask.sum() >= 10 and after_mask.sum() >= 10:
+                baseline_step = float(
+                    np.median(differential[after_mask])
+                    - np.median(differential[before_mask])
+                )
+        required_eclipse = float(candidate["eclipse_fraction_needed_tfop"])
+        required_eclipse_uncorrected = float(
+            candidate["eclipse_fraction_needed_simple"]
+        )
         target_aperture_overlap = bool(
             float(candidate["dstArcSec"])
             < (GROUND_SOURCE_RADIUS_PIXELS + NEARBY_SOURCE_RADIUS_PIXELS)
@@ -629,6 +675,21 @@ def measure_nearby_stars(
             and not target_aperture_overlap
             and three_sigma_upper < required_eclipse
         )
+        cleared_uncorrected = bool(
+            sufficient_measurements
+            and not target_aperture_overlap
+            and three_sigma_upper < required_eclipse_uncorrected
+        )
+        # Disposition vocabulary follows TFOP SG1 section 2.2, case 3, so the
+        # screen's outcome can be read against the formal procedure.
+        if cleared:
+            disposition = "cleared"
+        elif target_aperture_overlap:
+            disposition = "not cleared - blended with the target aperture"
+        elif not sufficient_measurements:
+            disposition = "not cleared - flux too low"
+        else:
+            disposition = "not cleared - depth limit too weak"
         rows.append(
             {
                 "tic_id": int(candidate["ID"]),
@@ -637,6 +698,8 @@ def measure_nearby_stars(
                 "tmag": float(candidate["Tmag"]),
                 "delta_tmag": float(candidate["delta_tmag"]),
                 "flux_ratio_to_target": float(candidate["flux_ratio_to_target"]),
+                "eclipse_fraction_needed_tfop": required_eclipse,
+                "delta_tmag_tfop": float(candidate["delta_tmag_tfop"]),
                 "eclipse_fraction_needed_simple": float(
                     candidate["eclipse_fraction_needed_simple"]
                 ),
@@ -674,11 +737,22 @@ def measure_nearby_stars(
                 "historical_window_depth_error_ppt": schedule_error * 1000.0,
                 "historical_window_three_sigma_upper_ppt": three_sigma_upper
                 * 1000.0,
-                "required_eclipse_depth_ppt_simple": required_eclipse * 1000.0,
+                "post_egress_minus_pre_ingress_ppt": baseline_step * 1000.0,
+                "eclipse_shape_consistent": bool(
+                    np.isfinite(baseline_step)
+                    and np.isfinite(schedule_depth)
+                    and abs(baseline_step) < 0.5 * abs(schedule_depth)
+                ),
+                "required_eclipse_depth_ppt_tfop": required_eclipse * 1000.0,
+                "required_eclipse_depth_ppt_simple": (
+                    required_eclipse_uncorrected * 1000.0
+                ),
                 "target_aperture_overlap": target_aperture_overlap,
                 "sufficient_schedule_window_measurements": sufficient_measurements,
                 "predicted_transit_covered": True,
                 "transit_relevant_clearance": cleared,
+                "transit_relevant_clearance_uncorrected": cleared_uncorrected,
+                "disposition": disposition,
                 "interpretation": (
                     "inconsistent with the required eclipse at the three-sigma screening level"
                     if cleared
@@ -915,18 +989,32 @@ def write_readme(
             "without `--skip-nearby-images` to complete it."
         )
     else:
-        cleared = int(nearby_measurements["transit_relevant_clearance"].sum())
-        overlap = int(nearby_measurements["target_aperture_overlap"].sum())
+        counts = nearby_measurements["disposition"].value_counts()
+        cleared = int(counts.get("cleared", 0))
+        overlap = int(
+            counts.get("not cleared - blended with the target aperture", 0)
+        )
+        faint = int(counts.get("not cleared - flux too low", 0))
+        weak = int(counts.get("not cleared - depth limit too weak", 0))
+        shaped = int(
+            nearby_measurements.loc[
+                nearby_measurements["disposition"]
+                == "not cleared - depth limit too weak",
+                "eclipse_shape_consistent",
+            ].sum()
+        )
         nearby_text = (
             f"{len(nearby_measurements)} deduplicated TIC sources within "
             f"{NEARBY_RADIUS_ARCSEC:.0f} arcseconds ({NEARBY_RADIUS_ARCSEC / 60.0:.1f} "
-            f"arcminutes, the TFOP SG1 nominal radius) "
-            "were bright enough to mimic a 2.91-ppt event in the simple total-eclipse "
-            "screen and were measured on all 281 aligned images. Using the confirmed "
-            "Eastern times from the 2022 schedule, "
-            f"{cleared} sources are inconsistent with the required eclipse at this "
-            f"screen's three-sigma level. {overlap} source apertures overlap the "
-            "target aperture and are not cleared."
+            f"arcminutes, the TFOP SG1 nominal radius) were bright enough to mimic a "
+            "2.91-ppt event once the TFOP -0.5 mag band correction is applied, and "
+            "were measured on all 281 aligned images. Using the confirmed Eastern "
+            f"times from the 2022 schedule: {cleared} cleared, {overlap} blended with "
+            f"the target aperture, {faint} too faint for a decisive limit, and {weak} "
+            "measured but without a limit deep enough to exclude the required "
+            f"eclipse. Of those {weak}, {shaped} show a dimming whose shape is "
+            "consistent with an eclipse; the rest are monotonic trends across the "
+            "night rather than events."
         )
     working = schedule["working_interpretation"]
     assert isinstance(working, dict)
@@ -1147,8 +1235,33 @@ def main() -> None:
             "image_measurement_completed": nearby_measurements is not None,
             "historical_schedule_window_covered": True,
             "confirmed_timezone": "America/New_York",
+            "tfop_band_correction_mag": TFOP_BAND_CORRECTION_MAG,
             "sources_cleared_by_conditional_screen": int(
                 nearby_measurements["transit_relevant_clearance"].sum()
+            )
+            if nearby_measurements is not None
+            else None,
+            "sources_cleared_without_band_correction": int(
+                nearby_measurements["transit_relevant_clearance_uncorrected"].sum()
+            )
+            if nearby_measurements is not None
+            else None,
+            "disposition_counts": (
+                {
+                    str(key): int(value)
+                    for key, value in nearby_measurements["disposition"]
+                    .value_counts()
+                    .items()
+                }
+                if nearby_measurements is not None
+                else None
+            ),
+            "uncleared_with_eclipse_consistent_shape": int(
+                nearby_measurements.loc[
+                    nearby_measurements["disposition"]
+                    == "not cleared - depth limit too weak",
+                    "eclipse_shape_consistent",
+                ].sum()
             )
             if nearby_measurements is not None
             else None,

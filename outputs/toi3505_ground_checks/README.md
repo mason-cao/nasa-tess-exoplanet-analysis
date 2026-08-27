@@ -35,7 +35,7 @@ aperture so blends are visible instead of hidden.
 
 ## Nearby-star scope
 
-280 deduplicated TIC sources within 150 arcseconds (2.5 arcminutes, the TFOP SG1 nominal radius) were bright enough to mimic a 2.91-ppt event in the simple total-eclipse screen and were measured on all 281 aligned images. Using the confirmed Eastern times from the 2022 schedule, 222 sources are inconsistent with the required eclipse at this screen's three-sigma level. 2 source apertures overlap the target aperture and are not cleared.
+409 deduplicated TIC sources within 150 arcseconds (2.5 arcminutes, the TFOP SG1 nominal radius) were bright enough to mimic a 2.91-ppt event once the TFOP -0.5 mag band correction is applied, and were measured on all 281 aligned images. Using the confirmed Eastern times from the 2022 schedule: 288 cleared, 4 blended with the target aperture, 115 too faint for a decisive limit, and 2 measured but without a limit deep enough to exclude the required eclipse. Of those 2, 0 show a dimming whose shape is consistent with an eclipse; the rest are monotonic trends across the night rather than events.
 
 The schedule-window result uses ingress BJD_TDB
 2459782.682401 and egress

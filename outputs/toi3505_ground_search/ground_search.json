@@ -1,0 +1,73 @@
+{
+  "target": "TOI-3505.01",
+  "analysis_type": "whole-sequence floating-midpoint transit search",
+  "source_files": {
+    "light_curve": "outputs/toi3505_final_candidate/TOI_3505.01_2022-07-22_R_final_candidate_light_curve.csv",
+    "tess_summary": "outputs/toi3505_tess_analysis/analysis_summary.json",
+    "validation_summary": "outputs/toi3505_data_validation/analysis_summary.json"
+  },
+  "method": "At each trial midpoint a straight local baseline and one exposure-integrated box depth are fitted by weighted least squares. The duration is held at a published TESS value and the depth is free.",
+  "accepted_measurements": 263,
+  "observed_span_hours": 5.0145054236,
+  "minimum_in_event_points": 30,
+  "minimum_baseline_points_each_side": 20,
+  "minimum_event_coverage_fraction": 0.85,
+  "durations": [
+    {
+      "label": "TOI catalog",
+      "source": "ExoFOP TOI catalog row frozen for this analysis",
+      "duration_hours": 2.004,
+      "searched_midpoint_range_hours": [
+        1.4367716326999997,
+        3.4701049660333325
+      ],
+      "expected_depth_ppt": 2.9099999999999997,
+      "expected_depth_error_ppt": null,
+      "trial_midpoints": 62,
+      "midpoint_step_minutes": 2.0,
+      "approximate_independent_trials": 1.0146373918829006,
+      "best_single_trial_probability": 0.014041995215587546,
+      "best_trials_corrected_probability": 0.014246062395678383,
+      "best_midpoint_hours_since_first_image": 1.7367716326999996,
+      "best_depth_ppt": 0.9296325093277953,
+      "best_depth_error_ppt": 0.42330850125034386,
+      "best_depth_snr": 2.196111126003615,
+      "best_consistent_with_noise": true,
+      "median_upper_limit_ppt": 0.9894662147129983,
+      "maximum_upper_limit_ppt": 2.3568537816241704,
+      "expected_depth_excluded_everywhere": true,
+      "upper_limit_sigma": 3.0
+    },
+    {
+      "label": "SPOC multi-sector",
+      "source": "SPOC sectors 54 and 81 combined Mandel-Agol fit",
+      "duration_hours": 2.7111916374936995,
+      "searched_midpoint_range_hours": [
+        1.770104966033333,
+        3.1367716326999995
+      ],
+      "expected_depth_ppt": 3.2918889004895218,
+      "expected_depth_error_ppt": 0.118516266,
+      "trial_midpoints": 42,
+      "midpoint_step_minutes": 2.0,
+      "approximate_independent_trials": 1.0,
+      "best_single_trial_probability": 0.1440623871897962,
+      "best_trials_corrected_probability": 0.14406238718979614,
+      "best_midpoint_hours_since_first_image": 2.0367716326999994,
+      "best_depth_ppt": 0.4220889565300652,
+      "best_depth_error_ppt": 0.39735580579775387,
+      "best_depth_snr": 1.062244342152383,
+      "best_consistent_with_noise": true,
+      "median_upper_limit_ppt": 0.6848864688504304,
+      "maximum_upper_limit_ppt": 1.6141563739233267,
+      "expected_depth_excluded_everywhere": true,
+      "upper_limit_sigma": 3.0
+    }
+  ],
+  "limits": [
+    "Observed aperture depths only; no dilution correction is applied.",
+    "A fixed symmetric box, not a limb-darkened physical transit model.",
+    "The noise reference is a scale, not a calibrated false-alarm rate.",
+    "A null over the searched span says nothing about events outside it."
+  ]
+}
