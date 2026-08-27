@@ -3,14 +3,4 @@ VERSION:2.0
 PRODID:-//TOI-3505.01 analysis//Observation planner//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-BEGIN:VEVENT
-UID:toi3505-cycle-505@nasa-tess-exoplanet-analysis
-DTSTAMP:20260804T203506Z
-DTSTART:20260813T015416Z
-DTEND:20260813T063656Z
-SUMMARY:TOI-3505.01 transit observation window
-DESCRIPTION:Predicted midpoint 2026-08-13T00:15:36-04:00\; 1-sigma uncertai
- nty 3.35 minutes. Planning output only\; independently confirm before obse
- rving.
-END:VEVENT
 END:VCALENDAR

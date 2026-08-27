@@ -294,6 +294,41 @@ def schedule_context(
                 < float(utc_times["egress"]["bjd_tdb"])
                 <= observation_end_bjd
             ),
+            # How much of the night the schedule asked for was actually
+            # delivered.  The row's own note records "bad RA jumps at the
+            # beginning of the night", and the sequence does start late.
+            "planned_span_hours": (
+                float(working_times["planned_end"]["bjd_tdb"])
+                - float(working_times["planned_start"]["bjd_tdb"])
+            )
+            * 24.0,
+            "observed_span_hours": (observation_end_bjd - observation_start_bjd)
+            * 24.0,
+            "late_start_hours": (
+                observation_start_bjd
+                - float(working_times["planned_start"]["bjd_tdb"])
+            )
+            * 24.0,
+            "early_end_hours": (
+                float(working_times["planned_end"]["bjd_tdb"]) - observation_end_bjd
+            )
+            * 24.0,
+            "planned_window_coverage_fraction": (
+                (observation_end_bjd - observation_start_bjd)
+                / (
+                    float(working_times["planned_end"]["bjd_tdb"])
+                    - float(working_times["planned_start"]["bjd_tdb"])
+                )
+            ),
+            "pre_ingress_baseline_hours": (
+                float(working_times["ingress"]["bjd_tdb"]) - observation_start_bjd
+            )
+            * 24.0,
+            "post_egress_baseline_hours": (
+                observation_end_bjd - float(working_times["egress"]["bjd_tdb"])
+            )
+            * 24.0,
+            "schedule_row_note": "bad RA jumps at the beginning of the night",
         }
     return context
 

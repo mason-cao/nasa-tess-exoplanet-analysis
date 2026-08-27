@@ -65,6 +65,10 @@ EPOCH_ERROR_DAYS = 0.0020787
 CATALOG_DEPTH = 0.002910
 CATALOG_DEPTH_ERROR = 0.000196
 CATALOG_DURATION_DAYS = 2.004 / 24.0
+# Population-context values from the same frozen ExoFOP TOI catalog row.  They
+# are reported as catalog quantities only; this work fits no radius.
+CATALOG_PLANET_RADIUS_REARTH = 7.4578
+CATALOG_INSOLATION_EARTH = 504.746
 FIT_WINDOW_DAYS = 0.22
 GROUND_START_BJD = 2459782.598234811
 GROUND_END_BJD = 2459782.809458706
@@ -1098,6 +1102,8 @@ def main() -> None:
         },
         "catalog_depth_ppt": CATALOG_DEPTH * 1000.0,
         "catalog_duration_hours": CATALOG_DURATION_DAYS * 24.0,
+        "catalog_planet_radius_rearth": CATALOG_PLANET_RADIUS_REARTH,
+        "catalog_insolation_earth": CATALOG_INSOLATION_EARTH,
         "quality_rule": "finite flux/error and QUALITY == 0",
         "model": "finite-exposure box with one local straight baseline per event",
         "random_seed_reserved_for_injection_tests": RANDOM_SEED,

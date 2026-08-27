@@ -9,7 +9,7 @@ observing.
 
 | Cycle | Sequence start | Midpoint | Sequence end | 1σ (min) | Min altitude | Moon below throughout |
 | ---: | --- | --- | --- | ---: | ---: | :---: |
-| 505 | 2026-08-12 21:54 EDT | 2026-08-13 00:16 EDT | 2026-08-13 02:37 EDT | 3.35 | 45.3 | yes |
+| — | No complete windows pass the planning limits | — | — | — | — | — |
 
 The sequence includes 1 hour of baseline on each side of a
 2.711-hour transit. A complete window must keep the target

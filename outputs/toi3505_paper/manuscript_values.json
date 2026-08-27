@@ -8,6 +8,7 @@
     "Owen Alfaro",
     "Rianne Eccleston",
     "Kasey Davidson",
+    "Kevin I. Collins",
     "Peter Plavchan"
   ],
   "status_statement": "TOI-3505.01 remains a planet candidate; the paper does not claim validation or confirmation.",
@@ -50,6 +51,10 @@
     "outputs/toi3505_schedule_reconstruction/schedule_reconstruction.json",
     "outputs/toi3505_final_candidate/summary.json",
     "outputs/toi3505_ground_checks/summary.json",
+    "outputs/toi3505_ground_search/ground_search.json",
+    "outputs/toi3505_false_positive/false_positive_assessment.json",
+    "outputs/toi3505_tess_pixels/dilution_screen.json",
+    "outputs/toi3505_data_validation/analysis_summary.json",
     "outputs/toi3505_tess_analysis/analysis_summary.json",
     "outputs/toi3505_tess_pixels/analysis_summary.json",
     "data/catalogs/toi3505/catalog_summary.json",
@@ -59,6 +64,8 @@
     "outputs/toi3505_tess_analysis/02_phase_folded_sectors.svg",
     "outputs/toi3505_final_candidate/TOI_3505.01_2022-07-22_R_light_curve.svg",
     "outputs/toi3505_ephemeris_robustness/01_ephemeris_robustness.svg",
-    "outputs/toi3505_schedule_reconstruction/01_schedule_reconstruction.svg"
+    "outputs/toi3505_schedule_reconstruction/01_schedule_reconstruction.svg",
+    "outputs/toi3505_ground_search/01_ground_transit_search.svg",
+    "outputs/toi3505_false_positive/01_false_positive_tests.svg"
   ]
 }

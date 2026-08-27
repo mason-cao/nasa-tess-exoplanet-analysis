@@ -219,7 +219,15 @@
       "observation_end_bjd_tdb": 2459782.8094587056,
       "working_planned_range_brackets_observation": true,
       "working_event_fully_covered": true,
-      "utc_event_fully_covered": false
+      "utc_event_fully_covered": false,
+      "planned_span_hours": 7.750044509768486,
+      "observed_span_hours": 5.069373473525047,
+      "late_start_hours": 1.0633744932711124,
+      "early_end_hours": 1.6172965429723263,
+      "planned_window_coverage_fraction": 0.654108949585437,
+      "pre_ingress_baseline_hours": 2.019978918135166,
+      "post_egress_baseline_hours": 1.3993851095438004,
+      "schedule_row_note": "bad RA jumps at the beginning of the night"
     },
     "fixed_window_check": {
       "model": "straight baseline plus exposure-integrated fixed box",

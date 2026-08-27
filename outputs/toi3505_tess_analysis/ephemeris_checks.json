@@ -210,7 +210,15 @@
       "observation_end_bjd_tdb": 2459782.809458706,
       "working_planned_range_brackets_observation": true,
       "working_event_fully_covered": true,
-      "utc_event_fully_covered": false
+      "utc_event_fully_covered": false,
+      "planned_span_hours": 7.750044509768486,
+      "observed_span_hours": 5.069373484700918,
+      "late_start_hours": 1.0633744932711124,
+      "early_end_hours": 1.6172965317964554,
+      "planned_window_coverage_fraction": 0.6541089510274766,
+      "pre_ingress_baseline_hours": 2.019978918135166,
+      "post_egress_baseline_hours": 1.3993851207196712,
+      "schedule_row_note": "bad RA jumps at the beginning of the night"
     },
     "comparison_with_ephemerides": {
       "schedule_period_days": 2.9151488,

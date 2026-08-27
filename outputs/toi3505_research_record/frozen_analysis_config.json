@@ -547,8 +547,8 @@
   },
   "observation_planning": {
     "date_range": {
-      "start_local": "2026-08-04",
-      "end_local_exclusive": "2026-11-02"
+      "start_local": "2026-08-26",
+      "end_local_exclusive": "2026-11-24"
     },
     "duration_hours": 2.7111916374936995,
     "planning_limits": {
@@ -556,7 +556,7 @@
       "min_target_altitude_deg": 25.0,
       "max_sun_altitude_deg": -18.0
     },
-    "observable_event_count": 1,
+    "observable_event_count": 0,
     "approval_status": "planning output; mentor confirmation required"
   },
   "public_followup_context": {
@@ -696,7 +696,8 @@
     "limits": [
       "A zero-result exact-name search does not prove that no relevant paper exists under an unexpected identifier or in an unindexed venue.",
       "The literature search is a dated snapshot and should be repeated immediately before journal submission or public preprint posting.",
-      "The novelty sentence concerns this study's combination and reconstruction, not discovery, classification, validation, or first follow-up."
+      "The novelty sentence concerns this study's combination and reconstruction, not discovery, classification, validation, or first follow-up.",
+      "The project owner confirmed on 2026-08-25 that no parallel paper is in progress within the program; this narrows but does not eliminate the risk that unpublished work exists elsewhere."
     ]
   },
   "paper": {
@@ -708,6 +709,7 @@
       "Owen Alfaro",
       "Rianne Eccleston",
       "Kasey Davidson",
+      "Kevin I. Collins",
       "Peter Plavchan"
     ],
     "status_statement": "TOI-3505.01 remains a planet candidate; the paper does not claim validation or confirmation.",
