@@ -66,6 +66,7 @@ EXPECTED_AUTHORS = (
     "Owen Alfaro",
     "Rianne Eccleston",
     "Kasey Davidson",
+    "Kevin I. Collins",
     "Peter Plavchan",
 )
 
@@ -510,9 +511,9 @@ def check_repository(root: Path = ROOT) -> list[str]:
         paper_html = paper_html_path.read_text(encoding="utf-8")
         if "{{" in paper_html or "}}" in paper_html:
             errors.append(f"{paper_html_path}: unreplaced template token remains")
-        if paper_html.count("data:image/svg+xml;base64,") != 4:
+        if paper_html.count("data:image/svg+xml;base64,") != 6:
             errors.append(
-                f"{paper_html_path}: expected exactly four embedded lossless SVG figures"
+                f"{paper_html_path}: expected exactly six embedded lossless SVG figures"
             )
 
     paper_pdf_path = root / PAPER_PDF_PATH

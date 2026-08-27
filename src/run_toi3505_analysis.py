@@ -135,7 +135,17 @@ def main() -> None:
         "Compare official SPOC reports",
         script("analyze_toi3505_data_validation.py"),
     )
+    # Needs the catalog and SPOC durations produced by the two TESS stages above.
+    run_stage(
+        "Search the whole ground sequence for a transit",
+        script("search_toi3505_ground_transit.py"),
+    )
     run_stage("Refine TESS ephemeris", script("refine_toi3505_ephemeris.py"))
+    # Needs the refined period and the nearby-star dispositions above.
+    run_stage(
+        "Summarize false-positive evidence",
+        script("assess_toi3505_false_positive.py"),
+    )
     run_stage(
         "Quantify ephemeris robustness",
         script("analyze_toi3505_ephemeris_robustness.py"),

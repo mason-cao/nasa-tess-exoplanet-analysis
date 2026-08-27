@@ -71,7 +71,7 @@ class ReproducibilityTests(unittest.TestCase):
         self.assertIn("ephemeris_robustness", tess)
         self.assertIn("archival_reconstruction", historical)
         self.assertIn("paper", config)
-        self.assertEqual(len(config["paper"]["authors"]), 6)
+        self.assertEqual(len(config["paper"]["authors"]), 7)
         self.assertEqual(config["paper"]["primary_result"]["events"], 27)
         self.assertEqual(
             historical["archival_reconstruction"]["reconstruction"]["cycles"], 96

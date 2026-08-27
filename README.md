@@ -8,6 +8,11 @@ products.
 
 - Ground photometry used 263 quality-reviewed exposures and achieved 2.497 ppt
   robust scatter. No clear transit was measured.
+- Searching the whole sequence rather than the stale schedule window alone, a
+  transit of either published TESS depth is excluded at every midpoint the data
+  can constrain; the median three-sigma depth limit is 0.99 ppt against a
+  2.91 ppt catalog depth. Details are in
+  [`outputs/toi3505_ground_search`](outputs/toi3505_ground_search).
 - The 2.915-day signal was recovered in TESS Sectors 14, 41, 54, and 81. The
   ground observations fall within a Sector 54 data gap.
 - A fit to 27 transit times spanning 5.05 years gives
@@ -21,9 +26,19 @@ products.
   seconds. The adopted TESS ephemeris places the relevant midpoint 20.31 hours
   before the stale schedule; applying the schedule's visible revised period to
   the same 2021 midpoint instead gives a 5.24-hour offset.
-- Nearby-star screening measured all 280 catalog stars bright enough to mimic
-  the signal within 2.5 arcminutes; 222 were cleared, while two sources inside
-  the target aperture remain unresolved.
+- The standard false-positive scenarios are each disfavoured: no measured
+  neighbour shows an eclipse-shaped event, the reported MuSCAT2 depths are
+  achromatic across 477-870 nm (0.26 sigma slope), and an eclipsing stellar
+  companion would move the host by at least 12 km/s against a 2.5 km/s observed
+  velocity span. The unresolved 0.517-arcsecond companion is not addressed, so
+  this supports rather than validates the candidate. Details are in
+  [`outputs/toi3505_false_positive`](outputs/toi3505_false_positive).
+- Nearby-star screening measured all 409 catalog stars within 2.5 arcminutes
+  bright enough to mimic the signal once the TFOP -0.5 mag band correction is
+  applied: 288 cleared, 4 blended with the target aperture, 115 too faint for a
+  decisive limit, and 2 measured without a deep enough limit. Neither of those
+  last two shows an eclipse-shaped event; both are monotonic trends across the
+  night.
 
 This work refines the light curve and ephemeris but does not independently
 validate the planet or resolve its known 0.517-arcsecond companion.
@@ -46,10 +61,12 @@ classification, follow-up, validation, or confirmation.
 
 Before journal or preprint submission, the dated literature search and live
 ExoFOP status should be refreshed and the manuscript should receive scientific
-review. The missing original scheduling-workbook formulas, formal program NEB
-procedure, unresolved close companion, and absent dilution-corrected radius are
-explicit scope limits; they do not block the paper's narrower timing and
-archival result.
+review. The missing original scheduling-workbook formulas, unresolved close
+companion, and absent dilution-corrected radius are explicit scope limits; they
+do not block the paper's narrower timing and archival result. Public imaging and
+spectroscopy for this target exist on ExoFOP and are inventoried but not
+analyzed here. Both dispositions were re-checked against the live ExoFOP page on
+2026-08-26 and remain planet candidate.
 
 ## Repository
 
@@ -62,6 +79,8 @@ archival result.
   sidecar and is not TOI-3505 observation data
 - `outputs/` — generated figures and analysis results
 - `paper/` — editable manuscript and self-contained HTML build
+- `LICENSE` — MIT for the code and derived products; third-party material
+  redistributed here keeps its own terms
 - `output/pdf/` — final rendered paper artifact
 - [`outputs/toi3505_poster`](outputs/toi3505_poster) — symposium posters and
   source figures

@@ -40,10 +40,13 @@ class PaperBuildTests(unittest.TestCase):
         )
         self.assertIn("remains a planet candidate", record["status_statement"])
 
-    def test_author_line_is_exactly_the_established_six_authors(self) -> None:
+    def test_author_line_is_exactly_the_established_seven_authors(self) -> None:
         _, record = collect_values()
         self.assertEqual(record["authors"], list(AUTHOR_NAMES))
-        self.assertEqual(len(record["authors"]), 6)
+        self.assertEqual(len(record["authors"]), 7)
+        # The observer named on the 2022 schedule row belongs on the author
+        # list under the program's own authorship guidance.
+        self.assertIn("Kevin I. Collins", record["authors"])
 
     def test_paper_record_inventories_build_inputs(self) -> None:
         _, record = collect_values()
@@ -63,7 +66,7 @@ class PaperBuildTests(unittest.TestCase):
         )
         self.assertIsNone(TOKEN_PATTERN.search(document))
         self.assertNotIn("file://", document)
-        self.assertEqual(document.count("data:image/svg+xml;base64,"), 4)
+        self.assertEqual(document.count("data:image/svg+xml;base64,"), 6)
         self.assertIn("To our knowledge,", document)
         self.assertIn("does not validate or confirm TOI-3505.01", document)
 

@@ -54,6 +54,14 @@ RECONSTRUCTION_PATH = (
 )
 GROUND_PATH = ROOT / "outputs" / "toi3505_final_candidate" / "summary.json"
 GROUND_CHECKS_PATH = ROOT / "outputs" / "toi3505_ground_checks" / "summary.json"
+GROUND_SEARCH_PATH = ROOT / "outputs" / "toi3505_ground_search" / "ground_search.json"
+FALSE_POSITIVE_PATH = (
+    ROOT / "outputs" / "toi3505_false_positive" / "false_positive_assessment.json"
+)
+DILUTION_PATH = ROOT / "outputs" / "toi3505_tess_pixels" / "dilution_screen.json"
+VALIDATION_PATH = (
+    ROOT / "outputs" / "toi3505_data_validation" / "analysis_summary.json"
+)
 TESS_PATH = ROOT / "outputs" / "toi3505_tess_analysis" / "analysis_summary.json"
 PIXEL_PATH = ROOT / "outputs" / "toi3505_tess_pixels" / "analysis_summary.json"
 CATALOG_PATH = ROOT / "data" / "catalogs" / "toi3505" / "catalog_summary.json"
@@ -90,6 +98,18 @@ FIGURES = {
         / "toi3505_schedule_reconstruction"
         / "01_schedule_reconstruction.svg"
     ),
+    "SEARCH_FIGURE": (
+        ROOT
+        / "outputs"
+        / "toi3505_ground_search"
+        / "01_ground_transit_search.svg"
+    ),
+    "FP_FIGURE": (
+        ROOT
+        / "outputs"
+        / "toi3505_false_positive"
+        / "01_false_positive_tests.svg"
+    ),
 }
 
 TOKEN_PATTERN = re.compile(r"{{([A-Z0-9_]+)}}")
@@ -99,6 +119,7 @@ AUTHOR_NAMES = (
     "Owen Alfaro",
     "Rianne Eccleston",
     "Kasey Davidson",
+    "Kevin I. Collins",
     "Peter Plavchan",
 )
 
@@ -175,6 +196,31 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
     reconstruction = load_json(RECONSTRUCTION_PATH)
     ground = load_json(GROUND_PATH)
     ground_checks = load_json(GROUND_CHECKS_PATH)
+    ground_search = load_json(GROUND_SEARCH_PATH)
+    false_positive = load_json(FALSE_POSITIVE_PATH)
+    fp_scenarios = false_positive["scenarios"]
+    chromatic = fp_scenarios["blended_eclipsing_binary"]["chromatic_depth_test"]
+    centroid_sigma = fp_scenarios["nearby_eclipsing_binary"][
+        "spoc_difference_image_offset_sigma"
+    ]
+    velocity = fp_scenarios["eclipsing_binary_on_target"][
+        "eclipsing_companion_velocity_bound"
+    ]
+    if not bool(chromatic["consistent_with_achromatic"]):
+        raise RuntimeError(
+            "The MuSCAT2 depths are no longer consistent with an achromatic "
+            "event; Section 4.5 and Section 5.4 must be rewritten"
+        )
+    if not bool(velocity["stellar_companion_disfavoured"]):
+        raise RuntimeError(
+            "The velocity bound no longer disfavours a stellar companion; "
+            "Section 4.5 and Section 5.4 must be rewritten"
+        )
+    dilution = load_json(DILUTION_PATH)
+    validation = load_json(VALIDATION_PATH)
+    spoc_records = validation["official_multisector_tce"]
+    assert isinstance(spoc_records, list) and len(spoc_records) == 1
+    spoc_tce = spoc_records[0]
     tess = load_json(TESS_PATH)
     pixels = load_json(PIXEL_PATH)
     catalog = load_json(CATALOG_PATH)
@@ -197,7 +243,25 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
     schedule = reconstruction["reconstruction"]
     timeline = reconstruction["timeline"]
     fixed = ground["historical_schedule"]["fixed_window_check"]
+    coverage = ground["historical_schedule"]["observation_comparison"]
     nearby = ground_checks["nearby_star_screen"]
+    search_durations = ground_search["durations"]
+    assert isinstance(search_durations, list)
+    search_by_label = {str(entry["label"]): entry for entry in search_durations}
+    search_catalog = search_by_label["TOI catalog"]
+    search_spoc = search_by_label["SPOC multi-sector"]
+    if int(nearby["uncleared_with_eclipse_consistent_shape"]) != 0:
+        raise RuntimeError(
+            "A nearby star now shows an eclipse-consistent dimming; Section 3.5 "
+            "states that none does and must be rewritten"
+        )
+    if not all(
+        bool(entry["expected_depth_excluded_everywhere"]) for entry in search_durations
+    ):
+        raise RuntimeError(
+            "The whole-sequence search no longer excludes the published depth "
+            "at every searched midpoint"
+        )
     current_status = exofop["current_status"]
 
     if current_status["tess_disposition"] != "PC":
@@ -308,6 +372,58 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
             ]
         )
 
+    inventory = exofop["imaging_and_spectroscopy_inventory"]
+    recon = exofop["reconnaissance_spectroscopy_notes"]
+    reverification = exofop["status_reverification"]
+    if reverification["tfopwg_disposition"] != "PC":
+        raise RuntimeError(
+            "The re-verified TFOPWG disposition is no longer PC; the manuscript's "
+            "status boundary must be rewritten before it can be built"
+        )
+    followup_rows: list[list[str]] = []
+    for row in inventory["high_resolution_imaging"]:
+        if "companion_delta_mag" in row:
+            result = (
+                f"{float(row['companion_separation_arcsec']):.3f} arcsec, "
+                f"delta {row['companion_delta_band']} = "
+                f"{float(row['companion_delta_mag']):.2f}"
+            )
+        else:
+            result = (
+                f"{float(row['companion_separation_arcsec']):.2f} arcsec, "
+                f"delta J = {float(row['companion_delta_mag_j']):.2f}, "
+                f"delta Ks = {float(row['companion_delta_mag_ks']):.2f}; "
+                f"{row['additional_sources']}"
+            )
+        followup_rows.append(
+            [
+                html.escape(str(row["date_utc"])),
+                html.escape(f"{row['facility']} / {row['instrument']}"),
+                html.escape(str(row["technique"]).title()),
+                html.escape(result),
+                "Companion parameters" if row["used_numerically"] else "Inventory only",
+            ]
+        )
+    for row in inventory["spectroscopy"]:
+        facility = str(row["facility"])
+        if "instrument" in row:
+            facility = f"{facility} / {row['instrument']}"
+        result = f"{int(row['epochs'])} epochs on file"
+        if str(row["facility"]) == "TRES":
+            result += (
+                "; velocities in phase with the photometric ephemeris, reported as "
+                "consistent with about 10 Jupiter masses, on hold"
+            )
+        followup_rows.append(
+            [
+                html.escape(str(row["year"])),
+                html.escape(facility),
+                "Spectroscopy",
+                html.escape(result),
+                "Inventory only",
+            ]
+        )
+
     values = {
         "PAPER_DATE": "22 August 2026",
         "TARGET_RA_HMS": format_ra(float(catalog["center_icrs_degrees"][0])),
@@ -372,6 +488,52 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
         "NEARBY_BRIGHT": str(int(nearby["bright_enough_catalog_candidates"])),
         "NEARBY_CLEARED": str(int(nearby["sources_cleared_by_conditional_screen"])),
         "NEARBY_OVERLAP": str(int(nearby["source_apertures_overlapping_target"])),
+        "NEARBY_FAINT": str(
+            int(nearby["disposition_counts"]["not cleared - flux too low"])
+        ),
+        "NEARBY_WEAK": str(
+            int(nearby["disposition_counts"]["not cleared - depth limit too weak"])
+        ),
+        "TFOP_BAND_CORRECTION": f"{float(nearby['tfop_band_correction_mag']):.1f}",
+        "RV_SPAN": f"{float(recon['velocity_span_km_s']):.2f}",
+        "RV_MASS": "10",
+        "HOST_MASS": f"{float(velocity['assumed_host_mass_solar']):.2f}",
+        "CHROMATIC_MEAN": f"{float(chromatic['mean_depth_ppt']):.2f}",
+        "CHROMATIC_SCATTER": f"{float(chromatic['depth_scatter_ppt']):.2f}",
+        "CHROMATIC_SLOPE": f"{float(chromatic['slope_ppt_per_100nm']):+.3f}",
+        "CHROMATIC_SLOPE_ERROR": f"{float(chromatic['slope_error_ppt_per_100nm']):.3f}",
+        "CHROMATIC_SIGMA": f"{float(chromatic['slope_sigma']):.2f}",
+        "STELLAR_MIN_K": f"{float(velocity['smallest_stellar_scenario_km_s']):.0f}",
+        "STELLAR_RATIO": f"{float(velocity['ratio_smallest_stellar_to_observed']):.0f}",
+        "CENTROID_SIGMA": (
+            "under 1" if max(float(v) for v in centroid_sigma) < 1.0
+            else f"{max(float(v) for v in centroid_sigma):.1f}"
+        ),
+        "SEARCH_BEST_DEPTH": f"{float(search_catalog['best_depth_ppt']):.2f}",
+        "SEARCH_BEST_ERROR": f"{float(search_catalog['best_depth_error_ppt']):.2f}",
+        "SEARCH_BEST_SIGMA": f"{float(search_catalog['best_depth_snr']):.2f}",
+        "SEARCH_BEST_P": f"{float(search_catalog['best_trials_corrected_probability']):.3f}",
+        "SEARCH_LIMIT_CATALOG": f"{float(search_catalog['median_upper_limit_ppt']):.2f}",
+        "SEARCH_LIMIT_SPOC": f"{float(search_spoc['median_upper_limit_ppt']):.2f}",
+        "SEARCH_RANGE_LOW": f"{float(search_catalog['searched_midpoint_range_hours'][0]):.2f}",
+        "SEARCH_RANGE_HIGH": f"{float(search_catalog['searched_midpoint_range_hours'][1]):.2f}",
+        "SEARCH_DURATION_CATALOG": f"{float(search_catalog['duration_hours']):.2f}",
+        "SEARCH_DURATION_SPOC": f"{float(search_spoc['duration_hours']):.2f}",
+        "SEARCH_COVERAGE": f"{float(ground_search['minimum_event_coverage_fraction']):.0%}",
+        "CATALOG_RADIUS": f"{float(tess['catalog_planet_radius_rearth']):.2f}",
+        "CATALOG_INSOLATION": f"{float(tess['catalog_insolation_earth']):.0f}",
+        "SPOC_DEPTH": f"{float(spoc_tce['fit_depth_ppt']):.2f}",
+        "SPOC_IMPACT": f"{float(spoc_tce['fit_impact_parameter']):.2f}",
+        "COMPANION_FLUX_RATIO": f"{float(dilution['unresolved_companion']['flux_ratio_using_delta_i_as_tess_band_proxy']):.3f}",
+        "TARGET_FLUX_FRACTION": f"{float(dilution['screening_target_fraction_of_total_flux']):.3f}",
+        "HOST_DEPTH_SCENARIO": f"{float(dilution['if_2p91_ppt_is_an_uncorrected_observed_depth']['target_host_depth_ppt']):.2f}",
+        "PLANNED_SPAN": f"{float(coverage['planned_span_hours']):.2f}",
+        "LATE_START": f"{float(coverage['late_start_hours']):.2f}",
+        "EARLY_END": f"{float(coverage['early_end_hours']):.2f}",
+        "PLANNED_COVERAGE": f"{float(coverage['planned_window_coverage_fraction']):.0%}",
+        "PRE_INGRESS_BASELINE": f"{float(coverage['pre_ingress_baseline_hours']):.2f}",
+        "POST_EGRESS_BASELINE": f"{float(coverage['post_egress_baseline_hours']):.2f}",
+        "SCHEDULE_ROW_NOTE": str(coverage["schedule_row_note"]),
         "COMPANION_SEPARATION": f"{float(pixels['dilution_screen']['unresolved_companion']['separation_arcsec']):.3f}",
         "COMPANION_DELTA_I": f"{float(pixels['dilution_screen']['unresolved_companion']['delta_i_mag']):.1f}",
         "TIC_CONTAMINATION": f"{float(pixels['dilution_screen']['tic_catalog_contamination_ratio']):.3f}",
@@ -412,6 +574,11 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
         "PUBLIC_TABLE": html_table(
             ["UT date", "Facility", "Filter", "Coverage", "Use here"],
             public_rows,
+            "compact-table public-table",
+        ),
+        "FOLLOWUP_TABLE": html_table(
+            ["UT date", "Facility", "Kind", "Result on file", "Use here"],
+            followup_rows,
             "compact-table public-table",
         ),
     }
@@ -468,6 +635,10 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
                 RECONSTRUCTION_PATH,
                 GROUND_PATH,
                 GROUND_CHECKS_PATH,
+                GROUND_SEARCH_PATH,
+                FALSE_POSITIVE_PATH,
+                DILUTION_PATH,
+                VALIDATION_PATH,
                 TESS_PATH,
                 PIXEL_PATH,
                 CATALOG_PATH,
