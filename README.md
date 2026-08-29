@@ -8,10 +8,11 @@ products.
 
 - Ground photometry used 263 quality-reviewed exposures and achieved 2.497 ppt
   robust scatter. No clear transit was measured.
-- Searching the whole sequence rather than the stale schedule window alone, a
-  transit of either published TESS depth is excluded at every midpoint the data
-  can constrain; the median three-sigma depth limit is 0.99 ppt against a
-  2.91 ppt catalog depth. Details are in
+- Searching the whole sequence rather than the stale schedule window alone
+  finds no event above a formal 3-sigma threshold. Exact published-depth
+  injections cross that threshold at 50/62 catalog-duration midpoints (80.6%)
+  and 40/42 SPOC-duration midpoints (95.2%), so the sequence does not support an
+  exclusion at every phase. Details are in
   [`outputs/toi3505_ground_search`](outputs/toi3505_ground_search).
 - The 2.915-day signal was recovered in TESS Sectors 14, 41, 54, and 81. The
   ground observations fall within a Sector 54 data gap.
@@ -20,18 +21,21 @@ products.
   [`outputs/toi3505_ephemeris_refined`](outputs/toi3505_ephemeris_refined).
 - Sector aggregation, event and sector deletion, selection-threshold tests,
   pipeline controls, and one public MuSCAT2 external control support the
-  headline period. A quadratic timing term is not favored (ΔBIC = +1.71).
+  headline period. The formal period error is 4.9e-6 days, while the
+  delete-one-sector sensitivity scale is 7.3e-6 days. A quadratic timing term
+  is not favored (ΔBIC = +1.71).
 - Propagating a public 2021 timing prediction by 96 cycles with its superseded
   2.9174250-day period reproduces all three 2022 schedule markers within 56.1
   seconds. The adopted TESS ephemeris places the relevant midpoint 20.31 hours
   before the stale schedule; applying the schedule's visible revised period to
   the same 2021 midpoint instead gives a 5.24-hour offset.
-- The standard false-positive scenarios are each disfavoured: no measured
-  neighbour shows an eclipse-shaped event, the reported MuSCAT2 depths are
-  achromatic across 477-870 nm (0.26 sigma slope), and an eclipsing stellar
-  companion would move the host by at least 12 km/s against a 2.5 km/s observed
-  velocity span. The unresolved 0.517-arcsecond companion is not addressed, so
-  this supports rather than validates the candidate. Details are in
+- The standard false-positive scenarios are each constrained: no measured
+  neighbour shows an eclipse-shaped event, the four reported MuSCAT2 depths
+  show no apparent monotonic trend across 477-870 nm (a descriptive result
+  because per-band errors are unavailable), and an eclipsing stellar companion
+  would move the host by at least 12 km/s against a 2.5 km/s observed velocity
+  span. The unresolved 0.517-arcsecond companion is not addressed, so this
+  supports rather than validates the candidate. Details are in
   [`outputs/toi3505_false_positive`](outputs/toi3505_false_positive).
 - Nearby-star screening measured all 409 catalog stars within 2.5 arcminutes
   bright enough to mimic the signal once the TFOP -0.5 mag band correction is
@@ -45,8 +49,7 @@ validate the planet or resolve its known 0.517-arcsecond companion.
 
 ## Research paper
 
-The analysis and a complete manuscript draft are ready for internal scientific
-review:
+The finalized analysis manuscript is ready for mentor scientific review:
 
 - [Final research-paper PDF](output/pdf/TOI-3505.01_research_paper.pdf)
 - [Editable manuscript](paper/TOI-3505.01_manuscript.md)
@@ -59,14 +62,13 @@ result to a schedule window consistent with a superseded ephemeris. This is a
 qualified, search-based novelty statement—not a claim of first detection,
 classification, follow-up, validation, or confirmation.
 
-Before journal or preprint submission, the dated literature search and live
-ExoFOP status should be refreshed and the manuscript should receive scientific
-review. The missing original scheduling-workbook formulas, unresolved close
-companion, and absent dilution-corrected radius are explicit scope limits; they
-do not block the paper's narrower timing and archival result. Public imaging and
-spectroscopy for this target exist on ExoFOP and are inventoried but not
-analyzed here. Both dispositions were re-checked against the live ExoFOP page on
-2026-08-26 and remain planet candidate.
+The literature search, live ExoFOP status, and NASA Exoplanet Archive candidate
+record were refreshed on 2026-08-29. The missing original scheduling-workbook
+formulas, unresolved close companion, and absent dilution-corrected radius are
+explicit scope limits; they do not block the paper's narrower timing and
+archival result. Public imaging and spectroscopy for this target exist on
+ExoFOP and are inventoried but not analyzed here. A final mentor review remains
+appropriate before submission.
 
 ## Repository
 

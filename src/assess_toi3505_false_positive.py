@@ -40,9 +40,7 @@ from astropy import units as u
 
 ROOT = Path(__file__).resolve().parents[1]
 GROUND_CHECKS_PATH = ROOT / "outputs" / "toi3505_ground_checks" / "summary.json"
-VALIDATION_PATH = (
-    ROOT / "outputs" / "toi3505_data_validation" / "analysis_summary.json"
-)
+VALIDATION_PATH = ROOT / "outputs" / "toi3505_data_validation" / "analysis_summary.json"
 EXOFOP_PATH = ROOT / "data" / "catalogs" / "toi3505" / "exofop_ground_followup.json"
 DILUTION_PATH = ROOT / "outputs" / "toi3505_tess_pixels" / "dilution_screen.json"
 EPHEMERIS_PATH = (
@@ -67,12 +65,13 @@ def load_object(path: Path) -> dict[str, object]:
 
 
 def chromatic_depth_test(depths_ppt: dict[str, float]) -> dict[str, object]:
-    """Fit reported multi-band depths against wavelength.
+    """Describe the reported multi-band depths against wavelength.
 
     A blended eclipsing binary generally produces a depth that varies with
-    wavelength, because the blended source and the target differ in colour. A
-    depth consistent with a constant across the band therefore disfavours that
-    scenario, without excluding a blend whose colour happens to match.
+    wavelength, because the blended source and the target differ in colour.
+    The public report gives no per-band uncertainties, so this function records
+    a slope and residual-based scale but does not treat their ratio as a
+    calibrated significance or establish statistical achromaticity.
     """
     bands = [band for band in BAND_WAVELENGTHS_NM if band in depths_ppt]
     wavelength = np.array([BAND_WAVELENGTHS_NM[band] for band in bands], dtype=float)
@@ -87,10 +86,13 @@ def chromatic_depth_test(depths_ppt: dict[str, float]) -> dict[str, object]:
     # would hide itself.
     residual = depth - (mean_depth + slope * centred)
     degrees_of_freedom = len(depth) - 2
-    residual_scatter = float(
-        np.sqrt(np.sum(residual**2) / degrees_of_freedom)
-    ) if degrees_of_freedom > 0 else float("nan")
-    slope_error = float(residual_scatter / np.sqrt(np.sum(centred**2)))
+    residual_scatter = (
+        float(np.sqrt(np.sum(residual**2) / degrees_of_freedom))
+        if degrees_of_freedom > 0
+        else float("nan")
+    )
+    slope_scale = float(residual_scatter / np.sqrt(np.sum(centred**2)))
+    monotonic = bool(np.all(np.diff(depth) > 0) or np.all(np.diff(depth) < 0))
     return {
         "bands": bands,
         "wavelengths_nm": wavelength.tolist(),
@@ -99,21 +101,24 @@ def chromatic_depth_test(depths_ppt: dict[str, float]) -> dict[str, object]:
         "depth_scatter_ppt": scatter,
         "residual_scatter_about_fit_ppt": residual_scatter,
         "slope_ppt_per_100nm": slope * 100.0,
-        "slope_error_ppt_per_100nm": slope_error * 100.0,
-        "slope_sigma": abs(slope) / slope_error if slope_error > 0 else float("nan"),
-        "consistent_with_achromatic": bool(abs(slope) <= 2.0 * slope_error),
-        "monotonic_with_wavelength": bool(
-            np.all(np.diff(depth) > 0) or np.all(np.diff(depth) < 0)
+        "residual_based_slope_scale_ppt_per_100nm": slope_scale * 100.0,
+        "absolute_slope_to_residual_scale_ratio": (
+            abs(slope) / slope_scale if slope_scale > 0 else float("nan")
         ),
-        "error_source": (
-            "residual scatter about the fitted line; the public report gives no "
-            "per-band uncertainties"
+        "monotonic_with_wavelength": monotonic,
+        "no_apparent_monotonic_trend": not monotonic,
+        "scale_interpretation": (
+            "Descriptive residual-based scale only; the public report gives no "
+            "per-band measurement uncertainties, so this is not a standard "
+            "error or calibrated significance."
         ),
         "limits": [
             "The reporting team described this as a tentative egress, so the "
             "depths come from a partial event at modest significance.",
             "A blend whose colour closely matches the target would not produce a "
             "measurable trend and is not excluded by this test.",
+            "Four reported depths without per-band errors cannot establish "
+            "statistical achromaticity.",
         ],
     }
 
@@ -149,9 +154,7 @@ def eclipsing_companion_bound(
         ("0.3 solar mass", 0.3),
         ("0.6 solar mass", 0.6),
     ):
-        scenarios[label] = velocity_amplitude_km_s(
-            mass, period_days, HOST_MASS_SOLAR
-        )
+        scenarios[label] = velocity_amplitude_km_s(mass, period_days, HOST_MASS_SOLAR)
     smallest = min(scenarios.values())
     return {
         "assumed_host_mass_solar": HOST_MASS_SOLAR,
@@ -248,14 +251,13 @@ def build_assessment() -> dict[str, object]:
             },
             "blended_eclipsing_binary": {
                 "evidence": (
-                    "Wavelength dependence of the reported MuSCAT2 four-band "
-                    "depths."
+                    "Wavelength dependence of the reported MuSCAT2 four-band depths."
                 ),
                 "chromatic_depth_test": chromatic,
                 "assessment": (
-                    "Disfavoured. The reported depths show no monotonic trend "
-                    "with wavelength and are consistent with a constant depth "
-                    "within their scatter."
+                    "Weakly disfavoured. The reported depths show no apparent "
+                    "monotonic trend with wavelength, but the absence of "
+                    "per-band errors makes this a qualitative constraint."
                 ),
                 "not_excluded": (
                     "A blend whose colour matches the target, and any blend at "
@@ -310,10 +312,11 @@ def build_assessment() -> dict[str, object]:
             },
         },
         "overall": (
-            "The nearby, blended, and on-target eclipsing-binary scenarios are "
-            "each disfavoured by at least one line of evidence. The unresolved "
-            "0.517-arcsecond companion is not addressed, so this summary supports "
-            "the existing planet-candidate disposition without validating it."
+            "The nearby and on-target eclipsing-binary scenarios are disfavoured "
+            "by the available screens, while the blended-binary chromatic check "
+            "is qualitative. The unresolved 0.517-arcsecond companion is not "
+            "addressed, so this summary supports continued candidate-level "
+            "follow-up without validating the object."
         ),
         "limits": [
             "An evidence summary, not a statistical validation. No false-positive "
@@ -365,7 +368,7 @@ def plot_assessment(result: dict[str, object], path: Path) -> None:
     axes[0].set_ylim(1.9, 2.85)
     axes[0].set_xlabel("Effective wavelength (nm)")
     axes[0].set_ylabel("Reported depth (ppt)")
-    axes[0].set_title("No wavelength trend in the four-band depths", fontsize=10)
+    axes[0].set_title("No apparent monotonic trend in reported depths", fontsize=10)
     axes[0].legend(fontsize=8, loc="lower right")
 
     predicted = velocity["predicted_semi_amplitude_km_s"]
@@ -395,7 +398,15 @@ def plot_assessment(result: dict[str, object], path: Path) -> None:
 
     figure.tight_layout()
     figure.savefig(path, dpi=200)
-    figure.savefig(path.with_suffix(".svg"))
+    svg_path = path.with_suffix(".svg")
+    figure.savefig(svg_path)
+    # Matplotlib leaves trailing spaces in SVG path data.  Removing them keeps
+    # generated artifacts clean under ``git diff --check`` without changing
+    # the rendered figure.
+    svg_path.write_text(
+        "\n".join(line.rstrip() for line in svg_path.read_text().splitlines()) + "\n",
+        encoding="utf-8",
+    )
     plt.close(figure)
 
 
@@ -485,10 +496,10 @@ def main() -> None:
     ]
     print("TOI-3505.01 false-positive evidence summary")
     print(
-        "  chromatic depth slope: "
-        f"{float(chromatic['slope_ppt_per_100nm']):+.3f} +/- "
-        f"{float(chromatic['slope_error_ppt_per_100nm']):.3f} ppt per 100 nm "
-        f"({float(chromatic['slope_sigma']):.2f} sigma)"
+        "  descriptive chromatic depth slope: "
+        f"{float(chromatic['slope_ppt_per_100nm']):+.3f} ppt per 100 nm; "
+        "residual-based scale "
+        f"{float(chromatic['residual_based_slope_scale_ppt_per_100nm']):.3f}"
     )
     print(
         "  smallest stellar scenario: "

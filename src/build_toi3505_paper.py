@@ -2,7 +2,7 @@
 
 The editable manuscript is a Markdown template. Every quantitative token in
 that template is populated from a canonical JSON or CSV analysis product, and
-all four figures are embedded from lossless SVG files. This keeps the prose
+all six figures are embedded from lossless SVG files. This keeps the prose
 editable while preventing headline values from drifting away from the frozen
 analysis.
 """
@@ -35,16 +35,10 @@ EPHEMERIS_PATH = (
     ROOT / "outputs" / "toi3505_ephemeris_refined" / "ephemeris_refined.json"
 )
 EVENT_TIMES_PATH = (
-    ROOT
-    / "outputs"
-    / "toi3505_ephemeris_refined"
-    / "event_times_best_per_sector.csv"
+    ROOT / "outputs" / "toi3505_ephemeris_refined" / "event_times_best_per_sector.csv"
 )
 ROBUSTNESS_PATH = (
-    ROOT
-    / "outputs"
-    / "toi3505_ephemeris_robustness"
-    / "ephemeris_robustness.json"
+    ROOT / "outputs" / "toi3505_ephemeris_robustness" / "ephemeris_robustness.json"
 )
 RECONSTRUCTION_PATH = (
     ROOT
@@ -59,26 +53,17 @@ FALSE_POSITIVE_PATH = (
     ROOT / "outputs" / "toi3505_false_positive" / "false_positive_assessment.json"
 )
 DILUTION_PATH = ROOT / "outputs" / "toi3505_tess_pixels" / "dilution_screen.json"
-VALIDATION_PATH = (
-    ROOT / "outputs" / "toi3505_data_validation" / "analysis_summary.json"
-)
+VALIDATION_PATH = ROOT / "outputs" / "toi3505_data_validation" / "analysis_summary.json"
 TESS_PATH = ROOT / "outputs" / "toi3505_tess_analysis" / "analysis_summary.json"
 PIXEL_PATH = ROOT / "outputs" / "toi3505_tess_pixels" / "analysis_summary.json"
 CATALOG_PATH = ROOT / "data" / "catalogs" / "toi3505" / "catalog_summary.json"
 TIC_PATH = ROOT / "data" / "catalogs" / "toi3505" / "tic_v8_2p5arcmin.csv"
-EXOFOP_PATH = (
-    ROOT / "data" / "catalogs" / "toi3505" / "exofop_ground_followup.json"
-)
-LITERATURE_PATH = (
-    ROOT / "data" / "catalogs" / "toi3505" / "literature_context.json"
-)
+EXOFOP_PATH = ROOT / "data" / "catalogs" / "toi3505" / "exofop_ground_followup.json"
+LITERATURE_PATH = ROOT / "data" / "catalogs" / "toi3505" / "literature_context.json"
 
 FIGURES = {
     "PHASE_FIGURE": (
-        ROOT
-        / "outputs"
-        / "toi3505_tess_analysis"
-        / "02_phase_folded_sectors.svg"
+        ROOT / "outputs" / "toi3505_tess_analysis" / "02_phase_folded_sectors.svg"
     ),
     "GROUND_FIGURE": (
         ROOT
@@ -99,16 +84,10 @@ FIGURES = {
         / "01_schedule_reconstruction.svg"
     ),
     "SEARCH_FIGURE": (
-        ROOT
-        / "outputs"
-        / "toi3505_ground_search"
-        / "01_ground_transit_search.svg"
+        ROOT / "outputs" / "toi3505_ground_search" / "01_ground_transit_search.svg"
     ),
     "FP_FIGURE": (
-        ROOT
-        / "outputs"
-        / "toi3505_false_positive"
-        / "01_false_positive_tests.svg"
+        ROOT / "outputs" / "toi3505_false_positive" / "01_false_positive_tests.svg"
     ),
 }
 
@@ -180,8 +159,7 @@ def html_table(headers: list[str], rows: list[list[str]], classes: str = "") -> 
     class_attribute = f' class="{html.escape(classes)}"' if classes else ""
     header_html = "".join(f"<th>{cell}</th>" for cell in headers)
     row_html = "".join(
-        "<tr>" + "".join(f"<td>{cell}</td>" for cell in row) + "</tr>"
-        for row in rows
+        "<tr>" + "".join(f"<td>{cell}</td>" for cell in row) + "</tr>" for row in rows
     )
     return (
         f"<table{class_attribute}><thead><tr>{header_html}</tr></thead>"
@@ -206,10 +184,10 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
     velocity = fp_scenarios["eclipsing_binary_on_target"][
         "eclipsing_companion_velocity_bound"
     ]
-    if not bool(chromatic["consistent_with_achromatic"]):
+    if not bool(chromatic["no_apparent_monotonic_trend"]):
         raise RuntimeError(
-            "The MuSCAT2 depths are no longer consistent with an achromatic "
-            "event; Section 4.5 and Section 5.4 must be rewritten"
+            "The MuSCAT2 depths now show a monotonic chromatic trend; Section "
+            "4.5 and Section 5.4 must be rewritten"
         )
     if not bool(velocity["stellar_companion_disfavoured"]):
         raise RuntimeError(
@@ -219,7 +197,8 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
     dilution = load_json(DILUTION_PATH)
     validation = load_json(VALIDATION_PATH)
     spoc_records = validation["official_multisector_tce"]
-    assert isinstance(spoc_records, list) and len(spoc_records) == 1
+    if not isinstance(spoc_records, list) or len(spoc_records) != 1:
+        raise RuntimeError("Expected exactly one official multi-sector TCE")
     spoc_tce = spoc_records[0]
     tess = load_json(TESS_PATH)
     pixels = load_json(PIXEL_PATH)
@@ -246,8 +225,11 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
     coverage = ground["historical_schedule"]["observation_comparison"]
     nearby = ground_checks["nearby_star_screen"]
     search_durations = ground_search["durations"]
-    assert isinstance(search_durations, list)
+    if not isinstance(search_durations, list):
+        raise RuntimeError("Ground-search durations must be a list")
     search_by_label = {str(entry["label"]): entry for entry in search_durations}
+    if set(search_by_label) != {"TOI catalog", "SPOC multi-sector"}:
+        raise RuntimeError("Ground search must contain both published hypotheses")
     search_catalog = search_by_label["TOI catalog"]
     search_spoc = search_by_label["SPOC multi-sector"]
     if int(nearby["uncleared_with_eclipse_consistent_shape"]) != 0:
@@ -255,13 +237,15 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
             "A nearby star now shows an eclipse-consistent dimming; Section 3.5 "
             "states that none does and must be rewritten"
         )
-    if not all(
-        bool(entry["expected_depth_excluded_everywhere"]) for entry in search_durations
-    ):
-        raise RuntimeError(
-            "The whole-sequence search no longer excludes the published depth "
-            "at every searched midpoint"
-        )
+    for entry in search_durations:
+        recovery = float(entry["expected_depth_formal_recovery_fraction"])
+        if not 0.0 < recovery <= 1.0:
+            raise RuntimeError("Ground-search injection recovery is outside (0, 1]")
+        if bool(entry["expected_depth_recovered_above_formal_3sigma_everywhere"]):
+            raise RuntimeError(
+                "The manuscript states that exact-depth injection recovery is "
+                "incomplete, but the ground-search result is now complete"
+            )
     current_status = exofop["current_status"]
 
     if current_status["tess_disposition"] != "PC":
@@ -273,9 +257,13 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
     if abs(float(primary["period_days"]) - float(adopted["period_days"])) > 1e-11:
         raise RuntimeError("Robustness and canonical periods disagree")
     if not bool(ground["figure_presentation"]["reviewer_overlap_note_resolved"]):
-        raise RuntimeError("The ground figure still has an unresolved presentation note")
+        raise RuntimeError(
+            "The ground figure still has an unresolved presentation note"
+        )
     if float(quadratic["delta_bic_quadratic_minus_linear"]) <= 0:
-        raise RuntimeError("The frozen quadratic control no longer favors the linear model")
+        raise RuntimeError(
+            "The frozen quadratic control no longer favors the linear model"
+        )
 
     event_table = pd.read_csv(EVENT_TIMES_PATH)
     accepted_events = event_table.loc[event_table["used_in_ephemeris"].astype(bool)]
@@ -425,7 +413,7 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
         )
 
     values = {
-        "PAPER_DATE": "22 August 2026",
+        "PAPER_DATE": "29 August 2026",
         "TARGET_RA_HMS": format_ra(float(catalog["center_icrs_degrees"][0])),
         "TARGET_DEC_DMS": format_dec(float(catalog["center_icrs_degrees"][1])),
         "TARGET_RA_DEG": f"{float(catalog['center_icrs_degrees'][0]):.6f}",
@@ -440,37 +428,35 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
         "CATALOG_DURATION": f"{float(tess['catalog_duration_hours']):.3f}",
         "EVENTS": str(int(adopted["events"])),
         "BASELINE_YEARS": f"{float(ephemeris['baseline_years']):.2f}",
-        "PERIOD": f"{float(adopted['period_days']):.10f}",
         "PERIOD_SHORT": f"{float(adopted['period_days']):.7f}",
-        "PERIOD_ERROR": f"{float(adopted['period_error_days']):.10f}",
         "PERIOD_ERROR_SHORT": f"{float(adopted['period_error_days']):.7f}",
-        "EPOCH": f"{float(adopted['epoch_bjd_tdb']):.9f}",
-        "EPOCH_ERROR": f"{float(adopted['epoch_error_days']):.7f}",
+        "EPOCH": f"{float(adopted['epoch_bjd_tdb']):.5f}",
+        "EPOCH_ERROR": f"{float(adopted['epoch_error_days']):.5f}",
         "REDUCED_CHI2": f"{float(adopted['reduced_chi2']):.3f}",
         "TIMING_RMS": f"{float(adopted['residual_rms_minutes']):.2f}",
         "ERROR_SCALE": f"{float(adopted['error_scale']):.3f}",
         "GAIN_CATALOG": f"{float(comparisons['precision_gain_over_catalog']):.2f}",
         "GAIN_SPOC": f"{float(comparisons['precision_gain_over_spoc']):.2f}",
-        "ANCHOR_PERIOD": f"{float(anchors['period_days']):.10f}",
-        "ANCHOR_ERROR": f"{float(anchors['period_error_days']):.10f}",
-        "SECTOR_JACKKNIFE_ERROR": f"{float(sector_jackknife['jackknife_standard_error_days']):.10f}",
+        "ANCHOR_PERIOD": f"{float(anchors['period_days']):.7f}",
+        "ANCHOR_ERROR": f"{float(anchors['period_error_days']):.7f}",
+        "SECTOR_JACKKNIFE_ERROR": f"{float(sector_jackknife['jackknife_standard_error_days']):.7f}",
         "SECTOR_JACKKNIFE_RATIO": f"{float(sector_jackknife['ratio_to_primary_formal_error']):.2f}",
-        "EVENT_JACKKNIFE_ERROR": f"{float(event_jackknife['jackknife_standard_error_days']):.10f}",
-        "EVENT_JACKKNIFE_MAX_SHIFT": f"{float(event_jackknife['maximum_absolute_period_shift_days']):.10f}",
+        "EVENT_JACKKNIFE_ERROR": f"{float(event_jackknife['jackknife_standard_error_days']):.7f}",
+        "EVENT_JACKKNIFE_MAX_SHIFT": f"{float(event_jackknife['maximum_absolute_period_shift_days']):.7f}",
         "QUADRATIC_TERM": f"{float(quadratic['quadratic_term_days_per_cycle2']):+.3e}",
         "QUADRATIC_ERROR": f"{float(quadratic['quadratic_term_error_days_per_cycle2']):.3e}",
         "QUADRATIC_SIGMA": f"{float(quadratic['quadratic_term_significance_sigma']):+.2f}",
         "DELTA_CHI2": f"{float(quadratic['delta_chi_square_linear_minus_quadratic']):.2f}",
         "DELTA_BIC": f"{float(quadratic['delta_bic_quadratic_minus_linear']):+.2f}",
-        "MUSCAT_PERIOD": f"{float(muscat2['fit']['period_days']):.10f}",
-        "MUSCAT_ERROR": f"{float(muscat2['fit']['period_error_days']):.10f}",
+        "MUSCAT_PERIOD": f"{float(muscat2['fit']['period_days']):.7f}",
+        "MUSCAT_ERROR": f"{float(muscat2['fit']['period_error_days']):.7f}",
         "MUSCAT_PRECISION_CHANGE": f"{float(muscat2['period_precision_change_percent']):.2f}",
         "GROUND_ARCHIVED": str(int(ground["measurements_archived"])),
         "GROUND_USED": str(int(ground["measurements_used_in_primary_curve"])),
         "GROUND_EXCLUDED": str(int(ground["measurements_excluded_from_primary_curve"])),
         "GROUND_DURATION": f"{float(ground['observation']['duration_hours']):.3f}",
-        "GROUND_START": f"{float(ground['observation']['start_bjd_tdb']):.9f}",
-        "GROUND_END": f"{float(ground['observation']['end_bjd_tdb']):.9f}",
+        "GROUND_START": f"{float(ground['observation']['start_bjd_tdb']):.6f}",
+        "GROUND_END": f"{float(ground['observation']['end_bjd_tdb']):.6f}",
         "GROUND_SCATTER": f"{float(ground['adopted_primary_robust_scatter_ppt']):.3f}",
         "GROUND_DEPTH": f"{float(fixed['observed_depth_ppt']):+.3f}",
         "GROUND_DEPTH_ERROR": f"{float(fixed['observed_depth_error_ppt']):.3f}",
@@ -501,20 +487,35 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
         "CHROMATIC_MEAN": f"{float(chromatic['mean_depth_ppt']):.2f}",
         "CHROMATIC_SCATTER": f"{float(chromatic['depth_scatter_ppt']):.2f}",
         "CHROMATIC_SLOPE": f"{float(chromatic['slope_ppt_per_100nm']):+.3f}",
-        "CHROMATIC_SLOPE_ERROR": f"{float(chromatic['slope_error_ppt_per_100nm']):.3f}",
-        "CHROMATIC_SIGMA": f"{float(chromatic['slope_sigma']):.2f}",
+        "CHROMATIC_SLOPE_SCALE": f"{float(chromatic['residual_based_slope_scale_ppt_per_100nm']):.3f}",
         "STELLAR_MIN_K": f"{float(velocity['smallest_stellar_scenario_km_s']):.0f}",
         "STELLAR_RATIO": f"{float(velocity['ratio_smallest_stellar_to_observed']):.0f}",
         "CENTROID_SIGMA": (
-            "under 1" if max(float(v) for v in centroid_sigma) < 1.0
+            "under 1"
+            if max(float(v) for v in centroid_sigma) < 1.0
             else f"{max(float(v) for v in centroid_sigma):.1f}"
         ),
         "SEARCH_BEST_DEPTH": f"{float(search_catalog['best_depth_ppt']):.2f}",
         "SEARCH_BEST_ERROR": f"{float(search_catalog['best_depth_error_ppt']):.2f}",
         "SEARCH_BEST_SIGMA": f"{float(search_catalog['best_depth_snr']):.2f}",
-        "SEARCH_BEST_P": f"{float(search_catalog['best_trials_corrected_probability']):.3f}",
-        "SEARCH_LIMIT_CATALOG": f"{float(search_catalog['median_upper_limit_ppt']):.2f}",
-        "SEARCH_LIMIT_SPOC": f"{float(search_spoc['median_upper_limit_ppt']):.2f}",
+        "SEARCH_FORMAL_LIMIT_CATALOG": f"{float(search_catalog['median_formal_upper_limit_ppt']):.2f}",
+        "SEARCH_FORMAL_LIMIT_SPOC": f"{float(search_spoc['median_formal_upper_limit_ppt']):.2f}",
+        "SEARCH_RECOVERY_CATALOG": f"{float(search_catalog['expected_depth_formal_recovery_fraction']):.1%}",
+        "SEARCH_RECOVERY_SPOC": f"{float(search_spoc['expected_depth_formal_recovery_fraction']):.1%}",
+        "SEARCH_RECOVERED_CATALOG": str(
+            int(search_catalog["expected_depth_formal_recovery_count"])
+        ),
+        "SEARCH_RECOVERED_SPOC": str(
+            int(search_spoc["expected_depth_formal_recovery_count"])
+        ),
+        "SEARCH_TRIALS_CATALOG": str(
+            int(search_catalog["expected_depth_formal_recovery_total"])
+        ),
+        "SEARCH_TRIALS_SPOC": str(
+            int(search_spoc["expected_depth_formal_recovery_total"])
+        ),
+        "SEARCH_MIN_SNR_CATALOG": f"{float(search_catalog['minimum_injected_total_depth_snr']):.2f}",
+        "SEARCH_MIN_SNR_SPOC": f"{float(search_spoc['minimum_injected_total_depth_snr']):.2f}",
         "SEARCH_RANGE_LOW": f"{float(search_catalog['searched_midpoint_range_hours'][0]):.2f}",
         "SEARCH_RANGE_HIGH": f"{float(search_catalog['searched_midpoint_range_hours'][1]):.2f}",
         "SEARCH_DURATION_CATALOG": f"{float(search_catalog['duration_hours']):.2f}",
@@ -537,7 +538,9 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
         "COMPANION_SEPARATION": f"{float(pixels['dilution_screen']['unresolved_companion']['separation_arcsec']):.3f}",
         "COMPANION_DELTA_I": f"{float(pixels['dilution_screen']['unresolved_companion']['delta_i_mag']):.1f}",
         "TIC_CONTAMINATION": f"{float(pixels['dilution_screen']['tic_catalog_contamination_ratio']):.3f}",
-        "PUBLIC_NIGHTS": str(int(exofop["time_series_inventory"]["unique_observing_nights"])),
+        "PUBLIC_NIGHTS": str(
+            int(exofop["time_series_inventory"]["unique_observing_nights"])
+        ),
         "TESS_STATUS": html.escape(str(current_status["tess_disposition"])),
         "TFOP_STATUS": html.escape(str(current_status["tfopwg_disposition"])),
         "NOVELTY_SENTENCE": html.escape(
@@ -585,9 +588,12 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
     values.update({name: svg_data_uri(path) for name, path in FIGURES.items()})
 
     record = {
-        "schema_version": 1,
-        "paper_date": date(2026, 8, 22).isoformat(),
-        "title": "A Four-Sector TESS Ephemeris for TOI-3505.01 and the Origin of a 2022 Ground-Based Null Observation",
+        "schema_version": 2,
+        "paper_date": date(2026, 8, 29).isoformat(),
+        "title": (
+            "A Four-Sector TESS Ephemeris for TOI-3505.01 and a Reconstruction "
+            "of a 2022 Ground-Based Null Observation"
+        ),
         "authors": list(AUTHOR_NAMES),
         "status_statement": (
             "TOI-3505.01 remains a planet candidate; the paper does not claim "
@@ -601,6 +607,9 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
             "epoch_error_days": float(adopted["epoch_error_days"]),
             "period_days": float(adopted["period_days"]),
             "period_error_days": float(adopted["period_error_days"]),
+            "sector_jackknife_sensitivity_days": float(
+                sector_jackknife["jackknife_standard_error_days"]
+            ),
             "covariance_days2": float(adopted["covariance_days2"]),
             "reduced_chi2": float(adopted["reduced_chi2"]),
             "residual_rms_minutes": float(adopted["residual_rms_minutes"]),
@@ -612,6 +621,18 @@ def collect_values() -> tuple[dict[str, str], dict[str, object]]:
             "historical_window_depth_error_ppt": float(
                 fixed["observed_depth_error_ppt"]
             ),
+            "whole_sequence_search": {
+                "catalog_duration_formal_recovery_fraction": float(
+                    search_catalog["expected_depth_formal_recovery_fraction"]
+                ),
+                "spoc_duration_formal_recovery_fraction": float(
+                    search_spoc["expected_depth_formal_recovery_fraction"]
+                ),
+                "interpretation": (
+                    "Phase-sampling diagnostic only; formal WLS limits do not "
+                    "support exclusion at every midpoint."
+                ),
+            },
         },
         "schedule_reconstruction": {
             "cycles": int(schedule["cycles"]),
@@ -780,6 +801,7 @@ td {
 }
 .model-table { font-size: 7.5pt; }
 .public-table { font-size: 7.35pt; }
+.public-table th:first-child, .public-table td:first-child { white-space: nowrap; }
 .table-caption {
   break-after: avoid;
   font-family: Arial, Helvetica, sans-serif;
@@ -788,8 +810,8 @@ td {
   margin: 0.1in 0 -0.06in;
   text-align: left;
 }
-.references { font-size: 8.35pt; line-height: 1.25; }
-.references p { margin-bottom: 0.38em; padding-left: 0.2in; text-align: left; text-indent: -0.2in; }
+.references { font-size: 7.9pt; line-height: 1.14; }
+.references p { margin-bottom: 0.14em; padding-left: 0.2in; text-align: left; text-indent: -0.2in; }
 .no-break { break-inside: avoid; }
 .page-break { break-before: page; }
 ul { margin: 0.04in 0 0.08in 0.22in; padding-left: 0.12in; }
@@ -807,7 +829,9 @@ def render_manuscript(template_path: Path) -> tuple[str, dict[str, object]]:
         raise RuntimeError(f"Unknown manuscript tokens: {sorted(unknown)}")
     unused = values.keys() - requested
     if unused:
-        raise RuntimeError(f"Collected values are not used by manuscript: {sorted(unused)}")
+        raise RuntimeError(
+            f"Collected values are not used by manuscript: {sorted(unused)}"
+        )
     rendered = TOKEN_PATTERN.sub(lambda match: values[match.group(1)], source)
     if TOKEN_PATTERN.search(rendered):
         raise RuntimeError("Unreplaced manuscript tokens remain")
@@ -822,7 +846,7 @@ def render_manuscript(template_path: Path) -> tuple[str, dict[str, object]]:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{html.escape(str(record['title']))}</title>
+<title>{html.escape(str(record["title"]))}</title>
 <style>{STYLE}</style>
 </head>
 <body>
@@ -903,7 +927,9 @@ def print_pdf(html_path: Path, pdf_path: Path, chrome: Path | None) -> None:
                 if current_size != previous_size:
                     previous_size = current_size
                     stable_since = time.monotonic()
-                elif stable_since is not None and time.monotonic() - stable_since >= 1.0:
+                elif (
+                    stable_since is not None and time.monotonic() - stable_since >= 1.0
+                ):
                     break
             time.sleep(0.1)
         return_code = process.poll()

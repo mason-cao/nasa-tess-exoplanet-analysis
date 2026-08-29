@@ -16,14 +16,10 @@ EPHEMERIS_PATH = (
     Path("outputs") / "toi3505_ephemeris_refined" / "ephemeris_refined.json"
 )
 ROBUSTNESS_PATH = (
-    Path("outputs")
-    / "toi3505_ephemeris_robustness"
-    / "ephemeris_robustness.json"
+    Path("outputs") / "toi3505_ephemeris_robustness" / "ephemeris_robustness.json"
 )
 RECONSTRUCTION_PATH = (
-    Path("outputs")
-    / "toi3505_schedule_reconstruction"
-    / "schedule_reconstruction.json"
+    Path("outputs") / "toi3505_schedule_reconstruction" / "schedule_reconstruction.json"
 )
 EXOFOP_CONTEXT_PATH = (
     Path("data") / "catalogs" / "toi3505" / "exofop_ground_followup.json"
@@ -38,9 +34,7 @@ PAPER_VALUES_PATH = Path("outputs") / "toi3505_paper" / "manuscript_values.json"
 PAPER_SOURCE_PATH = Path("paper") / "TOI-3505.01_manuscript.md"
 PAPER_HTML_PATH = Path("paper") / "TOI-3505.01_manuscript.html"
 PAPER_PDF_PATH = Path("output") / "pdf" / "TOI-3505.01_research_paper.pdf"
-FILE_MANIFEST_PATH = (
-    Path("outputs") / "toi3505_research_record" / "file_manifest.csv"
-)
+FILE_MANIFEST_PATH = Path("outputs") / "toi3505_research_record" / "file_manifest.csv"
 MANIFEST_SUMMARY_PATH = (
     Path("outputs") / "toi3505_research_record" / "manifest_summary.json"
 )
@@ -52,6 +46,10 @@ OBSERVATION_PLAN_PATH = (
 )
 GROUND_SUMMARY_PATH = Path("outputs") / "toi3505_final_candidate" / "summary.json"
 GROUND_CHECKS_PATH = Path("outputs") / "toi3505_ground_checks" / "summary.json"
+GROUND_SEARCH_PATH = Path("outputs") / "toi3505_ground_search" / "ground_search.json"
+FALSE_POSITIVE_PATH = (
+    Path("outputs") / "toi3505_false_positive" / "false_positive_assessment.json"
+)
 REVIEW_PACKAGE_PATH = Path("outputs") / "toi3505_review_package"
 PRIVATE_PLATFORM_NAME = "dis" + "cord"
 LEGACY_PACKAGE_PATH = Path("outputs") / f"toi3505_{PRIVATE_PLATFORM_NAME}_post"
@@ -133,7 +131,9 @@ def verify_manifest(root: Path = ROOT) -> list[str]:
     for row_number, row in enumerate(rows, start=2):
         relative_path = row["path"]
         if relative_path in seen:
-            errors.append(f"{manifest_path}:{row_number}: duplicate path {relative_path}")
+            errors.append(
+                f"{manifest_path}:{row_number}: duplicate path {relative_path}"
+            )
             continue
         seen.add(relative_path)
         candidate = (root / relative_path).resolve()
@@ -300,9 +300,10 @@ def check_repository(root: Path = ROOT) -> list[str]:
                     f"{robustness_path}: primary {key} differs from canonical fit"
                 )
     quadratic = robustness.get("quadratic_model_control")
-    if not isinstance(quadratic, dict) or float(
-        quadratic.get("delta_bic_quadratic_minus_linear", -math.inf)
-    ) <= 0.0:
+    if (
+        not isinstance(quadratic, dict)
+        or float(quadratic.get("delta_bic_quadratic_minus_linear", -math.inf)) <= 0.0
+    ):
         errors.append(f"{robustness_path}: quadratic control must favor linear BIC")
 
     reconstruction_path = root / RECONSTRUCTION_PATH
@@ -336,10 +337,67 @@ def check_repository(root: Path = ROOT) -> list[str]:
     exofop_path = root / EXOFOP_CONTEXT_PATH
     exofop = load_json(exofop_path)
     current_status = exofop.get("current_status")
-    if not isinstance(current_status, dict) or current_status.get(
-        "tfopwg_disposition"
-    ) != "PC":
+    if (
+        not isinstance(current_status, dict)
+        or current_status.get("tfopwg_disposition") != "PC"
+    ):
         errors.append(f"{exofop_path}: frozen TFOPWG disposition must be PC")
+    status_reverification = exofop.get("status_reverification")
+    if not isinstance(status_reverification, dict) or not str(
+        status_reverification.get("checked_utc", "")
+    ).startswith("2026-08-29"):
+        errors.append(f"{exofop_path}: live status was not refreshed on 2026-08-29")
+
+    literature_path = root / LITERATURE_CONTEXT_PATH
+    literature = load_json(literature_path)
+    if not str(literature.get("searched_utc", "")).startswith("2026-08-29"):
+        errors.append(f"{literature_path}: novelty search was not refreshed")
+
+    ground_search_path = root / GROUND_SEARCH_PATH
+    ground_search = load_json(ground_search_path)
+    search_durations = ground_search.get("durations")
+    if not isinstance(search_durations, list):
+        errors.append(f"{ground_search_path}: duration summaries are missing")
+        search_by_label: dict[str, object] = {}
+    else:
+        search_by_label = {
+            str(entry.get("label")): entry
+            for entry in search_durations
+            if isinstance(entry, dict)
+        }
+    for label in ("TOI catalog", "SPOC multi-sector"):
+        entry = search_by_label.get(label)
+        if not isinstance(entry, dict):
+            errors.append(f"{ground_search_path}: missing {label} search")
+            continue
+        recovered = int(entry.get("expected_depth_formal_recovery_count", -1))
+        total = int(entry.get("expected_depth_formal_recovery_total", -1))
+        fraction = float(entry.get("expected_depth_formal_recovery_fraction", math.nan))
+        if total <= 0 or recovered < 0 or recovered >= total:
+            errors.append(
+                f"{ground_search_path}: {label} must record incomplete recovery"
+            )
+        elif not math.isclose(fraction, recovered / total, abs_tol=1e-12):
+            errors.append(f"{ground_search_path}: {label} recovery fraction differs")
+        if bool(entry.get("expected_depth_recovered_above_formal_3sigma_everywhere")):
+            errors.append(f"{ground_search_path}: {label} overstates phase recovery")
+
+    false_positive_path = root / FALSE_POSITIVE_PATH
+    false_positive = load_json(false_positive_path)
+    try:
+        chromatic = false_positive["scenarios"]["blended_eclipsing_binary"][  # type: ignore[index]
+            "chromatic_depth_test"
+        ]
+    except (KeyError, TypeError):
+        chromatic = None
+    if not isinstance(chromatic, dict) or not bool(
+        chromatic.get("no_apparent_monotonic_trend")
+    ):
+        errors.append(f"{false_positive_path}: descriptive chromatic result is missing")
+    elif "consistent_with_achromatic" in chromatic or "slope_sigma" in chromatic:
+        errors.append(
+            f"{false_positive_path}: chromatic result still implies calibrated significance"
+        )
 
     text_expectations = {
         root / "README.md": (
@@ -347,67 +405,47 @@ def check_repository(root: Path = ROOT) -> list[str]:
             f"{events} transit times",
             f"{current_schedule_offset:.2f} hours",
             f"{revised_schedule_offset:.2f}-hour offset",
+            "50/62 catalog-duration midpoints (80.6%)",
+            "40/42 SPOC-duration midpoints (95.2%)",
         ),
-        root
-        / "outputs"
-        / "toi3505_ephemeris_refined"
-        / "README.md": (
+        root / "outputs" / "toi3505_ephemeris_refined" / "README.md": (
             ascii_period,
             f"| Events | {events} across",
             f"{gain_catalog:.2f} times tighter",
             f"{gain_spoc:.2f} times tighter",
         ),
-        root
-        / "outputs"
-        / "toi3505_ephemeris_robustness"
-        / "README.md": (
+        root / "outputs" / "toi3505_ephemeris_robustness" / "README.md": (
             f"{period:.10f} +/- {period_error:.10f} days",
             "four clusters",
             "external control",
         ),
-        root
-        / "outputs"
-        / "toi3505_schedule_reconstruction"
-        / "README.md": (
+        root / "outputs" / "toi3505_schedule_reconstruction" / "README.md": (
             "96` cycles",
             "56.1` seconds",
             "archival reconstruction, not proof",
         ),
-        root
-        / "outputs"
-        / "toi3505_poster"
-        / "README.md": (
+        root / "outputs" / "toi3505_poster" / "README.md": (
             ascii_period,
             f"{events} mid-transit times",
             f"{gain_catalog:.2f} times tighter",
             f"{gain_spoc:.2f} times tighter",
         ),
-        root
-        / "src"
-        / "poster_template.html": (
+        root / "src" / "poster_template.html": (
             html_period,
             f"{events} transits",
             poster_offset_text,
         ),
-        root
-        / "src"
-        / "poster_template_v2.html": (
+        root / "src" / "poster_template_v2.html": (
             html_period,
             f"{events} transits",
             poster_offset_text,
         ),
-        root
-        / "outputs"
-        / "toi3505_poster"
-        / "TOI-3505.01_Mason_Cao_poster.html": (
+        root / "outputs" / "toi3505_poster" / "TOI-3505.01_Mason_Cao_poster.html": (
             html_period,
             f"{events} transits",
             poster_offset_text,
         ),
-        root
-        / "outputs"
-        / "toi3505_poster"
-        / "TOI-3505.01_Mason_Cao_poster_v2.html": (
+        root / "outputs" / "toi3505_poster" / "TOI-3505.01_Mason_Cao_poster_v2.html": (
             html_period,
             f"{events} transits",
             poster_offset_text,
@@ -435,6 +473,13 @@ def check_repository(root: Path = ROOT) -> list[str]:
             tess.get("adopted_ephemeris") if isinstance(tess, dict) else None
         )
         compare_adopted_ephemeris(str(research_path), research_adopted, adopted, errors)
+        research_search = research.get("ground_whole_sequence_search")
+        if not isinstance(research_search, dict) or research_search.get(
+            "durations"
+        ) != ground_search.get("durations"):
+            errors.append(
+                f"{research_path}: whole-sequence ground search differs from canonical"
+            )
 
     paper_values_path = root / PAPER_VALUES_PATH
     if not paper_values_path.is_file():
@@ -446,13 +491,39 @@ def check_repository(root: Path = ROOT) -> list[str]:
         )
         if tuple(paper_values.get("authors", ())) != EXPECTED_AUTHORS:
             errors.append(
-                f"{paper_values_path}: author list must contain exactly the established six authors"
+                f"{paper_values_path}: author list must contain exactly the established seven authors"
             )
+        if paper_values.get("paper_date") != "2026-08-29":
+            errors.append(f"{paper_values_path}: paper date is not 2026-08-29")
         status_statement = str(paper_values.get("status_statement", "")).lower()
         if "planet candidate" not in status_statement:
             errors.append(f"{paper_values_path}: candidate status boundary is missing")
         if "does not claim validation or confirmation" not in status_statement:
             errors.append(f"{paper_values_path}: validation boundary is missing")
+        paper_ground = paper_values.get("ground_result")
+        paper_search = (
+            paper_ground.get("whole_sequence_search")
+            if isinstance(paper_ground, dict)
+            else None
+        )
+        if not isinstance(paper_search, dict):
+            errors.append(
+                f"{paper_values_path}: whole-sequence phase recovery is missing"
+            )
+        else:
+            expected_recovery = {
+                "catalog_duration_formal_recovery_fraction": 50 / 62,
+                "spoc_duration_formal_recovery_fraction": 40 / 42,
+            }
+            for key, expected in expected_recovery.items():
+                if not math.isclose(
+                    float(paper_search.get(key, math.nan)),
+                    expected,
+                    abs_tol=1e-12,
+                ):
+                    errors.append(
+                        f"{paper_values_path}: {key} differs from ground search"
+                    )
 
         literature = load_json(root / LITERATURE_CONTEXT_PATH)
         expected_novelty = literature.get("novelty_assessment", {}).get(
@@ -491,8 +562,10 @@ def check_repository(root: Path = ROOT) -> list[str]:
         paper_source_path,
         (
             "{{PERIOD_SHORT}}",
+            "{{SEARCH_RECOVERY_CATALOG}}",
             "{{NOVELTY_SENTENCE}}",
             "does not validate or confirm TOI-3505.01",
+            "does not support exclusion at every phase",
         ),
         errors,
     )
@@ -501,6 +574,8 @@ def check_repository(root: Path = ROOT) -> list[str]:
         paper_html_path,
         (
             unicode_period,
+            "50/62 catalog-duration midpoints",
+            "40/42 SPOC-duration midpoints",
             "To our knowledge,",
             "does not validate or confirm TOI-3505.01",
             *EXPECTED_AUTHORS,
@@ -552,7 +627,9 @@ def check_repository(root: Path = ROOT) -> list[str]:
             f"{events} accepted mid-transit times",
             "56.1 seconds",
             "Delta BIC is +1.71",
-            "dispositions as PC",
+            "retain the planet-candidate disposition",
+            "50/62 catalog-duration midpoints",
+            "40/42 SPOC-duration midpoints",
             *nearby_tokens,
         ),
         errors,
@@ -583,6 +660,18 @@ def check_repository(root: Path = ROOT) -> list[str]:
             errors.append(
                 f"public text still names a private communication platform: {path}"
             )
+        overstated_ground_claims = (
+            "excluded at every midpoint the data can constrain",
+            "excluded at every searched midpoint",
+        )
+        # This module necessarily contains the forbidden phrases as the rules
+        # it enforces, so do not mistake the guardrail itself for a public
+        # scientific claim.
+        is_this_checker = path.resolve() == Path(__file__).resolve()
+        if not is_this_checker and any(
+            claim in text for claim in overstated_ground_claims
+        ):
+            errors.append(f"public text still overstates the ground search: {path}")
     return errors
 
 

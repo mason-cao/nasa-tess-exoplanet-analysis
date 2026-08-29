@@ -2,7 +2,7 @@
 
 This folder freezes the reproducibility record for the current analysis.
 
-- `812` files are listed with size, modification time, and SHA-256.
+- `821` files are listed with size, modification time, and SHA-256.
 - The six original archives are included.
 - Reduced and aligned images are included.
 - Software and system versions are in `software_versions.json`.

@@ -173,7 +173,8 @@
     "use_in_this_work": "Establishes that resolved imaging and spectroscopic constraints already exist for this target. Only the speckle separation and delta-I are used numerically, as the companion parameters in the dilution screen.",
     "high_resolution_imaging": [
       {
-        "date_utc": "2021-10-01",
+        "date_utc": "2021-10-02",
+        "date_note": "The live ExoFOP observation row gives 2021-10-02; its report filename encodes 2021-10-01, likely reflecting a local-date/UT boundary. The date is not used quantitatively.",
         "facility": "SOAR",
         "instrument": "HRCam",
         "technique": "speckle",
@@ -206,6 +207,11 @@
         "instrument": "HIRES",
         "year": 2022,
         "epochs": 2,
+        "reported_velocity_count": 6,
+        "reported_velocity_span_utc": [
+          "2022-09-01",
+          "2022-09-12"
+        ],
         "used_numerically": false
       }
     ],
@@ -217,18 +223,22 @@
     ]
   },
   "status_reverification": {
-    "checked_utc": "2026-08-26",
-    "method": "Direct read of the live ExoFOP-TESS target page and observing notes.",
+    "checked_utc": "2026-08-29T19:58:49Z",
+    "method": "Direct retrieval of the live ExoFOP-TESS JSON record and cross-check against the NASA Exoplanet Archive TOI table.",
+    "sources": [
+      "https://exofop.ipac.caltech.edu/tess/target.php?id=390988385&json",
+      "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+*+from+toi+where+tid=390988385&format=json"
+    ],
     "tess_disposition": "PC",
     "tfopwg_disposition": "PC",
     "tfopwg_disposition_note": "Active planet candidate",
     "toi_row_last_modified_at_exofop": "2025-07-31 12:59:22",
     "confirmed_planets_listed": 0,
-    "result": "Unchanged from the 2026-08-22 snapshot. The dispositions used throughout this analysis remain current."
+    "result": "Unchanged from the 2026-08-22 snapshot. ExoFOP and the NASA Exoplanet Archive both retain the planet-candidate disposition used throughout this analysis."
   },
   "reconnaissance_spectroscopy_notes": {
     "source": "ExoFOP observing notes for TIC 390988385, author latham",
-    "retrieved_utc": "2026-08-26",
+    "retrieved_utc": "2026-08-29T19:58:49Z",
     "instrument": "FLWO 1.5 m / TRES",
     "radial_velocities_km_s": [
       -21.595,
@@ -260,7 +270,7 @@
       "Reconnaissance velocities from a recon spectrograph, not precise RVs.",
       "The reporting astronomer described a fair amount of scatter and placed the target on hold pending a multi-order analysis; no closing assessment is recorded in the notes.",
       "A phase-consistent velocity offset supports a companion on the star TRES observed but does not by itself validate the candidate or exclude the unresolved 0.517-arcsecond companion.",
-      "No SB2 or double-lined designation appears anywhere in the observing notes, the spectroscopy table, or the file list as of 2026-08-26."
+      "No SB2 or double-lined designation appears anywhere in the observing notes, the spectroscopy table, or the file list as of 2026-08-29."
     ]
   }
 }

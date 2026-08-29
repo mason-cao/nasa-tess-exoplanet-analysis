@@ -2,26 +2,29 @@
   "schema_version": 1,
   "target": "TOI-3505.01",
   "tic_id": 390988385,
-  "searched_utc": "2026-08-22T17:50:41Z",
+  "searched_utc": "2026-08-29T19:59:22Z",
   "purpose": "Freeze the evidence and limits behind the paper's qualified novelty wording.",
   "searches": [
     {
       "service": "arXiv API",
-      "query": "all:\"TOI-3505.01\"",
-      "url": "https://export.arxiv.org/api/query?search_query=all:%22TOI-3505.01%22&start=0&max_results=10",
+      "query": "all:\"TOI-3505\" OR all:\"390988385\"",
+      "url": "https://export.arxiv.org/api/query?search_query=all:%22TOI-3505%22+OR+all:%22390988385%22&start=0&max_results=20",
+      "checked_utc": "2026-08-29T19:58:16Z",
       "total_results": 0
     },
     {
-      "service": "arXiv API",
-      "query": "all:\"TOI 3505\"",
-      "url": "https://export.arxiv.org/api/query?search_query=all:%22TOI%203505%22&start=0&max_results=10",
+      "service": "OpenAlex",
+      "query": "fulltext.search:\"TOI-3505\"",
+      "url": "https://api.openalex.org/works?filter=fulltext.search:%22TOI-3505%22&per-page=20",
+      "checked_utc": "2026-08-29T19:59:14Z",
       "total_results": 0
     },
     {
-      "service": "arXiv API",
-      "query": "all:\"390988385\"",
-      "url": "https://export.arxiv.org/api/query?search_query=all:%22390988385%22&start=0&max_results=10",
-      "total_results": 0
+      "service": "NASA Exoplanet Archive overview bibliography",
+      "query": "TOI-3505.01",
+      "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-3505.01",
+      "checked_utc": "2026-08-29T19:59:22Z",
+      "result_summary": "The live overview retains candidate status and its bibliography contains catalog or target-list sources rather than a dedicated TOI-3505.01 study."
     },
     {
       "service": "general scholarly web search",
@@ -31,6 +34,7 @@
         "\"TIC 390988385\" exoplanet",
         "site:arxiv.org \"TOI-3505\""
       ],
+      "checked_utc": "2026-08-29",
       "result_summary": "No dedicated scientific paper or preprint about TOI-3505.01 was found. Results included this project repository, non-scholarly target lists, and a population-level Ariel target-list paper containing TOI-3505.01 as a table entry."
     }
   ],

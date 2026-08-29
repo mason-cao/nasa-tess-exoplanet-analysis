@@ -40,22 +40,20 @@ class FalsePositiveAssessmentTests(unittest.TestCase):
                 self.assertTrue(str(entry["not_excluded"]).strip())
 
     def test_reported_depths_show_no_wavelength_trend(self) -> None:
-        chromatic = self.scenarios["blended_eclipsing_binary"][
-            "chromatic_depth_test"
-        ]
-        self.assertTrue(chromatic["consistent_with_achromatic"])
+        chromatic = self.scenarios["blended_eclipsing_binary"]["chromatic_depth_test"]
+        self.assertTrue(chromatic["no_apparent_monotonic_trend"])
         self.assertFalse(chromatic["monotonic_with_wavelength"])
-        self.assertLess(float(chromatic["slope_sigma"]), 2.0)
+        self.assertIn("not a standard error", chromatic["scale_interpretation"])
 
-    def test_a_chromatic_blend_would_be_detected(self) -> None:
-        """A depth that climbs steeply with wavelength must fail the test."""
+    def test_a_monotonic_chromatic_pattern_is_flagged(self) -> None:
+        """A depth that climbs steeply with wavelength must be identified."""
         chromatic = assessment.chromatic_depth_test(
             {"g": 2.0, "r": 3.0, "i": 4.0, "z_s": 5.0}
         )
-        self.assertFalse(chromatic["consistent_with_achromatic"])
+        self.assertFalse(chromatic["no_apparent_monotonic_trend"])
         self.assertTrue(chromatic["monotonic_with_wavelength"])
 
-    def test_stellar_companions_are_excluded_by_the_velocity_span(self) -> None:
+    def test_stellar_companions_are_disfavoured_by_the_velocity_span(self) -> None:
         velocity = self.scenarios["eclipsing_binary_on_target"][
             "eclipsing_companion_velocity_bound"
         ]

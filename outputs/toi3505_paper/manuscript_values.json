@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
-  "paper_date": "2026-08-22",
-  "title": "A Four-Sector TESS Ephemeris for TOI-3505.01 and the Origin of a 2022 Ground-Based Null Observation",
+  "schema_version": 2,
+  "paper_date": "2026-08-29",
+  "title": "A Four-Sector TESS Ephemeris for TOI-3505.01 and a Reconstruction of a 2022 Ground-Based Null Observation",
   "authors": [
     "Mason Cao",
     "Annalyse Dickinson",
@@ -25,6 +25,7 @@
     "epoch_error_days": 0.0008800241369065363,
     "period_days": 2.9151515671005948,
     "period_error_days": 4.8719792289628144e-06,
+    "sector_jackknife_sensitivity_days": 7.289445316090324e-06,
     "covariance_days2": -1.4023055348649236e-09,
     "reduced_chi2": 1.3010946722009904,
     "residual_rms_minutes": 8.509649207070096
@@ -33,7 +34,12 @@
     "used_measurements": 263,
     "robust_scatter_ppt": 2.4968989195518168,
     "historical_window_depth_ppt": -0.6583833665306802,
-    "historical_window_depth_error_ppt": 0.39478212142599517
+    "historical_window_depth_error_ppt": 0.39478212142599517,
+    "whole_sequence_search": {
+      "catalog_duration_formal_recovery_fraction": 0.8064516129032258,
+      "spoc_duration_formal_recovery_fraction": 0.9523809523809523,
+      "interpretation": "Phase-sampling diagnostic only; formal WLS limits do not support exclusion at every midpoint."
+    }
   },
   "schedule_reconstruction": {
     "cycles": 96,

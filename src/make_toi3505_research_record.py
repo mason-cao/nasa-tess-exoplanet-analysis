@@ -58,9 +58,7 @@ def sha256_file(path: Path, block_size: int = 8 * 1024 * 1024) -> str:
     return digest.hexdigest()
 
 
-def add_group(
-    groups: list[tuple[str, Path]], category: str, paths: list[Path]
-) -> None:
+def add_group(groups: list[tuple[str, Path]], category: str, paths: list[Path]) -> None:
     for path in sorted(set(paths)):
         if path.is_file():
             groups.append((category, path))
@@ -70,7 +68,9 @@ def manifest_paths(include_large_derived: bool) -> list[tuple[str, Path]]:
     groups: list[tuple[str, Path]] = []
     archives = list((ROOT / "data_and_lectures").glob(ORIGINAL_ARCHIVE_PATTERN))
     if len(archives) != 6:
-        raise RuntimeError(f"Expected six original TOI-3505 archives; found {len(archives)}")
+        raise RuntimeError(
+            f"Expected six original TOI-3505 archives; found {len(archives)}"
+        )
     add_group(groups, "original_archive", archives)
     add_group(
         groups,
@@ -100,8 +100,7 @@ def manifest_paths(include_large_derived: bool) -> list[tuple[str, Path]]:
             path
             for path in (ROOT / "data" / "tess" / "toi3505").rglob("*")
             if path.is_file()
-            and path.suffix.lower()
-            in {".fits", ".pdf", ".xml", ".json", ".txt"}
+            and path.suffix.lower() in {".fits", ".pdf", ".xml", ".json", ".txt"}
         ],
     )
     catalog_dir = ROOT / "data" / "catalogs" / "toi3505"
@@ -137,6 +136,8 @@ def manifest_paths(include_large_derived: bool) -> list[tuple[str, Path]]:
     evidence_folders = (
         "toi3505_final_candidate",
         "toi3505_ground_checks",
+        "toi3505_ground_search",
+        "toi3505_false_positive",
         "toi3505_tess_download",
         "toi3505_tess_analysis",
         "toi3505_tess_pixels",
@@ -296,27 +297,20 @@ def software_record() -> dict[str, object]:
 
 
 def frozen_config() -> dict[str, object]:
-    protocol_path = ROOT / "outputs" / "toi3505_final_candidate" / "frozen_protocol.json"
+    protocol_path = (
+        ROOT / "outputs" / "toi3505_final_candidate" / "frozen_protocol.json"
+    )
     ground_protocol = json.loads(protocol_path.read_text(encoding="utf-8"))
     schedule_path = (
-        ROOT
-        / "outputs"
-        / "toi3505_final_candidate"
-        / "historical_schedule_check.json"
+        ROOT / "outputs" / "toi3505_final_candidate" / "historical_schedule_check.json"
     )
     schedule = json.loads(schedule_path.read_text(encoding="utf-8"))
     refined_path = (
-        ROOT
-        / "outputs"
-        / "toi3505_ephemeris_refined"
-        / "ephemeris_refined.json"
+        ROOT / "outputs" / "toi3505_ephemeris_refined" / "ephemeris_refined.json"
     )
     refined = json.loads(refined_path.read_text(encoding="utf-8"))
     robustness_path = (
-        ROOT
-        / "outputs"
-        / "toi3505_ephemeris_robustness"
-        / "ephemeris_robustness.json"
+        ROOT / "outputs" / "toi3505_ephemeris_robustness" / "ephemeris_robustness.json"
     )
     robustness = json.loads(robustness_path.read_text(encoding="utf-8"))
     reconstruction_path = (
@@ -326,23 +320,30 @@ def frozen_config() -> dict[str, object]:
         / "schedule_reconstruction.json"
     )
     reconstruction = json.loads(reconstruction_path.read_text(encoding="utf-8"))
-    exofop_path = (
-        ROOT / "data" / "catalogs" / "toi3505" / "exofop_ground_followup.json"
+    ground_search_path = (
+        ROOT / "outputs" / "toi3505_ground_search" / "ground_search.json"
     )
+    ground_search = json.loads(ground_search_path.read_text(encoding="utf-8"))
+    false_positive_path = (
+        ROOT / "outputs" / "toi3505_false_positive" / "false_positive_assessment.json"
+    )
+    false_positive = json.loads(false_positive_path.read_text(encoding="utf-8"))
+    exofop_path = ROOT / "data" / "catalogs" / "toi3505" / "exofop_ground_followup.json"
     exofop = json.loads(exofop_path.read_text(encoding="utf-8"))
-    literature_path = (
-        ROOT / "data" / "catalogs" / "toi3505" / "literature_context.json"
-    )
+    literature_path = ROOT / "data" / "catalogs" / "toi3505" / "literature_context.json"
     literature = json.loads(literature_path.read_text(encoding="utf-8"))
     paper_path = ROOT / "outputs" / "toi3505_paper" / "manuscript_values.json"
     paper = json.loads(paper_path.read_text(encoding="utf-8"))
-    plan_path = (
-        ROOT / "outputs" / "toi3505_observation_plan" / "observation_plan.json"
+    plan_path = ROOT / "outputs" / "toi3505_observation_plan" / "observation_plan.json"
+    plan = (
+        json.loads(plan_path.read_text(encoding="utf-8"))
+        if plan_path.exists()
+        else None
     )
-    plan = json.loads(plan_path.read_text(encoding="utf-8")) if plan_path.exists() else None
     return {
         "target": {"name": "TOI-3505.01", "tic_id": 390988385},
         "ground": ground_protocol,
+        "ground_whole_sequence_search": ground_search,
         "historical_schedule": {
             "source_record": schedule["source_record"],
             "working_interpretation": schedule["working_interpretation"],
@@ -369,14 +370,10 @@ def frozen_config() -> dict[str, object]:
                 "delete_one_sector_jackknife": robustness[
                     "delete_one_sector_jackknife"
                 ],
-                "delete_one_event_jackknife": robustness[
-                    "delete_one_event_jackknife"
-                ],
+                "delete_one_event_jackknife": robustness["delete_one_event_jackknife"],
                 "selection_sensitivity": robustness["selection_sensitivity"],
                 "quadratic_model_control": robustness["quadratic_model_control"],
-                "external_muscat2_control": robustness[
-                    "external_muscat2_control"
-                ],
+                "external_muscat2_control": robustness["external_muscat2_control"],
             },
             "forward_propagation": refined["forward_propagation"],
             "physical_transit_model": False,
@@ -405,9 +402,14 @@ def frozen_config() -> dict[str, object]:
         "public_followup_context": {
             "retrieved_utc": exofop["retrieved_utc"],
             "current_status": exofop["current_status"],
+            "status_reverification": exofop["status_reverification"],
             "time_series_inventory": exofop["time_series_inventory"],
+            "imaging_and_spectroscopy_inventory": exofop[
+                "imaging_and_spectroscopy_inventory"
+            ],
             "scope_limits": exofop["scope_limits"],
         },
+        "false_positive_scenarios": false_positive["scenarios"],
         "literature_context": {
             "searched_utc": literature["searched_utc"],
             "known_scholarly_mentions": literature["known_scholarly_mentions"],
@@ -424,6 +426,7 @@ def frozen_config() -> dict[str, object]:
         },
         "claim_limits": [
             "The GMU night is off transit under the current ephemeris, but the recovered 2022 schedule placed an event inside it.",
+            "Formal WLS limits from the whole-sequence ground scan do not model temporal covariance; incomplete exact-depth injection recovery precludes an every-phase exclusion.",
             "The schedule clocks are confirmed as Eastern time. Public reports enable a strong stale-ephemeris reconstruction, but the original workbook and formulas remain unavailable.",
             "The GMU window falls in a Sector 54 data gap.",
             "TESS-scale localization cannot separate the 0.517-arcsecond companion.",
@@ -431,6 +434,7 @@ def frozen_config() -> dict[str, object]:
             "The trapezoidal timing model is not a physical limb-darkened planet fit; first-pass sector measurements retain their box model.",
             "The four-sector jackknife is a sensitivity diagnostic, not a calibrated replacement uncertainty.",
             "The public MuSCAT2 midpoint is an external control and not part of the primary TESS-only result.",
+            "The MuSCAT2 chromatic comparison is descriptive because the public report supplies no per-band depth uncertainties.",
             "TOI-3505.01 remains a planet candidate; this work does not statistically validate or confirm it.",
         ],
     }
@@ -439,15 +443,25 @@ def frozen_config() -> dict[str, object]:
 def claim_evidence_rows() -> list[dict[str, str]]:
     refined = json.loads(
         (
-            ROOT
-            / "outputs"
-            / "toi3505_ephemeris_refined"
-            / "ephemeris_refined.json"
+            ROOT / "outputs" / "toi3505_ephemeris_refined" / "ephemeris_refined.json"
         ).read_text(encoding="utf-8")
     )
     ground = json.loads(
+        (ROOT / "outputs" / "toi3505_ground_checks" / "summary.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    ground_search = json.loads(
+        (ROOT / "outputs" / "toi3505_ground_search" / "ground_search.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    false_positive = json.loads(
         (
-            ROOT / "outputs" / "toi3505_ground_checks" / "summary.json"
+            ROOT
+            / "outputs"
+            / "toi3505_false_positive"
+            / "false_positive_assessment.json"
         ).read_text(encoding="utf-8")
     )
     reconstruction = json.loads(
@@ -468,25 +482,28 @@ def claim_evidence_rows() -> list[dict[str, str]]:
     )
     exofop = json.loads(
         (
-            ROOT
-            / "data"
-            / "catalogs"
-            / "toi3505"
-            / "exofop_ground_followup.json"
+            ROOT / "data" / "catalogs" / "toi3505" / "exofop_ground_followup.json"
         ).read_text(encoding="utf-8")
     )
     literature = json.loads(
-        (
-            ROOT
-            / "data"
-            / "catalogs"
-            / "toi3505"
-            / "literature_context.json"
-        ).read_text(encoding="utf-8")
+        (ROOT / "data" / "catalogs" / "toi3505" / "literature_context.json").read_text(
+            encoding="utf-8"
+        )
     )
     adopted = refined["ephemeris"]["adopted"]
     comparisons = refined["comparisons"]
     nearby = ground["nearby_star_screen"]
+    search_by_label = {
+        str(entry["label"]): entry for entry in ground_search["durations"]
+    }
+    search_catalog = search_by_label["TOI catalog"]
+    search_spoc = search_by_label["SPOC multi-sector"]
+    chromatic = false_positive["scenarios"]["blended_eclipsing_binary"][
+        "chromatic_depth_test"
+    ]
+    velocity = false_positive["scenarios"]["eclipsing_binary_on_target"][
+        "eclipsing_companion_velocity_bound"
+    ]
     period_text = (
         f"{float(adopted['period_days']):.7f} +/- "
         f"{float(adopted['period_error_days']):.7f} days"
@@ -502,7 +519,7 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "claim": "The adopted ground curve uses a 25-pixel aperture and all ten comparison stars.",
             "evidence": "outputs/toi3505_aperture_check/aperture_radius_metrics.csv; outputs/toi3505_final_candidate/frozen_protocol.json",
             "status": "supported",
-            "limit": "The reviewer said the final curve looked good; the formal NEB question remains unanswered.",
+            "limit": "The reviewer said the final curve looked good; the program-required nearby-star screen is recorded separately and does not resolve the close companion.",
         },
         {
             "claim": "No detrending correction was justified for the mentor-review ground curve.",
@@ -532,6 +549,21 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "evidence": "outputs/toi3505_final_candidate/historical_schedule_check.json; outputs/toi3505_final_candidate/historical_schedule_times.csv",
             "status": "supported using the confirmed Eastern schedule times",
             "limit": "This is a straight-baseline exposure-integrated box check, not a physical transit fit.",
+        },
+        {
+            "claim": (
+                "The whole-sequence ground scan contains no formal 3-sigma "
+                "event; exact published-depth injections cross that threshold "
+                f"at {int(search_catalog['expected_depth_formal_recovery_count'])}/"
+                f"{int(search_catalog['expected_depth_formal_recovery_total'])} "
+                "catalog-duration midpoints and "
+                f"{int(search_spoc['expected_depth_formal_recovery_count'])}/"
+                f"{int(search_spoc['expected_depth_formal_recovery_total'])} "
+                "SPOC-duration midpoints."
+            ),
+            "evidence": "outputs/toi3505_ground_search/ground_search.json; outputs/toi3505_ground_search/floating_time_scan.csv",
+            "status": "supported phase-sampling diagnostic",
+            "limit": "Formal WLS covariance does not model time-correlated residuals, the trial midpoints overlap, and recovery is incomplete; this is not a detection probability or an exclusion at every phase.",
         },
         {
             "claim": "The GMU sequence does not cover a predicted transit under the adopted refined ephemeris.",
@@ -577,8 +609,10 @@ def claim_evidence_rows() -> list[dict[str, str]]:
         {
             "claim": (
                 "The 2026-08-22 public ExoFOP snapshot lists six unique prior "
-                "ground observing nights and retains both TESS and TFOPWG "
-                f"dispositions as {exofop['current_status']['tfopwg_disposition']}."
+                "ground observing nights; live ExoFOP and NASA Exoplanet "
+                "Archive records checked on "
+                f"{str(exofop['status_reverification']['checked_utc'])[:10]} "
+                "retain the planet-candidate disposition."
             ),
             "evidence": "data/catalogs/toi3505/exofop_ground_followup.json",
             "status": "supported public-data snapshot",
@@ -588,7 +622,7 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "claim": literature["novelty_assessment"]["supported_wording"],
             "evidence": "data/catalogs/toi3505/literature_context.json",
             "status": "qualified, search-based novelty statement",
-            "limit": "The wording must retain 'To our knowledge'; exact-name searches cannot exclude every unexpected identifier or unindexed venue, and the search must be refreshed before journal or preprint submission.",
+            "limit": "The wording must retain 'To our knowledge'; this dated search cannot exclude every unexpected identifier, unindexed venue, or unpublished project and should be refreshed again before any later journal or preprint submission.",
         },
         {
             "claim": "The two per-sector and one combined SPOC reports recover the same signal without a strong odd/even, secondary-event, or centroid warning in Sectors 54 and 81.",
@@ -626,6 +660,24 @@ def claim_evidence_rows() -> list[dict[str, str]]:
             "evidence": "outputs/toi3505_ground_checks/nearby_star_image_measurements.csv; outputs/toi3505_ground_checks/summary.json",
             "status": "conditional screening result",
             "limit": "It uses the confirmed Eastern schedule window, is not the formal program NEB procedure, and cannot resolve the 0.517-arcsecond companion.",
+        },
+        {
+            "claim": (
+                "The four reported MuSCAT2 depths show no apparent monotonic "
+                "trend with wavelength, and the smallest tested stellar "
+                "companion would produce a circular edge-on velocity "
+                f"semi-amplitude of {float(velocity['smallest_stellar_scenario_km_s']):.1f} "
+                "km/s."
+            ),
+            "evidence": "outputs/toi3505_false_positive/false_positive_assessment.json; outputs/toi3505_false_positive/01_false_positive_tests.svg",
+            "status": "scenario constraints, not validation",
+            "limit": (
+                "The chromatic fit is descriptive because per-band errors are "
+                "unavailable (reported-depth scatter "
+                f"{float(chromatic['depth_scatter_ppt']):.2f} ppt); the velocity "
+                "comparison uses three public reconnaissance values and an "
+                "assumed host mass, not an orbit fit."
+            ),
         },
     ]
 
@@ -704,6 +756,18 @@ def decision_rows() -> list[dict[str, str]]:
             "reason": "Exact-name literature searches found no dedicated paper, but prior ground observations exist and TOI-3505.01 appears in an Ariel population target table.",
             "alternative": "Do not claim first classification, first follow-up, discovery, validation, or confirmation; retain the phrase 'To our knowledge.'",
         },
+        {
+            "date": "2026-08-29",
+            "decision": "Replace the every-midpoint ground exclusion with exact-depth phase-injection recovery.",
+            "reason": "The formal WLS covariance does not model temporal correlation, and catalog- and SPOC-depth injections exceed a formal 3-sigma threshold at 80.6% and 95.2% of admissible midpoints rather than 100%.",
+            "alternative": "Retain formal upper bounds only as explicitly labeled white-noise diagnostics; quote no Gaussian false-alarm probability or global phase exclusion.",
+        },
+        {
+            "date": "2026-08-29",
+            "decision": "Refresh candidate status and the qualified novelty search before finalizing the manuscript.",
+            "reason": "The deadline extension provides time for a current check; ExoFOP and the NASA Exoplanet Archive still list a planet candidate, while arXiv, OpenAlex, and the archive bibliography show no dedicated target study.",
+            "alternative": "Keep all status and novelty statements dated and qualified, and repeat the search before any later public preprint or journal submission.",
+        },
     ]
 
 
@@ -735,6 +799,11 @@ def dependence_rows() -> list[dict[str, str]]:
             "shared_data_warning": "The reconstruction strongly explains the timing cells but cannot recover or prove the missing workbook formulas and history.",
         },
         {
+            "product": "whole-sequence ground transit search",
+            "depends_on": "adopted undetrended ground light curve; published TOI and SPOC durations and observed depths; exposure-integrated box model",
+            "shared_data_warning": "Overlapping trial midpoints are not independent, formal WLS covariance omits temporal correlation, and exact-depth injection recovery is a phase diagnostic rather than a calibrated detection probability.",
+        },
+        {
             "product": "TESS custom-aperture depths and difference images",
             "depends_on": "MAST TESScut cubes; TESS box timing results",
             "shared_data_warning": "Aperture variants are not independent observations.",
@@ -756,7 +825,7 @@ def dependence_rows() -> list[dict[str, str]]:
         },
         {
             "product": "research manuscript and PDF",
-            "depends_on": "canonical ground, TESS, timing-robustness, schedule-reconstruction, ExoFOP-status, and literature-snapshot products; four lossless SVG figures",
+            "depends_on": "canonical ground, whole-sequence-search, TESS, timing-robustness, schedule-reconstruction, false-positive, ExoFOP-status, and literature-snapshot products; six lossless SVG figures",
             "shared_data_warning": "The manuscript is a synthesis of the listed products, not an independent detection; quantitative fields are injected from canonical files and the candidate, companion, dilution, and novelty limits remain binding.",
         },
     ]
@@ -809,7 +878,7 @@ This folder freezes the reproducibility record for the current analysis.
 
 - `{len(manifest)}` files are listed with size, modification time, and SHA-256.
 - The six original archives are included.
-- Reduced and aligned images are {'included' if include_large else 'not included in this refresh'}.
+- Reduced and aligned images are {"included" if include_large else "not included in this refresh"}.
 - Software and system versions are in `software_versions.json`.
 - Ground and TESS choices are in `frozen_analysis_config.json`.
 - The adopted refined ephemeris and observation-planning limits are frozen in

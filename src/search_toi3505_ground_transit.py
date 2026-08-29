@@ -9,14 +9,15 @@ the expected transit anywhere in the sequence?
 This script answers it directly.  The event duration is held at a published
 TESS value and the midpoint is scanned across the observed span.  At each trial
 midpoint a straight local baseline and one exposure-integrated box depth are
-fitted, so the depth is free while the shape and timing are fixed.  The scan
-reports the most significant dimming found, a trials-aware reference level for
-what noise alone produces, and a per-midpoint upper limit on any transit that
-could still be hiding in the data.
+fitted, so the depth is free while the shape and timing are fixed.  The same
+scan is then repeated after injecting the corresponding published depth at
+each admissible midpoint.  That injection check retains the actual temporal
+systematics and prevents formal white-noise covariance from being mistaken for
+uniform sensitivity.
 
-The result is a null-detection limit for this sequence.  It does not resolve
-the close companion, correct for dilution, or convert the sequence into a
-detection.
+The result is a phase-sampling diagnostic for this one sequence.  It does not
+provide a calibrated false-alarm probability, resolve the close companion,
+correct for dilution, or convert the sequence into a detection.
 """
 
 from __future__ import annotations
@@ -36,7 +37,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.special import erfc
 
 from make_toi3505_ground_checks import fit_linear_box, integrated_box_fraction
 
@@ -67,7 +67,7 @@ MINIMUM_IN_EVENT_POINTS = 30
 MINIMUM_BASELINE_POINTS_EACH_SIDE = 20
 # Fraction of the trial event window that must fall inside the observed span.
 MINIMUM_EVENT_COVERAGE = 0.85
-UPPER_LIMIT_SIGMA = 3.0
+FORMAL_DETECTION_SIGMA = 3.0
 
 
 def load_object(path: Path) -> dict[str, object]:
@@ -121,9 +121,7 @@ def scan_one_duration(
     for midpoint in midpoints:
         event_start = float(midpoint) - duration_hours / 2.0
         event_end = float(midpoint) + duration_hours / 2.0
-        inside = max(
-            0.0, min(event_end, span_end) - max(event_start, span_start)
-        )
+        inside = max(0.0, min(event_end, span_end) - max(event_start, span_start))
         coverage = inside / duration_hours
         if coverage < MINIMUM_EVENT_COVERAGE:
             continue
@@ -152,7 +150,9 @@ def scan_one_duration(
                 "depth_ppt": depth_ppt,
                 "depth_error_ppt": error_ppt,
                 "depth_snr": depth_ppt / error_ppt if error_ppt > 0 else float("nan"),
-                "upper_limit_ppt": depth_ppt + UPPER_LIMIT_SIGMA * error_ppt,
+                "formal_upper_limit_ppt": (
+                    depth_ppt + FORMAL_DETECTION_SIGMA * error_ppt
+                ),
                 "in_event_points": in_event,
                 "baseline_points_before": before,
                 "baseline_points_after": after,
@@ -168,34 +168,67 @@ def scan_one_duration(
     return pd.DataFrame(rows)
 
 
-def independent_trials(scan: pd.DataFrame, duration_hours: float) -> float:
-    """Approximate the count of statistically independent trial positions.
+def assess_expected_depth_recovery(
+    time_hours: np.ndarray,
+    flux: np.ndarray,
+    flux_error: np.ndarray,
+    use: np.ndarray,
+    duration_hours: float,
+    expected_depth_ppt: float,
+    scan: pd.DataFrame,
+) -> pd.DataFrame:
+    """Inject the published depth at every admissible midpoint and refit it.
 
-    Neighbouring midpoints overlap heavily, so the number of grid points
-    overstates the number of independent chances to find a dip.  Trials
-    separated by one duration are approximately independent.
+    The injected curve preserves the observed residual structure.  The
+    resulting fraction above the formal threshold is a phase-sampling
+    diagnostic for this particular realization, not a frequentist detection
+    probability or completeness estimate for an ensemble of observing nights.
     """
-    span = float(
-        scan["midpoint_hours_since_first_image"].max()
-        - scan["midpoint_hours_since_first_image"].min()
+    assessed = scan.copy()
+    total_depths: list[float] = []
+    depth_errors: list[float] = []
+    depth_snrs: list[float] = []
+    recovered_increments: list[float] = []
+    injected_depth = expected_depth_ppt / 1000.0
+    exposure_hours = EXPOSURE_SECONDS / 3600.0
+
+    for row in assessed.itertuples(index=False):
+        midpoint = float(row.midpoint_hours_since_first_image)
+        box = integrated_box_fraction(
+            time_hours, midpoint, duration_hours, exposure_hours
+        )
+        injected_flux = flux * (1.0 - injected_depth * box)
+        fit = fit_linear_box(time_hours, injected_flux, flux_error, box, use)
+        total_depth_ppt = float(fit["depth"]) * 1000.0
+        depth_error_ppt = float(fit["depth_error"]) * 1000.0
+        depth_snr = (
+            total_depth_ppt / depth_error_ppt if depth_error_ppt > 0.0 else float("nan")
+        )
+        total_depths.append(total_depth_ppt)
+        depth_errors.append(depth_error_ppt)
+        depth_snrs.append(depth_snr)
+        recovered_increments.append(total_depth_ppt - float(row.depth_ppt))
+
+    assessed["injected_expected_depth_ppt"] = expected_depth_ppt
+    assessed["injected_total_depth_ppt"] = total_depths
+    assessed["injected_depth_error_ppt"] = depth_errors
+    assessed["injected_total_depth_snr"] = depth_snrs
+    assessed["injected_recovered_increment_ppt"] = recovered_increments
+    assessed["injected_above_formal_3sigma"] = (
+        assessed["injected_total_depth_snr"] >= FORMAL_DETECTION_SIGMA
     )
-    return max(1.0, span / duration_hours)
+    return assessed
 
 
 def summarize(scan: pd.DataFrame, hypothesis: dict[str, object]) -> dict[str, object]:
-    """Reduce one scan to the deepest dimming and the detection limit."""
+    """Reduce one scan to formal fit metrics and injection recovery."""
     duration_hours = float(hypothesis["duration_hours"])
     expected_depth = float(hypothesis["expected_depth_ppt"])
     best = scan.loc[scan["depth_snr"].idxmax()]
-    trials = independent_trials(scan, duration_hours)
-    best_snr = float(best["depth_snr"])
-    # One-sided Gaussian tail for a single trial, then inflated for the number
-    # of approximately independent midpoints searched.  Reported instead of an
-    # expected-maximum level because that approximation degenerates when only a
-    # couple of independent positions fit inside the sequence.
-    single_trial_p = float(0.5 * erfc(best_snr / np.sqrt(2.0)))
-    trials_corrected_p = float(1.0 - (1.0 - single_trial_p) ** trials)
-    worst_limit = float(scan["upper_limit_ppt"].max())
+    worst_limit = float(scan["formal_upper_limit_ppt"].max())
+    recovered = scan["injected_above_formal_3sigma"].astype(bool)
+    recovered_count = int(recovered.sum())
+    trial_count = int(len(scan))
     return {
         "label": hypothesis["label"],
         "source": hypothesis["source"],
@@ -206,22 +239,43 @@ def summarize(scan: pd.DataFrame, hypothesis: dict[str, object]) -> dict[str, ob
         ],
         "expected_depth_ppt": expected_depth,
         "expected_depth_error_ppt": hypothesis["expected_depth_error_ppt"],
-        "trial_midpoints": int(len(scan)),
+        "trial_midpoints": trial_count,
         "midpoint_step_minutes": MIDPOINT_STEP_MINUTES,
-        "approximate_independent_trials": trials,
-        "best_single_trial_probability": single_trial_p,
-        "best_trials_corrected_probability": trials_corrected_p,
         "best_midpoint_hours_since_first_image": float(
             best["midpoint_hours_since_first_image"]
         ),
         "best_depth_ppt": float(best["depth_ppt"]),
         "best_depth_error_ppt": float(best["depth_error_ppt"]),
         "best_depth_snr": float(best["depth_snr"]),
-        "best_consistent_with_noise": bool(trials_corrected_p > 0.01),
-        "median_upper_limit_ppt": float(scan["upper_limit_ppt"].median()),
-        "maximum_upper_limit_ppt": worst_limit,
-        "expected_depth_excluded_everywhere": bool(worst_limit < expected_depth),
-        "upper_limit_sigma": UPPER_LIMIT_SIGMA,
+        "median_formal_upper_limit_ppt": float(scan["formal_upper_limit_ppt"].median()),
+        "maximum_formal_upper_limit_ppt": worst_limit,
+        "formal_upper_limit_below_expected_depth_everywhere": bool(
+            worst_limit < expected_depth
+        ),
+        "formal_upper_limit_sigma": FORMAL_DETECTION_SIGMA,
+        "expected_depth_formal_recovery_count": recovered_count,
+        "expected_depth_formal_recovery_total": trial_count,
+        "expected_depth_formal_recovery_fraction": recovered_count / trial_count,
+        "expected_depth_recovered_above_formal_3sigma_everywhere": bool(
+            recovered.all()
+        ),
+        "minimum_injected_total_depth_snr": float(
+            scan["injected_total_depth_snr"].min()
+        ),
+        "median_injected_total_depth_snr": float(
+            scan["injected_total_depth_snr"].median()
+        ),
+        "maximum_injected_total_depth_snr": float(
+            scan["injected_total_depth_snr"].max()
+        ),
+        "median_injected_recovered_increment_ppt": float(
+            scan["injected_recovered_increment_ppt"].median()
+        ),
+        "interpretation": (
+            "Formal weighted-least-squares upper limits do not model temporal "
+            "correlation. Injection recovery is therefore used to describe "
+            "phase sensitivity, and no global exclusion is claimed."
+        ),
     }
 
 
@@ -245,12 +299,21 @@ def plot_search(
     for axis in axes:
         if window is not None:
             axis.axvspan(
-                window[0], window[1], color="#C0392B", alpha=0.12, zorder=0,
+                window[0],
+                window[1],
+                color="#C0392B",
+                alpha=0.12,
+                zorder=0,
                 label="2022 schedule window",
             )
 
     axes[0].plot(
-        time[use], flux[use], ".", color="#2C6B5F", markersize=3.4, alpha=0.55,
+        time[use],
+        flux[use],
+        ".",
+        color="#2C6B5F",
+        markersize=3.4,
+        alpha=0.55,
         label=f"{int(use.sum())} accepted measurements",
     )
     axes[0].set_ylabel("Relative brightness")
@@ -270,7 +333,10 @@ def plot_search(
             "-",
             color=color,
             linewidth=1.4,
-            label=f"{label} ({summary['duration_hours']:.2f} h)",
+            label=(
+                f"{label} ({summary['duration_hours']:.2f} h; injection "
+                f"recovery {float(summary['expected_depth_formal_recovery_fraction']):.0%})"
+            ),
         )
         axes[1].fill_between(
             scan["midpoint_hours_since_first_image"],
@@ -294,6 +360,7 @@ def plot_search(
     axes[0].legend(loc="lower left", fontsize=8, framealpha=0.9)
     axes[1].annotate(
         "Dotted lines mark the published TESS depths.\n"
+        "Shading is the formal WLS 1-sigma interval.\n"
         "Positive depth means dimming.",
         xy=(0.99, 0.04),
         xycoords="axes fraction",
@@ -305,7 +372,15 @@ def plot_search(
 
     figure.tight_layout()
     figure.savefig(path, dpi=200)
-    figure.savefig(path.with_suffix(".svg"))
+    svg_path = path.with_suffix(".svg")
+    figure.savefig(svg_path)
+    # Matplotlib leaves trailing spaces in SVG path data.  Removing them keeps
+    # generated artifacts clean under ``git diff --check`` without changing
+    # the rendered figure.
+    svg_path.write_text(
+        "\n".join(line.rstrip() for line in svg_path.read_text().splitlines()) + "\n",
+        encoding="utf-8",
+    )
     plt.close(figure)
 
 
@@ -343,14 +418,17 @@ def write_readme(summaries: list[dict[str, object]], path: Path) -> None:
         "",
     ]
     for summary in summaries:
-        limit = float(summary["maximum_upper_limit_ppt"])
+        limit = float(summary["maximum_formal_upper_limit_ppt"])
         expected = float(summary["expected_depth_ppt"])
         searched = summary["searched_midpoint_range_hours"]
-        assert isinstance(searched, list)
+        if not isinstance(searched, list) or len(searched) != 2:
+            raise RuntimeError("A search summary has an invalid midpoint range")
+        recovered = int(summary["expected_depth_formal_recovery_count"])
+        total = int(summary["expected_depth_formal_recovery_total"])
+        recovery_fraction = float(summary["expected_depth_formal_recovery_fraction"])
         lines.extend(
             [
-                f"### {summary['label']} duration "
-                f"({summary['duration_hours']:.3f} h)",
+                f"### {summary['label']} duration ({summary['duration_hours']:.3f} h)",
                 "",
                 f"- Searched midpoints {searched[0]:.2f} to {searched[1]:.2f} h "
                 f"after the first exposure: {summary['trial_midpoints']} trials at "
@@ -362,20 +440,21 @@ def write_readme(summaries: list[dict[str, object]], path: Path) -> None:
                 f"{float(summary['best_depth_error_ppt']):.3f} ppt at "
                 f"{float(summary['best_midpoint_hours_since_first_image']):.2f} h "
                 f"({float(summary['best_depth_snr']):.2f} sigma).",
-                f"- Approximately "
-                f"{float(summary['approximate_independent_trials']):.1f} "
-                "independent trial positions; the trials-corrected probability "
-                "of a noise excursion at least this deep is "
-                f"{float(summary['best_trials_corrected_probability']):.3f}.",
-                f"- Median {summary['upper_limit_sigma']}-sigma depth limit "
-                f"{float(summary['median_upper_limit_ppt']):.3f} ppt; weakest "
-                f"{limit:.3f} ppt, against a published {expected:.3f} ppt depth.",
-                "- A transit of the published depth is "
-                + (
-                    "excluded at every searched midpoint."
-                    if summary["expected_depth_excluded_everywhere"]
-                    else "not excluded at every searched midpoint."
-                ),
+                f"- Median formal {summary['formal_upper_limit_sigma']}-sigma "
+                "WLS upper bound "
+                f"{float(summary['median_formal_upper_limit_ppt']):.3f} ppt; "
+                f"weakest {limit:.3f} ppt, against a published {expected:.3f} "
+                "ppt depth. These formal bounds do not include temporal "
+                "covariance and are not treated as global exclusions.",
+                f"- Injecting the published depth into the observed curve at "
+                f"each admissible midpoint produces a formal >=3-sigma fitted "
+                f"depth at {recovered}/{total} midpoints "
+                f"({recovery_fraction:.1%}); the minimum injected-event formal "
+                "S/N is "
+                f"{float(summary['minimum_injected_total_depth_snr']):.2f}.",
+                "- Because exact-depth recovery is not complete across phase, "
+                "this analysis does not claim that the published depth is "
+                "excluded at every midpoint.",
                 "",
             ]
         )
@@ -387,9 +466,12 @@ def write_readme(summaries: list[dict[str, object]], path: Path) -> None:
             "  not a limb-darkened physical transit fit.",
             "- Depths are observed aperture depths. No dilution correction is",
             "  applied, and the 0.517-arcsecond companion is not resolved.",
-            "- The trials correction assumes midpoints separated by one duration",
-            "  are independent and that the residuals are Gaussian. Correlated",
-            "  systematics would make the quoted probability optimistic.",
+            "- Formal WLS intervals are locally scaled by reduced chi-square but",
+            "  do not model time-correlated residuals. No false-alarm probability",
+            "  is quoted.",
+            "- The injection-recovery percentage is a phase-sampling diagnostic",
+            "  for this observed residual realization, not a calibrated detection",
+            "  probability or an ensemble completeness estimate.",
             "- The sequence is only about twice the transit duration, so a fully",
             "  sampled event with baseline on both sides fits only near the middle",
             "  of the night. The search says nothing about events outside that",
@@ -434,6 +516,15 @@ def main() -> None:
         scan = scan_one_duration(
             time_hours, flux, flux_error, use, float(hypothesis["duration_hours"])
         )
+        scan = assess_expected_depth_recovery(
+            time_hours,
+            flux,
+            flux_error,
+            use,
+            float(hypothesis["duration_hours"]),
+            float(hypothesis["expected_depth_ppt"]),
+            scan,
+        )
         scans[label] = scan
         summaries.append(summarize(scan, hypothesis))
         labelled = scan.copy()
@@ -455,12 +546,12 @@ def main() -> None:
         "method": (
             "At each trial midpoint a straight local baseline and one "
             "exposure-integrated box depth are fitted by weighted least squares. "
-            "The duration is held at a published TESS value and the depth is free."
+            "The duration is held at a published TESS value and the depth is free. "
+            "The corresponding published depth is then injected into the actual "
+            "observed curve at every admissible midpoint and refitted."
         ),
         "accepted_measurements": int(use.sum()),
-        "observed_span_hours": float(
-            time_hours[use].max() - time_hours[use].min()
-        ),
+        "observed_span_hours": float(time_hours[use].max() - time_hours[use].min()),
         "minimum_in_event_points": MINIMUM_IN_EVENT_POINTS,
         "minimum_baseline_points_each_side": MINIMUM_BASELINE_POINTS_EACH_SIDE,
         "minimum_event_coverage_fraction": MINIMUM_EVENT_COVERAGE,
@@ -468,7 +559,8 @@ def main() -> None:
         "limits": [
             "Observed aperture depths only; no dilution correction is applied.",
             "A fixed symmetric box, not a limb-darkened physical transit model.",
-            "The noise reference is a scale, not a calibrated false-alarm rate.",
+            "Formal WLS covariance does not model time-correlated residuals.",
+            "Injection recovery is a phase diagnostic, not a detection probability.",
             "A null over the searched span says nothing about events outside it.",
         ],
     }
@@ -490,13 +582,18 @@ def main() -> None:
             f"  {summary['label']} ({float(summary['duration_hours']):.3f} h): "
             f"best {float(summary['best_depth_ppt']):.3f} +/- "
             f"{float(summary['best_depth_error_ppt']):.3f} ppt "
-            f"({float(summary['best_depth_snr']):.2f} sigma, trials-corrected "
-            f"p = {float(summary['best_trials_corrected_probability']):.3f})"
+            f"({float(summary['best_depth_snr']):.2f} formal sigma)"
         )
         print(
-            f"    weakest {UPPER_LIMIT_SIGMA:.0f}-sigma limit "
-            f"{float(summary['maximum_upper_limit_ppt']):.3f} ppt vs published "
+            f"    weakest formal {FORMAL_DETECTION_SIGMA:.0f}-sigma bound "
+            f"{float(summary['maximum_formal_upper_limit_ppt']):.3f} ppt vs published "
             f"{float(summary['expected_depth_ppt']):.3f} ppt"
+        )
+        print(
+            "    exact-depth injection formal recovery "
+            f"{int(summary['expected_depth_formal_recovery_count'])}/"
+            f"{int(summary['expected_depth_formal_recovery_total'])} "
+            f"({float(summary['expected_depth_formal_recovery_fraction']):.1%})"
         )
     print(f"Wrote {OUTPUT_DIR}")
 

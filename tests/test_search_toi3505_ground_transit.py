@@ -5,7 +5,6 @@ import sys
 import unittest
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 
@@ -27,24 +26,55 @@ class GroundTransitSearchTests(unittest.TestCase):
         }
 
     def test_both_published_durations_are_searched(self) -> None:
-        self.assertEqual(
-            set(self.durations), {"TOI catalog", "SPOC multi-sector"}
-        )
+        self.assertEqual(set(self.durations), {"TOI catalog", "SPOC multi-sector"})
 
-    def test_published_depth_is_excluded_at_every_searched_midpoint(self) -> None:
+    def test_formal_bounds_are_explicitly_not_global_exclusions(self) -> None:
         for label, entry in self.durations.items():
             with self.subTest(label=label):
-                self.assertTrue(entry["expected_depth_excluded_everywhere"])
-                self.assertLess(
-                    entry["maximum_upper_limit_ppt"], entry["expected_depth_ppt"]
+                self.assertTrue(
+                    entry["formal_upper_limit_below_expected_depth_everywhere"]
                 )
+                self.assertLess(
+                    entry["maximum_formal_upper_limit_ppt"],
+                    entry["expected_depth_ppt"],
+                )
+                self.assertIn("no global exclusion", entry["interpretation"])
 
-    def test_deepest_feature_is_consistent_with_noise(self) -> None:
+    def test_no_single_midpoint_reaches_formal_three_sigma(self) -> None:
         for label, entry in self.durations.items():
             with self.subTest(label=label):
-                self.assertTrue(entry["best_consistent_with_noise"])
-                self.assertLess(
-                    entry["best_depth_ppt"], entry["expected_depth_ppt"]
+                self.assertLess(entry["best_depth_snr"], 3.0)
+
+    def test_expected_depth_recovery_is_reported_without_overstatement(self) -> None:
+        scan = pd.read_csv(
+            ROOT / "outputs" / "toi3505_ground_search" / "floating_time_scan.csv"
+        )
+        for label, entry in self.durations.items():
+            with self.subTest(label=label):
+                subset = scan.loc[scan["duration_label"] == label]
+                recovered = subset["injected_above_formal_3sigma"].astype(bool)
+                self.assertEqual(
+                    int(recovered.sum()),
+                    entry["expected_depth_formal_recovery_count"],
+                )
+                self.assertEqual(
+                    len(subset), entry["expected_depth_formal_recovery_total"]
+                )
+                self.assertAlmostEqual(
+                    float(recovered.mean()),
+                    entry["expected_depth_formal_recovery_fraction"],
+                )
+                self.assertFalse(
+                    entry["expected_depth_recovered_above_formal_3sigma_everywhere"]
+                )
+                self.assertGreater(
+                    entry["expected_depth_formal_recovery_fraction"], 0.5
+                )
+                self.assertLess(entry["expected_depth_formal_recovery_fraction"], 1.0)
+                self.assertAlmostEqual(
+                    float(subset["injected_recovered_increment_ppt"].median()),
+                    entry["expected_depth_ppt"],
+                    delta=0.02,
                 )
 
     def test_every_trial_keeps_baseline_on_both_sides(self) -> None:
@@ -81,23 +111,6 @@ class GroundTransitSearchTests(unittest.TestCase):
             abs(float(best["midpoint_hours_since_first_image"]) - injected_midpoint),
             0.25,
         )
-
-    def test_trials_correction_never_reports_a_smaller_probability(self) -> None:
-        for label, entry in self.durations.items():
-            with self.subTest(label=label):
-                # Equal to within rounding when only one independent trial
-                # fits inside the sequence.
-                self.assertGreaterEqual(
-                    entry["best_trials_corrected_probability"],
-                    entry["best_single_trial_probability"] - 1e-12,
-                )
-
-    def test_independent_trials_never_undercount(self) -> None:
-        frame = pd.DataFrame(
-            {"midpoint_hours_since_first_image": np.linspace(0.0, 1.0, 11)}
-        )
-        self.assertEqual(search.independent_trials(frame, 4.0), 1.0)
-        self.assertAlmostEqual(search.independent_trials(frame, 0.25), 4.0)
 
 
 if __name__ == "__main__":

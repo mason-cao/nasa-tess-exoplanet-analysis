@@ -51,17 +51,18 @@
         "depth_scatter_ppt": 0.30478134238608945,
         "residual_scatter_about_fit_ppt": 0.36716356779617254,
         "slope_ppt_per_100nm": -0.032219242142906335,
-        "slope_error_ppt_per_100nm": 0.12430449081431538,
-        "slope_sigma": 0.25919612342111653,
-        "consistent_with_achromatic": true,
+        "residual_based_slope_scale_ppt_per_100nm": 0.12430449081431538,
+        "absolute_slope_to_residual_scale_ratio": 0.25919612342111653,
         "monotonic_with_wavelength": false,
-        "error_source": "residual scatter about the fitted line; the public report gives no per-band uncertainties",
+        "no_apparent_monotonic_trend": true,
+        "scale_interpretation": "Descriptive residual-based scale only; the public report gives no per-band measurement uncertainties, so this is not a standard error or calibrated significance.",
         "limits": [
           "The reporting team described this as a tentative egress, so the depths come from a partial event at modest significance.",
-          "A blend whose colour closely matches the target would not produce a measurable trend and is not excluded by this test."
+          "A blend whose colour closely matches the target would not produce a measurable trend and is not excluded by this test.",
+          "Four reported depths without per-band errors cannot establish statistical achromaticity."
         ]
       },
-      "assessment": "Disfavoured. The reported depths show no monotonic trend with wavelength and are consistent with a constant depth within their scatter.",
+      "assessment": "Weakly disfavoured. The reported depths show no apparent monotonic trend with wavelength, but the absence of per-band errors makes this a qualitative constraint.",
       "not_excluded": "A blend whose colour matches the target, and any blend at separations below the follow-up resolution."
     },
     "eclipsing_binary_on_target": {
@@ -108,7 +109,7 @@
       "not_excluded": "Everything; the companion remains unresolved here."
     }
   },
-  "overall": "The nearby, blended, and on-target eclipsing-binary scenarios are each disfavoured by at least one line of evidence. The unresolved 0.517-arcsecond companion is not addressed, so this summary supports the existing planet-candidate disposition without validating it.",
+  "overall": "The nearby and on-target eclipsing-binary scenarios are disfavoured by the available screens, while the blended-binary chromatic check is qualitative. The unresolved 0.517-arcsecond companion is not addressed, so this summary supports continued candidate-level follow-up without validating the object.",
   "limits": [
     "An evidence summary, not a statistical validation. No false-positive probability is computed and no validation framework is run.",
     "External report values are used as published and are not re-reduced.",

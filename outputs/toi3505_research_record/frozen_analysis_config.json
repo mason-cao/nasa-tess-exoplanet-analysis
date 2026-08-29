@@ -92,6 +92,90 @@
       "fixed_window_only": true
     }
   },
+  "ground_whole_sequence_search": {
+    "target": "TOI-3505.01",
+    "analysis_type": "whole-sequence floating-midpoint transit search",
+    "source_files": {
+      "light_curve": "outputs/toi3505_final_candidate/TOI_3505.01_2022-07-22_R_final_candidate_light_curve.csv",
+      "tess_summary": "outputs/toi3505_tess_analysis/analysis_summary.json",
+      "validation_summary": "outputs/toi3505_data_validation/analysis_summary.json"
+    },
+    "method": "At each trial midpoint a straight local baseline and one exposure-integrated box depth are fitted by weighted least squares. The duration is held at a published TESS value and the depth is free. The corresponding published depth is then injected into the actual observed curve at every admissible midpoint and refitted.",
+    "accepted_measurements": 263,
+    "observed_span_hours": 5.0145054236,
+    "minimum_in_event_points": 30,
+    "minimum_baseline_points_each_side": 20,
+    "minimum_event_coverage_fraction": 0.85,
+    "durations": [
+      {
+        "label": "TOI catalog",
+        "source": "ExoFOP TOI catalog row frozen for this analysis",
+        "duration_hours": 2.004,
+        "searched_midpoint_range_hours": [
+          1.4367716326999997,
+          3.4701049660333325
+        ],
+        "expected_depth_ppt": 2.9099999999999997,
+        "expected_depth_error_ppt": null,
+        "trial_midpoints": 62,
+        "midpoint_step_minutes": 2.0,
+        "best_midpoint_hours_since_first_image": 1.7367716326999996,
+        "best_depth_ppt": 0.9296325093277953,
+        "best_depth_error_ppt": 0.42330850125034386,
+        "best_depth_snr": 2.196111126003615,
+        "median_formal_upper_limit_ppt": 0.9894662147129983,
+        "maximum_formal_upper_limit_ppt": 2.3568537816241704,
+        "formal_upper_limit_below_expected_depth_everywhere": true,
+        "formal_upper_limit_sigma": 3.0,
+        "expected_depth_formal_recovery_count": 50,
+        "expected_depth_formal_recovery_total": 62,
+        "expected_depth_formal_recovery_fraction": 0.8064516129032258,
+        "expected_depth_recovered_above_formal_3sigma_everywhere": false,
+        "minimum_injected_total_depth_snr": 0.675865272198165,
+        "median_injected_total_depth_snr": 7.324623773094054,
+        "maximum_injected_total_depth_snr": 9.31265315829922,
+        "median_injected_recovered_increment_ppt": 2.9099593054534765,
+        "interpretation": "Formal weighted-least-squares upper limits do not model temporal correlation. Injection recovery is therefore used to describe phase sensitivity, and no global exclusion is claimed."
+      },
+      {
+        "label": "SPOC multi-sector",
+        "source": "SPOC sectors 54 and 81 combined Mandel-Agol fit",
+        "duration_hours": 2.7111916374936995,
+        "searched_midpoint_range_hours": [
+          1.770104966033333,
+          3.1367716326999995
+        ],
+        "expected_depth_ppt": 3.2918889004895218,
+        "expected_depth_error_ppt": 0.118516266,
+        "trial_midpoints": 42,
+        "midpoint_step_minutes": 2.0,
+        "best_midpoint_hours_since_first_image": 2.0367716326999994,
+        "best_depth_ppt": 0.4220889565300652,
+        "best_depth_error_ppt": 0.39735580579775387,
+        "best_depth_snr": 1.062244342152383,
+        "median_formal_upper_limit_ppt": 0.6848864688504304,
+        "maximum_formal_upper_limit_ppt": 1.6141563739233267,
+        "formal_upper_limit_below_expected_depth_everywhere": true,
+        "formal_upper_limit_sigma": 3.0,
+        "expected_depth_formal_recovery_count": 40,
+        "expected_depth_formal_recovery_total": 42,
+        "expected_depth_formal_recovery_fraction": 0.9523809523809523,
+        "expected_depth_recovered_above_formal_3sigma_everywhere": false,
+        "minimum_injected_total_depth_snr": 2.8408808371679934,
+        "median_injected_total_depth_snr": 6.868772867197723,
+        "maximum_injected_total_depth_snr": 9.70754851917309,
+        "median_injected_recovered_increment_ppt": 3.2919277083234824,
+        "interpretation": "Formal weighted-least-squares upper limits do not model temporal correlation. Injection recovery is therefore used to describe phase sensitivity, and no global exclusion is claimed."
+      }
+    ],
+    "limits": [
+      "Observed aperture depths only; no dilution correction is applied.",
+      "A fixed symmetric box, not a limb-darkened physical transit model.",
+      "Formal WLS covariance does not model time-correlated residuals.",
+      "Injection recovery is a phase diagnostic, not a detection probability.",
+      "A null over the searched span says nothing about events outside it."
+    ]
+  },
   "historical_schedule": {
     "source_record": "data/program_records/toi3505/observing_schedule_2022-07-21.json",
     "working_interpretation": {
@@ -567,6 +651,20 @@
       "confirmed_planets_listed": 0,
       "interpretation": "TOI-3505.01 remains a planet candidate; these records do not establish statistical validation or confirmation."
     },
+    "status_reverification": {
+      "checked_utc": "2026-08-29T19:58:49Z",
+      "method": "Direct retrieval of the live ExoFOP-TESS JSON record and cross-check against the NASA Exoplanet Archive TOI table.",
+      "sources": [
+        "https://exofop.ipac.caltech.edu/tess/target.php?id=390988385&json",
+        "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+*+from+toi+where+tid=390988385&format=json"
+      ],
+      "tess_disposition": "PC",
+      "tfopwg_disposition": "PC",
+      "tfopwg_disposition_note": "Active planet candidate",
+      "toi_row_last_modified_at_exofop": "2025-07-31 12:59:22",
+      "confirmed_planets_listed": 0,
+      "result": "Unchanged from the 2026-08-22 snapshot. ExoFOP and the NASA Exoplanet Archive both retain the planet-candidate disposition used throughout this analysis."
+    },
     "time_series_inventory": {
       "table_rows": 7,
       "unique_observing_nights": 6,
@@ -659,6 +757,60 @@
         }
       ]
     },
+    "imaging_and_spectroscopy_inventory": {
+      "provenance": "Transcribed from the ExoFOP-TESS target page for TIC 390988385 alongside the time-series inventory in this file, and previously recorded in outputs/toi3505_poster/README.md. These rows are an inventory of what exists; no image, spectrum, or velocity was retrieved or reduced here.",
+      "use_in_this_work": "Establishes that resolved imaging and spectroscopic constraints already exist for this target. Only the speckle separation and delta-I are used numerically, as the companion parameters in the dilution screen.",
+      "high_resolution_imaging": [
+        {
+          "date_utc": "2021-10-02",
+          "date_note": "The live ExoFOP observation row gives 2021-10-02; its report filename encodes 2021-10-01, likely reflecting a local-date/UT boundary. The date is not used quantitatively.",
+          "facility": "SOAR",
+          "instrument": "HRCam",
+          "technique": "speckle",
+          "companion_separation_arcsec": 0.517,
+          "companion_delta_mag": 1.7,
+          "companion_delta_band": "I",
+          "used_numerically": true
+        },
+        {
+          "date_utc": "2021-07-19",
+          "facility": "Shane 3 m",
+          "instrument": "ShARCS",
+          "technique": "adaptive optics",
+          "companion_separation_arcsec": 0.51,
+          "companion_delta_mag_j": 1.53,
+          "companion_delta_mag_ks": 1.59,
+          "additional_sources": "five sources between 6 and 8 arcsec",
+          "used_numerically": false
+        }
+      ],
+      "spectroscopy": [
+        {
+          "facility": "TRES",
+          "year": 2021,
+          "epochs": 3,
+          "used_numerically": false
+        },
+        {
+          "facility": "Keck",
+          "instrument": "HIRES",
+          "year": 2022,
+          "epochs": 2,
+          "reported_velocity_count": 6,
+          "reported_velocity_span_utc": [
+            "2022-09-01",
+            "2022-09-12"
+          ],
+          "used_numerically": false
+        }
+      ],
+      "radial_velocities_on_file": 6,
+      "limits": [
+        "Row-level inventory only; the underlying data products were not retrieved.",
+        "No radial-velocity amplitude, mass limit, or spectroscopic-binary assessment is derived or implied by this work.",
+        "Band-dependent companion contrast in the TESS band is constrained by the I and J measurements that bracket it, but is not measured directly."
+      ]
+    },
     "scope_limits": [
       "The inventory records public ExoFOP metadata and report-level summaries; it does not re-reduce the external observers' images or photometry.",
       "The public time-series rows and reports are contextual evidence, not six independent validations of the candidate.",
@@ -667,8 +819,115 @@
       "Historical comments copied into older reports may contain superseded classifications; the live ExoFOP dispositions, both PC at retrieval, control the status stated in this work."
     ]
   },
+  "false_positive_scenarios": {
+    "nearby_eclipsing_binary": {
+      "evidence": "Image-level screen of every catalogued neighbour within 2.5 arcmin bright enough to mimic the signal, evaluated at the 2022 schedule window with the TFOP band correction applied.",
+      "measured_sources": 409,
+      "disposition_counts": {
+        "cleared": 288,
+        "not cleared - flux too low": 115,
+        "not cleared - blended with the target aperture": 4,
+        "not cleared - depth limit too weak": 2
+      },
+      "uncleared_with_eclipse_consistent_shape": 0,
+      "spoc_difference_image_offset_sigma": [
+        0.7158049578680605,
+        0.7608349843611643
+      ],
+      "spoc_difference_image_offset_note": "Offset between the difference-image centroid and the catalogued target position, in sigma. Values below three indicate the transit source coincides with the target at TESS resolution.",
+      "public_neb_checks_on_file": [
+        "KeplerCam 2022-06-14",
+        "ULMT 2021-10-15",
+        "MuSCAT2 2023-07-14 (133 nearby stars ruled out)"
+      ],
+      "assessment": "Disfavoured. No measured neighbour shows an eclipse-shaped event of the required depth, independent public NEB checks report the same, and the SPOC difference-image centroid stays within three sigma of the target in both sectors.",
+      "not_excluded": "Neighbours too faint for a decisive limit, and any source inside the target aperture."
+    },
+    "blended_eclipsing_binary": {
+      "evidence": "Wavelength dependence of the reported MuSCAT2 four-band depths.",
+      "chromatic_depth_test": {
+        "bands": [
+          "g",
+          "r",
+          "i",
+          "z_s"
+        ],
+        "wavelengths_nm": [
+          477.0,
+          623.0,
+          762.0,
+          870.0
+        ],
+        "depths_ppt": [
+          2.72,
+          2.02,
+          2.59,
+          2.4
+        ],
+        "mean_depth_ppt": 2.4325,
+        "depth_scatter_ppt": 0.30478134238608945,
+        "residual_scatter_about_fit_ppt": 0.36716356779617254,
+        "slope_ppt_per_100nm": -0.032219242142906335,
+        "residual_based_slope_scale_ppt_per_100nm": 0.12430449081431538,
+        "absolute_slope_to_residual_scale_ratio": 0.25919612342111653,
+        "monotonic_with_wavelength": false,
+        "no_apparent_monotonic_trend": true,
+        "scale_interpretation": "Descriptive residual-based scale only; the public report gives no per-band measurement uncertainties, so this is not a standard error or calibrated significance.",
+        "limits": [
+          "The reporting team described this as a tentative egress, so the depths come from a partial event at modest significance.",
+          "A blend whose colour closely matches the target would not produce a measurable trend and is not excluded by this test.",
+          "Four reported depths without per-band errors cannot establish statistical achromaticity."
+        ]
+      },
+      "assessment": "Weakly disfavoured. The reported depths show no apparent monotonic trend with wavelength, but the absence of per-band errors makes this a qualitative constraint.",
+      "not_excluded": "A blend whose colour matches the target, and any blend at separations below the follow-up resolution."
+    },
+    "eclipsing_binary_on_target": {
+      "evidence": "SPOC odd/even and weak-secondary diagnostics, plus the amplitude of the public reconnaissance velocities.",
+      "odd_even_difference_sigma": [
+        0.21895605951879935,
+        0.6167933770720954
+      ],
+      "weak_secondary_mes": [
+        2.5197134,
+        2.1133375
+      ],
+      "suspected_eclipsing_binary_flags": [
+        false,
+        false
+      ],
+      "eclipsing_companion_velocity_bound": {
+        "assumed_host_mass_solar": 1.25,
+        "period_days": 2.9151515671005948,
+        "predicted_semi_amplitude_km_s": {
+          "0.1 solar mass": 12.201588127224285,
+          "0.3 solar mass": 33.384047984690135,
+          "0.6 solar mass": 59.33928441744085
+        },
+        "observed_velocity_span_km_s": 2.516,
+        "smallest_stellar_scenario_km_s": 12.201588127224285,
+        "ratio_smallest_stellar_to_observed": 4.849597824810925,
+        "stellar_companion_disfavoured": true,
+        "limits": [
+          "The observed span is the range of three reconnaissance velocities, not a fitted orbital semi-amplitude.",
+          "The host mass is assumed, not measured.",
+          "This bounds a companion to the star the spectrograph observed. It says nothing about the unresolved 0.517-arcsecond companion."
+        ]
+      },
+      "reported_companion_mass_note": "The public observing notes report the velocities as in phase with the photometric ephemeris and consistent with a companion of about 10 Jupiter masses, with scatter, on hold.",
+      "assessment": "Disfavoured. No significant odd/even difference, no secondary eclipse detection, no SPOC eclipsing-binary flag, and a velocity span far below any stellar companion.",
+      "not_excluded": "A definitive mass requires the multi-order velocity analysis the public notes leave open."
+    },
+    "unresolved_close_companion": {
+      "evidence": "SOAR speckle and Shane adaptive-optics imaging both resolve a companion near 0.51 arcsec that no dataset in this work can separate.",
+      "separation_arcsec": 0.517,
+      "flux_ratio_tess_band_proxy": 0.20892961308540392,
+      "assessment": "Not addressed. This is the limiting scenario and the reason no validation, dilution correction, or radius is claimed.",
+      "not_excluded": "Everything; the companion remains unresolved here."
+    }
+  },
   "literature_context": {
-    "searched_utc": "2026-08-22T17:50:41Z",
+    "searched_utc": "2026-08-29T19:59:22Z",
     "known_scholarly_mentions": [
       {
         "authors": "Edwards, Billy; Tinetti, Giovanna",
@@ -701,8 +960,8 @@
     ]
   },
   "paper": {
-    "paper_date": "2026-08-22",
-    "title": "A Four-Sector TESS Ephemeris for TOI-3505.01 and the Origin of a 2022 Ground-Based Null Observation",
+    "paper_date": "2026-08-29",
+    "title": "A Four-Sector TESS Ephemeris for TOI-3505.01 and a Reconstruction of a 2022 Ground-Based Null Observation",
     "authors": [
       "Mason Cao",
       "Annalyse Dickinson",
@@ -726,6 +985,7 @@
       "epoch_error_days": 0.0008800241369065363,
       "period_days": 2.9151515671005948,
       "period_error_days": 4.8719792289628144e-06,
+      "sector_jackknife_sensitivity_days": 7.289445316090324e-06,
       "covariance_days2": -1.4023055348649236e-09,
       "reduced_chi2": 1.3010946722009904,
       "residual_rms_minutes": 8.509649207070096
@@ -734,6 +994,7 @@
   },
   "claim_limits": [
     "The GMU night is off transit under the current ephemeris, but the recovered 2022 schedule placed an event inside it.",
+    "Formal WLS limits from the whole-sequence ground scan do not model temporal covariance; incomplete exact-depth injection recovery precludes an every-phase exclusion.",
     "The schedule clocks are confirmed as Eastern time. Public reports enable a strong stale-ephemeris reconstruction, but the original workbook and formulas remain unavailable.",
     "The GMU window falls in a Sector 54 data gap.",
     "TESS-scale localization cannot separate the 0.517-arcsecond companion.",
@@ -741,6 +1002,7 @@
     "The trapezoidal timing model is not a physical limb-darkened planet fit; first-pass sector measurements retain their box model.",
     "The four-sector jackknife is a sensitivity diagnostic, not a calibrated replacement uncertainty.",
     "The public MuSCAT2 midpoint is an external control and not part of the primary TESS-only result.",
+    "The MuSCAT2 chromatic comparison is descriptive because the public report supplies no per-band depth uncertainties.",
     "TOI-3505.01 remains a planet candidate; this work does not statistically validate or confirm it."
   ]
 }

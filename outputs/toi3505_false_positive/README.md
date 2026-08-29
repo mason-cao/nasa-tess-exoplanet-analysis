@@ -19,7 +19,7 @@ probability is computed.
 ### Blended eclipsing binary (BEB)
 
 - Evidence: Wavelength dependence of the reported MuSCAT2 four-band depths.
-- Assessment: Disfavoured. The reported depths show no monotonic trend with wavelength and are consistent with a constant depth within their scatter.
+- Assessment: Weakly disfavoured. The reported depths show no apparent monotonic trend with wavelength, but the absence of per-band errors makes this a qualitative constraint.
 - Not excluded: A blend whose colour matches the target, and any blend at separations below the follow-up resolution.
 
 ### Eclipsing binary on the target (EB)
@@ -36,7 +36,7 @@ probability is computed.
 
 ## Overall
 
-The nearby, blended, and on-target eclipsing-binary scenarios are each disfavoured by at least one line of evidence. The unresolved 0.517-arcsecond companion is not addressed, so this summary supports the existing planet-candidate disposition without validating it.
+The nearby and on-target eclipsing-binary scenarios are disfavoured by the available screens, while the blended-binary chromatic check is qualitative. The unresolved 0.517-arcsecond companion is not addressed, so this summary supports continued candidate-level follow-up without validating the object.
 
 ## Limits
 
